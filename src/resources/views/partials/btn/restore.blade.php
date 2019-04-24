@@ -1,0 +1,5 @@
+{!! Form::open(['url' => $url, 'method' => 'post']) !!}
+    <a class="js-dimmer js-submit ml-2 icon" href="#">
+        <i class="fe fe-refresh-cw"></i>
+    </a>
+{!! Form::close() !!}

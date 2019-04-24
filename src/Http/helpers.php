@@ -1,0 +1,210 @@
+<?php
+
+//TODO: Refatorar estes helpers para snake_case
+
+function admix_is_active($route = '')
+{
+    $url = parse_url($route);
+    $path = trim($url['path'], '/');
+
+    return request()->is($path . '*');
+}
+
+function admix_cannot($action, $place)
+{
+    return auth('admix-web')
+        ->user()
+        ->cannot($action, $place);
+}
+
+function audit_events($event = '')
+{
+    $events['created'] = 'Criou';
+    $events['updated'] = 'Alterou';
+    $events['deleted'] = 'Removeu';
+    $events['restored'] = 'Restaurou';
+
+    if (!$event) {
+        return $events;
+    }
+
+    if (isset($events[$event])) {
+        return $events[$event];
+    }
+
+    return $event;
+}
+
+function audit_alias($model = '')
+{
+    $alias = config('audit-alias');
+
+    if (!$model) {
+        return $alias;
+    }
+
+    if (isset($alias[$model])) {
+        return $alias[$model];
+    }
+
+    return $model;
+}
+
+function human_number($num, $places = 2, $type = 'metric')
+{
+    if ('metric' === $type) {
+        $k = 'K';
+        $m = 'M';
+    } else {
+        $k = ' thousand';
+        $m = ' million';
+    }
+    if ($num < 1000) {
+        $num_format = number_format($num);
+    } elseif ($num < 1000000) {
+        $num_format = number_format($num / 1000, $places) . $k;
+    } else {
+        $num_format = number_format($num / 1000000, $places) . $m;
+    }
+
+    return $num_format;
+}
+
+function remove_accents($string)
+{
+    if (is_array($string)) {
+        foreach ($string as $key => $value) {
+            $array[$key] = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $value);
+        }
+
+        return $array;
+    }
+
+    return iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $string);
+}
+
+function only_numbers($string)
+{
+    return preg_replace('/[^0-9]/', '', $string);
+}
+
+function states($state = null)
+{
+    $states = [
+        'AC' => 'Acre',
+        'AL' => 'Alagoas',
+        'AP' => 'Amapá',
+        'AM' => 'Amazonas',
+        'BA' => 'Bahia',
+        'CE' => 'Ceará',
+        'DF' => 'Distrito Federal',
+        'ES' => 'Espírito Santo',
+        'GO' => 'Goiás',
+        'MA' => 'Maranhão',
+        'MT' => 'Mato Grosso',
+        'MS' => 'Mato Grosso do Sul',
+        'MG' => 'Minas Gerais',
+        'PA' => 'Pará',
+        'PB' => 'Paraíba',
+        'PR' => 'Paraná',
+        'PE' => 'Pernambuco',
+        'PI' => 'Piauí',
+        'RJ' => 'Rio de Janeiro',
+        'RN' => 'Rio Grande do Norte',
+        'RS' => 'Rio Grande do Sul',
+        'RO' => 'Rondônia',
+        'RR' => 'Roraima',
+        'SC' => 'Santa Catarina',
+        'SP' => 'São Paulo',
+        'SE' => 'Sergipe',
+        'TO' => 'Tocantins'
+    ];
+
+    if (isset($states[$state])) {
+        return $states[$state];
+    }
+
+    return $states;
+}
+
+function float_to_db($value)
+{
+    if (!$value) {
+        return null;
+    }
+
+    return trim(str_replace('R$', '', str_replace(',', '.', str_replace('.', '', $value))));
+}
+
+function db_to_float($value)
+{
+    if (!$value) {
+        return null;
+    }
+
+    return number_format($value, 2, ',', '.');
+}
+
+function date_to_db($value, $formFormat = 'd/m/Y H:i')
+{
+    if (!$value) {
+        return null;
+    }
+
+    return \Carbon\Carbon::createFromFormat($formFormat, $value)
+        ->toDateTimeString();
+}
+
+if (!function_exists('db_to_date')) {
+    function db_to_date($value, $default = null, $format = 'd/m/Y H:i')
+    {
+        if (!$value) {
+            return $default;
+        }
+
+        return optional($value)->format($format);
+    }
+}
+
+
+if (!function_exists('filter')) {
+    function filter($field)
+    {
+        if(isset(request()->get('filter', [$field => ''])[$field])) {
+            return request()->get('filter', [$field => ''])[$field];
+        }
+    }
+}
+
+if (!function_exists('column_sort')) {
+    function column_sort($title, $field, $sort = true)
+    {
+        if(!$sort) {
+            return '<span class="text-muted font-weight-bold">' . $title . '</span>';
+        }
+
+        $sort = request()->get('sort');
+
+        if (substr($sort, 0, 1) == '-') {
+            $param['sort'] = substr($sort, 1);
+            $icon = 'fe fe-chevron-up';
+        } else {
+            $param['sort'] = '-' . $sort;
+            $icon = 'fe fe-chevron-down';
+        }
+
+        if (($sort != $field) && ($sort != '-' . $field)) {
+            $param['sort'] = $field;
+            $icon = 'fe fe-code';
+        }
+
+        $queryString = request()->getQueryString();
+        parse_str($queryString, $query);
+
+        unset($query['page']);
+        unset($query['sort']);
+        $fullUrl = request()->url() . '?' . http_build_query($query + $param);
+
+        return sprintf('<a href="%s" class="font-weight-bold text-muted text-decoration-none">%s</a> <i class="%s"></i>', $fullUrl, $title, $icon);
+    }
+}

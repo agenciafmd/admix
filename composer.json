@@ -1,0 +1,39 @@
+{
+  "name": "agenciafmd/admix",
+  "description": "Admix - Agência F&MD",
+  "homepage": "https://github.com/agenciafmd/admix",
+  "keywords": [
+    "laravel",
+    "agenciafmd",
+    "admin",
+    "painel"
+  ],
+  "authors": [
+    {
+      "name": "Irineu Martins Junior",
+      "email": "irineu@fmd.ag",
+      "homepage": "https://fmd.ag/",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "laravel/framework": "5.8.*"
+  },
+  "autoload": {
+    "files": [
+      "src/Http/helpers.php"
+    ],
+    "psr-4": {
+      "Agenciafmd\\Admix\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Agenciafmd\\Admix\\Providers\\AdmixServiceProvider"
+      ],
+      "aliases": {
+      }
+    }
+  }
+}
