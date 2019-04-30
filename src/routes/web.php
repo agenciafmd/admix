@@ -25,8 +25,8 @@ Route::prefix(config('admix.url'))->name('admix.')->group(function () {
 Route::prefix(config('admix.url'))->name('admix.')->middleware(['auth:admix-web'])->group(function () {
     Route::get('', 'AdmixController@redirect')->name('redirect');
     Route::get('dashboard', 'AdmixController@dashboard')->name('dashboard');
-//    Route::get('profile', 'ProfileController@index')->name('profile');
-//    Route::post('profile', 'ProfileController@update')->name('profile.post');
+    Route::get('profile', 'ProfileController@index')->name('profile');
+    Route::put('profile', 'ProfileController@update')->name('profile.update');
 //    Route::get('notification', 'NotificationController@index')->name('notification');
 //    Route::post('notification', 'NotificationController@update')->name('notification.post');
     Route::get('audit', 'AuditController@index')->name('audit.index')->middleware('can:view,\Agenciafmd\Admix\Audit');

@@ -15,6 +15,9 @@
 
 @section('form')
     {!! Form::bsOpen(['model' => optional($role), 'create' => route('admix.roles.store'), 'update' => route('admix.roles.update', ['role' => $role->id])]) !!}
+    <div class="card-header bg-gray-lightest">
+        <h3 class="card-title">Geral</h3>
+    </div>
     <ul class="list-group list-group-flush">
         {!! Form::bsIsActive('Ativo', 'is_active', null, ['required']) !!}
 
@@ -59,7 +62,7 @@
             </div>
         @endforeach
     </div>
-    <div class="card-footer text-right">
+    <div class="card-footer bg-gray-lightest text-right">
         <div class="d-flex">
             @include('agenciafmd/admix::partials.btn.back')
 

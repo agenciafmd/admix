@@ -38,7 +38,7 @@
                 <div class="dimmer">
                     <div class="loader"></div>
                     <div class="dimmer-content">
-                        <div class="card-header">
+                        <div class="card-header bg-gray-lightest">
                             <div class="col-md-6 p-0">
                                 <label class="d-none d-md-inline-flex mb-0 custom-control custom-checkbox custom-control-inline">
                                     <input type="checkbox" class="js-check-all custom-control-input">
