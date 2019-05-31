@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.5.21"
     },
     "dependencies": {
+        "bootstrap-fileinput": "^5.0.2",
         "malihu-custom-scrollbar-plugin": "^3.1.5",
         "vue-router": "^3.0.2"
     }

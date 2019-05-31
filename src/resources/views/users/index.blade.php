@@ -79,19 +79,28 @@
                         <td>
                             @include('agenciafmd/admix::partials.label.status', ['status' => $item->is_active])
                         </td>
-                        <td class="w-1 text-right">
-                            @if(request()->is('*/trash'))
+                        @if(request()->is('*/trash'))
+                            <td class="w-1 text-right">
                                 @include('agenciafmd/admix::partials.btn.restore', ['url' => route('admix.users.restore', $item->id)])
-                            @else
-                                @include('agenciafmd/admix::partials.btn.show', ['url' => route('admix.users.show', $item->id)])
-                                @can('edit', '\Agenciafmd\Admix\User')
-                                    @include('agenciafmd/admix::partials.btn.edit', ['url' => route('admix.users.edit', $item->id)])
-                                @endcan
-                                @can('delete', '\Agenciafmd\Admix\User')
-                                    @include('agenciafmd/admix::partials.btn.remove', ['url' => route('admix.users.destroy', $item->id)])
-                                @endcan
-                            @endif
-                        </td>
+                            </td>
+                        @else
+                            <td class="w-1 text-center">
+                                <div class="item-action dropdown">
+                                    <a href="#" data-toggle="dropdown" class="icon">
+                                        <i class="fe fe-more-vertical"></i>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        @include('agenciafmd/admix::partials.btn.show', ['url' => route('admix.users.show', $item->id)])
+                                        @can('edit', '\Agenciafmd\Admix\User')
+                                            @include('agenciafmd/admix::partials.btn.edit', ['url' => route('admix.users.edit', $item->id)])
+                                        @endcan
+                                        @can('delete', '\Agenciafmd\Admix\User')
+                                            @include('agenciafmd/admix::partials.btn.remove', ['url' => route('admix.users.destroy', $item->id)])
+                                        @endcan
+                                    </div>
+                                </div>
+                            </td>
+                        @endif
                     </tr>
                 @endforeach
                 </tbody>

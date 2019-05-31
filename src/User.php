@@ -3,7 +3,7 @@
 namespace Agenciafmd\Admix;
 
 use OwenIt\Auditing\Auditable;
-//use Agenciafmd\Media\MediaTrait;
+use Agenciafmd\Media\MediaTrait;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Builder;
 //use Agenciafmd\Sortable\Traits\Sortable;
@@ -15,10 +15,10 @@ use Agenciafmd\Admix\Notifications\ResetPasswordNotification;
 
 class User extends Authenticatable implements AuditableContract //, UserResolver
 {
-    use Notifiable, SoftDeletes, Auditable; //, MediaTrait;
+    use Notifiable, SoftDeletes, Auditable, MediaTrait;
 
     protected $guarded = [
-        'password_confirmation'
+        'password_confirmation', 'width', 'height', 'quality', 'crop', 'media'
     ];
 
     protected $hidden = [
@@ -50,6 +50,11 @@ class User extends Authenticatable implements AuditableContract //, UserResolver
         }
 
         return in_array('\\' . $ability, $this->role->rules, true);
+    }
+
+    public function getImageAttribute()
+    {
+        return $this->getFirstMedia('image');
     }
 
     public function getIsAdminAttribute()

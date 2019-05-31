@@ -115,11 +115,11 @@ form.destroy button {
   text-decoration:none
 }
 
-#sidebar ul li.active > a,
-a[aria-expanded="true"] {
-  color: #fff;
-  background: $gray-100;
-}
+//#sidebar ul li.active > a,
+//a[aria-expanded="true"] {
+//  color: #fff;
+//  background: $gray-100;
+//}
 
 //a[data-toggle="collapse"] {
 //  position: relative;
@@ -132,3 +132,38 @@ a[aria-expanded="true"] {
 //  right: 20px;
 //  transform: translateY(-50%);
 //}
+
+// file-input
+.file-drop-zone {
+  border:unset;
+  margin: unset;
+  padding: unset;
+}
+
+.file-preview-image {
+  border-radius: $border-radius;
+}
+
+.file-preview {
+  border: 1px solid $border-color;
+}
+
+.krajee-default.file-preview-frame {
+  margin: unset;
+  box-shadow: unset;
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+}
+
+.krajee-default.file-preview-frame:not(.file-preview-error):hover {
+  box-shadow: unset;
+  border: 1px solid $border-color;
+}
+
+.krajee-default.file-preview-frame .kv-file-content {
+  width: unset;
+  height: unset;
+  max-width: 300px;
+  max-height: 300px;
+}
+// fim file-input

@@ -1,3 +1,3 @@
-<a class="ml-2 icon" href="{{ $url }}">
-    <i class="fe fe-edit"></i>
+<a href="{{ $url }}" class="dropdown-item">
+    <i class="dropdown-icon fe fe-edit"></i> Editar
 </a>

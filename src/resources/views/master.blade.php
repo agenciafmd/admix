@@ -54,11 +54,8 @@
                         </button>
                     </nav>
                     <div class="d-flex order-lg-2 ml-auto">
-                        <div class="nav-item d-none d-md-flex">
-                            <a href="https://github.com/tabler/tabler" class="btn btn-sm btn-outline-primary"
-                               target="_blank">Source code</a>
-                        </div>
-                        <div class="dropdown d-none d-md-flex">
+                        {{-- TODO: Notifications --}}
+                        {{--<div class="dropdown d-none d-md-flex">
                             <a class="nav-link icon" data-toggle="dropdown">
                                 <i class="fe fe-bell"></i>
                                 <span class="nav-unread"></span>
@@ -91,35 +88,27 @@
                                 <div class="dropdown-divider"></div>
                                 <a href="#" class="dropdown-item text-center text-muted-dark">Mark all as read</a>
                             </div>
-                        </div>
+                        </div>--}}
                         <div class="dropdown d-none d-md-flex">
                             <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
-                                <span class="avatar" style="background-image: url(/images/male.jpg)"></span>
+                                <span class="avatar" style="background-image: url({{ image(auth('admix-web')->user(), 'image') }})"></span>
                                 <span class="ml-2 d-none d-lg-block">
-                      <span class="text-default">Jane Pearson</span>
-                      <small class="text-muted d-block mt-1">Administrator</small>
-                    </span>
+                                    <span class="text-default">{{ auth('admix-web')->user()->name }}</span>
+                                    <small class="text-muted d-block mt-1">
+                                        {{ (auth('admix-web')->user()->role == null) ? 'Administrador' : auth('admix-web')->user()->role->name }}
+                                    </small>
+                                </span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                <a class="dropdown-item" href="#">
-                                    <i class="dropdown-icon fe fe-user"></i> Profile
+                                <a class="dropdown-item" href="{{ route('admix.profile') }}">
+                                    <i class="dropdown-icon fe fe-user"></i> Meus dados
                                 </a>
                                 <a class="dropdown-item" href="#">
-                                    <i class="dropdown-icon fe fe-settings"></i> Settings
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <span class="float-right"><span class="badge badge-primary">6</span></span>
-                                    <i class="dropdown-icon fe fe-mail"></i> Inbox
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="dropdown-icon fe fe-send"></i> Message
+                                    <i class="dropdown-icon fe fe-settings"></i> Configurações
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">
-                                    <i class="dropdown-icon fe fe-help-circle"></i> Need help?
-                                </a>
-                                <a class="dropdown-item" href="#">
-                                    <i class="dropdown-icon fe fe-log-out"></i> Sign out
+                                <a class="dropdown-item" href="{{ route('admix.logout') }}">
+                                    <i class="dropdown-icon fe fe-log-out"></i> Sair
                                 </a>
                             </div>
                         </div>
