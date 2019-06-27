@@ -14130,7 +14130,7 @@ yx-axis
 /* ---------------------------------------- */
 
 /*!
- * bootstrap-fileinput v5.0.2
+ * bootstrap-fileinput v5.0.3
  * http://plugins.krajee.com/file-input
  *
  * Krajee default styling for bootstrap-fileinput.
@@ -23849,8 +23849,24 @@ form.destroy button {
   padding: 0;
 }
 
-.card-list-group .list-group-item:last-child {
-  border-bottom: 1px solid rgba(0, 40, 100, 0.12);
+.list-group-item {
+  border: unset;
+}
+
+.list-group li:nth-of-type(even) {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.table-striped thead tr {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.card-header {
+  border-bottom: unset;
+}
+
+.card-footer {
+  border-top: unset;
 }
 
 #sidebar {

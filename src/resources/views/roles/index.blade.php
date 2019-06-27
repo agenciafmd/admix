@@ -36,7 +36,7 @@
 @section('table')
     @if($items->count() > 0)
         <div class="table-responsive">
-            <table class="table card-table table-vcenter text-nowrap">
+            <table class="table table-striped table-borderless table-vcenter card-table text-nowrap">
                 <thead>
                 <tr>
                     <th class="w-1 d-none d-md-table-cell">&nbsp;</th>

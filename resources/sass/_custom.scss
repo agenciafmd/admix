@@ -26,7 +26,27 @@ form.destroy button {
 }
 
 .card-list-group .list-group-item:last-child {
-  border-bottom: 1px solid $border-color;
+  //border-bottom: 1px solid $border-color;
+}
+
+.list-group-item {
+  border: unset;
+}
+
+.list-group li:nth-of-type(even) {
+  background-color: $table-accent-bg;
+}
+
+.table-striped thead tr {
+  background-color: $table-accent-bg;
+}
+
+.card-header {
+  border-bottom: unset;
+}
+
+.card-footer {
+  border-top: unset;
 }
 
 #sidebar {
