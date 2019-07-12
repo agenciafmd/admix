@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "bootstrap-fileinput": "^5.0.3",
+        "bs4-toast": "^0.7.1",
         "malihu-custom-scrollbar-plugin": "^3.1.5",
         "vue-router": "^3.0.2"
     }

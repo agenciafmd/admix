@@ -2,16 +2,17 @@
 
 namespace Agenciafmd\Admix;
 
-use OwenIt\Auditing\Auditable;
-use Agenciafmd\Media\MediaTrait;
-use Illuminate\Notifications\Notifiable;
+use Agenciafmd\Admix\Notifications\ResetPasswordNotification;
 use Illuminate\Database\Eloquent\Builder;
-//use Agenciafmd\Sortable\Traits\Sortable;
-//use OwenIt\Auditing\Contracts\UserResolver;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
-use Agenciafmd\Admix\Notifications\ResetPasswordNotification;
+use Agenciafmd\Media\MediaTrait;
+
+//use Agenciafmd\Sortable\Traits\Sortable;
+//use OwenIt\Auditing\Contracts\UserResolver;
 
 class User extends Authenticatable implements AuditableContract //, UserResolver
 {

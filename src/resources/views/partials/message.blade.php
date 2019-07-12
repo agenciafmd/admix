@@ -17,18 +17,15 @@
             'body'       => $message['message']
         ])
     @else
-        <div style="position: absolute; top: 1rem; right: 1rem;">
-            <div class="alert alert-{{ ($message['level']) ? $message['level'] : 'info' }} alert-dismissible fake-toast fade hide"
-                 data-autohide="true" data-delay="6000">
-                <button data-dismiss="alert" class="close"></button>
-                <h4>{{ ($message['title']) ? $message['title'] : 'Atenção' }}</h4>
-                {!! $message['message'] !!}
-            </div>
-        </div>
-
         <script>
-            $(function () {
-                $('.fake-toast').toast('show');
+            $(function() {
+                $.toast({
+                    title: '{{ ($message['title']) ? $message['title'] : 'Atenção' }}',
+                    content: '{!! $message['message'] !!}',
+                    type: '{{ ($message['level']) ? $message['level'] : 'info' }}',
+                    delay: 3000,
+                    pause_on_hover: true
+                });
             });
         </script>
     @endif

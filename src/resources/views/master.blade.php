@@ -91,7 +91,7 @@
                         </div>--}}
                         <div class="dropdown d-none d-md-flex">
                             <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
-                                <span class="avatar" style="background-image: url({{ image(auth('admix-web')->user(), 'image') }})"></span>
+                                <span class="avatar" style="background-image: url({{ image(auth('admix-web')->user(), 'image', '/images/avatar-1.svg') }})"></span>
                                 <span class="ml-2 d-none d-lg-block">
                                     <span class="text-default">{{ auth('admix-web')->user()->name }}</span>
                                     <small class="text-muted d-block mt-1">

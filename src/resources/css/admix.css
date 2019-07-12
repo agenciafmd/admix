@@ -1,4 +1,9 @@
-@charset "UTF-8";
+/**
+ * @author Script47 (https://github.com/Script47/Toast)
+ * @description Toast - A Bootstrap 4.2+ jQuery plugin for the toast component
+ * @version 0.7.1
+ **/
+#toast-container{position:-webkit-sticky;position:sticky;z-index:1055;top:0}#toast-wrapper{position:absolute;top:0;right:0;margin:5px}#toast-container>#toast-wrapper>.toast{min-width:150px;background-color:rgb(255,255,255);border-top:none;}#toast-container>#toast-wrapper>.toast>.toast-header strong{padding-right:20px}@charset "UTF-8";
 
 /**
 Dashboard UI
@@ -23849,6 +23854,15 @@ form.destroy button {
   padding: 0;
 }
 
+#formMediaMetaPost .col-xl-5 {
+  flex: unset;
+  max-width: 74.666667%;
+}
+
+#formMediaMetaPost .list-group-item {
+  padding: 0;
+}
+
 .list-group-item {
   border: unset;
 }
@@ -23940,12 +23954,24 @@ form.destroy button {
   padding: unset;
 }
 
+.file-drop-zone.clickable:hover {
+  border: unset;
+}
+
+.file-caption-main.no-browse {
+  display: none;
+}
+
 .file-preview-image {
   border-radius: 3px;
 }
 
 .file-preview {
   border: 1px solid rgba(0, 40, 100, 0.12);
+}
+
+.file-no-browse:disabled {
+  opacity: 0;
 }
 
 .krajee-default.file-preview-frame {
@@ -23965,5 +23991,13 @@ form.destroy button {
   height: unset;
   max-width: 300px;
   max-height: 300px;
+}
+
+.krajee-default .file-upload-indicator,
+.krajee-default .file-drag-handle {
+  float: left;
+  margin: unset;
+  width: unset;
+  height: unset;
 }
 
