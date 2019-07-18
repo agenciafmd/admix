@@ -25,12 +25,12 @@ form.destroy button {
   padding: 0;
 }
 
-#formMediaMetaPost .col-xl-5 {
+#formUploadMetaPost .col-xl-5 {
   flex: unset;
   max-width: 74.666667%; //col-xl-9
 }
 
-#formMediaMetaPost .list-group-item {
+#formUploadMetaPost .list-group-item {
   padding: 0;
 }
 
@@ -169,7 +169,7 @@ form.destroy button {
   padding: unset;
 }
 
-.file-drop-zone.clickable:hover {
+.file-drop-zone.clickable:hover, .file-drop-zone.clickable:focus {
   border:unset;
 }
 
@@ -187,6 +187,20 @@ form.destroy button {
 
 .file-no-browse:disabled {
   opacity: 0;
+}
+
+.single-upload .file-preview {
+  width: max-content;
+}
+
+.single-upload .krajee-default.file-preview-frame {
+  border: unset;
+  padding: 0;
+}
+
+.single-upload .krajee-default.file-preview-frame:not(.file-preview-error):hover {
+  border: unset;
+  padding: 0;
 }
 
 .krajee-default.file-preview-frame {

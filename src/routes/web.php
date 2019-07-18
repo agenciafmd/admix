@@ -30,6 +30,12 @@ Route::prefix(config('admix.url'))->name('admix.')->middleware(['auth:admix-web'
 //    Route::get('notification', 'NotificationController@index')->name('notification');
 //    Route::post('notification', 'NotificationController@update')->name('notification.post');
     Route::get('audit', 'AuditController@index')->name('audit.index')->middleware('can:view,\Agenciafmd\Admix\Audit');
+
+    Route::post('upload', 'UploadController@index')->name('upload.index');
+    Route::post('destroy', 'UploadController@destroy')->name('upload.destroy');
+    Route::get('meta/{uuid}', 'UploadController@metaForm')->name('upload.meta');
+    Route::post('meta/{uuid}', 'UploadController@metaPost')->name('upload.meta.post');
+#    Route::post('sort', 'UploadController@sort')->name('upload.sort');
 });
 
 /*

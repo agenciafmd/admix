@@ -63,6 +63,34 @@ $(function () {
         $('.dimmer').addClass('active');
     });
     /* fim trigga o loading na tabela da listagem dos itens */
+
+    /* botão de descrição do upload */
+    $(document).on('click', '.kv-file-tags', function() {
+        var uuid = $(this).parents('.file-footer-buttons').find('.kv-file-remove').attr('data-key');
+        var modal = $("#modalMediaMetaPost");
+
+        $.get($('meta[name="upload-meta"]').attr('content') + "/" + uuid, function(data) {
+            modal.find('.modal-body').html(data);
+            modal.modal('show');
+        });
+
+        modal.find('.btn-primary').off('click').on('click', function () {
+            var form = $("#formUploadMetaPost");
+            $.post(form.attr('action'), form.serialize()).done(function() {
+                modal.modal('hide');
+
+                $.toast({
+                    title: 'Atenção',
+                    content: 'Item atualizado com sucesso',
+                    type: 'success',
+                    delay: 3000,
+                    pause_on_hover: true
+                });
+            });
+        });
+
+    });
+    /* fim botão de descrição do upload */
 });
 
 /* validação dos formulários */

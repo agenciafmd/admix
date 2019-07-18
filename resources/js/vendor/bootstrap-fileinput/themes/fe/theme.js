@@ -14,20 +14,62 @@
     "use strict";
 
     $.fn.fileinputThemes.fe = {
+        overwriteInitial: true,
+        showClose: false,
+        showUpload: false,
+        showCancel: false,
+        showBrowse: false,
+        uploadAsync: false,
+        browseOnZoneClick: true,
+        allowedFileExtensions: ["jpg", "jpeg", "png"],
+        resizeImage: true,
+        resizePreference: 'height',
+        uploadUrl: $('meta[name="upload"]').attr('content'),
+        deleteUrl: $('meta[name="upload-destroy"]').attr('content'),
+        deleteExtraData: function () {
+            return {
+                _token: $('meta[name="csrf-token"]').attr('content')
+            };
+        },
+        layoutTemplates: {
+            fileIcon: '<i class="fe fe-file kv-caption-icon"></i> ',
+            main1: "{preview}\n" +
+                "<div class='input-group {class}'>\n" +
+                "   <div class='input-group-btn input-group-prepend'>\n" +
+                "       {browse}\n" +
+                "       {upload}\n" +
+                "   </div>\n" +
+                "   {caption}\n" +
+                "</div>",
+            actions: '<div class="file-actions">\n' +
+                '    <div class="file-footer-buttons">\n' +
+                '       {download} ' +
+                '       {upload} ' +
+                '       {delete} ' +
+                '       {zoom} ' +
+                '       {other} ' +
+                '       <button type="button" class="btn btn-sm btn-kv btn-outline-secondary kv-file-tags" title="Alterar descrição"><i class="fe fe-tag"></i></button>' +
+                '    </div>\n' +
+                '</div>\n' +
+                '{drag}\n' +
+                '<div class="clearfix"></div>',
+            size: '<span>{sizeText}</span>',
+
+        },
         fileActionSettings: {
+            showUpload: false,
+            showDrag: false,
             removeIcon: '<i class="fe fe-trash"></i>',
             uploadIcon: '<i class="fe fe-upload"></i>',
             uploadRetryIcon: '<i class="fe fe-repeat"></i>',
             downloadIcon: '<i class="fe fe-download"></i>',
             zoomIcon: '<i class="fe fe-zoom-in"></i>',
-            dragIcon: '<i class="fe fe-arrows"></i>',
-            indicatorNew: '<i class="fe fe-plus-circle text-warning"></i>',
-            indicatorSuccess: '<i class="fe fe-check-circle text-success"></i>',
-            indicatorError: '<i class="fe fe-exclamation-circle text-danger"></i>',
-            indicatorLoading: '<i class="fe fe-hourglass text-muted"></i>'
-        },
-        layoutTemplates: {
-            fileIcon: '<i class="fe fe-file kv-caption-icon"></i> '
+            dragIcon: '<span class="btn btn-sm btn-kv btn-outline-secondary"><i class="fe fe-move"></i></span>',
+            indicatorNew: '<span class="btn btn-sm btn-kv btn-outline-warning"><i class="fe fe-star"></i></span>',
+            indicatorSuccess: '<span class="btn btn-sm btn-kv btn-outline-success"><i class="fe fe-check"></i></span>',
+            indicatorError: '<span class="btn btn-sm btn-kv btn-outline-danger"><i class="fe fe-alert-triangle"></i></span>',
+            indicatorLoading: '<span class="btn btn-sm btn-kv btn-outline-secondary"><i class="fe fe-spinner fe-loader"></i></span>',
+            indicatorPaused: '<i class="fe fe-pause text-info"></i>'
         },
         previewZoomButtonIcons: {
             prev: '<i class="fe fe-caret-left fe-lg"></i>',

@@ -14,9 +14,9 @@
     <ul class="list-group list-group-flush">
         {!! Form::bsText('Nome', 'name', null, ['-required']) !!}
 
-        {!! Form::bsEmail('E-mail', 'email', null, ['-required']) !!}
+        {!! Form::bsEmail('E-mail', 'email', null, ['required']) !!}
 
-        {!! Form::bsImage('Avatar', 'image', optional($user)->getFirstMedia('image') ?? null, ['width' => 400, 'height' => 400]) !!}
+        {!! Form::bsImage('Avatar', 'image', $user) !!}
     </ul>
     <div class="card-header bg-gray-lightest">
         <h3 class="card-title">Alterar senha</h3>

@@ -9,6 +9,11 @@
     <meta name="author" content="Agência F&MD">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <!-- uploads / medialibrary -->
+    <meta name="upload" content="{{ route('admix.upload.index') }}">
+    <meta name="upload-meta" content="{{ route('admix.upload.meta', ['key' => '']) }}">
+    <meta name="upload-destroy" content="{{ route('admix.upload.destroy') }}">
+
     <link rel="shortcut icon" href="/images/icons/favicon.ico">
     <link rel="apple-touch-icon" href="/images/icons/icon-512x512.png">
 
@@ -91,7 +96,7 @@
                         </div>--}}
                         <div class="dropdown d-none d-md-flex">
                             <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
-                                <span class="avatar" style="background-image: url({{ image(auth('admix-web')->user(), 'image', '/images/avatar-1.svg') }})"></span>
+                                <span class="avatar" style="background-image: url({{ (auth('admix-web')->user()->getFirstMediaUrl('image', 'thumb') ?: '/images/avatar-1.svg') }})"></span>
                                 <span class="ml-2 d-none d-lg-block">
                                     <span class="text-default">{{ auth('admix-web')->user()->name }}</span>
                                     <small class="text-muted d-block mt-1">

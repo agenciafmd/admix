@@ -9,14 +9,16 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
-use Agenciafmd\Media\MediaTrait;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\Models\Media;
+use Spatie\Image\Manipulations;
 
-//use Agenciafmd\Sortable\Traits\Sortable;
-//use OwenIt\Auditing\Contracts\UserResolver;
-
-class User extends Authenticatable implements AuditableContract //, UserResolver
+class User extends Authenticatable implements AuditableContract, HasMedia
 {
-    use Notifiable, SoftDeletes, Auditable, MediaTrait;
+    use Notifiable, SoftDeletes, Auditable, HasMediaTrait, MediaTrait {
+        MediaTrait::registerMediaConversions insteadof HasMediaTrait;
+    }
 
     protected $guarded = [
         'password_confirmation', 'width', 'height', 'quality', 'crop', 'media'
@@ -53,10 +55,11 @@ class User extends Authenticatable implements AuditableContract //, UserResolver
         return in_array('\\' . $ability, $this->role->rules, true);
     }
 
-    public function getImageAttribute()
-    {
-        return $this->getFirstMedia('image');
-    }
+//    TODO: Deixar isso dinamico
+//    public function getImageAttribute()
+//    {
+//        return $this->getFirstMedia('image');
+//    }
 
     public function getIsAdminAttribute()
     {

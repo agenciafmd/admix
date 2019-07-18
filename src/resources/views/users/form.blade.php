@@ -25,10 +25,20 @@
 
         {!! Form::bsEmail('E-mail', 'email', null, ['required']) !!}
 
+        {!! Form::bsImage('Avatar', 'image', $user) !!}
+    </ul>
+    <div class="card-header bg-gray-lightest">
+        <h3 class="card-title">Alterar senha</h3>
+    </div>
+    <ul class="list-group list-group-flush">
         {!! Form::bsPassword('Senha', 'password') !!}
 
         {!! Form::bsPassword('Confirmação de Senha', 'password_confirmation') !!}
-
+    </ul>
+    <div class="card-header bg-gray-lightest">
+        <h3 class="card-title">Permissões</h3>
+    </div>
+    <ul class="list-group list-group-flush">
         {!! Form::bsSelect('Grupo', 'role_id', ['0' => 'Administrador'] + $roles->toSelect()) !!}
     </ul>
     <div class="card-footer bg-gray-lightest text-right">
