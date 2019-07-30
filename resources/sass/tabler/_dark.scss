@@ -1,0 +1,49 @@
+// stylelint-disable declaration-no-important
+
+@mixin dark-mode {
+
+  &,
+  .modal-content,
+  .dropdown-menu {
+    background: $dark;
+    color: #afbdd1;
+  }
+
+  .dropdown-menu-arrow::after {
+    border-bottom-color: $dark;
+  }
+
+  .card,
+  .header,
+  .sidebar,
+  .sidenav,
+  .topnav,
+  .navbar,
+  .form-control,
+  .selectgroup-button {
+    background: rgba(0, 0, 0, .1);
+    color: inherit;
+  }
+
+  .text-default {
+    color: #afbdd1 !important;
+  }
+
+  .avatar-list-stacked .avatar {
+    box-shadow: 0 0 0 2px #2b3648;
+  }
+
+  .navbar-brand-logo {
+    filter: brightness(0) invert(1);
+  }
+}
+
+body.theme-dark {
+  @include dark-mode;
+}
+
+@media (prefers-color-scheme: dark) {
+  body.auto-theme-dark {
+    @include dark-mode;
+  }
+}

@@ -1,7 +1,7 @@
 @extends('agenciafmd/admix::partials.crud.form')
 
 @section('title')
-    Meu perfil
+
 @endsection
 
 @section('form')
@@ -9,7 +9,7 @@
         'class' => 'card-list-group card needs-validation' . ((count($errors) > 0) ? ' was-validated' : ''),
         'novalidate' => true, 'id' => 'formCrud', 'files' => true]) !!}
     <div class="card-header bg-gray-lightest">
-        <h3 class="card-title">Geral</h3>
+        <h3 class="card-title">Meu Perfil</h3>
     </div>
     <ul class="list-group list-group-flush">
         {!! Form::bsText('Nome', 'name', null, ['-required']) !!}

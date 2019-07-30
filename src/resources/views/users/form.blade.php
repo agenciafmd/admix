@@ -2,21 +2,24 @@
 
 @inject('roles', '\Agenciafmd\Admix\Services\RoleService')
 
-@section('title')
-    @if(request()->is('*/create'))
-        Criar
-    @elseif(request()->is('*/edit'))
-        Editar
-    @else
-        Visualizar
-    @endif
-    Usuário
-@endsection
-
 @section('form')
     {!! Form::bsOpen(['model' => optional($user), 'create' => route('admix.users.store'), 'update' => route('admix.users.update', ['user' => $user->id])]) !!}
     <div class="card-header bg-gray-lightest">
-        <h3 class="card-title">Geral</h3>
+        <h3 class="card-title">
+            @if(request()->is('*/create'))
+                Criar
+            @elseif(request()->is('*/edit'))
+                Editar
+            @else
+                Visualizar
+            @endif
+            Usuário
+        </h3>
+        <div class="card-options">
+            @if(strpos(request()->route()->getName(), 'show') === false)
+                @include('agenciafmd/admix::partials.btn.save')
+            @endif
+        </div>
     </div>
     <ul class="list-group list-group-flush">
         {!! Form::bsIsActive('Ativo', 'is_active', null, ['required']) !!}

@@ -1,37 +1,6 @@
 @extends('agenciafmd/admix::master')
 
 @section('content')
-    <div class="page-header">
-        <h1 class="page-title">
-            @yield('title')
-        </h1>
-    </div>
-    <div class="row page-subheader">
-        <div class="col-md-3">
-            {{ Form::open(['url' => $route, 'method' => 'get']) }}
-            @foreach(request()->get('filter', []) as $name => $value)
-                {{ Form::hidden('filter[' . $name . ']', $value) }}
-            @endforeach
-            <div class="form-group">
-                <label class="form-label sr-only">Procurar</label>
-                <div class="input-icon">
-                    <input type="text" name="query" class="form-control" placeholder="Procurar..."
-                           value="{{ request()->get('query', '') }}">
-                    <span class="input-icon-addon">
-                            <i class="fe fe-search"></i>
-                        </span>
-                </div>
-            </div>
-            {{ Form::close() }}
-        </div>
-        <div class="col-md-9 text-right">
-            <div class="form-group">
-                <div class="btn-list">
-                    @yield('actions')
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="row">
         <div class="col-12">
             <div class="card">
@@ -39,6 +8,12 @@
                     <div class="loader"></div>
                     <div class="dimmer-content">
                         <div class="card-header bg-gray-lightest">
+                            <h3 class="card-title">@yield('title')</h3>
+                            <div class="card-options">
+                                @yield('actions')
+                            </div>
+                        </div>
+                        <div class="card-header">
                             <div class="col-md-6 p-0">
                                 <label class="d-none d-md-inline-flex mb-0 custom-control custom-checkbox custom-control-inline">
                                     <input type="checkbox" class="js-check-all custom-control-input">

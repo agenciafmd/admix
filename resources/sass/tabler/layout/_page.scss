@@ -1,0 +1,19 @@
+.page-title-box {
+  display: flex;
+  align-items: center;
+  min-height: 2.5rem;
+  margin: 1rem 0;
+  color: $text-muted;
+}
+
+.page-title {
+  margin: 0;
+  font-size: $h3-font-size;
+  font-weight: 400;
+  line-height: 2.5rem;
+}
+
+.page-title-options {
+  margin-left: auto;
+  color: $text-muted;
+}

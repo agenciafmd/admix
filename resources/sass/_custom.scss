@@ -2,6 +2,23 @@
 * Customização do admix
 */
 
+.btn-secondary.dropdown-toggle,
+.show > .btn-secondary.dropdown-toggle,
+.show > .btn-secondary.dropdown-toggle:focus {
+  background-color: #fff;
+  color: $gray-600;
+  box-shadow: none;
+}
+
+.card-header .custom-select {
+  height: 2.05rem;
+  line-height: 1.1;
+}
+
+.custom-control-label::before {
+  background: white;
+}
+
 .form-group.row {
   display: flex;
 }
@@ -111,6 +128,7 @@ form.destroy button {
   opacity: 0;
   transition: all 0.5s ease-in-out;
 }
+
 .overlay.active {
   display: block;
   opacity: 1;
@@ -141,7 +159,7 @@ form.destroy button {
 #sidebar ul li a:hover {
   color: $gray-700;
   background: $gray-100;
-  text-decoration:none
+  text-decoration: none
 }
 
 //#sidebar ul li.active > a,
@@ -164,13 +182,13 @@ form.destroy button {
 
 // file-input
 .file-drop-zone {
-  border:unset;
+  border: unset;
   margin: unset;
   padding: unset;
 }
 
 .file-drop-zone.clickable:hover, .file-drop-zone.clickable:focus {
-  border:unset;
+  border: unset;
 }
 
 .file-caption-main.no-browse {
@@ -183,6 +201,7 @@ form.destroy button {
 
 .file-preview {
   border: 1px solid $border-color;
+  background: $white;
 }
 
 .file-no-browse:disabled {
@@ -228,4 +247,9 @@ form.destroy button {
   width: unset;
   height: unset;
 }
+
 // fim file-input
+
+.brd-b {
+  border-bottom: 1px solid $border-color;
+}

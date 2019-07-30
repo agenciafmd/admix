@@ -1,0 +1,28 @@
+.breadcrumb {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.breadcrumb-item {
+  &.active {
+    a {
+      color: inherit;
+      pointer-events: none;
+    }
+  }
+}
+
+@each $name, $symbol in $breadcrumb-variants {
+  .breadcrumb-#{$name} {
+    .breadcrumb-item + .breadcrumb-item::before {
+      content: $symbol;
+    }
+  }
+}
+
+.breadcrumb-alternate {
+  a {
+    color: $text-muted;
+  }
+}

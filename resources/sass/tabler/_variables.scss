@@ -1,0 +1,328 @@
+// FONTS
+$font-family-base: "Source Sans Pro", -apple-system, blinkmacsystemfont, "Segoe UI", roboto, "Helvetica Neue", arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;
+$font-family-serif: "Georgia", "Times New Roman", times, serif !default;
+$font-icons: "tabler-webfont" !default;
+
+// EXTERNAL FONTS
+$google-font-url: "https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,500,600,700&display=swap" !default;
+$icon-fonts: () !default;
+
+// COLORS
+$full-black: rgba(0, 0, 0, 1) !default;
+$full-white: rgba(255, 255, 255, 1) !default;
+$light-black: rgba(0, 0, 0, .4) !default;
+$light-white: rgba(255, 255, 255, .4) !default;
+$min-black: rgba(135, 150, 165, .064) !default;
+$min-white: rgba(255, 255, 255, .064) !default;
+
+$gray-100: #f8f9fa !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #868e96 !default;
+$gray-700: #495057 !default;
+$gray-800: #343a40 !default;
+$gray-900: #212529 !default;
+
+$blue: #206bc4 !default;
+$azure: #45aaf2 !default;
+$indigo: #6574cd !default;
+$purple: #a55eea !default;
+$pink: #f66d9b !default;
+$red: #fa4654 !default;
+$orange: #fd9644 !default;
+$yellow: #f1c40f !default;
+$lime: #7bd235 !default;
+$green: #5eba00 !default;
+$teal: #2bcbba !default;
+$cyan: #17a2b8 !default;
+
+$light: #f0f2f5 !default;
+$dark: #1c2c41 !default;
+$black: #000 !default;
+$white: #fff !default;
+
+$body-bg: #f8fafb !default;
+
+$text-color: #495057 !default;
+$text-muted: #888e9a !default;
+$text-muted-light: #adb5bd !default;
+
+$border-color: rgba(0, 0, 0, 0.09) !default;
+
+$social-colors: (
+  "facebook": #3b5998,
+  "twitter": #1da1f2,
+  "google": #dc4e41,
+  "youtube": #f00,
+  "vimeo": #1ab7ea,
+  "dribbble": #ea4c89,
+  "github": #181717,
+  "instagram": #e4405f,
+  "pinterest": #bd081c,
+  "vk": #6383a8,
+  "rss": #ffa500,
+  "flickr": #0063dc,
+  "bitbucket": #0052cc,
+) !default;
+
+$status-colors: (
+  "primary": $blue,
+  "secondary": $gray-600,
+  "success": $green,
+  "info": $cyan,
+  "warning": $yellow,
+  "danger": $red,
+  "dark": $dark,
+) !default;
+
+$colors: (
+  "blue": $blue,
+  "azure": $azure,
+  "indigo": $indigo,
+  "purple": $purple,
+  "pink": $pink,
+  "red": $red,
+  "orange": $orange,
+  "yellow": $yellow,
+  "lime": $lime,
+  "green": $green,
+  "teal": $teal,
+  "cyan": $cyan,
+  "white": $white,
+  "gray": $gray-600,
+  "gray-dark": $gray-800,
+  "dark": $dark
+) !default;
+
+$avatar-sizes: (
+  "sm": 1.25rem,
+  "md": 3rem,
+  "lg": 4.5rem,
+  "xl": 6rem
+) !default;
+
+//Fonts
+$font-size-base: 1rem !default;
+$font-weight-base: 400 !default;
+$line-height-base: 1.375 !default;
+
+$border-radius: 3px !default;
+
+//Typography
+$headings-font-weight: 600 !default;
+
+$small-font-size: 87.5% !default;
+
+$h1-font-size: $font-size-base * 2 !default;
+$h2-font-size: $font-size-base * 1.75 !default;
+$h3-font-size: $font-size-base * 1.5 !default;
+$h4-font-size: $font-size-base * 1.25 !default;
+$h5-font-size: $font-size-base * 1 !default;
+$h6-font-size: $font-size-base * .875 !default;
+
+$blockquote-font-size: $h4-font-size !default;
+$lead-font-size: $h3-font-size !default;
+
+//Sizing
+$spacer: 1rem !default;
+$spacers: (
+  0: 0rem,
+  1: .25rem,
+  2: .5rem,
+  4: 1rem,
+  5: 1.5rem,
+  6: 2rem,
+  7: 2.5rem,
+  8: 3rem,
+) !default;
+
+$size-spacers: (
+  9: 4rem,
+  10: 5rem,
+  11: 6rem,
+  12: 8rem,
+  13: 10rem,
+  14: 12rem,
+  15: 14rem,
+  16: 16rem,
+  17: 18rem,
+  18: 20rem,
+  auto: auto,
+  px: 1px,
+  full: 100%
+) !default;
+
+$size-max-spacers: (
+  xs: 20rem,
+  sm: 24rem,
+  md: 28rem,
+  lg: 32rem,
+  xl: 36rem,
+  2 xl: 42rem,
+  3 xl: 48rem,
+  4 xl: 56rem,
+  5 xl: 64rem,
+  6 xl: 72rem,
+  full: 100%
+) !default;
+
+$sizes-percentage: (
+  1: 1%,
+  25: 25%,
+  50: 50%,
+  75: 75%,
+  100: 100%,
+  auto: auto
+) !default;
+
+//Ribbons
+$ribbon-margin: .25rem !default;
+
+$loader-size: 2.5rem !default;
+
+$generate-social-colors: true !default;
+$generate-color-hues: true !default;
+$generate-colors: true !default;
+
+$enable-gradients: false !default;
+
+$grid-gutter-width: 24px !default;
+
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1280px
+) !default;
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1200px
+) !default;
+
+//close
+$close-font-weight: 400 !default;
+$close-font-size: 1.5rem !default;
+
+//badges
+$badge-font-weight: 600 !default;
+
+//buttons
+$btn-font-weight: 600 !default;
+$btn-font-size: 14px !default;
+$btn-border-radius: 3px !default;
+
+//breadcrumb
+$breadcrumb-variants: (
+  dots: '·',
+  arrows: '›',
+  bullets: '\02022',
+) !default;
+
+//pagination
+$pagination-border-width: 0 !default;
+$pagination-padding-y: .25rem !default;
+$pagination-padding-x: .25rem !default;
+$pagination-color: $text-muted !default;
+$pagination-bg: transparent !default;
+$pagination-disabled-bg: transparent !default;
+$pagination-disabled-color: rgba($text-muted-light, .5) !default;
+
+//sidenav
+$sidenav-width: 16rem !default;
+$sidenav-folded-width: 4rem !default;
+$sidenav-bg: $white !default;
+$sidenav-border-color: $border-color !default;
+$sidenav-dark-bg: $dark !default;
+$sidenav-link-padding-x: .75rem !default;
+
+$navbar-padding-x: .75rem !default;
+$navbar-padding-y: .75rem !default;
+$navbar-nav-link-padding-x: .75rem !default;
+
+//steps
+$steps-border-width: 2px !default;
+$steps-color-inactive: #f3f5f5 !default;
+
+//spinner
+$spinner-width: 1.5rem !default;
+$spinner-height: 1.5rem !default;
+$spinner-border-width: 2px !default;
+$spinner-border-width-sm: 2px !default;
+
+//toasts
+$toast-border-color: $border-color !default;
+$toast-header-color: $text-muted !default;
+
+//other
+$yiq-contrasted-threshold: 200 !default;
+
+$card-border-color: $border-color !default;
+$list-group-border-color: $border-color !default;
+$list-group-action-color: inherit !default;
+
+$body-color: $dark !default;
+
+$input-disabled-bg: $gray-100 !default;
+$input-border-color: $border-color !default;
+$input-placeholder-color: $text-muted-light !default;
+
+$input-group-addon-bg: $gray-100 !default;
+$input-group-addon-color: $text-muted !default;
+
+$dropdown-border-color: $border-color !default;
+
+$card-border-radius: $border-radius !default;
+$input-border-radius: $border-radius !default;
+
+$form-feedback-icon-valid: str-replace(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='" + $green + "' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-check'><polyline points='20 6 9 17 4 12'></polyline></svg>"), "#", "%23") !default;
+$form-feedback-icon-invalid: str-replace(url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='" + $red + "' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-x'><line x1='18' y1='6' x2='6' y2='18'></line><line x1='6' y1='6' x2='18' y2='18'></line></svg>"), "#", "%23") !default;
+
+
+//Flags
+$generate-flags: true !default;
+$flag-sizes: (
+  "md": 2rem,
+  "lg": 3rem,
+  "xl": 4rem
+) !default;
+
+//Utilities
+$utilities: (
+  "opacity": (
+    property: letter-spacing,
+    class: tracking,
+    values: (
+      tight: -.05em,
+      normal: 0,
+      wide: .05em,
+    )
+  ),
+  "leading": (
+    property: line-height,
+    class: leading,
+    values: (
+      none: 1,
+      tight: 1.25,
+      normal: $line-height-base,
+      loose: 2 !important,
+    )
+  ),
+  "cursor": (
+    property: cursor,
+    class: cursor,
+    values: (
+      auto: auto,
+      pointer: pointer,
+      move: move,
+      not-allowed: not-allowed,
+      zoom-in: zoom-in,
+      zoom-out: zoom-out
+    )
+  )
+) !default;

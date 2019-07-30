@@ -24,9 +24,9 @@ mix.sass('sass/bundle.scss', 'css/admix.css');
 /*
 * Compilando o javascript
 * */
-mix.js('js/app.js', 'js/admix.js');
+// mix.js('js/app.js', 'js/admix.js');
 
 /*
 * Copiando arquivos locais
 * */
-mix.copyDirectory('images/local', '../src/resources/images');
+// mix.copyDirectory('images/local', '../src/resources/images');

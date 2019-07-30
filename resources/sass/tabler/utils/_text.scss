@@ -1,0 +1,77 @@
+// stylelint-disable declaration-no-important
+
+.text-inherit { color: inherit !important; }
+.text-default { color: $body-color !important; }
+
+.text-h6	{ font-size: $h6-font-size !important; }
+.text-h5	{ font-size: $h5-font-size !important; }
+.text-h4	{ font-size: $h4-font-size !important; }
+.text-h3	{ font-size: $h3-font-size !important; }
+.text-h2	{ font-size: $h2-font-size !important; }
+.text-h1	{ font-size: $h1-font-size !important; }
+
+.text-muted-light { color: $text-muted-light !important; }
+
+.text-subheader {
+  font-size: $h6-font-size;
+  font-weight: 600;
+  color: $text-muted;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.text-label {
+  font-size: $h6-font-size;
+  color: $text-muted;
+  text-transform: uppercase;
+}
+
+.leading-none	{ line-height: 1 !important; }
+.leading-tight	{ line-height: 1.25 !important; }
+.leading-normal	{ line-height: $line-height-base !important; }
+.leading-loose	{ line-height: 2 !important; }
+
+
+/**
+Antialiasing
+ */
+.antialiased {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.subpixel-antialiased {
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+}
+
+/**
+Markdown
+ */
+.markdown {
+  line-height: 1.66;
+
+  > :first-child {
+    margin-top: 0;
+  }
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+
+  > {
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      margin-top: 1.5em;
+      font-weight: 600;
+    }
+  }
+
+  table {
+    @extend .table, .table-bordered;
+  }
+}

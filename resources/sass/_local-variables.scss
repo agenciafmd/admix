@@ -8,7 +8,7 @@
 }
 
 // Tables
-$custom-select-indicator-color: $secondary;
+$custom-select-indicator-color: $gray-600;
 $custom-select-indicator: str-replace(url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 5'%3E%3Cpath fill='#{$custom-select-indicator-color}' d='M0 0L10 0L5 5L0 0'/%3E%3C/svg%3E"), "#", "%23");
 
 $container-max-widths: (

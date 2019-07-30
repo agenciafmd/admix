@@ -1,0 +1,63 @@
+@keyframes loader {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loader {
+  position: relative;
+  display: block;
+  width: $loader-size;
+  height: $loader-size;
+  color: $blue;
+  vertical-align: middle;
+
+  &::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    content: "";
+    border: 1px solid;
+    border-color: transparent;
+    border-top-color: currentColor;
+    border-left-color: currentColor;
+
+    border-radius: 50%;
+    animation: loader .6s linear;
+    animation-iteration-count: infinite;
+  }
+}
+
+/**
+Dimmer
+*/
+.dimmer {
+  position: relative;
+
+  .loader {
+    display: none;
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+  }
+
+  &.active {
+    .loader {
+      display: block;
+    }
+
+    .dimmer-content {
+      opacity: .1;
+      pointer-events: none;
+    }
+  }
+}
