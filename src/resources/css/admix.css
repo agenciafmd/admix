@@ -23814,3 +23814,18 @@ form.destroy button {
   border-bottom: 1px solid rgba(0, 0, 0, 0.09);
 }
 
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100%;
+}
+
+.page-single {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0;
+}
+

@@ -1,7 +1,7 @@
 <aside class="navbar navbar-side navbar-fixed js-sidebar navbar-dark">
     <div class="pb-3">
         <a class="navbar-brand text-inherit">
-            <img src="/images/fmd.svg" alt="" class="hide-navbar-folded navbar-brand-logo">
+            <img src="/images/fmd-negative.svg" alt="" class="hide-navbar-folded navbar-brand-logo">
         </a>
     </div>
     <div class="flex-fill">

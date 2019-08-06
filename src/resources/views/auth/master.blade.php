@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="{{ asset('css/admix.css') }}"/>
 
 </head>
-<body class="">
+<body class="h-100">
 <div class="page">
     @yield('content')
 </div>

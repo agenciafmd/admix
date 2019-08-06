@@ -1,11 +1,12 @@
 <header class="navbar navbar-expand-lg js-header">
-    <div class="container">
+    <div class="container-fluid p-0">
         <a class="navbar-toggler" data-toggle="modal" data-target="#aside">
             <span class="navbar-toggler-icon"></span>
         </a>
         <a href="{{ config('app.url') }}" target="_blank" class="navbar-brand text-inherit mr-md-3">
             <h1>{{ config('app.name') }}</h1>
         </a>
+{{--        TODO: filtar as models usando o spatie --}}
 {{--        <div class="w-auto flex-fill max-w-md ml-0 ml-md-8 mr-auto d-none d-lg-block">--}}
 {{--            <div class="input-icon">--}}
 {{--                    <span class="input-icon-addon">--}}

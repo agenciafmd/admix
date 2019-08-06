@@ -18,14 +18,8 @@
     <link rel="apple-touch-icon" href="/images/icons/icon-512x512.png">
 
     <!--cdn-->
-    {{--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"/>--}}
-    {{--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome-animation/0.1.0/font-awesome-animation.min.css"/>--}}
-    {{--<link rel="stylesheet"--}}
-    {{--href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.min.css"/>--}}
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&subset=latin-ext">
-    {{--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">--}}
-<!--css-->
     <link rel="stylesheet" href="{{ asset('css/admix.css') }}"/>
 
     @stack('styles')
@@ -41,26 +35,11 @@
 
         @include('agenciafmd/admix::partials.header')
 
-        <main class="container mt-4">
+        <main class="container-fluid mt-4">
             @yield('content')
         </main>
     </div>
 </div>
-
-{{--<script src="./libs/jquery/jquery.js"></script>--}}
-{{--<script src="./libs/bootstrap/js/bootstrap.bundle.min.js"></script>--}}
-
-{{--<script src="./libs/apexcharts/apexcharts.min.js"></script>--}}
-{{--<script src="./libs/peity/jquery.peity.min.js"></script>--}}
-{{--<script src="./libs/autosize/autosize.min.js"></script>--}}
-{{--<script src="./libs/imask/imask.min.js"></script>--}}
-{{--<script src="./libs/selectize/js/standalone/selectize.min.js"></script>--}}
-
-
-{{--<script src="./js/polyfill.js"></script>--}}
-{{--<script src="./js/tabler.js"></script>--}}
-{{--<script src="./js/charts.js"></script>--}}
-{{--<script src="./js/demo.js"></script>--}}
 
 <script>
     window.tabler = window.tabler || {};
@@ -85,8 +64,8 @@
 <script>document.body.style.display = 'block';</script>
 
 @stack('bottom')
+
 <script src="{{ asset('js/admix.js') }}"></script>
-{{--<script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>--}}
 
 @include('agenciafmd/flash::partials.message')
 

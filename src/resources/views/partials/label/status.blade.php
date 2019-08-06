@@ -1,5 +1,5 @@
 @if ($status == '1')
-    <span class="status-icon bg-success"></span> Ativo
+    <span class="badge mr-1 bg-success"></span> Ativo
 @else
-    <span class="status-icon bg-danger"></span> Inativo
+    <span class="badge mr-1 bg-danger"></span> Inativo
 @endif
