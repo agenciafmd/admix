@@ -250,10 +250,6 @@ form.destroy button {
 
 // fim file-input
 
-.brd-b {
-  border-bottom: 1px solid $border-color;
-}
-
 // centraliza o login
 .page {
   display: -ms-flexbox;
@@ -278,3 +274,15 @@ form.destroy button {
 }
 
 // fim centraliza o login
+
+.navbar-toggler-icon {
+  outline: unset;
+}
+
+.navbar-toggler-icon i {
+  font-size: 2rem;
+}
+
+.brd-b {
+  border-bottom: 1px solid $border-color;
+}

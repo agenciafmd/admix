@@ -23810,10 +23810,6 @@ form.destroy button {
   height: unset;
 }
 
-.brd-b {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.09);
-}
-
 .page {
   display: flex;
   flex-direction: column;
@@ -23827,5 +23823,17 @@ form.destroy button {
   align-items: center;
   justify-content: center;
   padding: 1rem 0;
+}
+
+.navbar-toggler-icon {
+  outline: unset;
+}
+
+.navbar-toggler-icon i {
+  font-size: 2rem;
+}
+
+.brd-b {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.09);
 }
 
