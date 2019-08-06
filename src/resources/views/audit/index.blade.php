@@ -17,17 +17,17 @@
 @section('filters')
     <h6 class="dropdown-header bg-gray-lightest p-2">Local</h6>
     <div class="p-2">
-        {{ Form::select('filter[auditable_type]', ['' => '-'] + audit_alias(), filter('event'), [
+        {{ Form::select('filter[auditable_type]', ['' => '-'] + audit_alias(), filter('auditable_type'), [
                 'class' => 'form-control form-control-sm'
             ]) }}
     </div>
     <h6 class="dropdown-header bg-gray-lightest p-2">Usuário</h6>
     <div class="p-2">
-        {{ Form::select('filter[user_id]', ['' => '-'] + $users->toSelect(), filter('event'), [
+        {{ Form::select('filter[user_id]', ['' => '-'] + $users->toSelect(), filter('user_id'), [
                 'class' => 'form-control form-control-sm'
             ]) }}
     </div>
-    <h6 class="dropdown-header bg-gray-lightest p-2">Grupo</h6>
+    <h6 class="dropdown-header bg-gray-lightest p-2">Evento</h6>
     <div class="p-2">
         {{ Form::select('filter[event]', ['' => '-'] + audit_events(), filter('event'), [
                 'class' => 'form-control form-control-sm'
