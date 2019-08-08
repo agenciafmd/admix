@@ -20,19 +20,24 @@ trait MediaTrait
             foreach ($request->get('media') as $file) {
                 $collection = $file['collection'];
                 $file = storage_path('admix/tmp') . "/{$file['name']}";
-                $model
-                    ->clearMediaCollection($collection)
-                    ->addMedia($file)
-                    ->withCustomProperties(['uuid' => uniqid()])
-                    ->toMediaCollection($collection);
+
+                $model->doUpload($file, $collection);
             }
         });
+    }
+
+    public function doUpload($file, $collection = 'image')
+    {
+        $this->clearMediaCollection($collection)
+            ->addMedia($file)
+            ->withCustomProperties(['uuid' => uniqid()])
+            ->toMediaCollection($collection);
     }
 
     public function registerMediaConversions(Media $media = null)
     {
         $modelName = strtolower(class_basename($this));
-        $fields = config("medialibrary.conversions.{$modelName}");
+        $fields = config("upload-configs.{$modelName}");
         foreach ($fields as $collection => $field) {
             $convertion = $this->addMediaConversion('thumb');
             if ($field['crop']) {

@@ -21,7 +21,7 @@ class User extends Authenticatable implements AuditableContract, HasMedia
     }
 
     protected $guarded = [
-        'password_confirmation', 'width', 'height', 'quality', 'crop', 'media'
+        'password_confirmation', 'media'
     ];
 
     protected $hidden = [

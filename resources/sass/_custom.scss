@@ -286,3 +286,52 @@ form.destroy button {
 .brd-b {
   border-bottom: 1px solid $border-color;
 }
+
+.btn-loading {
+  color: transparent !important;
+  pointer-events: none;
+  position: relative;
+}
+
+.btn-loading:after {
+  content: '';
+  -webkit-animation: loader 500ms infinite linear;
+  animation: loader 500ms infinite linear;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  border-right-color: transparent !important;
+  border-top-color: transparent !important;
+  display: block;
+  height: 1.4em;
+  width: 1.4em;
+  left: calc(50% - (1.4em / 2));
+  top: calc(50% - (1.4em / 2));
+  -webkit-transform-origin: center;
+  transform-origin: center;
+  position: absolute !important;
+}
+
+.btn-loading.btn-sm:after, .btn-group-sm > .btn-loading.btn:after, .dataTables_wrapper .dataTables_paginate .btn-group-sm > .btn-loading.paginate_button:after {
+  height: 1em;
+  width: 1em;
+  left: calc(50% - (1em / 2));
+  top: calc(50% - (1em / 2));
+}
+
+.btn-loading.btn-secondary:after, .dataTables_wrapper .dataTables_paginate .btn-loading.paginate_button:after {
+  border-color: #495057;
+}
+
+.collapsing {
+
+  min-height: 100%;
+  overflow: hidden;
+  width: 16rem;
+  transition: 0.3s width ease-in;
+
+  .width {
+    width: 14.5rem;
+    height: 100%;
+  }
+}
+

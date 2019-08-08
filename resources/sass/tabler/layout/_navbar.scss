@@ -226,7 +226,7 @@ Responsive utils
  */
 .navbar {
   &.navbar-side {
-    display: none;
+    //display: none;
 
     @include media-breakpoint-up(xl) {
       display: flex;

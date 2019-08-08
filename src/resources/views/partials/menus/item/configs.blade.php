@@ -12,7 +12,7 @@
             ) active @endif"
            href="#sidebar-settings" data-toggle="collapse" data-parent="#menu" role="button" aria-expanded="{{ (admix_is_active(route('admix.audit.index')) || admix_is_active(route('admix.postal.index'))) ? 'true' : 'false' }}">
             <span class="nav-icon">
-                <i class="icon fe fe-settings"></i>
+                <i class="icon fe-settings"></i>
             </span>
             <span class="nav-text">
                 Configurações
@@ -31,7 +31,7 @@
                         <a class="nav-link {{ admix_is_active(route('admix.audit.index')) ? 'active' : '' }}"
                            href="{{ route('admix.audit.index') }}">
                             <span class="nav-icon">
-                                <i class="icon fe fe-minus"></i>
+                                <i class="icon fe-minus"></i>
                             </span>
                             <span class="nav-text">
                                 Logs

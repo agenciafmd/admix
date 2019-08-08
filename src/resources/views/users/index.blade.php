@@ -87,7 +87,7 @@
                             <td class="w-1 text-center">
                                 <div class="item-action dropdown">
                                     <a href="#" data-toggle="dropdown" class="icon">
-                                        <i class="fe fe-more-vertical text-muted"></i>
+                                        <i class="icon fe-more-vertical text-muted"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         @include('agenciafmd/admix::partials.btn.show', ['url' => route('admix.users.show', $item->id)])

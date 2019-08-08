@@ -1,7 +1,7 @@
 <header class="navbar navbar-expand-lg js-header">
     <div class="container-fluid p-0">
         <a class="navbar-toggler" data-toggle="collapse" data-target="#aside">
-            <span class="navbar-toggler-icon"><i class="fe fe-menu"></i></span>
+            <span class="navbar-toggler-icon"><i class="icon fe-menu"></i></span>
         </a>
 
         <a href="{{ config('app.url') }}" target="_blank" class="navbar-brand text-inherit mr-md-3">
@@ -11,7 +11,7 @@
 {{--        <div class="w-auto flex-fill max-w-md ml-0 ml-md-8 mr-auto d-none d-lg-block">--}}
 {{--            <div class="input-icon">--}}
 {{--                    <span class="input-icon-addon">--}}
-{{--                        <i class="icon fe fe-search"></i>--}}
+{{--                        <i class="icon fe-search"></i>--}}
 {{--                    </span>--}}
 {{--                <input type="text" class="form-control form-control-light" placeholder="Search" tabindex="-1">--}}
 {{--            </div>--}}
@@ -30,14 +30,14 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                     <a class="dropdown-item" href="{{ route('admix.profile') }}">
-                        <i class="dropdown-icon fe fe-user"></i> Meus dados
+                        <i class="dropdown-icon icon fe-user"></i> Meus dados
                     </a>
 {{--                    <a class="dropdown-item" href="#">--}}
-{{--                        <i class="dropdown-icon fe fe-settings"></i> Configurações--}}
+{{--                        <i class="dropdown-icon icon fe-settings"></i> Configurações--}}
 {{--                    </a>--}}
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{{ route('admix.logout') }}">
-                        <i class="dropdown-icon fe fe-log-out"></i> Sair
+                        <i class="dropdown-icon icon fe-log-out"></i> Sair
                     </a>
                 </div>
             </li>

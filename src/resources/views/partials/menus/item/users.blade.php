@@ -3,7 +3,7 @@
         <a class="nav-link {{ (admix_is_active(route('admix.users.index')) || admix_is_active(route('admix.roles.index'))) ? 'active' : '' }}"
            href="#sidebar-user" data-toggle="collapse" data-parent="#menu" role="button" aria-expanded="{{ (admix_is_active(route('admix.users.index')) || admix_is_active(route('admix.roles.index'))) ? 'true' : 'false' }}">
             <span class="nav-icon">
-                <i class="icon fe fe-users"></i>
+                <i class="icon fe-users"></i>
             </span>
             <span class="nav-text">
                 Usuários
@@ -17,7 +17,7 @@
                         <a class="nav-link {{ admix_is_active(route('admix.users.index')) ? 'active' : '' }}"
                            href="{{ route('admix.users.index') }}">
                             <span class="nav-icon">
-                                <i class="icon fe fe-minus"></i>
+                                <i class="icon fe-minus"></i>
                             </span>
                             <span class="nav-text">
                                 Usuários
@@ -30,7 +30,7 @@
                         <a class="nav-link {{ admix_is_active(route('admix.roles.index')) ? 'active' : '' }}"
                            href="{{ route('admix.roles.index') }}">
                             <span class="nav-icon">
-                                <i class="icon fe fe-minus"></i>
+                                <i class="icon fe-minus"></i>
                             </span>
                             <span class="nav-text">
                                 Grupos

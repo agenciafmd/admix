@@ -1,3 +1,3 @@
 <a href="{{ $url }}" class="dropdown-item">
-    <i class="dropdown-icon fe fe-eye"></i> Visualizar
+    <i class="dropdown-icon icon fe-eye"></i> Visualizar
 </a>

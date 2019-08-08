@@ -170,7 +170,7 @@ if (!function_exists('db_to_date')) {
 if (!function_exists('filter')) {
     function filter($field)
     {
-        if(isset(request()->get('filter', [$field => ''])[$field])) {
+        if (isset(request()->get('filter', [$field => ''])[$field])) {
             return request()->get('filter', [$field => ''])[$field];
         }
     }
@@ -179,7 +179,7 @@ if (!function_exists('filter')) {
 if (!function_exists('column_sort')) {
     function column_sort($title, $field, $sort = true)
     {
-        if(!$sort) {
+        if (!$sort) {
             return '<span class="text-muted font-weight-bold">' . $title . '</span>';
         }
 
@@ -187,15 +187,15 @@ if (!function_exists('column_sort')) {
 
         if (substr($sort, 0, 1) == '-') {
             $param['sort'] = substr($sort, 1);
-            $icon = 'fe fe-chevron-up';
+            $icon = 'icon fe-chevron-up';
         } else {
             $param['sort'] = '-' . $sort;
-            $icon = 'fe fe-chevron-down';
+            $icon = 'icon fe-chevron-down';
         }
 
         if (($sort != $field) && ($sort != '-' . $field)) {
             $param['sort'] = $field;
-            $icon = 'fe fe-code';
+            $icon = 'icon fe-code';
         }
 
         $queryString = request()->getQueryString();
@@ -206,5 +206,20 @@ if (!function_exists('column_sort')) {
         $fullUrl = request()->url() . '?' . http_build_query($query + $param);
 
         return sprintf('<a href="%s" class="font-weight-bold text-muted text-decoration-none">%s</a> <i class="%s"></i>', $fullUrl, $title, $icon);
+    }
+}
+
+if (!function_exists('default_sort')) {
+    function default_sort($fields)
+    {
+        return collect($fields)->map(function ($value) {
+            $field = ltrim($value, '-');
+            $direction = ($value[0] == '-') ? 'desc' : 'asc';
+
+            return [
+                'field' => $field,
+                'direction' => $direction
+            ];
+        });
     }
 }

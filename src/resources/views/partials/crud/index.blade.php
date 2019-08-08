@@ -5,7 +5,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="dimmer">
-                    <div class="loader"></div>
+                    <div class="loader text-muted"></div>
                     <div class="dimmer-content">
                         <div class="card-header bg-gray-lightest">
                             <h3 class="card-title">@yield('title')</h3>
@@ -18,7 +18,7 @@
                                 <label class="d-none d-md-inline-flex mb-0 custom-control custom-checkbox custom-control-inline">
                                     <input type="checkbox" class="js-check-all custom-control-input">
                                     <span class="custom-control-label">
-                                        <i class="fe fe-chevron-down"></i>
+                                        <i class="icon fe-chevron-down"></i>
                                     </span>
                                 </label>
                             </div>
@@ -38,7 +38,7 @@
                                         <div class="dropdown">
                                             <button type="button" class="btn btn-secondary dropdown-toggle"
                                                     data-toggle="dropdown">
-                                                <i class="fe fe-filter"></i>
+                                                <i class="icon fe-filter"></i>
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-right p-0">
                                                 {{ Form::open(['url' => $route, 'method' => 'get']) }}
