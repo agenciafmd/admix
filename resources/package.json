@@ -28,6 +28,7 @@
         "bs4-toast": "^0.7.1",
         "feather-icons": "^4.22.1",
         "malihu-custom-scrollbar-plugin": "^3.1.5",
+        "medium-editor": "^5.23.3",
         "vue-router": "^3.0.2"
     }
 }

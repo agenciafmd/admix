@@ -5,15 +5,16 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
+import MediumEditor from 'medium-editor';
+window.MediumEditor = MediumEditor;
+
 require('./bootstrap');
 require('./vendor/bs4-toast/js/toast-alert.js');
-require('malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js');
 require('bootstrap-fileinput/js/plugins/sortable.min.js');
 require('bootstrap-fileinput/js/plugins/piexif.min.js');
 require('bootstrap-fileinput/js/fileinput.min.js');
 require('./vendor/bootstrap-fileinput/themes/fe/theme.js');
 require('bootstrap-fileinput/js/locales/pt-BR.js');
-//require('./vendor/bootstrap-fileinput/defaults.js');
 require('./admix');
 
 //window.Vue = require('vue');

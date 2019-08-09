@@ -91,7 +91,19 @@ $(function () {
 
     });
     /* fim botão de descrição do upload */
+
+    /* editor wysiwyg */
+    var editor = new MediumEditor('.js-wysiwyg', {
+        placeholder: false,
+    });
+    /* fim editor wysiwyg */
 });
+
+// window.onload = function(){
+//     var editor = new MediumEditor('.js-wysiwyg', {
+//         placeholder: false,
+//     });
+// }
 
 /* validação dos formulários */
 (function () {
