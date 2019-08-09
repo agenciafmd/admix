@@ -95,6 +95,11 @@ $(function () {
     /* editor wysiwyg */
     var editor = new MediumEditor('.js-wysiwyg', {
         placeholder: false,
+        anchor: {
+            placeholderText: 'ex. https://fmd.ag',
+            targetCheckbox: true,
+            targetCheckboxText: 'abrir em uma nova janela'
+        }
     });
     /* fim editor wysiwyg */
 });

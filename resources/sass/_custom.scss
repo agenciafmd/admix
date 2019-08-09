@@ -318,11 +318,44 @@ form.destroy button {
   top: calc(50% - (1em / 2));
 }
 
-.btn-loading.btn-secondary:after, .dataTables_wrapper .dataTables_paginate .btn-loading.paginate_button:after {
+.btn-loading.btn-secondary:after,
+.dataTables_wrapper .dataTables_paginate .btn-loading.paginate_button:after {
   border-color: #495057;
 }
 
 // medium-editor
+.medium-editor-toolbar,
+.medium-editor-toolbar-anchor-preview {
+  border-radius: 5px;
+}
+
+.medium-editor-anchor-preview a,
+.medium-editor-anchor-preview a:hover {
+  margin: 0;
+  color: #fafafa;
+}
+
+.medium-editor-toolbar-form .medium-editor-toolbar-input,
+.medium-editor-toolbar-form label {
+  width: 270px;
+}
+
+.medium-editor-toolbar-form .medium-editor-toolbar-form-row {
+  margin-left: 16px;
+}
+
+.medium-editor-toolbar-form a:hover {
+  color: #fafafa;
+}
+
+.medium-editor-element a,
+.medium-editor-element a:hover,
+.medium-editor-element a:visited,
+.medium-editor-element a:focus {
+  color: $input-color;
+  text-decoration: underline;
+}
+
 .medium-editor-element {
   overflow: auto;
   display: block;
