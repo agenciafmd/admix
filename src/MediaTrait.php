@@ -36,8 +36,7 @@ trait MediaTrait
 
     public function registerMediaConversions(Media $media = null)
     {
-        $modelName = strtolower(class_basename($this));
-        $fields = config("upload-configs.{$modelName}");
+        $fields = $this->fieldsToConvertion();
         foreach ($fields as $collection => $field) {
             $convertion = $this->addMediaConversion('thumb');
             if ($field['crop']) {
@@ -56,5 +55,12 @@ trait MediaTrait
                 ->withResponsiveImages()
                 ->keepOriginalImageFormat();
         }
+    }
+
+    public function fieldsToConvertion()
+    {
+        $modelName = strtolower(class_basename($this));
+
+        return config("upload-configs.{$modelName}");
     }
 }
