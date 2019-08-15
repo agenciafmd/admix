@@ -2,6 +2,8 @@
 
 namespace Agenciafmd\Admix\Providers;
 
+use Agenciafmd\Admix\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 
@@ -29,12 +31,13 @@ class AdmixServiceProvider extends ServiceProvider
             $this->setLocalFactories();
         }
 
-//        if ($this->app->environment(['local']) && !$this->app->runningInConsole()) {
-//            $user = new \Agenciafmd\Admix\User();
-//            $user->name = 'Anônimo';
-//            $user->email = 'anonimo@fmd.ag';
-//            \Illuminate\Support\Facades\Auth::guard('admix-web')->login($user);
-//        }
+        if ($this->app->environment(['local']) && !$this->app->runningInConsole()) {
+            $user = new User();
+            $user->name = 'Anônimo';
+            $user->email = 'anonimo@fmd.ag';
+
+            Auth::guard('admix-web')->login($user);
+        }
     }
 
     public function register()
