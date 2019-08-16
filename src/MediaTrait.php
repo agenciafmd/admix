@@ -30,6 +30,7 @@ trait MediaTrait
     {
         $this->clearMediaCollection($collection)
             ->addMedia($file)
+            ->withResponsiveImages()
             ->withCustomProperties(['uuid' => uniqid()])
             ->toMediaCollection($collection);
     }
