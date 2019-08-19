@@ -293,7 +293,8 @@ if (!function_exists('image_path_builder')) {
     function image_path_builder($image, $config)
     {
         $configPath = str_replace('=', '.', http_build_query($config, null, '/'));
+        $dirname = str_replace('/storage/', '/', dirname($image));
 
-        return trim(dirname($image) . '/' . $configPath . '/' . basename($image), './');
+        return trim($dirname . '/' . $configPath . '/' . basename($image), './');
     }
 }
