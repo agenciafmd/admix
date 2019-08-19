@@ -4,6 +4,7 @@ namespace Agenciafmd\Admix\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Spatie\MediaLibrary\Models\Media;
 use Collective\Html\FormFacade as Form;
 
@@ -23,7 +24,7 @@ class UploadController extends Controller
         @mkdir($tmpPath, 0775, true);
 
         $fileInfo = pathinfo($file->getClientOriginalName());
-        $fileName = str_slug(str_limit($fileInfo['filename'], 50, '') . '-' . rand(1, 999)) . '.' . $file->getClientOriginalExtension();
+        $fileName = Str::slug(Str::limit($fileInfo['filename'], 50, '') . '-' . rand(1, 999)) . '.' . $file->getClientOriginalExtension();
         $file->move($tmpPath, $fileName);
 
         return [

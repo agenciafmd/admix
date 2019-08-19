@@ -38,6 +38,9 @@ Route::prefix(config('admix.url'))->name('admix.')->middleware(['auth:admix-web'
 #    Route::post('sort', 'UploadController@sort')->name('upload.sort');
 });
 
+// resize route
+Route::get('/media/{path}', 'MediaController@show')->name('media.show')->where('path', '.*');
+
 /*
 |--------------------------------------------------------------------------
 | USERS Routes

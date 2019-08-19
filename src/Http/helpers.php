@@ -223,3 +223,77 @@ if (!function_exists('default_sort')) {
         });
     }
 }
+
+if (!function_exists('thumb')) {
+    function thumb($model, $name, $config = [], $placeholder = '/images/sem-imagem.jpg')
+    {
+        $default = [
+            'w' => 800,
+            'h' => 600,
+            'q' => 80,
+            'fit' => 'crop',
+            'fm' => 'webp',
+        ];
+
+        $mergedConfig = array_merge($default, $config);
+
+        $location = '/media/';
+        if ('cdn' === config('filesystems.default')) {
+            $location = config('filesystems.disks.cdn.url') . '/r/';
+        }
+
+        $image = $model->getFirstMedia($name) ?? null;
+
+        if (!$image) {
+            return (object)[
+                'original' => $placeholder,
+                'name' => $placeholder,
+                'meta' => 'sem imagem'
+            ];
+        }
+
+        return (object)[
+            'original' => $image->getUrl(),
+            'name' => $location . image_path_builder($image->getUrl(), $mergedConfig),
+            'meta' => optional($image->meta)[app()->getLocale()],
+        ];
+    }
+}
+
+if (!function_exists('image')) {
+    function image($model, $name, $placeholder = '/images/sem-imagem.jpg')
+    {
+        $image = optional($model->getFirstMedia($name))->name;
+        if (!$image) {
+            return $placeholder;
+        }
+
+        $location = '/media/';
+        if ('cdn' === config('filesystems.default')) {
+            $location = config('filesystems.disks.cdn.url') . '/';
+        }
+
+        return $location . $image;
+    }
+}
+
+if (!function_exists('media_file')) {
+    function media_file($model, $name)
+    {
+        $file = optional($model->getFirstMedia($name))->name;
+        if (!$file) {
+            return false;
+        }
+
+        return "/storage/{$file}";
+    }
+}
+
+if (!function_exists('image_path_builder')) {
+    function image_path_builder($image, $config)
+    {
+        $configPath = str_replace('=', '.', http_build_query($config, null, '/'));
+
+        return trim(dirname($image) . '/' . $configPath . '/' . basename($image), './');
+    }
+}
