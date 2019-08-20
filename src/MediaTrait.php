@@ -30,7 +30,6 @@ trait MediaTrait
     {
         $this->clearMediaCollection($collection)
             ->addMedia($file)
-            ->withResponsiveImages()
             ->withCustomProperties(['uuid' => uniqid()])
             ->toMediaCollection($collection);
     }
@@ -46,14 +45,15 @@ trait MediaTrait
                 $convertion->width($field['width'])
                     ->height($field['height']);
             }
-            if ($field['optimize']) {
-                $convertion->optimize();
-            }
-            if ($field['quality']) {
-                $convertion->quality($field['quality']);
+            if (!app()->environment('local')) {
+                if ($field['optimize']) {
+                    $convertion->optimize();
+                }
+                if ($field['quality']) {
+                    $convertion->quality($field['quality']);
+                }
             }
             $convertion->performOnCollections($collection)
-                ->withResponsiveImages()
                 ->keepOriginalImageFormat();
         }
     }

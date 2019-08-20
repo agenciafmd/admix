@@ -253,8 +253,8 @@ if (!function_exists('thumb')) {
         }
 
         return (object)[
-            'original' => $image->getUrl(),
-            'name' => $location . image_path_builder($image->getUrl(), $mergedConfig),
+            'original' => $image->getUrl('thumb'),
+            'name' => $location . image_path_builder($image->getUrl('thumb'), $mergedConfig),
             'meta' => optional($image->meta)[app()->getLocale()],
         ];
     }
