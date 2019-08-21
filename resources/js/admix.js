@@ -99,6 +99,60 @@ $(function () {
             placeholderText: 'ex. https://fmd.ag',
             targetCheckbox: true,
             targetCheckboxText: 'abrir em uma nova janela'
+        },
+        extensions: {
+            table: new MediumEditorTable({
+                aria: 'tabela',
+                contentDefault: '<i class="icon fe-grid"></i>',
+            })
+        },
+        toolbar: {
+            buttons: [
+                {
+                    name: 'bold',
+                    aria: 'negrito',
+                },
+                {
+                    name: 'italic',
+                    aria: 'itálico',
+                },
+                {
+                    name: 'underline',
+                    aria: 'sublinhado',
+                },
+                {
+                    name: 'strikethrough',
+                    aria: 'tachado',
+                },
+                {
+                    name: 'anchor',
+                    aria: 'link',
+                },
+                {
+                    name: 'h3',
+                    aria: 'cabeçalho tipo 3',
+                },
+                {
+                    name: 'h4',
+                    aria: 'cabeçalho tipo 4',
+                },
+                {
+                    name: 'quote',
+                    aria: 'citação',
+                },
+                {
+                    name: 'unorderedlist',
+                    aria: 'lista',
+                    contentDefault: '<i class="icon fe-list"></i>',
+                },
+                {
+                    name: 'orderedlist',
+                    aria: 'lista ordenada'
+                },
+                'table'
+            ],
+            static: true,
+            sticky: true
         }
     });
     /* fim editor wysiwyg */
