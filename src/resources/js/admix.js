@@ -218,7 +218,13 @@ $(function () {
       }, {
         name: 'anchor',
         aria: 'link'
-      }, 'h3', 'h4', {
+      }, {
+        name: 'h3',
+        aria: 'cabeçalho tipo 3'
+      }, {
+        name: 'h4',
+        aria: 'cabeçalho tipo 4'
+      }, {
         name: 'quote',
         aria: 'citação'
       }, {
@@ -228,9 +234,7 @@ $(function () {
       }, {
         name: 'orderedlist',
         aria: 'lista ordenada'
-      }, 'table'],
-      "static": true,
-      sticky: true
+      }, 'table']
     }
   });
   /* fim editor wysiwyg */

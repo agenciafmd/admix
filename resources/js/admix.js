@@ -150,9 +150,7 @@ $(function () {
                     aria: 'lista ordenada'
                 },
                 'table'
-            ],
-            static: true,
-            sticky: true
+            ]
         }
     });
     /* fim editor wysiwyg */
