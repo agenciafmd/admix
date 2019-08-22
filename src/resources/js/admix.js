@@ -237,6 +237,23 @@ $(function () {
       }, 'table']
     }
   });
+  var mediumEditorTableBuilderToolbar = $('.medium-editor-table-builder-toolbar');
+  mediumEditorTableBuilderToolbar.find('span')[0].innerHTML = 'Linha';
+  $(mediumEditorTableBuilderToolbar.find('button')[0]).attr('title', 'Adicionar uma linha antes');
+  $(mediumEditorTableBuilderToolbar.find('button')[0]).find('i').removeClass().addClass('icon fe-arrow-up');
+  $(mediumEditorTableBuilderToolbar.find('button')[1]).attr('title', 'Adicionar uma linha depois');
+  $(mediumEditorTableBuilderToolbar.find('button')[1]).find('i').removeClass().addClass('icon fe-arrow-down');
+  $(mediumEditorTableBuilderToolbar.find('button')[2]).attr('title', 'Remover linha');
+  $(mediumEditorTableBuilderToolbar.find('button')[2]).find('i').removeClass().addClass('icon fe-x');
+  mediumEditorTableBuilderToolbar.find('span')[1].innerHTML = 'Coluna';
+  $(mediumEditorTableBuilderToolbar.find('button')[3]).attr('title', 'Adicionar uma linha antes');
+  $(mediumEditorTableBuilderToolbar.find('button')[3]).find('i').removeClass().addClass('icon fe-arrow-left');
+  $(mediumEditorTableBuilderToolbar.find('button')[4]).attr('title', 'Adicionar uma linha depois');
+  $(mediumEditorTableBuilderToolbar.find('button')[4]).find('i').removeClass().addClass('icon fe-arrow-right');
+  $(mediumEditorTableBuilderToolbar.find('button')[5]).attr('title', 'Remover linha');
+  $(mediumEditorTableBuilderToolbar.find('button')[5]).find('i').removeClass().addClass('icon fe-x');
+  $(mediumEditorTableBuilderToolbar.find('button')[6]).attr('title', 'Remover tabela');
+  $(mediumEditorTableBuilderToolbar.find('button')[6]).find('i').removeClass().addClass('icon fe-trash');
   /* fim editor wysiwyg */
 }); // window.onload = function(){
 //     var editor = new MediumEditor('.js-wysiwyg', {
