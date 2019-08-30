@@ -45,6 +45,7 @@
 
         html += '<strong class="mr-auto">' + title + '</strong>';
         html += '<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">';
+        html += '<span aria-hidden="true">×</span>';
         html += '</button>';
         html += '</h4>';
 

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\Models\Media;
 use Collective\Html\FormFacade as Form;
+use Illuminate\Support\Facades\Storage;
 
 class UploadController extends Controller
 {
@@ -14,7 +15,7 @@ class UploadController extends Controller
     {
         if (!$request->hasFile('file')) {
             return [
-                'status' => 'error'
+                'status' => 'error',
             ];
         }
 
@@ -31,7 +32,7 @@ class UploadController extends Controller
             'status' => 'success',
             'name' => $fileName,
             'collection' => $request->get('collection'),
-            'uuid' => uniqid()
+            'uuid' => uniqid(),
         ];
     }
 
@@ -44,7 +45,7 @@ class UploadController extends Controller
         }
 
         return [
-            'message' => 'A imagem não pode ser apagada'
+            'message' => 'A imagem não pode ser apagada',
         ];
     }
 
@@ -70,7 +71,8 @@ class UploadController extends Controller
 
     public function metaPost($uuid)
     {
-        $media = Media::where('custom_properties->uuid', $uuid)->first();
+        $media = Media::where('custom_properties->uuid', $uuid)
+            ->first();
         $media->setCustomProperty('meta', request()->get('meta', ''));
         $media->save();
     }
@@ -89,4 +91,33 @@ class UploadController extends Controller
 //        Media::first()
 //            ->touch();
 //    }
+
+    public function medium()
+    {
+        $file = request()->get('file');
+
+        $fileinfo = explode(";base64,", $file);
+        $extention = strtolower(str_replace('data:image/', '', $fileinfo[0]));
+
+        if (!in_array($extention, $this->allowedExtentions())) {
+            return '';
+        }
+
+        $file = str_replace(' ', '+', $fileinfo[1]);
+        $filename = 'editor/' . date('Y/m/') . time() . '.' . $extention;
+
+        Storage::put($filename, base64_decode($file), 'public');
+
+        return Storage::url($filename);
+    }
+
+    private function allowedExtentions()
+    {
+        return [
+            'png',
+            'jpg',
+            'jpeg',
+            'webpg',
+        ];
+    }
 }
