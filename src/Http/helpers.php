@@ -263,17 +263,26 @@ if (!function_exists('thumb')) {
 if (!function_exists('image')) {
     function image($model, $name, $placeholder = '/images/sem-imagem.jpg')
     {
-        $image = optional($model->getFirstMedia($name))->name;
-        if (!$image) {
-            return $placeholder;
-        }
-
         $location = '/media/';
-        if ('cdn' === config('filesystems.default')) {
-            $location = config('filesystems.disks.cdn.url') . '/';
+        if (config('filesystems.default') === 'cdn') {
+            $location = config('filesystems.disks.cdn.url');
         }
 
-        return $location . $image;
+        $image = $model->getFirstMedia($name) ?? null;
+
+        if (!$image) {
+            return (object)[
+                'original' => $placeholder,
+                'name' => $placeholder,
+                'meta' => 'sem imagem'
+            ];
+        }
+
+        return (object)[
+            'original' => $image->getUrl(),
+            'name' => $image->getUrl('thumb'),
+            'meta' => optional($image->meta)[app()->getLocale()],
+        ];
     }
 }
 

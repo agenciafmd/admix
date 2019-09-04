@@ -6,6 +6,7 @@ use Agenciafmd\Admix\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Blade;
 
 class AdmixServiceProvider extends ServiceProvider
 {
@@ -25,6 +26,8 @@ class AdmixServiceProvider extends ServiceProvider
 
         $this->loadTranslations();
 
+        $this->loadBladeDirectives();
+
         $this->publish();
 
         if ($this->app->environment(['local', 'testing']) && $this->app->runningInConsole()) {
@@ -36,7 +39,8 @@ class AdmixServiceProvider extends ServiceProvider
             $user->name = 'Anônimo';
             $user->email = 'anonimo@fmd.ag';
 
-            Auth::guard('admix-web')->login($user);
+            Auth::guard('admix-web')
+                ->login($user);
         }
     }
 
@@ -70,20 +74,23 @@ class AdmixServiceProvider extends ServiceProvider
 
     protected function setMenu()
     {
-        $this->app->make('admix-menu')->push((object) [
-            'view' => 'agenciafmd/admix::partials.menus.item.dashboard',
-            'ord' => 1,
-        ]);
+        $this->app->make('admix-menu')
+            ->push((object)[
+                'view' => 'agenciafmd/admix::partials.menus.item.dashboard',
+                'ord' => 1,
+            ]);
 
-        $this->app->make('admix-menu')->push((object) [
-            'view' => 'agenciafmd/admix::partials.menus.item.users',
-            'ord' => 2,
-        ]);
+        $this->app->make('admix-menu')
+            ->push((object)[
+                'view' => 'agenciafmd/admix::partials.menus.item.users',
+                'ord' => 2,
+            ]);
 
-        $this->app->make('admix-menu')->push((object) [
-            'view' => 'agenciafmd/admix::partials.menus.item.configs',
-            'ord' => 3,
-        ]);
+        $this->app->make('admix-menu')
+            ->push((object)[
+                'view' => 'agenciafmd/admix::partials.menus.item.configs',
+                'ord' => 3,
+            ]);
     }
 
     protected function setMiddlewares()
@@ -129,6 +136,13 @@ class AdmixServiceProvider extends ServiceProvider
         config(['auth.guards' => array_merge(config('admix.auth.guards'), config('auth.guards'))]);
         config(['auth.providers' => array_merge(config('admix.auth.providers'), config('auth.providers'))]);
         config(['auth.passwords' => array_merge(config('admix.auth.passwords'), config('auth.passwords'))]);
+    }
+
+    protected function loadBladeDirectives()
+    {
+        Blade::directive('render', function ($component) {
+            return "<?php echo (app($component))->toHtml(); ?>";
+        });
     }
 
     protected function publish()
