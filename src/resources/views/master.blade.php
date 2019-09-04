@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ app()->getLocale() }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,8 +14,8 @@
     <meta name="upload-meta" content="{{ route('admix.upload.meta', ['key' => '']) }}">
     <meta name="upload-destroy" content="{{ route('admix.upload.destroy') }}">
 
-    <link rel="shortcut icon" href="/images/icons/favicon.ico">
-    <link rel="apple-touch-icon" href="/images/icons/icon-512x512.png">
+    <link rel="shortcut icon" href="/images/favicon.png">
+    <link rel="apple-touch-icon" href="/images/favicon.png">
 
     <!--cdn-->
     <link rel="stylesheet"
