@@ -1,4 +1,12 @@
 $(function () {
+    /* select 2 */
+    var select2 = $('.js-select2').select2({
+        language: "pt-BR",
+        width: '100%',
+    });
+    select2.data('select2').$container.addClass('custom-select');
+    /* fim select 2 */
+
     /* confirmação dos botões de remover */
     $('.js-delete').on('click', function (event) {
         event.preventDefault();
@@ -255,7 +263,7 @@ $(function () {
         };
 
         fileReader.readAsDataURL(file);
-    }
+    };
 
     var mediumEditorTableBuilderToolbar = $('.medium-editor-table-builder-toolbar');
     if (mediumEditorTableBuilderToolbar.length > 0) {
@@ -279,12 +287,6 @@ $(function () {
     }
     /* fim editor wysiwyg */
 });
-
-// window.onload = function(){
-//     var editor = new MediumEditor('.js-wysiwyg', {
-//         placeholder: false,
-//     });
-// }
 
 /* validação dos formulários */
 (function () {

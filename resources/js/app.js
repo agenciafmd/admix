@@ -6,6 +6,7 @@
  */
 
 import MediumEditor from 'medium-editor';
+
 window.MediumEditor = MediumEditor;
 
 // import MediumEditorTable from 'medium-editor-table';
@@ -18,7 +19,8 @@ require('bootstrap-fileinput/js/plugins/piexif.min.js');
 require('bootstrap-fileinput/js/fileinput.min.js');
 require('./vendor/bootstrap-fileinput/themes/fe/theme.js');
 require('bootstrap-fileinput/js/locales/pt-BR.js');
-// require('medium-editor-tables/dist/js/medium-editor-tables.min.js');
+require('select2/dist/js/select2.min.js');
+require('select2/dist/js/i18n/pt-BR.js');
 require('./admix');
 
 //window.Vue = require('vue');

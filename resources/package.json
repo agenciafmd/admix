@@ -30,6 +30,7 @@
         "malihu-custom-scrollbar-plugin": "^3.1.5",
         "medium-editor": "^5.23.3",
         "medium-editor-tables": "^0.6.1",
+      "select2": "^4.0.10",
         "vue-router": "^3.0.2"
     }
 }

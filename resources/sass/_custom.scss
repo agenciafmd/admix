@@ -388,6 +388,7 @@ form.destroy button {
     color: $input-placeholder-color;
     opacity: 1;
   }
+
   &:disabled,
   &[readonly] {
     background-color: $input-disabled-bg;
@@ -399,7 +400,89 @@ form.destroy button {
 .medium-editor-toolbar li button:hover {
   color: #fafafa;
 }
+
 // fim medium-editor
+
+// select2
+.select2-container--default .select2-selection--single .select2-selection__rendered,
+.select2-container--default .select2-selection--multiple .select2-selection__rendered {
+  line-height: unset;
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered,
+.select2-container .select2-selection--multiple .select2-selection__rendered {
+  padding-left: unset;
+  padding-right: unset;
+  height: unset;
+}
+
+.select2-container--default .select2-selection--single:focus,
+.select2-container--default .select2-selection--multiple:focus,
+.select2-container .select2-selection--single .select2-selection__rendered:focus,
+.select2-container .select2-selection--multiple .select2-selection__rendered:focus,
+.select2-container--default .select2-search--dropdown .select2-search__field:focus {
+  outline: none;
+}
+
+.select2-container .select2-selection--single {
+  height: unset;
+}
+
+.select2-container .select2-selection--multiple {
+  min-height: unset;
+  height: 24px;
+}
+
+.select2-container--default .select2-selection--multiple,
+.select2-container--default .select2-selection--single {
+  border: unset;
+  border-radius: unset;
+}
+
+.select2-dropdown {
+  border: 1px solid $border-color;
+}
+
+.select2-container--default .select2-search--dropdown .select2-search__field {
+  border: 1px solid $border-color;
+}
+
+.select2-container--open {
+  border-bottom: 0;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.select2-selection__arrow {
+  display: none;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+  margin-top: 0;
+  border-radius: $border-radius;
+}
+
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+  border: unset;
+}
+
+.select2-container .select2-search--inline .select2-search__field {
+  margin-top: 0;
+}
+
+.select2-container {
+  display: inline-table;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__rendered {
+  margin-top: -4px;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__rendered li {
+  margin-top: 5px;
+}
+
+// fim select2
 
 .collapsing {
 
