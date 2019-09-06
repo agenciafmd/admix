@@ -1,10 +1,15 @@
 $(function () {
     /* select 2 */
-    var select2 = $('.js-select2').select2({
-        language: "pt-BR",
-        width: '100%',
-    });
-    select2.data('select2').$container.addClass('custom-select');
+    var select2Item = $('.js-select2');
+    if (select2Item.length > 0) {
+
+        var select2 = select2Item.select2({
+            language: "pt-BR",
+            width: '100%',
+        });
+        select2Item.data('select2').$container.addClass('custom-select');
+    }
+
     /* fim select 2 */
 
     /* confirmação dos botões de remover */
@@ -286,6 +291,51 @@ $(function () {
         $(mediumEditorTableBuilderToolbar.find('button')[6]).find('i').removeClass().addClass('icon fe-trash');
     }
     /* fim editor wysiwyg */
+
+    /* ativa backdrop do menu mobile*/
+    //menu project and filters
+    let toggleBackdrop = $('.js-toggle-backdrop');
+    let backdropCollapse = $('.backdrop-collapse');
+
+    //add backdrop when have action collapse show.
+    toggleBackdrop.on('click', function (e) {
+
+        e.preventDefault();
+
+        if ($('.navbar.collapse').has('show')) {
+
+            showBackdrop();
+        }
+    });
+
+    function showBackdrop() {
+
+        backdropCollapse
+            .fadeIn({
+                    duration: 160,
+                    easing: 'linear',
+                },
+            );
+    }
+
+    function hideBackdrop() {
+
+        backdropCollapse
+            .fadeOut({
+                    duration: 160,
+                    easing: 'linear',
+                },
+            );
+    }
+
+    //trigger class to remove collapse
+    backdropCollapse.on('click', function (e) {
+
+        $('.navbar.collapse').collapse('hide');
+        hideBackdrop();
+    });
+
+    /* fim ativa backdrop do menu mobile*/
 });
 
 /* validação dos formulários */

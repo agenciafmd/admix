@@ -484,15 +484,31 @@ form.destroy button {
 
 // fim select2
 
+//menu mobile
 .collapsing {
 
   min-height: 100%;
   overflow: hidden;
   width: 16rem;
-  transition: 0.3s width ease-in;
+  transition: 0.15s width linear;
 
   .width {
     width: 14.5rem;
     height: 100%;
   }
 }
+
+.backdrop-collapse {
+  height: 100vh;
+  width: 100%;
+  z-index: 7;
+  position: fixed;
+  transition: width 0.15s;
+  top: 0;
+  left: 0;
+  display: none;
+  opacity: 0.5;
+  backdrop-filter: blur(2px);
+  background: rgba(0, 0, 0, 0.4);
+}
+//fim menu mobile

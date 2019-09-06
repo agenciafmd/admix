@@ -1,7 +1,7 @@
 <header class="navbar navbar-expand-lg js-header">
     <div class="container-fluid p-0">
         <a class="navbar-toggler" data-toggle="collapse" data-target="#aside">
-            <span class="navbar-toggler-icon"><i class="icon fe-menu"></i></span>
+            <span class="navbar-toggler-icon js-toggle-backdrop"><i class="icon fe-menu"></i></span>
         </a>
 
         <a href="{{ config('app.url') }}" target="_blank" class="navbar-brand text-inherit mr-md-3">
