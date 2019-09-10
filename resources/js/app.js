@@ -19,7 +19,7 @@ require('bootstrap-fileinput/js/plugins/piexif.min.js');
 require('bootstrap-fileinput/js/fileinput.min.js');
 require('./vendor/bootstrap-fileinput/themes/fe/theme.js');
 require('bootstrap-fileinput/js/locales/pt-BR.js');
-require('select2/dist/js/select2.min.js');
+require('select2/dist/js/select2.full.min.js');
 require('select2/dist/js/i18n/pt-BR.js');
 require('./admix');
 

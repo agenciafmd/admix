@@ -1,15 +1,15 @@
 $(function () {
     /* select 2 */
-    var select2Item = $('.js-select2');
-    if (select2Item.length > 0) {
-
-        var select2 = select2Item.select2({
-            language: "pt-BR",
+    var select2Selector = $('.js-select2');
+    if (select2Selector.length > 0) {
+        var select2Element = select2Selector.select2({
+            language: 'pt-BR',
             width: '100%',
         });
-        select2Item.data('select2').$container.addClass('custom-select');
+        select2Element.each(function (index) {
+            $(this).data('select2').$container.addClass('custom-select');
+        });
     }
-
     /* fim select 2 */
 
     /* confirmação dos botões de remover */
@@ -225,7 +225,7 @@ $(function () {
 
                 $.toast({
                     title: 'Atenção',
-                    content: 'A imagem deve ter no máximo ' + (maxFileSize/1000) + 'kb',
+                    content: 'A imagem deve ter no máximo ' + (maxFileSize / 1000) + 'kb',
                     type: 'danger',
                     delay: 3000,
                     pause_on_hover: true
@@ -247,7 +247,7 @@ $(function () {
                 _token: $('meta[name="csrf-token"]').attr('content'),
                 file: fileReader.result
             }, function (result) {
-                if(!result) {
+                if (!result) {
                     $.toast({
                         title: 'Atenção',
                         content: 'Falha no envio da imagem',
@@ -255,8 +255,7 @@ $(function () {
                         delay: 3000,
                         pause_on_hover: true
                     });
-                }
-                else {
+                } else {
                     const previewElement = document.createElement('img');
                     previewElement.setAttribute('class', 'medium-editor-image')
                     // previewElement.src = fileReader.result;
