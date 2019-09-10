@@ -1,4 +1,4 @@
-<header class="navbar navbar-expand-lg js-header">
+<header class="navbar navbar-expand-xl js-header">
     <div class="container-fluid p-0">
         <a class="navbar-toggler" data-toggle="collapse" data-target="#aside">
             <span class="navbar-toggler-icon js-toggle-backdrop"><i class="icon fe-menu"></i></span>

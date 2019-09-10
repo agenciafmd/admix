@@ -21153,6 +21153,27 @@ form.destroy button {
   height: unset;
 }
 
+.file-no-browse {
+    position: absolute;
+    left: 0;
+}
+
+.file-drop-zone-title {
+    font-size: 0.9em;
+}
+
+@media (min-width: 576px) {
+    .file-drop-zone-title {
+        font-size: 1.3em;
+    }
+}
+
+@media (min-width: 768px) {
+    .file-drop-zone-title {
+        font-size: 1.6em;
+    }
+}
+
 .page {
   display: flex;
   flex-direction: column;

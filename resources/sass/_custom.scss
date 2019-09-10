@@ -248,6 +248,22 @@ form.destroy button {
   height: unset;
 }
 
+.file-no-browse {
+  position: absolute;
+  left: 0;
+}
+
+.file-drop-zone-title {
+  font-size: 0.9em;
+
+  @include media-breakpoint-up(sm) {
+    font-size: 1.3em;
+  }
+
+  @include media-breakpoint-up(md) {
+    font-size: 1.6em;
+  }
+}
 // fim file-input
 
 // centraliza o login
