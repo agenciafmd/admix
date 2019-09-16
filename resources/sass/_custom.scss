@@ -222,6 +222,11 @@ form.destroy button {
   padding: 0;
 }
 
+.multiple-upload .krajee-default.file-preview-frame {
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+
 .krajee-default.file-preview-frame {
   margin: unset;
   box-shadow: unset;
@@ -264,6 +269,15 @@ form.destroy button {
     font-size: 1.6em;
   }
 }
+
+.file-zoom-dialog .btn-navigate {
+  padding: unset;
+  color: unset;
+  font-size: 2em;
+}
+
+.sing
+
 // fim file-input
 
 // centraliza o login
@@ -527,4 +541,5 @@ form.destroy button {
   backdrop-filter: blur(2px);
   background: rgba(0, 0, 0, 0.4);
 }
+
 //fim menu mobile

@@ -72,8 +72,8 @@
             indicatorPaused: '<i class="icon fe-pause text-info"></i>'
         },
         previewZoomButtonIcons: {
-            prev: '<i class="icon fe-caret-left fe-lg"></i>',
-            next: '<i class="icon fe-caret-right fe-lg"></i>',
+            prev: '<i class="icon fa-chevron-left fe-lg"></i>',
+            next: '<i class="icon fe-chevron-right fe-lg"></i>',
             toggleheader: '<i class="icon fe-fw fe-minimize-2"></i>',
             fullscreen: '<i class="icon fe-fw fe-maximize-2"></i>',
             borderless: '<i class="icon fe-fw fe-external-link"></i>',

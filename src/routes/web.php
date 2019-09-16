@@ -35,7 +35,8 @@ Route::prefix(config('admix.url'))->name('admix.')->middleware(['auth:admix-web'
     Route::post('destroy', 'UploadController@destroy')->name('upload.destroy');
     Route::get('meta/{uuid}', 'UploadController@metaForm')->name('upload.meta');
     Route::post('meta/{uuid}', 'UploadController@metaPost')->name('upload.meta.post');
-#    Route::post('sort', 'UploadController@sort')->name('upload.sort');
+    Route::post('sort', 'UploadController@sort')
+        ->name('upload.sort');
     Route::post('medium', 'UploadController@medium')->name('upload.medium');
 });
 

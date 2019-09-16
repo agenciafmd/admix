@@ -3,11 +3,11 @@
 namespace Agenciafmd\Admix\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Collective\Html\FormFacade as Form;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Spatie\MediaLibrary\Models\Media;
-use Collective\Html\FormFacade as Form;
-use Illuminate\Support\Facades\Storage;
 
 class UploadController extends Controller
 {
@@ -19,21 +19,32 @@ class UploadController extends Controller
             ];
         }
 
-        $file = $request->file('file');
+        $files = $request->file('file');
+
+        if (!is_array($files)) {
+            $files = [
+                $files,
+            ];
+        }
 
         $tmpPath = storage_path('admix/tmp');
         @mkdir($tmpPath, 0775, true);
 
-        $fileInfo = pathinfo($file->getClientOriginalName());
-        $fileName = Str::slug(Str::limit($fileInfo['filename'], 50, '') . '-' . rand(1, 999)) . '.' . $file->getClientOriginalExtension();
-        $file->move($tmpPath, $fileName);
+        $response = [];
+        foreach ($files as $file) {
+            $fileInfo = pathinfo($file->getClientOriginalName());
+            $fileName = Str::slug(Str::limit($fileInfo['filename'], 50, '') . '-' . rand(1, 999)) . '.' . $file->getClientOriginalExtension();
+            $file->move($tmpPath, $fileName);
 
-        return [
-            'status' => 'success',
-            'name' => $fileName,
-            'collection' => $request->get('collection'),
-            'uuid' => uniqid(),
-        ];
+            $response[] = [
+                'status' => 'success',
+                'name' => $fileName,
+                'collection' => $request->get('collection'),
+                'uuid' => uniqid(),
+            ];
+        }
+
+        return $response;
     }
 
     public function destroy(Request $request)
@@ -77,20 +88,17 @@ class UploadController extends Controller
         $media->save();
     }
 
-//    public function sort()
-//    {
-//        $images = request('stack');
-//
-//        foreach ($images as $order => $image) {
-//            Media::where('uuid', $image['key'])
-//                ->update([
-//                    'order' => $order,
-//                ]);
-//        }
-//
-//        Media::first()
-//            ->touch();
-//    }
+    public function sort()
+    {
+        $images = request('stack');
+
+        foreach ($images as $order => $image) {
+            Media::whereJsonContains('custom_properties->uuid', $image['key'])
+                ->update([
+                    'order_column' => $order,
+                ]);
+        }
+    }
 
     public function medium()
     {

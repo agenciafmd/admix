@@ -364,3 +364,57 @@ $(function () {
 })();
 /* fim validação dos formulários */
 
+/* mascaras */
+(function () {
+    function inputHandler(masks, max, event) {
+        var c = event.target;
+        var v = c.value.replace(/\D/g, '');
+        var m = c.value.length > max ? 1 : 0;
+        VMasker(c).unMask();
+        VMasker(c).maskPattern(masks[m]);
+        c.value = VMasker.toPattern(v, masks[m]);
+    }
+
+    if (document.querySelectorAll('.mask-phone').length > 0) {
+        var telMask = ['(99) 9999-99999', '(99) 99999-9999'];
+        var tel = document.querySelectorAll('.mask-phone');
+        VMasker(tel).maskPattern(telMask[0]);
+        tel.addEventListener('input', inputHandler.bind(undefined, telMask, 14), false);
+    }
+
+    if (document.querySelectorAll('.mask-cpfcnpj').length > 0) {
+        var docMask = ['999.999.999-999', '99.999.999/9999-99'];
+        var doc = document.querySelectorAll('.mask-cpfcnpj');
+        VMasker(doc).maskPattern(docMask[0]);
+        doc.addEventListener('input', inputHandler.bind(undefined, docMask, 14), false);
+    }
+
+    if (document.querySelectorAll('.mask-date').length > 0) {
+        VMasker(document.querySelectorAll('.mask-date')).maskPattern('99/99/9999');
+    }
+    if (document.querySelectorAll('.mask-zipcode').length > 0) {
+        VMasker(document.querySelectorAll('.mask-zipcode')).maskPattern('99999-999');
+    }
+
+    if (document.querySelectorAll('.mask-cpf').length > 0) {
+        VMasker(document.querySelectorAll('.mask-cpf')).maskPattern('999.999.999-99');
+    }
+
+    if (document.querySelectorAll('.mask-cnpj').length > 0) {
+        VMasker(document.querySelectorAll('.mask-cnpj')).maskPattern('99.999.999/9999-99');
+    }
+
+    if (document.querySelectorAll('.mask-hour').length > 0) {
+        VMasker(document.querySelectorAll('.mask-hour')).maskPattern('99:99');
+    }
+
+    if (document.querySelectorAll('.mask-money').length > 0) {
+        VMasker(document.querySelectorAll('.mask-money')).maskMoney({
+            precision: 2,
+            separator: ',',
+            delimiter: '.',
+            unit: 'R$',
+        });
+    }
+})();
+/* fim mascaras */

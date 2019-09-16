@@ -2,7 +2,6 @@
 
 namespace Agenciafmd\Admix;
 
-use Illuminate\Support\Facades\Artisan;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\Models\Media;
 
@@ -17,11 +16,19 @@ trait MediaTrait
                 return false;
             }
 
-            foreach ($request->get('media') as $file) {
-                $collection = $file['collection'];
-                $file = storage_path('admix/tmp') . "/{$file['name']}";
+            foreach ($request->get('media') as $media) {
+                if (is_array($media['collection'])) {
+                    $collection = reset($media['collection']);
+                    $file = storage_path('admix/tmp') . "/" . reset($media['name']);
 
-                $model->doUpload($file, $collection);
+                    $model->doUploadGallery($file, $collection);
+
+                } else {
+                    $collection = $media['collection'];
+                    $file = storage_path('admix/tmp') . "/{$media['name']}";
+
+                    $model->doUpload($file, $collection);
+                }
             }
         });
     }
@@ -30,6 +37,13 @@ trait MediaTrait
     {
         $this->clearMediaCollection($collection)
             ->addMedia($file)
+            ->withCustomProperties(['uuid' => uniqid()])
+            ->toMediaCollection($collection);
+    }
+
+    public function doUploadGallery($file, $collection = 'image')
+    {
+        $this->addMedia($file)
             ->withCustomProperties(['uuid' => uniqid()])
             ->toMediaCollection($collection);
     }
