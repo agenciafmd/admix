@@ -21,7 +21,7 @@ trait MediaTrait
                     $collection = reset($media['collection']);
                     $file = storage_path('admix/tmp') . "/" . reset($media['name']);
 
-                    $model->doUploadGallery($file, $collection);
+                    $model->doUploadMultiple($file, $collection);
 
                 } else {
                     $collection = $media['collection'];
@@ -41,7 +41,7 @@ trait MediaTrait
             ->toMediaCollection($collection);
     }
 
-    public function doUploadGallery($file, $collection = 'image')
+    public function doUploadMultiple($file, $collection = 'image')
     {
         $this->addMedia($file)
             ->withCustomProperties(['uuid' => uniqid()])

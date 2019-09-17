@@ -79,12 +79,56 @@
             borderless: '<i class="icon fe-fw fe-external-link"></i>',
             close: '<i class="icon fe-fw fe-x"></i>'
         },
-        previewFileIcon: '<i class="icon fe-file"></i>',
         browseIcon: '<i class="icon fe-folder-open"></i>',
         removeIcon: '<i class="icon fe-trash"></i>',
         cancelIcon: '<i class="icon fe-ban"></i>',
         pauseIcon: '<i class="icon fe-pause"></i>',
         uploadIcon: '<i class="icon fe-upload"></i>',
-        msgValidationErrorIcon: '<i class="icon fe-exclamation-circle"></i> '
+        msgValidationErrorIcon: '<i class="icon fe-exclamation-circle"></i> ',
+        preferIconicPreview: false,
+        previewFileIcon: '<i class="icon fe-file"></i>',
+        // previewFileIconSettings: {
+        //     'doc': '<i class="fa fa-file-word-o"></i>',
+        //     'xls': '<i class="fa fa-file-excel-o"></i>',
+        //     'ppt': '<i class="fa fa-file-powerpoint-o"></i>',
+        //     'pdf': '<i class="fa fa-file-pdf-o"></i>',
+        //     'zip': '<i class="fa fa-file-archive-o"></i>',
+        //     'htm': '<i class="fa fa-file-code-o"></i>',
+        //     'txt': '<i class="fa fa-file-text-o"></i>',
+        //     'mov': '<i class="fa fa-file-movie-o"></i>',
+        //     'mp3': '<i class="fa fa-file-audio-o"></i>',
+        //     'jpg': '<i class="fa fa-file-photo-o"></i>',
+        //     'gif': '<i class="fa fa-file-photo-o"></i>',
+        //     'png': '<i class="fa fa-file-photo-o"></i>'
+        // },
+        previewFileExtSettings: {
+            'doc': function (ext) {
+                return ext.match(/(doc|docx)$/i);
+            },
+            'xls': function (ext) {
+                return ext.match(/(xls|xlsx)$/i);
+            },
+            'ppt': function (ext) {
+                return ext.match(/(ppt|pptx)$/i);
+            },
+            'zip': function (ext) {
+                return ext.match(/(zip|rar|tar|gzip|gz|7z)$/i);
+            },
+            'htm': function (ext) {
+                return ext.match(/(htm|html)$/i);
+            },
+            'txt': function (ext) {
+                return ext.match(/(txt|ini|csv|java|php|js|css)$/i);
+            },
+            'mov': function (ext) {
+                return ext.match(/(avi|mpg|mkv|mov|mp4|3gp|webm|wmv)$/i);
+            },
+            'mp3': function (ext) {
+                return ext.match(/(mp3|wav)$/i);
+            },
+            'jpg': function (ext) {
+                return ext.match(/(jpg|jpeg)$/i);
+            }
+        }
     };
 })(window.jQuery);
