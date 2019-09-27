@@ -232,7 +232,7 @@ if (!function_exists('thumb')) {
             'h' => 600,
             'q' => 80,
             'fit' => 'crop',
-            'fm' => 'webp',
+            //'fm' => 'webp',
         ];
 
         $mergedConfig = array_merge($default, $config);
