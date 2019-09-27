@@ -12,9 +12,6 @@ class AdmixOptimize extends Command
 
     public function handle()
     {
-        /*
-         * Limpando geral
-         * */
         $this->line('+--------------------------+');
         $this->line('+----- Limpando tudo ------+');
         $this->line('+--------------------------+');
