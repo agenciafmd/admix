@@ -24,7 +24,6 @@ class AdmixOptimize extends Command
         $this->call('config:clear');
         $this->call('route:clear');
         $this->call('view:clear');
-        $this->call('media:clear');
         $this->call('page-cache:clear');
         $this->line('');
         $this->line('+-------------------------------+');
