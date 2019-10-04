@@ -109,24 +109,49 @@ $(function () {
     var editor = new MediumEditor('.js-wysiwyg', {
         placeholder: false,
         imageDragging: false,
-        // paste: {
-        //     forcePlainText: true,
-        //     cleanPastedHTML: false,
-        //     cleanReplacements: [
-        //         [
-        //             '/<[^>]*>/ig', ''
-        //         ]
-        //     ],
-        //     cleanTags: [
-        //         'meta',
-        //         'script',
-        //         'style',
-        //         'img',
-        //         'object',
-        //         'iframe',
-        //         'p'
-        //     ]
-        // },
+        paste: {
+            forcePlainText: false,
+            cleanPastedHTML: true,
+            // preCleanReplacements: [
+            //     [
+            //         '/<[^>]*>/ig', ''
+            //     ]
+            // ],
+            cleanReplacements: [
+                [
+                    new RegExp(/(<table[^\>]*) width="[^\"]*"/gi), '<table width="100%" border="1"'
+                ]
+            ],
+            cleanTags: [
+                'meta',
+                'script',
+                'style',
+                'img',
+                'object',
+                'iframe',
+            ],
+            cleanAttrs: [
+                'class',
+                'style',
+                'dir',
+                //'width',
+                'height',
+                'cellpadding',
+                'cellspacing',
+                'valign'
+            ],
+            unwrapTags: [
+                'p',
+                'font',
+                'label',
+                'span',
+                'div',
+                'dl',
+                'dd',
+                'sub',
+                'sup'
+            ]
+        },
         anchor: {
             placeholderText: 'ex. https://fmd.ag',
             targetCheckbox: true,
