@@ -117,7 +117,7 @@ function states($state = null)
         'SC' => 'Santa Catarina',
         'SP' => 'São Paulo',
         'SE' => 'Sergipe',
-        'TO' => 'Tocantins'
+        'TO' => 'Tocantins',
     ];
 
     if (isset($states[$state])) {
@@ -218,7 +218,7 @@ if (!function_exists('default_sort')) {
 
             return [
                 'field' => $field,
-                'direction' => $direction
+                'direction' => $direction,
             ];
         });
     }
@@ -248,7 +248,7 @@ if (!function_exists('thumb')) {
             return (object)[
                 'original' => $placeholder,
                 'name' => $placeholder,
-                'meta' => 'sem imagem'
+                'meta' => 'sem imagem',
             ];
         }
 
@@ -257,6 +257,44 @@ if (!function_exists('thumb')) {
             'name' => $location . image_path_builder($image->getUrl('thumb'), $mergedConfig),
             'meta' => optional($image->meta)[app()->getLocale()],
         ];
+    }
+}
+
+if (!function_exists('thumbs')) {
+    function thumbs($model, $name, $config = [])
+    {
+        $default = [
+            'w' => 800,
+            'h' => 600,
+            'q' => 80,
+            'fit' => 'crop',
+            //'fm' => 'webp',
+        ];
+
+        $mergedConfig = array_merge($default, $config);
+
+        $location = '/media/';
+
+        if ('cdn' === config('filesystems.default')) {
+            $location = config('filesystems.disks.cdn.url') . '/r/';
+        }
+
+        $images = $model->getMedia($name) ?? null;
+
+        if (!$images) {
+            return collect([]);
+        }
+
+        $items = [];
+        foreach ($images as $image) {
+            $items[] = (object)[
+                'original' => $location . $image->getUrl('thumb'),
+                'name' => $location . image_path_builder($image->getUrl('thumb'), $mergedConfig),
+                'meta' => optional($image->meta)[app()->getLocale()],
+            ];
+        }
+
+        return collect($items);
     }
 }
 
@@ -274,7 +312,7 @@ if (!function_exists('image')) {
             return (object)[
                 'original' => $placeholder,
                 'name' => $placeholder,
-                'meta' => 'sem imagem'
+                'meta' => 'sem imagem',
             ];
         }
 
