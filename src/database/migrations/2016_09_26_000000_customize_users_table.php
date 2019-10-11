@@ -1,17 +1,26 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CustomizeUsersTable extends Migration
 {
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->boolean('is_active')->default(1);
-            $table->integer('role_id')->unsigned()->default('0')->after('password');
-            $table->string('type')->nullable();
-            $table->string('api_token', 60)->nullable()->unique();
+            $table->boolean('is_active')
+                ->default(1);
+            $table->integer('role_id')
+                ->unsigned()
+                ->default('0')
+                ->after('password');
+            $table->string('type')
+                ->nullable();
+            $table->string('api_token', 60)
+                ->after('password')
+                ->unique()
+                ->nullable()
+                ->default(null);
             $table->softDeletes();
         });
     }
