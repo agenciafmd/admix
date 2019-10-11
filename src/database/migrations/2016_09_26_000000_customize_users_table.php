@@ -16,7 +16,7 @@ class CustomizeUsersTable extends Migration
                 ->after('password');
             $table->string('type')
                 ->nullable();
-            $table->string('api_token', 60)
+            $table->string('api_token', 80)
                 ->after('password')
                 ->unique()
                 ->nullable()
