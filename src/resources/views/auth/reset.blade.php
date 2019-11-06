@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col col-login mx-auto">
                     <div class="text-center mb-6">
-                        <img src="/images/admix-logo.svg" class="h-6" alt="">
+                        <img src="/images/fmd.svg" class="h-6" alt="">
                     </div>
                     <form class="card" action="{{ route('admix.recover.reset') }}" method="post">
                         {{ csrf_field() }}
