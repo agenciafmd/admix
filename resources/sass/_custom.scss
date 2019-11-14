@@ -275,9 +275,6 @@ form.destroy button {
   color: unset;
   font-size: 2em;
 }
-
-.sing
-
 // fim file-input
 
 // centraliza o login
@@ -301,6 +298,7 @@ form.destroy button {
   -ms-flex-pack: center;
   justify-content: center;
   padding: 1rem 0;
+  height: 100vh;
 }
 
 // fim centraliza o login

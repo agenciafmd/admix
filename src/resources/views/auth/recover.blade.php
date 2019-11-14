@@ -33,12 +33,12 @@
                             </div>
                             <div class="form-footer">
                                 <button type="submit" class="btn btn-primary btn-block">Enviar</button>
+                                <a href="{{ route('admix.login') }}" class="btn btn-link btn-block text-lowercase">
+                                    voltar
+                                </a>
                             </div>
                         </div>
                     </form>
-                    <div class="text-center text-muted">
-                        Deixa pra lá, <a href="{{ route('admix.login') }}">quero voltar</a> para a tela de login.
-                    </div>
                 </div>
             </div>
         </div>

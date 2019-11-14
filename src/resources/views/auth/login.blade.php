@@ -23,9 +23,6 @@
                             <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">
                                 <label class="form-label">
                                     Senha
-                                    <a href="{{ route('admix.recover.form') }}" class="float-right small" tabindex="1">
-                                        Esqueci minha senha
-                                    </a>
                                 </label>
                                 <input type="password" name="password" class="form-control" id="password" required />
                                 @if ($errors->has('password'))
@@ -41,6 +38,9 @@
                             </div>
                             <div class="form-footer">
                                 <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+                                <a href="{{ route('admix.recover.form') }}" class="btn btn-link btn-block text-lowercase">
+                                    esqueci minha senha
+                                </a>
                             </div>
                         </div>
                     </form>
