@@ -24,9 +24,9 @@
 
 @section('batch')
     @if(request()->is('*/trash'))
-        {{ Form::select('batch', ['' => 'com os selecionados', route('admix.roles.batchRestore') => '- restaurar'], null, ['class' => 'js-batch-select form-control custom-select']) }}
+        @inputSelect(['batch', ['' => 'com os selecionados', route('admix.roles.batchRestore') => '- restaurar'], null, ['class' => 'js-batch-select form-control custom-select']])
     @else
-        {{ Form::select('batch', ['' => 'com os selecionados', route('admix.roles.batchDestroy') => '- remover'], null, ['class' => 'js-batch-select form-control custom-select']) }}
+        @inputSelect(['batch', ['' => 'com os selecionados', route('admix.roles.batchDestroy') => '- remover'], null, ['class' => 'js-batch-select form-control custom-select']])
     @endif
 @endsection
 

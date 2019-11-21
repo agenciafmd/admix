@@ -4,46 +4,43 @@
 
 @inject('users', '\Agenciafmd\Admix\Services\UserService')
 
-@section('title')
-    Logs
-@endsection
+@section('title', 'Logs')
 
-@section('actions')
-@endsection
+@section('actions', '')
 
-@section('batch')
-@endsection
+@section('batch', '')
 
 @section('filters')
     <h6 class="dropdown-header bg-gray-lightest p-2">Local</h6>
     <div class="p-2">
-        {{ Form::select('filter[auditable_type]', ['' => '-'] + audit_alias(), filter('auditable_type'), [
-                'class' => 'form-control form-control-sm'
-            ]) }}
+        {{-- TODO: filtro não está funcionando --}}
+        @inputSelect(['filter[auditable_type]', ['' => '-'] + audit_alias(), filter('auditable_type'), [
+        'class' => 'form-control form-control-sm'
+        ]])
     </div>
     <h6 class="dropdown-header bg-gray-lightest p-2">Usuário</h6>
     <div class="p-2">
-        {{ Form::select('filter[user_id]', ['' => '-'] + $users->toSelect(), filter('user_id'), [
-                'class' => 'form-control form-control-sm'
-            ]) }}
+        @inputSelect(['filter[user_id]', ['' => '-'] + $users->toSelect(), filter('user_id'), [
+        'class' => 'form-control form-control-sm'
+        ]])
     </div>
     <h6 class="dropdown-header bg-gray-lightest p-2">Evento</h6>
     <div class="p-2">
-        {{ Form::select('filter[event]', ['' => '-'] + audit_events(), filter('event'), [
-                'class' => 'form-control form-control-sm'
-            ]) }}
+        @inputSelect(['filter[event]', ['' => '-'] + audit_events(), filter('event'), [
+        'class' => 'form-control form-control-sm'
+        ]])
     </div>
     <h6 class="dropdown-header bg-gray-lightest p-2">Registro</h6>
     <div class="p-2">
-        {{ Form::text('filter[auditable_id]', filter('auditable_id'), [
+        @inputText(['filter[auditable_id]', filter('auditable_id'), [
                 'class' => 'form-control form-control-sm'
-            ]) }}
+        ]])
     </div>
     <h6 class="dropdown-header bg-gray-lightest p-2">Data</h6>
-    <div class="p-2"> <!-- TODO Datetime range picker -->
-        {{ Form::date('filter[created_at]', filter('created_at'), [
+    <div class="p-2">
+        @inputDate(['filter[created_at]', filter('created_at'), [
                 'class' => 'form-control form-control-sm'
-            ]) }}
+        ]])
     </div>
 @endsection
 

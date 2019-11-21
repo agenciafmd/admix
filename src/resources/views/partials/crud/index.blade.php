@@ -25,11 +25,11 @@
                             <div class="col-md-6 p-0 text-right">
                                 <div class="form-row float-right">
                                     <div class="js-batch col-auto d-none">
-                                        {{ Form::open(['url' => '', 'method' => 'post', 'class' => 'js-batch-form']) }}
+                                        @formOpen(['', 'post', ['class' => 'js-batch-form']])
 
                                         @yield('batch')
 
-                                        {{ Form::close() }}
+                                        @formClose()
                                     </div>
 
                                     @yield('bar')
@@ -41,29 +41,29 @@
                                                 <i class="icon fe-filter"></i>
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-right p-0">
-                                                {{ Form::open(['url' => $route, 'method' => 'get']) }}
-                                                {{ Form::hidden('query', request()->get('query')) }}
+                                                @formOpen([$route, 'get'])
+                                                @inputHidden(['query', request()->get('query')])
                                                 <h6 class="dropdown-header bg-gray-lightest p-2">#</h6>
                                                 <div class="p-2">
-                                                    {{ Form::text('filter[id]', filter('id'), [
-                                                            'class' => 'form-control form-control-sm'
-                                                        ]) }}
+                                                    @inputText(['filter[id]', filter('id'), [
+                                                    'class' => 'form-control form-control-sm'
+                                                    ]])
                                                 </div>
                                                 <h6 class="dropdown-header bg-gray-lightest p-2">Ativo</h6>
                                                 <div class="p-2">
-                                                    {{ Form::select('filter[is_active]', [
+                                                    @inputSelect(['filter[is_active]', [
                                                             '' => '-',
                                                             '1' => 'Sim',
                                                             '0' => 'Não'
                                                         ], filter('is_active'), [
                                                             'class' => 'form-control form-control-sm'
-                                                        ]) }}
+                                                    ]])
                                                 </div>
                                                 <h6 class="dropdown-header bg-gray-lightest p-2">Nome</h6>
                                                 <div class="p-2">
-                                                    {{ Form::text('filter[name]', filter('name'), [
-                                                            'class' => 'form-control form-control-sm'
-                                                        ]) }}
+                                                    @inputText(['filter[name]', filter('name'), [
+                                                    'class' => 'form-control form-control-sm'
+                                                    ]])
                                                 </div>
 
                                                 @yield('filters')
@@ -81,7 +81,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {{ Form::close() }}
+                                                @formClose()
                                             </div>
                                         </div>
                                     </div>
