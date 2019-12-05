@@ -14,9 +14,7 @@ class UploadController extends Controller
     public function index(Request $request)
     {
         if (!$request->hasFile('file')) {
-            return [
-                'status' => 'error',
-            ];
+            return response('Arquivo não recebido', 400);
         }
 
         $files = $request->file('file');
@@ -65,17 +63,38 @@ class UploadController extends Controller
         $media = Media::where('custom_properties->uuid', $uuid)
             ->first();
 
-        $html = Form::open(['route' => ['admix.upload.meta.post', $uuid], 'id' => 'formUploadMetaPost']);
+        $html = '<form method="POST" action="' . route('admix.upload.meta.post', $uuid) . '" accept-charset="UTF-8" id="formUploadMetaPost" onsubmit="return event.preventDefault();">';
+        $html .= '<input name="_token" type="hidden" value="' . csrf_token() . '">';
 
         try {
             foreach (app()->make('languages') as $k => $language) {
-                $html .= Form::bsText($language->name, 'meta[' . $language->locale . ']', ($media->getCustomProperty("meta.{$language->locale}")) ?? null);
+                $html .= '<li class="list-group-item">
+                    <div class="row gutters-sm">
+                        <label for="' . $language->name . '" class="col-xl-3 col-form-label pt-0 pt-xl-2">' . $language->name . '</label>
+                        <div class="col-xl-5">
+                            <input class="form-control" name="meta[' . $language->locale . ']" type="text" value="' . (($media->getCustomProperty("meta.{$language->locale}")) ?? '') . '">
+                            <div class="invalid-feedback">
+                                o campo ' . strtolower($language->name) .' é obrigatório
+                            </div>
+                        </div>
+                    </div>
+                </li>';
             }
         } catch (\Exception $e) {
-            $html .= Form::bsText('Descrição', 'meta[' . app()->getLocale() . ']', ($media->getCustomProperty("meta." . app()->getLocale())) ?? null);
+            $html .= '<li class="list-group-item">
+                    <div class="row gutters-sm">
+                        <label for="Descrição" class="col-xl-3 col-form-label pt-0 pt-xl-2">Descrição</label>
+                        <div class="col-xl-5">
+                            <input class="form-control" name="meta[' . app()->getLocale() . ']" type="text" value="' . (($media->getCustomProperty("meta." . app()->getLocale())) ?? '') . '">
+                            <div class="invalid-feedback">
+                                o campo descrição é obrigatório
+                            </div>
+                        </div>
+                    </div>
+                </li>';
         }
 
-        $html .= Form::close();
+        $html .= '</form>';
 
         return $html;
     }

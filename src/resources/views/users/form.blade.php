@@ -28,6 +28,10 @@
 
         @formEmail(['Email', 'email', null, ['required']])
 
+        @formImage(['Avatar', 'image', $user])
+
+        @formImages(['Imagens', 'images', $user])
+
         {{--        {!! Form::bsImage('Avatar', 'image', $user) !!}--}}
     </ul>
     <div class="card-header bg-gray-lightest">

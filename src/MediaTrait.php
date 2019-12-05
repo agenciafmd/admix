@@ -52,22 +52,22 @@ trait MediaTrait
     {
         $fields = $this->fieldsToConvertion();
         foreach ($fields as $collection => $field) {
-            $convertion = $this->addMediaConversion('thumb');
+            $conversion = $this->addMediaConversion('thumb');
             if ($field['crop']) {
-                $convertion->fit(Manipulations::FIT_CROP, $field['width'], $field['height']);
+                $conversion->fit(Manipulations::FIT_CROP, $field['width'], $field['height']);
             } else {
-                $convertion->width($field['width'])
+                $conversion->width($field['width'])
                     ->height($field['height']);
             }
             if (!app()->environment('local')) {
                 if ($field['optimize']) {
-                    $convertion->optimize();
+                    $conversion->optimize();
                 }
                 if ($field['quality']) {
-                    $convertion->quality($field['quality']);
+                    $conversion->quality($field['quality']);
                 }
             }
-            $convertion->performOnCollections($collection)
+            $conversion->performOnCollections($collection)
                 ->keepOriginalImageFormat();
         }
     }
