@@ -11,7 +11,7 @@
 
     <!-- uploads / medialibrary -->
     <meta name="upload" content="{{ route('admix.upload.index') }}">
-    <meta name="upload-meta" content="{{ route('admix.upload.meta', ['key' => '']) }}">
+    <meta name="upload-meta" content="{{ route('admix.upload.meta') }}">
     <meta name="upload-destroy" content="{{ route('admix.upload.destroy') }}">
 
     <link rel="shortcut icon" href="/images/favicon.png">

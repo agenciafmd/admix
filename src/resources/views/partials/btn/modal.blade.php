@@ -1,4 +1,4 @@
-<a class="ml-2 icon" data-toggle="modal" data-target="#auditModal{{ md5($content) }}">
+<a href="#" class="ml-2 icon" data-toggle="modal" data-target="#auditModal{{ md5($content) }}">
     <i class="icon fe-eye text-muted"></i>
 </a>
 

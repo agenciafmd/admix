@@ -3,7 +3,7 @@
 @inject('roles', '\Agenciafmd\Admix\Services\RoleService')
 
 @section('form')
-    @formModel(['model' => optional($user), 'create' => route('admix.users.store'), 'update' => route('admix.users.update', ['user' => $user->id]), 'id' => 'formCrud', 'class' => 'mb-0 card-list-group card' . ((count($errors) > 0) ? ' was-validated' : '')])
+    @formModel(['model' => optional($user), 'create' => route('admix.users.store'), 'update' => route('admix.users.update', ['user' => ($user->id) ?? 0]), 'id' => 'formCrud', 'class' => 'mb-0 card-list-group card' . ((count($errors) > 0) ? ' was-validated' : '')])
     <div class="card-header bg-gray-lightest">
         <h3 class="card-title">
             @if(request()->is('*/create'))
@@ -22,6 +22,10 @@
         </div>
     </div>
     <ul class="list-group list-group-flush">
+        @if (optional($user)->id)
+            @formText(['Código', 'id', null, ['disabled' => true]])
+        @endif
+
         @formIsActive(['Ativo', 'is_active', null, ['required']])
 
         @formText(['Nome', 'name', null, ['required']])
@@ -29,10 +33,6 @@
         @formEmail(['Email', 'email', null, ['required']])
 
         @formImage(['Avatar', 'image', $user])
-
-        @formImages(['Imagens', 'images', $user])
-
-        {{--        {!! Form::bsImage('Avatar', 'image', $user) !!}--}}
     </ul>
     <div class="card-header bg-gray-lightest">
         <h3 class="card-title">Alterar senha</h3>

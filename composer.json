@@ -28,14 +28,11 @@
     "laravel/framework": "6.*",
     "owen-it/laravel-auditing": "^9.2",
     "renatomarinho/laravel-page-speed": "^1.8",
-    "sentry/sentry-laravel": "^1.0",
     "silber/page-cache": "^1.0",
     "spatie/laravel-medialibrary": "^7.0.0",
-    "spatie/laravel-query-builder": "^1.17",
+    "spatie/laravel-query-builder": "^2.3",
     "spatie/laravel-sitemap": "^5.3",
-    "spatie/laravel-translatable": "^4.1",
-    "thiagocordeiro/laravel-translator": "^0.1.6",
-    "webparking/laravel-queue-ensurer": "^1.0"
+    "spatie/laravel-translatable": "^4.1"
   },
   "require-dev": {
     "beyondcode/laravel-dump-server": "^1.0",

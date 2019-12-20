@@ -13,33 +13,34 @@
 @section('filters')
     <h6 class="dropdown-header bg-gray-lightest p-2">Local</h6>
     <div class="p-2">
-        {{-- TODO: filtro não está funcionando --}}
-        @inputSelect(['filter[auditable_type]', ['' => '-'] + audit_alias(), filter('auditable_type'), [
-        'class' => 'form-control form-control-sm'
+        @inputSelect(['filter[auditable_type]', ['' => '-'] + collect(audit_alias())->mapWithKeys(function ($item, $key) {
+            return [str_replace('\\', '\\\\', $key) => $item];
+        })->toArray(), filter('auditable_type'), [
+            'class' => 'form-control form-control-sm'
         ]])
     </div>
     <h6 class="dropdown-header bg-gray-lightest p-2">Usuário</h6>
     <div class="p-2">
         @inputSelect(['filter[user_id]', ['' => '-'] + $users->toSelect(), filter('user_id'), [
-        'class' => 'form-control form-control-sm'
+            'class' => 'form-control form-control-sm'
         ]])
     </div>
     <h6 class="dropdown-header bg-gray-lightest p-2">Evento</h6>
     <div class="p-2">
         @inputSelect(['filter[event]', ['' => '-'] + audit_events(), filter('event'), [
-        'class' => 'form-control form-control-sm'
+            'class' => 'form-control form-control-sm'
         ]])
     </div>
     <h6 class="dropdown-header bg-gray-lightest p-2">Registro</h6>
     <div class="p-2">
         @inputText(['filter[auditable_id]', filter('auditable_id'), [
-                'class' => 'form-control form-control-sm'
+            'class' => 'form-control form-control-sm'
         ]])
     </div>
     <h6 class="dropdown-header bg-gray-lightest p-2">Data</h6>
     <div class="p-2">
         @inputDate(['filter[created_at]', filter('created_at'), [
-                'class' => 'form-control form-control-sm'
+            'class' => 'form-control form-control-sm'
         ]])
     </div>
 @endsection

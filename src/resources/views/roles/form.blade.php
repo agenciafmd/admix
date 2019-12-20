@@ -14,11 +14,15 @@
 @endsection
 
 @section('form')
-    @formModel(['model' => optional($role), 'create' => route('admix.roles.store'), 'update' => route('admix.roles.update', ['role' => $role->id]), 'id' => 'formCrud', 'class' => 'mb-0 card-list-group card' . ((count($errors) > 0) ? ' was-validated' : '')])
+    @formModel(['model' => optional($role), 'create' => route('admix.roles.store'), 'update' => route('admix.roles.update', ['role' => ($role->id) ?? 0]), 'id' => 'formCrud', 'class' => 'mb-0 card-list-group card' . ((count($errors) > 0) ? ' was-validated' : '')])
     <div class="card-header bg-gray-lightest">
         <h3 class="card-title">Geral</h3>
     </div>
     <ul class="list-group list-group-flush">
+        @if (optional($role)->id)
+            @formText(['Código', 'id', null, ['disabled' => true]])
+        @endif
+
         @formIsActive(['Ativo', 'is_active', null, ['required']])
 
         @formText(['Nome', 'name', null, ['required']])
