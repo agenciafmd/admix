@@ -14,14 +14,18 @@
 @endsection
 
 @section('form')
-    {!! Form::bsOpen(['model' => optional($role), 'create' => route('admix.roles.store'), 'update' => route('admix.roles.update', ['role' => $role->id])]) !!}
+    @formModel(['model' => optional($role), 'create' => route('admix.roles.store'), 'update' => route('admix.roles.update', ['role' => ($role->id) ?? 0]), 'id' => 'formCrud', 'class' => 'mb-0 card-list-group card' . ((count($errors) > 0) ? ' was-validated' : '')])
     <div class="card-header bg-gray-lightest">
         <h3 class="card-title">Geral</h3>
     </div>
     <ul class="list-group list-group-flush">
-        {!! Form::bsIsActive('Ativo', 'is_active', null, ['required']) !!}
+        @if (optional($role)->id)
+            @formText(['Código', 'id', null, ['disabled' => true]])
+        @endif
 
-        {!! Form::bsText('Nome', 'name', null, ['required']) !!}
+        @formIsActive(['Ativo', 'is_active', null, ['required']])
+
+        @formText(['Nome', 'name', null, ['required']])
     </ul>
     <div class="card-body">
         <label for="permissions" class="mb-lg-4">
@@ -43,15 +47,7 @@
                             <div class="custom-controls-stacked">
                                 @foreach($rule->policies as $policy)
                                     <label class="custom-control custom-checkbox">
-                                        @php
-                                            $attributes['disabled'] = false;
-                                            if(strpos(request()->route()->getName(), 'show') !== false) {
-                                                $formControl = 'form-control-plaintext';
-                                                $attributes['disabled'] = true;
-                                            }
-                                        @endphp
-
-                                        {{ Form::checkbox('rules[]', $policy->policy, null, ['class' => 'custom-control-input'] + $attributes) }}
+                                        @inputCheckbox(['rules[]', $policy->policy])
                                         <span class="custom-control-label">pode {{ $policy->name }}</span>
                                     </label>
                                 @endforeach
@@ -71,5 +67,5 @@
             @endif
         </div>
     </div>
-    {!! Form::close() !!}
+    @formClose()
 @endsection

@@ -3,7 +3,7 @@
 @inject('roles', '\Agenciafmd\Admix\Services\RoleService')
 
 @section('form')
-    {!! Form::bsOpen(['model' => optional($user), 'create' => route('admix.users.store'), 'update' => route('admix.users.update', ['user' => $user->id])]) !!}
+    @formModel(['model' => optional($user), 'create' => route('admix.users.store'), 'update' => route('admix.users.update', ['user' => ($user->id) ?? 0]), 'id' => 'formCrud', 'class' => 'mb-0 card-list-group card' . ((count($errors) > 0) ? ' was-validated' : '')])
     <div class="card-header bg-gray-lightest">
         <h3 class="card-title">
             @if(request()->is('*/create'))
@@ -22,27 +22,31 @@
         </div>
     </div>
     <ul class="list-group list-group-flush">
-        {!! Form::bsIsActive('Ativo', 'is_active', null, ['required']) !!}
+        @if (optional($user)->id)
+            @formText(['Código', 'id', null, ['disabled' => true]])
+        @endif
 
-        {!! Form::bsText('Nome', 'name', null, ['required']) !!}
+        @formIsActive(['Ativo', 'is_active', null, ['required']])
 
-        {!! Form::bsEmail('E-mail', 'email', null, ['required']) !!}
+        @formText(['Nome', 'name', null, ['required']])
 
-        {!! Form::bsImage('Avatar', 'image', $user) !!}
+        @formEmail(['Email', 'email', null, ['required']])
+
+        @formImage(['Avatar', 'image', $user])
     </ul>
     <div class="card-header bg-gray-lightest">
         <h3 class="card-title">Alterar senha</h3>
     </div>
     <ul class="list-group list-group-flush">
-        {!! Form::bsPassword('Senha', 'password') !!}
+        @formPassword(['Senha', 'password'])
 
-        {!! Form::bsPassword('Confirmação de Senha', 'password_confirmation') !!}
+        @formPassword(['Confirmação de Senha', 'password_confirmation'])
     </ul>
     <div class="card-header bg-gray-lightest">
         <h3 class="card-title">Permissões</h3>
     </div>
     <ul class="list-group list-group-flush">
-        {!! Form::bsSelect('Grupo', 'role_id', ['0' => 'Administrador'] + $roles->toSelect()) !!}
+        @formSelect(['Grupo', 'role_id', ['0' => 'Administrador'] + $roles->toSelect()])
     </ul>
     <div class="card-footer bg-gray-lightest text-right">
         <div class="d-flex">
@@ -53,5 +57,5 @@
             @endif
         </div>
     </div>
-    {!! Form::close() !!}
+    @formClose()
 @endsection

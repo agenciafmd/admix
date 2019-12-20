@@ -17,20 +17,13 @@ class RolesController extends Controller
         session()->put('backUrl', request()->fullUrl());
 
         $query = QueryBuilder::for(Role::class)
-            ->defaultSort('name')
+            ->defaultSort('-is_active', 'name')
+            ->allowedSorts($request->sort)
             ->allowedFilters((($request->filter) ? array_keys($request->get('filter')) : []));
 
         if ($request->is('*/trash')) {
             $query->onlyTrashed();
         }
-
-        //TODO: substituir por https://github.com/spatie/laravel-query-builder/pull/223
-//        if ($request->filled('query')) {
-//            $constraints = $query;
-//            $query = Role::search($request->get('query'))
-//                ->constrain($constraints)
-//                ->orderBy(ltrim($request->get('sort', 'name'), '-'), (Str::startsWith($request->get('sort'), '-')) ? 'desc' : 'asc');
-//        }
 
         $view['items'] = $query->paginate($request->get('per_page', 50));
 

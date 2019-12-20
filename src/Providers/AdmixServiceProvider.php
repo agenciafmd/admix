@@ -132,6 +132,7 @@ class AdmixServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(__DIR__ . '/../config/audit.php', 'audit');
         $this->mergeConfigFrom(__DIR__ . '/../config/audit-alias.php', 'audit-alias');
         $this->mergeConfigFrom(__DIR__ . '/../config/upload-configs.php', 'upload-configs');
+        $this->mergeConfigFrom(__DIR__ . '/../config/queue-ensurer.php', 'queue-ensurer');
 
         config(['auth.guards' => array_merge(config('admix.auth.guards'), config('auth.guards'))]);
         config(['auth.providers' => array_merge(config('admix.auth.providers'), config('auth.providers'))]);

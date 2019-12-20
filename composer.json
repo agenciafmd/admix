@@ -16,9 +16,32 @@
       "role": "Developer"
     }
   ],
+  "repositories": [
+      {
+          "type": "composer",
+          "url": "https://packages.mixd.com.br"
+      }
+  ],
   "require": {
-    "laravel/framework": "5.8.*",
-    "league/glide-laravel": "^1.0"
+    "hmazter/laravel-schedule-list": "^2.0",
+    "laracasts/flash": "^3.0",
+    "laravel/framework": "6.*",
+    "owen-it/laravel-auditing": "^9.2",
+    "renatomarinho/laravel-page-speed": "^1.8",
+    "silber/page-cache": "^1.0",
+    "spatie/laravel-medialibrary": "^7.0.0",
+    "spatie/laravel-query-builder": "^2.3",
+    "spatie/laravel-sitemap": "^5.3",
+    "spatie/laravel-translatable": "^4.1"
+  },
+  "require-dev": {
+    "beyondcode/laravel-dump-server": "^1.0",
+    "itsgoingd/clockwork": "^4.0"
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true
   },
   "autoload": {
     "files": [

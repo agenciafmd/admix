@@ -67,30 +67,21 @@ class User extends Authenticatable implements AuditableContract, HasMedia
             && $this->attributes['role_id']) ? false : true;
     }
 
-    /*
-    public function scopeSort($query, $fields = [])
-    {
-        if (count($fields) <= 0) {
-            $fields = [
-                'users.is_active' => 'asc'
-            ];
-        }
-
-        if (request()->has('field') && request()->has('sort')) {
-            $fields = [request()->get('field') => request()->get('sort')];
-        }
-
-        $query->select('users.*');
-
-        foreach ($fields as $field => $order) {
-            $query->orderBy($field, $order);
-        }
-    }
-    */
-
     public function scopeIsActive($query)
     {
         $query->where('is_active', 1);
+    }
+
+    public function scopeSort($query)
+    {
+        $sorts = default_sort([
+            '-is_active',
+            'name',
+        ]);
+
+        foreach ($sorts as $sort) {
+            $query->orderBy($sort['field'], $sort['direction']);
+        }
     }
 
     public function sendPasswordResetNotification($token)
