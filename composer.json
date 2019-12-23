@@ -11,13 +11,11 @@
       "role": "Developer"
     }
   ],
-  "repositories": [
-    {
-          "type": "composer",
-          "url": "https://packages.mixd.com.br"
-      }
-  ],
   "require": {
+    "agenciafmd/admix-form": "dev-master",
+    "agenciafmd/admix-postal": "dev-master",
+    "agenciafmd/admix-analytics": "dev-master",
+    "agenciafmd/admix-leads": "dev-master",
     "hmazter/laravel-schedule-list": "^2.0",
     "laracasts/flash": "^3.0",
     "laravel/framework": "6.*",
