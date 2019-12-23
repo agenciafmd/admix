@@ -2,22 +2,17 @@
   "name": "agenciafmd/admix",
   "description": "Admix - Agência F&MD",
   "homepage": "https://github.com/agenciafmd/admix",
-  "keywords": [
-    "laravel",
-    "agenciafmd",
-    "admin",
-    "painel"
-  ],
+  "license": "MIT",
   "authors": [
     {
-      "name": "Irineu Martins Junior",
+      "name": "Irineu Junior",
       "email": "irineu@fmd.ag",
       "homepage": "https://fmd.ag/",
       "role": "Developer"
     }
   ],
   "repositories": [
-      {
+    {
           "type": "composer",
           "url": "https://packages.mixd.com.br"
       }
