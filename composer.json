@@ -19,6 +19,7 @@
     "hmazter/laravel-schedule-list": "^2.0",
     "laracasts/flash": "^3.0",
     "laravel/framework": "6.*",
+    "league/glide-laravel": "^1.0",
     "owen-it/laravel-auditing": "^9.2",
     "renatomarinho/laravel-page-speed": "^1.8",
     "silber/page-cache": "^1.0",
