@@ -1,24 +1,30 @@
 @extends('agenciafmd/admix::partials.crud.form')
 
-@section('title', '')
+@section('title')
+
+@endsection
 
 @section('form')
-    @formModel(['model' => $user, 'update' => route('admix.profile.update'), 'id' => 'formCrud', 'class' => 'card-list-groud card' . ((count($errors) > 0) ? ' was-validated' : '')])
-
+    {!! Form::model($user, ['url' => route('admix.profile.update'), 'method' => 'PUT',
+        'class' => 'card-list-group card needs-validation' . ((count($errors) > 0) ? ' was-validated' : ''),
+        'novalidate' => true, 'id' => 'formCrud', 'files' => true]) !!}
     <div class="card-header bg-gray-lightest">
         <h3 class="card-title">Meu Perfil</h3>
     </div>
     <ul class="list-group list-group-flush">
-        @formText(['Nome', 'name', null, ['required']])
-        @formEmail(['E-mail', 'email', null, ['required']])
-        @formImage(['Avatar', 'image', $user])
+        {!! Form::bsText('Nome', 'name', null, ['-required']) !!}
+
+        {!! Form::bsEmail('E-mail', 'email', null, ['required']) !!}
+
+        {!! Form::bsImage('Avatar', 'image', $user) !!}
     </ul>
     <div class="card-header bg-gray-lightest">
         <h3 class="card-title">Alterar senha</h3>
     </div>
     <ul class="list-group list-group-flush">
-        @formPassword(['Senha', 'password'])
-        @formPassword(['Confirmação de Senha', 'password_confirmation'])
+        {!! Form::bsPassword('Senha', 'password') !!}
+
+        {!! Form::bsPassword('Confirmação de Senha', 'password_confirmation') !!}
     </ul>
     <div class="card-footer bg-gray-lightest text-right">
         <div class="d-flex">
@@ -31,5 +37,5 @@
             @endif
         </div>
     </div>
-    @formClose()
+    {!! Form::close() !!}
 @endsection

@@ -15,23 +15,30 @@
                         </p>
                     @endif
 
-                    @formOpen([route('admix.recover'), 'post', ['id' => 'form-login', 'class' => 'card']])
-                    <div class="card-body p-6">
-                        <div class="card-title">Esqueci minha senha</div>
-                        <p class="text-muted">
-                            Digite seu e-mail que enviaremos um link para você alterar sua senha
-                        </p>
-
-                        @formGroupEmail(['E-mail', 'email', null, ['required']])
-
-                        <div class="form-footer">
-                            <button type="submit" class="btn btn-primary btn-block">Enviar</button>
-                            <a href="{{ route('admix.login') }}" class="btn btn-link btn-block text-lowercase">
-                                voltar
-                            </a>
+                    <form class="card" action="{{ route('admix.recover') }}" method="post">
+                        {{csrf_field()}}
+                        <div class="card-body p-6">
+                            <div class="card-title">Esqueci minha senha</div>
+                            <p class="text-muted">
+                                Digite seu e-mail que enviaremos um link para você alterar sua senha
+                            </p>
+                            <div class="form-group">
+                                <label class="form-label" for="email">E-mail</label>
+                                <input type="email" name="email"
+                                       class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" id="email"
+                                       required autofocus/>
+                                @if ($errors->has('email'))
+                                    <div class="invalid-feedback">{{ $errors->first('email') }}</div>
+                                @endif
+                            </div>
+                            <div class="form-footer">
+                                <button type="submit" class="btn btn-primary btn-block">Enviar</button>
+                            </div>
                         </div>
+                    </form>
+                    <div class="text-center text-muted">
+                        Deixa pra lá, <a href="{{ route('admix.login') }}">quero voltar</a> para a tela de login.
                     </div>
-                    @formClose()
                 </div>
             </div>
         </div>

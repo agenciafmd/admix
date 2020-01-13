@@ -26,32 +26,8 @@
     @yield('content')
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
-<script>
-    $(function () {
-        var forms = document.getElementsByClassName('needs-validation');
-        var validation = Array.prototype.filter.call(forms, function (form) {
-            form.addEventListener('submit', function (event) {
-                if (form.checkValidity() === false) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                }
-                form.classList.add('was-validated');
-            }, false);
-        });
+{{--<script src="{{ asset('js/backend.js') }}"></script>--}}
 
-        $('.is-invalid')
-            .each(function () {
-                $(this)[0].setCustomValidity('needs validate');
-            })
-            .on('focusout', function () {
-                $(this)
-                    .removeClass('is-invalid');
-                $(this)[0].setCustomValidity('');
-            });
-    });
-</script>
-
-@include('agenciafmd/flash::partials.message')
+{{--@include('agenciafmd/flash::partials.message')--}}
 </body>
 </html>

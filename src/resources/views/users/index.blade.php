@@ -26,24 +26,24 @@
 
 @section('batch')
     @if(request()->is('*/trash'))
-        @inputSelect(['batch', ['' => 'com os selecionados', route('admix.users.batchRestore') => '- restaurar'], null, ['class' => 'js-batch-select form-control custom-select']])
+        {{ Form::select('batch', ['' => 'com os selecionados', route('admix.users.batchRestore') => '- restaurar'], null, ['class' => 'js-batch-select form-control custom-select']) }}
     @else
-        @inputSelect(['batch', ['' => 'com os selecionados', route('admix.users.batchDestroy') => '- remover'], null, ['class' => 'js-batch-select form-control custom-select']])
+        {{ Form::select('batch', ['' => 'com os selecionados', route('admix.users.batchDestroy') => '- remover'], null, ['class' => 'js-batch-select form-control custom-select']) }}
     @endif
 @endsection
 
 @section('filters')
     <h6 class="dropdown-header bg-gray-lightest p-2">E-mail</h6>
     <div class="p-2">
-        @inputText(['filter[email]', filter('email'), [
-        'class' => 'form-control form-control-sm'
-        ]])
+        {{ Form::text('filter[email]', filter('email'), [
+                'class' => 'form-control form-control-sm'
+            ]) }}
     </div>
     <h6 class="dropdown-header bg-gray-lightest p-2">Grupo</h6>
     <div class="p-2">
-        @inputSelect(['filter[role_id]', ['' => '-', '0' => 'Administrador'] + $roles->toSelect(), filter('role_id'), [
-        'class' => 'form-control form-control-sm'
-        ]])
+        {{ Form::select('filter[role_id]', ['' => '-', '0' => 'Administrador'] + $roles->toSelect(), filter('role_id'), [
+                'class' => 'form-control form-control-sm'
+            ]) }}
     </div>
 @endsection
 
