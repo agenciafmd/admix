@@ -3,7 +3,7 @@
 @inject('roles', '\Agenciafmd\Admix\Services\RoleService')
 
 @section('form')
-    {!! Form::bsOpen(['model' => optional($user), 'create' => route('admix.users.store'), 'update' => route('admix.users.update', ['user' => $user->id])]) !!}
+    {!! Form::bsOpen(['model' => optional($user), 'create' => route('admix.users.store'), 'update' => route('admix.users.update', ['user' => ($user->id) ?? 0])]) !!}
     <div class="card-header bg-gray-lightest">
         <h3 class="card-title">
             @if(request()->is('*/create'))

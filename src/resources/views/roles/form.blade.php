@@ -14,7 +14,7 @@
 @endsection
 
 @section('form')
-    {!! Form::bsOpen(['model' => optional($role), 'create' => route('admix.roles.store'), 'update' => route('admix.roles.update', ['role' => $role->id])]) !!}
+    {!! Form::bsOpen(['model' => optional($role), 'create' => route('admix.roles.store'), 'update' => route('admix.roles.update', ['role' => ($role->id) ?? 0])]) !!}
     <div class="card-header bg-gray-lightest">
         <h3 class="card-title">Geral</h3>
     </div>
