@@ -3,7 +3,7 @@
 @inject('roles', '\Agenciafmd\Admix\Services\RoleService')
 
 @section('form')
-    {!! Form::bsOpen(['model' => optional($model), 'create' => route('admix.users.store'), 'update' => route('admix.users.update', ['user' => ($model->id) ?? 0])]) !!}
+    {{ Form::bsOpen(['model' => optional($model), 'create' => route('admix.users.store'), 'update' => route('admix.users.update', ['user' => ($model->id) ?? 0])]) }}
     <div class="card-header bg-gray-lightest">
         <h3 class="card-title">
             @if(request()->is('*/create'))
@@ -22,27 +22,27 @@
         </div>
     </div>
     <ul class="list-group list-group-flush">
-        {!! Form::bsIsActive('Ativo', 'is_active', null, ['required']) !!}
+        {{ Form::bsIsActive('Ativo', 'is_active', null, ['required']) }}
 
-        {!! Form::bsText('Nome', 'name', null, ['required']) !!}
+        {{ Form::bsText('Nome', 'name', null, ['required']) }}
 
-        {!! Form::bsEmail('E-mail', 'email', null, ['required']) !!}
+        {{ Form::bsEmail('E-mail', 'email', null, ['required']) }}
 
-        {!! Form::bsImage('Avatar', 'image', $model) !!}
+        {{ Form::bsImage('Avatar', 'image', $model) }}
     </ul>
     <div class="card-header bg-gray-lightest">
         <h3 class="card-title">Alterar senha</h3>
     </div>
     <ul class="list-group list-group-flush">
-        {!! Form::bsPassword('Senha', 'password') !!}
+        {{ Form::bsPassword('Senha', 'password') }}
 
-        {!! Form::bsPassword('Confirmação de Senha', 'password_confirmation') !!}
+        {{ Form::bsPassword('Confirmação de Senha', 'password_confirmation') }}
     </ul>
     <div class="card-header bg-gray-lightest">
         <h3 class="card-title">Permissões</h3>
     </div>
     <ul class="list-group list-group-flush">
-        {!! Form::bsSelect('Grupo', 'role_id', ['0' => 'Administrador'] + $roles->toSelect()) !!}
+        {{ Form::bsSelect('Grupo', 'role_id', ['0' => 'Administrador'] + $roles->toSelect()) }}
     </ul>
     <div class="card-footer bg-gray-lightest text-right">
         <div class="d-flex">
@@ -53,5 +53,5 @@
             @endif
         </div>
     </div>
-    {!! Form::close() !!}
+    {{ Form::close() }}
 @endsection

@@ -14,14 +14,14 @@
 @endsection
 
 @section('form')
-    {!! Form::bsOpen(['model' => optional($model), 'create' => route('admix.roles.store'), 'update' => route('admix.roles.update', ['role' => ($model->id) ?? 0])]) !!}
+    {{ Form::bsOpen(['model' => optional($model), 'create' => route('admix.roles.store'), 'update' => route('admix.roles.update', ['role' => ($model->id) ?? 0])]) }}
     <div class="card-header bg-gray-lightest">
         <h3 class="card-title">Geral</h3>
     </div>
     <ul class="list-group list-group-flush">
-        {!! Form::bsIsActive('Ativo', 'is_active', null, ['required']) !!}
+        {{ Form::bsIsActive('Ativo', 'is_active', null, ['required']) }}
 
-        {!! Form::bsText('Nome', 'name', null, ['required']) !!}
+        {{ Form::bsText('Nome', 'name', null, ['required']) }}
     </ul>
     <div class="card-body">
         <label for="permissions" class="mb-lg-4">
@@ -71,5 +71,5 @@
             @endif
         </div>
     </div>
-    {!! Form::close() !!}
+    {{ Form::close() }}
 @endsection
