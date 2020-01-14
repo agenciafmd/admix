@@ -32,7 +32,7 @@ class UsersController extends Controller
 
     public function create(User $user)
     {
-        $view['user'] = $user;
+        $view['model'] = $user;
 
         return view('agenciafmd/admix::users.form', $view);
     }
@@ -53,14 +53,14 @@ class UsersController extends Controller
 
     public function show(User $user)
     {
-        $view['user'] = $user;
+        $view['model'] = $user;
 
         return view('agenciafmd/admix::users.form', $view);
     }
 
     public function edit(User $user)
     {
-        $view['user'] = $user;
+        $view['model'] = $user;
 
         return view('agenciafmd/admix::users.form', $view);
     }

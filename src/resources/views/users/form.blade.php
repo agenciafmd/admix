@@ -3,7 +3,7 @@
 @inject('roles', '\Agenciafmd\Admix\Services\RoleService')
 
 @section('form')
-    {!! Form::bsOpen(['model' => optional($user), 'create' => route('admix.users.store'), 'update' => route('admix.users.update', ['user' => ($user->id) ?? 0])]) !!}
+    {!! Form::bsOpen(['model' => optional($model), 'create' => route('admix.users.store'), 'update' => route('admix.users.update', ['user' => ($model->id) ?? 0])]) !!}
     <div class="card-header bg-gray-lightest">
         <h3 class="card-title">
             @if(request()->is('*/create'))
@@ -28,7 +28,7 @@
 
         {!! Form::bsEmail('E-mail', 'email', null, ['required']) !!}
 
-        {!! Form::bsImage('Avatar', 'image', $user) !!}
+        {!! Form::bsImage('Avatar', 'image', $model) !!}
     </ul>
     <div class="card-header bg-gray-lightest">
         <h3 class="card-title">Alterar senha</h3>

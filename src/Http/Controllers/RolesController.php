@@ -32,7 +32,7 @@ class RolesController extends Controller
 
     public function create(Role $role)
     {
-        $view['role'] = $role;
+        $view['model'] = $role;
 
         return view('agenciafmd/admix::roles.form', $view);
     }
@@ -50,14 +50,14 @@ class RolesController extends Controller
 
     public function show(Role $role)
     {
-        $view['role'] = $role;
+        $view['model'] = $role;
 
         return view('agenciafmd/admix::roles.form', $view);
     }
 
     public function edit(Role $role)
     {
-        $view['role'] = $role;
+        $view['model'] = $role;
 
         return view('agenciafmd/admix::roles.form', $view);
     }
