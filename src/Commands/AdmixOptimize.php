@@ -2,6 +2,7 @@
 
 namespace Agenciafmd\Admix\Commands;
 
+use Clockwork\Support\Laravel\ClockworkServiceProvider;
 use Illuminate\Console\Command;
 
 class AdmixOptimize extends Command
@@ -18,7 +19,7 @@ class AdmixOptimize extends Command
         $this->call('clear-compiled');
         $this->call('auth:clear-resets');
         $this->call('cache:clear');
-        if (class_exists(\Clockwork\Support\Laravel\ClockworkServiceProvider::class)) {
+        if (class_exists(ClockworkServiceProvider::class)) {
             $this->call('clockwork:clean', [
                 '--all' => 'true',
             ]);
