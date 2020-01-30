@@ -19,11 +19,12 @@ class AdmixOptimize extends Command
         $this->call('clear-compiled');
         $this->call('auth:clear-resets');
         $this->call('cache:clear');
-        if (class_exists(ClockworkServiceProvider::class)) {
-            $this->call('clockwork:clean', [
-                '--all' => 'true',
-            ]);
-        }
+//        disable for a while
+//        if (class_exists(ClockworkServiceProvider::class)) {
+//            $this->call('clockwork:clean', [
+//                '--all' => 'true',
+//            ]);
+//        }
         $this->call('config:clear');
         $this->call('event:clear');
         $this->call('notifications:clear');
