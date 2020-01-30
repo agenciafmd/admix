@@ -3,10 +3,15 @@
 namespace Agenciafmd\Admix\Providers;
 
 use Agenciafmd\Admix\User;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\ServiceProvider;
+use RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace;
+use RenatoMarinho\LaravelPageSpeed\Middleware\RemoveComments;
+use RenatoMarinho\LaravelPageSpeed\Middleware\RemoveQuotes;
+use RenatoMarinho\LaravelPageSpeed\Middleware\TrimUrls;
+use Silber\PageCache\Middleware\CacheResponse;
 
 class AdmixServiceProvider extends ServiceProvider
 {
@@ -96,11 +101,11 @@ class AdmixServiceProvider extends ServiceProvider
     protected function setMiddlewares()
     {
         $this->app->router->middlewareGroup('turbo', [
-            \Silber\PageCache\Middleware\CacheResponse::class,
-            \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveComments::class,
-            \RenatoMarinho\LaravelPageSpeed\Middleware\TrimUrls::class,
-            \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveQuotes::class,
-            \RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace::class,
+            CacheResponse::class,
+            RemoveComments::class,
+            TrimUrls::class,
+            RemoveQuotes::class,
+            CollapseWhitespace::class,
         ]);
     }
 
