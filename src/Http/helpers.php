@@ -255,7 +255,7 @@ if (!function_exists('thumb')) {
         return (object)[
             'original' => $image->getUrl('thumb'),
             'name' => $location . image_path_builder($image->getUrl('thumb'), $mergedConfig),
-            'meta' => $image->getCustomProperty('meta')[app()->getLocale()],
+            'meta' => optional($image->getCustomProperty('meta'))[app()->getLocale()],
         ];
     }
 }
@@ -290,7 +290,7 @@ if (!function_exists('thumbs')) {
             $items[] = (object)[
                 'original' => $location . $image->getUrl('thumb'),
                 'name' => $location . image_path_builder($image->getUrl('thumb'), $mergedConfig),
-                'meta' => $image->getCustomProperty('meta')[app()->getLocale()],
+                'meta' => optional($image->getCustomProperty('meta'))[app()->getLocale()],
             ];
         }
 
@@ -319,7 +319,7 @@ if (!function_exists('image')) {
         return (object)[
             'original' => $image->getUrl(),
             'name' => $image->getUrl('thumb'),
-            'meta' => $image->getCustomProperty('meta')[app()->getLocale()],
+            'meta' => optional($image->getCustomProperty('meta'))[app()->getLocale()],
         ];
     }
 }
