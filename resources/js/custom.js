@@ -110,47 +110,45 @@ $(function () {
         placeholder: false,
         imageDragging: false,
         paste: {
-            forcePlainText: false,
-            cleanPastedHTML: true,
-            // preCleanReplacements: [
+            forcePlainText: true,
+            cleanPastedHTML: false,
+
+            // forcePlainText: false,
+            // cleanPastedHTML: true,
+            // cleanReplacements: [
             //     [
-            //         '/<[^>]*>/ig', ''
+            //         new RegExp(/(<table[^\>]*) width="[^\"]*"/gi), '<table width="100%" border="1"'
             //     ]
             // ],
-            cleanReplacements: [
-                [
-                    new RegExp(/(<table[^\>]*) width="[^\"]*"/gi), '<table width="100%" border="1"'
-                ]
-            ],
-            cleanTags: [
-                'meta',
-                'script',
-                'style',
-                'img',
-                'object',
-                'iframe',
-            ],
-            cleanAttrs: [
-                'class',
-                'style',
-                'dir',
-                //'width',
-                'height',
-                'cellpadding',
-                'cellspacing',
-                'valign'
-            ],
-            unwrapTags: [
-                'p',
-                'font',
-                'label',
-                'span',
-                'div',
-                'dl',
-                'dd',
-                'sub',
-                'sup'
-            ]
+            // cleanTags: [
+            //     'meta',
+            //     'script',
+            //     'style',
+            //     'img',
+            //     'object',
+            //     'iframe',
+            // ],
+            // cleanAttrs: [
+            //     'class',
+            //     'style',
+            //     'dir',
+            //     //'width',
+            //     'height',
+            //     'cellpadding',
+            //     'cellspacing',
+            //     'valign'
+            // ],
+            // unwrapTags: [
+            //     'p',
+            //     'font',
+            //     'label',
+            //     'span',
+            //     'div',
+            //     'dl',
+            //     'dd',
+            //     'sub',
+            //     'sup'
+            // ]
         },
         anchor: {
             placeholderText: 'ex. https://fmd.ag',
@@ -188,14 +186,14 @@ $(function () {
                     name: 'anchor',
                     aria: 'link',
                 },
-                {
-                    name: 'h3',
-                    aria: 'cabeçalho tipo 3',
-                },
-                {
-                    name: 'h4',
-                    aria: 'cabeçalho tipo 4',
-                },
+                // {
+                //     name: 'h3',
+                //     aria: 'cabeçalho tipo 3',
+                // },
+                // {
+                //     name: 'h4',
+                //     aria: 'cabeçalho tipo 4',
+                // },
                 {
                     name: 'quote',
                     aria: 'citação',
@@ -402,16 +400,20 @@ $(function () {
 
     if (document.querySelectorAll('.mask-phone').length > 0) {
         var telMask = ['(99) 9999-99999', '(99) 99999-9999'];
-        var tel = document.querySelectorAll('.mask-phone');
-        VMasker(tel).maskPattern(telMask[0]);
-        tel.addEventListener('input', inputHandler.bind(undefined, telMask, 14), false);
+        var tels = document.querySelectorAll('.mask-phone');
+        tels.forEach((tel) => {
+            VMasker(tel).maskPattern(telMask[0]);
+            tel.addEventListener('input', inputHandler.bind(undefined, telMask, 14), false);
+        });
     }
 
     if (document.querySelectorAll('.mask-cpfcnpj').length > 0) {
         var docMask = ['999.999.999-999', '99.999.999/9999-99'];
-        var doc = document.querySelectorAll('.mask-cpfcnpj');
-        VMasker(doc).maskPattern(docMask[0]);
-        doc.addEventListener('input', inputHandler.bind(undefined, docMask, 14), false);
+        var docs = document.querySelectorAll('.mask-cpfcnpj');
+        docs.forEach((doc) => {
+            VMasker(doc).maskPattern(docMask[0]);
+            doc.addEventListener('input', inputHandler.bind(undefined, docMask, 14), false);
+        });
     }
 
     if (document.querySelectorAll('.mask-date').length > 0) {
