@@ -77,6 +77,86 @@ $(function () {
     });
     /* fim trigga o loading na tabela da listagem dos itens */
 
+    /* select de estado e cidade */
+    if($(".js-state").length > 0) {
+        $.getJSON('/json/estados-cidades.json', function (data) {
+            var items = [];
+            var state = $(".js-state");
+            var options = '<option value="">-</option>';
+            $.each(data, function (key, val) {
+                var selected = '';
+                if(val.nome === state.attr('data-selected')) {
+                    selected = "selected"
+                }
+                options += '<option value="' + val.nome + '" ' + selected + '>' + val.nome + '</option>';
+            });
+            state.html(options);
+            state.change(function () {
+                var options_cidades = '<option value="">-</option>';
+                var str = "";
+                $(".js-state option:selected").each(function () {
+                    str += $(this).text();
+                });
+
+                var city = $(".js-city");
+                $.each(data, function (key, val) {
+                    if (val.nome === str) {
+                        $.each(val.cidades, function (key_city, val_city) {
+                            var selected = '';
+                            if(val_city === city.attr('data-selected')) {
+                                selected = "selected"
+                            }
+                            options_cidades += '<option value="' + val_city + '" ' + selected + '>' + val_city + '</option>';
+                        });
+                    }
+                });
+                city.html(options_cidades);
+            }).change();
+        });
+    }
+    /* fim select de estado e cidade */
+
+    /* autocompletar de cep */
+    $('.js-zipcode').on('blur', function () {
+
+        var $this = $(this);
+        var cep = $this.val().replace('-', '');
+
+        if (cep.length === 8) {
+            $.getJSON('https://api.mixd.com.br/cep/' + cep, {},
+                function (result) {
+
+                    if (!result) {
+
+                        console.log(result.message || 'Houve um erro desconhecido');
+                        return;
+                    }
+
+                    var stateInput = $('.js-state');
+                    var cityInput = $('.js-city');
+
+                    $('.js-neighborhood').val(result.bairro);
+                    $('.js-address').val(result.logradouro);
+
+                    if (stateInput.is('input')) {
+                        stateInput.val(result.uf_nome);
+                    }
+
+                    if (cityInput.is('input')) {
+                        cityInput.val(result.cidade);
+                    }
+
+                    if (stateInput.is('select')) {
+                        stateInput.val(result.uf_nome);
+                        stateInput.trigger('change');
+                        cityInput.val(result.cidade);
+                    }
+                },
+            );
+        }
+    });
+    /* fim autocompletar de cep */
+
     /* botão de descrição do upload */
     $(document).on('click', '.kv-file-tags', function () {
         var uuid = $(this).parents('.file-footer-buttons').find('.kv-file-remove').attr('data-key');
@@ -356,7 +436,6 @@ $(function () {
         $('.navbar.collapse').collapse('hide');
         hideBackdrop();
     });
-
     /* fim ativa backdrop do menu mobile*/
 });
 

@@ -170,6 +170,7 @@ class AdmixServiceProvider extends ServiceProvider
             __DIR__ . '/../resources/fonts' => public_path() . '/fonts',
             __DIR__ . '/../resources/images' => public_path() . '/images',
             __DIR__ . '/../resources/js' => public_path() . '/js',
+            __DIR__ . '/../resources/json' => public_path() . '/json',
         ], 'assets');
     }
 }
