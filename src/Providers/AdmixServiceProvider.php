@@ -103,7 +103,6 @@ class AdmixServiceProvider extends ServiceProvider
         $this->app->router->middlewareGroup('turbo', [
             CacheResponse::class,
             RemoveComments::class,
-            TrimUrls::class,
             RemoveQuotes::class,
             CollapseWhitespace::class,
         ]);
