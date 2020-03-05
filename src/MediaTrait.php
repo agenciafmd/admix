@@ -33,18 +33,18 @@ trait MediaTrait
         });
     }
 
-    public function doUpload($file, $collection = 'image')
+    public function doUpload($file, $collection = 'image', $customProperties = [])
     {
         $this->clearMediaCollection($collection)
             ->addMedia($file)
-            ->withCustomProperties(['uuid' => uniqid()])
+            ->withCustomProperties(array_merge(['uuid' => uniqid()], $customProperties))
             ->toMediaCollection($collection);
     }
 
-    public function doUploadMultiple($file, $collection = 'image')
+    public function doUploadMultiple($file, $collection = 'image', $customProperties = [])
     {
         $this->addMedia($file)
-            ->withCustomProperties(['uuid' => uniqid()])
+            ->withCustomProperties(array_merge(['uuid' => uniqid()], $customProperties))
             ->toMediaCollection($collection);
     }
 
