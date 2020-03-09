@@ -22,9 +22,12 @@ class CommandServiceProvider extends ServiceProvider
 
         $this->app->booted(function () {
             $schedule = $this->app->make(Schedule::class);
-            $schedule->command('queue:work --tries=3 --delay=5 --timeout=60 --stop-when-empty')
-                ->name('Rotina de processamento de fila')
-                ->withoutOverlapping(5)
+            $schedule->command('queue:restart')
+                ->everyThirtyMinutes();
+            $schedule->command('queue:work --tries=3 --delay=5 --timeout=60 --queue=high,default,low')
+                ->name(now()->format('H:i') . ' Rotina de processamento de fila')
+                ->runInBackground()
+                ->withoutOverlapping(30)
                 ->everyMinute()
                 ->appendOutputTo(storage_path('logs/command-queue-work-' . date('Y-m-d') . '.log'));
 
