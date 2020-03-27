@@ -9,6 +9,10 @@ trait TurboTrait
 {
     public static function bootTurboTrait()
     {
+        if (app()->runningInConsole()) {
+            return false;
+        }
+
         static::created(function ($model) {
             if ($model->is_active) {
                 dispatch(function () use ($model) {
