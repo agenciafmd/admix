@@ -3,6 +3,7 @@
 return [
     'url' => 'admix',
     'name' => 'Agência F&MD',
+    'turbo' => env('TURBO_ENABLED', false),
     'auth' => [
         'guards' => [
             'admix-web' => [

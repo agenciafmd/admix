@@ -101,7 +101,7 @@ class AdmixServiceProvider extends ServiceProvider
     protected function setMiddlewares()
     {
         $turboGroup = [];
-        if (!$this->app->environment('local') || env('TURBO_ENABLED', false) == true) {
+        if (!$this->app->environment('local') || config('admix.turbo')) {
             $turboGroup = array_merge($turboGroup, [
                 CacheResponse::class,
                 RemoveComments::class,
