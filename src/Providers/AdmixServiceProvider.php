@@ -100,12 +100,17 @@ class AdmixServiceProvider extends ServiceProvider
 
     protected function setMiddlewares()
     {
-        $this->app->router->middlewareGroup('turbo', [
-            CacheResponse::class,
-            RemoveComments::class,
-            RemoveQuotes::class,
-            CollapseWhitespace::class,
-        ]);
+        $turboGroup = [];
+        if (config('admix.turbo')) {
+            $turboGroup = array_merge($turboGroup, [
+                CacheResponse::class,
+                RemoveComments::class,
+                RemoveQuotes::class,
+                CollapseWhitespace::class,
+            ]);
+        }// if
+
+        $this->app->router->middlewareGroup('turbo', $turboGroup);
     }
 
     protected function setPaginator()
