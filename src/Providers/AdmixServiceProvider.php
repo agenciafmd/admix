@@ -10,7 +10,6 @@ use Illuminate\Support\ServiceProvider;
 use RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace;
 use RenatoMarinho\LaravelPageSpeed\Middleware\RemoveComments;
 use RenatoMarinho\LaravelPageSpeed\Middleware\RemoveQuotes;
-use RenatoMarinho\LaravelPageSpeed\Middleware\TrimUrls;
 use Silber\PageCache\Middleware\CacheResponse;
 
 class AdmixServiceProvider extends ServiceProvider
@@ -108,7 +107,7 @@ class AdmixServiceProvider extends ServiceProvider
                 RemoveQuotes::class,
                 CollapseWhitespace::class,
             ]);
-        }// if
+        }
 
         $this->app->router->middlewareGroup('turbo', $turboGroup);
     }
