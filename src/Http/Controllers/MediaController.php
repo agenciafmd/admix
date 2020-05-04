@@ -2,10 +2,10 @@
 
 namespace Agenciafmd\Admix\Http\Controllers;
 
-use League\Glide\ServerFactory;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use League\Glide\Responses\LaravelResponseFactory;
+use League\Glide\ServerFactory;
 
 class MediaController extends Controller
 {
@@ -33,8 +33,10 @@ class MediaController extends Controller
 
         $server = ServerFactory::create([
             'response' => new LaravelResponseFactory(app('request')),
-            'source' => Storage::disk('public')->getDriver(),
-            'cache' => Storage::disk('local')->getDriver(),
+            'source' => Storage::disk('public')
+                ->getDriver(),
+            'cache' => Storage::disk('local')
+                ->getDriver(),
             'cache_path_prefix' => '.cache',
             //'group_cache_in_folders' => false
         ]);
@@ -43,15 +45,18 @@ class MediaController extends Controller
 
         try {
             $imagePath = $server->makeImage($basePath, $options);
-            $imageBase = $server->getCache()->read($imagePath);
+            $imageBase = $server->getCache()
+                ->read($imagePath);
             file_put_contents(public_path("media/{$path}"), $imageBase);
 
             return $server->getImageResponse($basePath, $options);
-        }
-        catch (\Exception $exception) {
+        } catch (\Exception $exception) {
+            @file_put_contents(public_path('media/image-placeholder.gif'), base64_decode('R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw=='));
+
             $basePath = 'image-placeholder.gif';
             $imagePath = $server->makeImage($basePath, $options);
-            $imageBase = $server->getCache()->read($imagePath);
+            $imageBase = $server->getCache()
+                ->read($imagePath);
             file_put_contents(public_path("media/{$path}"), $imageBase);
 
             return $server->getImageResponse($basePath, $options);

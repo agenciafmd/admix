@@ -11,12 +11,10 @@ use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\Models\Media;
-use Spatie\Image\Manipulations;
 
 class User extends Authenticatable implements AuditableContract, HasMedia
 {
-    use Notifiable, SoftDeletes, Auditable, HasMediaTrait, MediaTrait {
+    use Notifiable, SoftDeletes, Auditable, HasMediaTrait, MediaThumbTrait, MediaTrait {
         MediaTrait::registerMediaConversions insteadof HasMediaTrait;
     }
 
@@ -54,12 +52,6 @@ class User extends Authenticatable implements AuditableContract, HasMedia
 
         return in_array('\\' . $ability, $this->role->rules, true);
     }
-
-//    TODO: Deixar isso dinamico
-//    public function getImageAttribute()
-//    {
-//        return $this->getFirstMedia('image');
-//    }
 
     public function getIsAdminAttribute()
     {

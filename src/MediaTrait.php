@@ -30,6 +30,8 @@ trait MediaTrait
                     $model->doUpload($file, $collection);
                 }
             }
+
+            return true;
         });
     }
 
