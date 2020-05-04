@@ -1,7 +1,5 @@
 <?php
 
-//TODO: Refatorar estes helpers para snake_case
-
 function admix_is_active($route = '')
 {
     $url = parse_url($route);
@@ -225,7 +223,7 @@ if (!function_exists('default_sort')) {
 }
 
 if (!function_exists('thumb')) {
-    function thumb($model, $name, $config = [], $placeholder = '/images/sem-imagem.jpg')
+    function thumb($model, $name, $config = [], $placeholder = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==')
     {
         $default = [
             'w' => 800,

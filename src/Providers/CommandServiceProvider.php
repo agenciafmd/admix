@@ -2,6 +2,7 @@
 
 namespace Agenciafmd\Admix\Providers;
 
+use Agenciafmd\Admix\Commands\AdmixClear;
 use Agenciafmd\Admix\Commands\AdmixMediaClear;
 use Agenciafmd\Admix\Commands\AdmixOptimize;
 use Agenciafmd\Admix\Commands\AdmixUser;
@@ -15,6 +16,7 @@ class CommandServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->commands([
+            AdmixClear::class,
             AdmixMediaClear::class,
             AdmixOptimize::class,
             AdmixUser::class,

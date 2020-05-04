@@ -18,5 +18,11 @@ class AdmixMediaClear extends Command
         } else {
             $this->info('Falha na remoção dos thumbs');
         }
+
+        if (File::deleteDirectory(storage_path('/app/.cache'), true)) {
+            $this->info('Cache do Glide removido com sucesso');
+        } else {
+            $this->info('Falha na remoção do cache do Glide');
+        }
     }
 }
