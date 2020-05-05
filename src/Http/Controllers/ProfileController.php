@@ -17,7 +17,7 @@ class ProfileController extends Controller
 
     public function update(ProfilesRequest $request)
     {
-        $data = $request->all();
+        $data = $request->validated();
         if (empty($data['password'])) {
             unset($data['password']);
         } else {

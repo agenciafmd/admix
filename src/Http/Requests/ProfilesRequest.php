@@ -14,6 +14,7 @@ class ProfilesRequest extends FormRequest
             'name' => 'required|max:150',
             'email' => 'required|email|unique:users,email,' . auth('admix-web')->user()->id,
             'password' => 'nullable|min:6|same:password_confirmation',
+            'media' => 'array|nullable',
         ];
     }
 

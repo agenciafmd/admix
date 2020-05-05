@@ -39,7 +39,7 @@ class RolesController extends Controller
 
     public function store(RolesRequest $request)
     {
-        if (Role::create($request->all())) {
+        if (Role::create($request->validated())) {
             flash('Item inserido com sucesso.', 'success');
         } else {
             flash('Falha no cadastro.', 'danger');
@@ -64,7 +64,7 @@ class RolesController extends Controller
 
     public function update(Role $role, RolesRequest $request)
     {
-        if ($role->update($request->all())) {
+        if ($role->update($request->validated())) {
             flash('Item atualizado com sucesso.', 'success');
         } else {
             flash('Falha na atualização.', 'danger');

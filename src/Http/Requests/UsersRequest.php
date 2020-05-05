@@ -15,6 +15,7 @@ class UsersRequest extends FormRequest
             'name' => 'required|max:150',
             'email' => 'required|email|unique:users',
             'password' => 'min:6|same:password_confirmation',
+            'media' => 'array|nullable',
         ];
 
         if (request()->isMethod('PUT')) {

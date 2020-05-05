@@ -39,7 +39,7 @@ class UsersController extends Controller
 
     public function store(UsersRequest $request)
     {
-        $data = $request->all();
+        $data = $request->validated();
         $data['password'] = Hash::make($data['password']);
 
         if (User::create($data)) {
@@ -67,7 +67,7 @@ class UsersController extends Controller
 
     public function update(User $user, UsersRequest $request)
     {
-        $data = $request->all();
+        $data = $request->validated();
         if (empty($data['password'])) {
             unset($data['password']);
         } else {
