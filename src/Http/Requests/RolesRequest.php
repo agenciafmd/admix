@@ -11,9 +11,9 @@ class RolesRequest extends FormRequest
     public function rules()
     {
         return [
-            'is_active' => 'required|boolean',
-            'name' => 'required|max:150',
-            'rules' => 'required',
+            'is_active' => ['required', 'boolean'],
+            'name' => ['required', 'max:150'],
+            'rules' => ['required'],
         ];
     }
 
