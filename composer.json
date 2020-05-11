@@ -16,6 +16,7 @@
     "agenciafmd/admix-postal": "dev-master",
     "agenciafmd/admix-analytics": "dev-master",
     "agenciafmd/admix-leads": "dev-master",
+    "geekcom/validator-docs": "^3.4",
     "hmazter/laravel-schedule-list": "^2.0",
     "laracasts/flash": "^3.0",
     "laravel/framework": "6.*",

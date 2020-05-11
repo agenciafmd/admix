@@ -32,7 +32,7 @@ class CommandServiceProvider extends ServiceProvider
              * rodem exatamente na mesma hora
              * */
             $minutes = cache()->rememberForever('schedule-minutes', function () {
-                return str_pad(rand(0, 59), 2, STR_PAD_LEFT);
+                return str_pad(rand(0, 59), 2, 0, STR_PAD_LEFT);
             });
 
             $schedule->command('queue:restart')
