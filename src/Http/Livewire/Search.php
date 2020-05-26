@@ -17,6 +17,7 @@ class Search extends Component
         if ($this->searchTerm) {
             $this->results = app()->make('admix-search')
                 ->search($this->searchTerm)
+                ->take(10)
                 ->groupByType()
                 ->toArray();
         }
