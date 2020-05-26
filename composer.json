@@ -27,6 +27,7 @@
     "silber/page-cache": "^1.0",
     "spatie/laravel-medialibrary": "^7.0.0",
     "spatie/laravel-query-builder": "^2.3",
+    "spatie/laravel-searchable": "^1.6",
     "spatie/laravel-sitemap": "^5.3",
     "spatie/laravel-translatable": "^4.1"
   },
