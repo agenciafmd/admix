@@ -11,6 +11,7 @@ use RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace;
 use RenatoMarinho\LaravelPageSpeed\Middleware\RemoveComments;
 use RenatoMarinho\LaravelPageSpeed\Middleware\RemoveQuotes;
 use Silber\PageCache\Middleware\CacheResponse;
+use Spatie\Searchable\Search as SpatieSearch;
 
 class AdmixServiceProvider extends ServiceProvider
 {
@@ -60,6 +61,11 @@ class AdmixServiceProvider extends ServiceProvider
         $this->app->singleton('admix-menu', function () {
             return collect();
         });
+
+        $this->app->singleton('admix-search', function () {
+            return (new SpatieSearch())
+                ->registerModel(User::class, 'name', 'email');
+        });
     }
 
     public function setLocalFactories()
@@ -70,10 +76,11 @@ class AdmixServiceProvider extends ServiceProvider
 
     protected function providers()
     {
-        $this->app->register(RouteServiceProvider::class);
         $this->app->register(AuthServiceProvider::class);
-        $this->app->register(CommandServiceProvider::class);
         $this->app->register(BroadcastServiceProvider::class);
+        $this->app->register(CommandServiceProvider::class);
+        $this->app->register(LivewireServiceProvider::class);
+        $this->app->register(RouteServiceProvider::class);
     }
 
     protected function setMenu()

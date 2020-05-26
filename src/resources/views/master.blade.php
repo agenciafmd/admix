@@ -22,6 +22,8 @@
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&subset=latin-ext">
     <link rel="stylesheet" href="{{ asset('css/admix.css') }}"/>
 
+    @livewireStyles
+
     @stack('styles')
 </head>
 <body class="antialiased ">
@@ -66,6 +68,8 @@
 @stack('bottom')
 
 <script src="{{ asset('js/admix.js') }}"></script>
+
+@livewireScripts
 
 @include('agenciafmd/flash::partials.message')
 

@@ -11,8 +11,10 @@ use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 
-class User extends Authenticatable implements AuditableContract, HasMedia
+class User extends Authenticatable implements AuditableContract, HasMedia, Searchable
 {
     use Notifiable, SoftDeletes, Auditable, HasMediaTrait, MediaThumbTrait, MediaTrait {
         MediaTrait::registerMediaConversions insteadof HasMediaTrait;
@@ -37,6 +39,17 @@ class User extends Authenticatable implements AuditableContract, HasMedia
         static::addGlobalScope('type', function (Builder $builder) {
             $builder->where('users.type', 'admix');
         });
+    }
+
+    public $searchableType = 'Usuários';
+
+    public function getSearchResult(): SearchResult
+    {
+        return new SearchResult(
+            $this,
+            "{$this->name} ({$this->email})",
+            route('admix.users.edit', $this->id)
+        );
     }
 
     public function role()

@@ -7,15 +7,9 @@
         <a href="{{ config('app.url') }}" target="_blank" class="navbar-brand text-inherit mr-md-3">
             <h1 class="mb-0 mb-md-2">{{ config('app.name') }}</h1>
         </a>
-{{--        TODO: filtar as models usando o spatie --}}
-{{--        <div class="w-auto flex-fill max-w-md ml-0 ml-md-8 mr-auto d-none d-lg-block">--}}
-{{--            <div class="input-icon">--}}
-{{--                    <span class="input-icon-addon">--}}
-{{--                        <i class="icon fe-search"></i>--}}
-{{--                    </span>--}}
-{{--                <input type="text" class="form-control form-control-light" placeholder="Search" tabindex="-1">--}}
-{{--            </div>--}}
-{{--        </div>--}}
+
+        @livewire('admix::search')
+
         <ul class="nav navbar-menu align-items-center order-1 order-lg-2">
             <li class="nav-item dropdown">
                 <a href="#" data-toggle="dropdown"
