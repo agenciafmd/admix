@@ -11,16 +11,40 @@ class UsersRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'is_active' => ['required', 'boolean'],
-            'name' => ['required', 'max:150'],
-            'email' => ['required', 'email', 'unique:users'],
-            'password' => ['min:6', 'same:password_confirmation'],
-            'media' => ['array', 'nullable'],
+            'is_active' => [
+                'required',
+                'boolean',
+            ],
+            'name' => [
+                'required',
+                'max:150',
+            ],
+            'email' => [
+                'required',
+                'email',
+                'unique:users',
+            ],
+            'password' => [
+                'min:6',
+                'same:password_confirmation',
+            ],
+            'media' => [
+                'array',
+                'nullable',
+            ],
         ];
 
         if (request()->isMethod('PUT')) {
-            $rules['email'] = ['required', 'email', 'unique:users,email,' . request()->route()->user->id];
-            $rules['password'] = ['nullable', 'min:6', 'same:password_confirmation'];
+            $rules['email'] = [
+                'required',
+                'email',
+                'unique:users,email,' . request()->route()->user->id,
+            ];
+            $rules['password'] = [
+                'nullable',
+                'min:6',
+                'same:password_confirmation',
+            ];
         }
 
         return $rules;

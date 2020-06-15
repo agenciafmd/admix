@@ -31,6 +31,16 @@ return [
             ],
         ],
     ],
+    'logging' => [
+        'channels' => [
+            'admix' => [
+                'driver' => 'daily',
+                'path' => storage_path('logs/admix.log'),
+                'level' => 'debug',
+                'days' => 14,
+            ],
+        ],
+    ],
     'manifest' => [
         'name' => 'Admix',
         'short_name' => 'Admix',

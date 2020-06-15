@@ -11,10 +11,24 @@ class ProfilesRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'max:150'],
-            'email' => ['required', 'email', 'unique:users,email,' . auth('admix-web')->user()->id],
-            'password' => ['nullable', 'min:6', 'same:password_confirmation'],
-            'media' => ['array', 'nullable'],
+            'name' => [
+                'required',
+                'max:150',
+            ],
+            'email' => [
+                'required',
+                'email',
+                'unique:users,email,' . auth('admix-web')->user()->id,
+            ],
+            'password' => [
+                'nullable',
+                'min:6',
+                'same:password_confirmation',
+            ],
+            'media' => [
+                'array',
+                'nullable',
+            ],
         ];
     }
 

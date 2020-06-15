@@ -151,6 +151,7 @@ class AdmixServiceProvider extends ServiceProvider
         config(['auth.guards' => array_merge(config('admix.auth.guards'), config('auth.guards'))]);
         config(['auth.providers' => array_merge(config('admix.auth.providers'), config('auth.providers'))]);
         config(['auth.passwords' => array_merge(config('admix.auth.passwords'), config('auth.passwords'))]);
+        config(['logging.channels' => array_merge(config('admix.logging.channels'), config('logging.channels'))]);
     }
 
     protected function loadBladeDirectives()

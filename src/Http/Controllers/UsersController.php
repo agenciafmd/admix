@@ -2,13 +2,12 @@
 
 namespace Agenciafmd\Admix\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Agenciafmd\Admix\User;
-use Illuminate\Support\Facades\Hash;
 use Agenciafmd\Admix\Http\Requests\UsersRequest;
+use Agenciafmd\Admix\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Spatie\QueryBuilder\QueryBuilder;
-use Illuminate\Support\Str;
 
 class UsersController extends Controller
 {
