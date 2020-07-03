@@ -164,8 +164,8 @@ class AdmixServiceProvider extends ServiceProvider
     protected function publish()
     {
         // cd ~/code/packages/agenciafmd/admix/resources
-        // npm run dev && php ~/code/starter/artisan vendor:publish --provider="Agenciafmd\Admix\Providers\AdmixServiceProvider" --tag="assets" --force
-        // php artisan vendor:publish --provider="Agenciafmd\Admix\Providers\AdmixServiceProvider" --tag="assets" --force
+        // npm run dev && php ~/code/starter/artisan vendor:publish --tag="admix:assets" --force
+        // php artisan vendor:publish --tag="admix:assets" --force
 
         $this->publishes([
             __DIR__ . '/../resources/views' => base_path('resources/views/vendor/agenciafmd/admix'),
