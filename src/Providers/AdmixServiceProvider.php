@@ -169,11 +169,11 @@ class AdmixServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__ . '/../resources/views' => base_path('resources/views/vendor/agenciafmd/admix'),
-        ], 'views');
+        ], 'admix:views');
 
         $this->publishes([
             __DIR__ . '/../config' => base_path('config'),
-        ], 'config');
+        ], 'admix:config');
 
         $this->publishes([
             __DIR__ . '/../resources/css' => public_path() . '/css',
@@ -181,6 +181,6 @@ class AdmixServiceProvider extends ServiceProvider
             __DIR__ . '/../resources/images' => public_path() . '/images',
             __DIR__ . '/../resources/js' => public_path() . '/js',
             __DIR__ . '/../resources/json' => public_path() . '/json',
-        ], 'assets');
+        ], 'admix:assets');
     }
 }
