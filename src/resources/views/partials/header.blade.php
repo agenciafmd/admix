@@ -14,7 +14,8 @@
             <li class="nav-item dropdown">
                 <a href="#" data-toggle="dropdown"
                    class="nav-link d-flex align-items-center py-0 px-lg-0 px-2 text-color ml-2">
-                    <span class="avatar" style="background-image: url({{ (auth('admix-web')->user()->getFirstMediaUrl('image', 'thumb') ?: '/images/avatar-1.svg') }})"></span>
+                    <span class="avatar"
+                          style="background-image: url({{ (auth('admix-web')->user()->getFirstMediaUrl('image', 'thumb') ?: '/images/avatar-' . Str::limit(base_convert(md5(auth('admix-web')->user()->email), 16, 5), 2, '') . '.svg') }})"></span>
                     <span class="ml-2 d-none d-lg-block leading-none">
                         <span>{{ auth('admix-web')->user()->name }}</span>
                         <span class="text-muted d-block mt-1 text-h6">
@@ -26,9 +27,9 @@
                     <a class="dropdown-item" href="{{ route('admix.profile') }}">
                         <i class="dropdown-icon icon fe-user"></i> Meus dados
                     </a>
-{{--                    <a class="dropdown-item" href="#">--}}
-{{--                        <i class="dropdown-icon icon fe-settings"></i> Configurações--}}
-{{--                    </a>--}}
+                    {{--                    <a class="dropdown-item" href="#">--}}
+                    {{--                        <i class="dropdown-icon icon fe-settings"></i> Configurações--}}
+                    {{--                    </a>--}}
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{{ route('admix.logout') }}">
                         <i class="dropdown-icon icon fe-log-out"></i> Sair
