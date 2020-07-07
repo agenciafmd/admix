@@ -18,5 +18,13 @@ class AdmixException extends Exception
     {
         Log::channel('admix')
             ->info("{$this->message} ({$this->file}:L{$this->line})");
+
+        Log::channel('admix-slack')
+            ->warning("{$this->message}", [
+                'Site' => "[" . config('app.name') . "](" . config('app.url') . ")",
+                'Arquivo' => $this->file,
+                'Linha' => $this->line,
+                'Responsável' => ':elephant:',
+            ]);
     }
 }

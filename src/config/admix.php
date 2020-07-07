@@ -39,6 +39,21 @@ return [
                 'level' => 'debug',
                 'days' => 14,
             ],
+            'admix-slack' => [
+                'driver' => 'slack',
+                'url' => env('LOG_SLACK_WEBHOOK_URL'),
+                'username' => 'WALL-E',
+                'tap' => [
+                    //
+                ],
+                'emoji' => 'boom',
+                'level' => 'info',
+                'short' => false,
+                'context' => true,
+                'exclude_fields' => [
+                    //
+                ],
+            ],
         ],
     ],
     'manifest' => [
