@@ -28,6 +28,9 @@ class UsersRequest extends FormRequest
                 'min:6',
                 'same:password_confirmation',
             ],
+            'role_id' => [
+                'required',
+            ],
             'media' => [
                 'array',
                 'nullable',
@@ -57,6 +60,7 @@ class UsersRequest extends FormRequest
             'name' => 'nome',
             'password' => 'senha',
             'password_confirmation' => 'confirmação de senha',
+            'role_id' => 'grupo'
         ];
     }
 
