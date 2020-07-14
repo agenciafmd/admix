@@ -180,6 +180,10 @@ form.destroy button {
 //  transform: translateY(-50%);
 //}
 
+.item-action.dropdown {
+  position: unset;
+}
+
 // file-input
 .file-drop-zone {
   border: unset;

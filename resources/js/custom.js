@@ -78,14 +78,14 @@ $(function () {
     /* fim trigga o loading na tabela da listagem dos itens */
 
     /* select de estado e cidade */
-    if($(".js-state").length > 0) {
+    if ($(".js-state").length > 0) {
         $.getJSON('/json/estados-cidades.json', function (data) {
             var items = [];
             var state = $(".js-state");
             var options = '<option value="">-</option>';
             $.each(data, function (key, val) {
                 var selected = '';
-                if(val.nome === state.attr('data-selected')) {
+                if (val.nome === state.attr('data-selected')) {
                     selected = "selected"
                 }
                 options += '<option value="' + val.nome + '" ' + selected + '>' + val.nome + '</option>';
@@ -103,7 +103,7 @@ $(function () {
                     if (val.nome === str) {
                         $.each(val.cidades, function (key_city, val_city) {
                             var selected = '';
-                            if(val_city === city.attr('data-selected')) {
+                            if (val_city === city.attr('data-selected')) {
                                 selected = "selected"
                             }
                             options_cidades += '<option value="' + val_city + '" ' + selected + '>' + val_city + '</option>';
@@ -449,7 +449,12 @@ $(function () {
                 if (form.checkValidity() === false) {
                     event.preventDefault();
                     event.stopPropagation();
-                    $(form).find('button.js-loading').removeClass('btn-loading').attr('disabled', false);
+                    $(form).find('button.js-loading')
+                        .removeClass('btn-loading')
+                        .attr('disabled', false);
+
+                    guideUserToTheFirstError();
+
                 }
                 form.classList.add('was-validated');
             }, false);
@@ -524,3 +529,71 @@ $(function () {
     }
 })();
 /* fim mascaras */
+
+/* select2ajax */
+
+/*
+* Caso de uso / brain
+* {{ Form::bsSelect('Cliente', 'customer_id', (optional($model)->id) ? [$model->customer->id => "#{$model->customer->id} - {$model->customer->name}"] : ['' => '-'], null, [
+        'data-ajax--url' => route('admix.api.customers.index'),
+        'class' => 'js-select2-ajax',
+        'required'
+    ]) }}
+* */
+function initializeSelect2Ajax() {
+    var select2Selector = $('.js-select2-ajax');
+
+    select2Selector.each(function (key, item) {
+        if (!$(item).hasClass('select2-hidden-accessible')) {
+            let select2Element = $(item).select2({
+                language: 'pt-BR',
+                width: '100%',
+                ajax: {
+                    data: function (params) {
+                        return {
+                            filter: {
+                                string: params.term,
+                            },
+                        };
+                    },
+                },
+            });
+            select2Element.each(function (index) {
+                $(this).data('select2').$container.addClass('custom-select d-block');
+                $(this).trigger('change');
+            });
+        }
+    });
+}
+
+/* fim select2ajax */
+
+/* scroll para o erro */
+function guideUserToTheFirstError() {
+
+    const currentScrollPosition = $(window)
+        .scrollTop();
+    const invalidInputsSelectors = [
+        '.form-control:invalid',
+        '.custom-control-input:invalid',
+        '.form-control.is-invalid',
+        '.custom-control-input.is-invalid',
+    ];
+    const $invalidInputs = $(invalidInputsSelectors.join(', '));
+    // Selects the parent to get input label
+    const $firstInvalidInput = $invalidInputs.first()
+        .parent();
+    const firstInvalidInputOffsetTop = $firstInvalidInput.offset().top;
+
+    if (currentScrollPosition <= firstInvalidInputOffsetTop) {
+
+        return;
+    }
+
+    $('html, body')
+        .animate({
+            scrollTop: $firstInvalidInput.offset().top - 30,
+        }, 1000);
+}
+
+/* fim scroll para o erro */
