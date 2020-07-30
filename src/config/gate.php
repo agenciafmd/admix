@@ -22,7 +22,7 @@ return [
                 'method' => 'delete',
             ],
             [
-                'name' => 'restarurar',
+                'name' => 'restaurar',
                 'method' => 'restore',
             ],
         ],
@@ -49,7 +49,7 @@ return [
                 'method' => 'delete',
             ],
             [
-                'name' => 'restarurar',
+                'name' => 'restaurar',
                 'method' => 'restore',
             ],
         ],
