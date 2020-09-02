@@ -545,3 +545,37 @@ form.destroy button {
 }
 
 //fim menu mobile
+
+// dropbox das actions abertas no desktop
+@include media-breakpoint-up(md) {
+  .item-action.dropdown {
+    a.icon, .dropdown-icon {
+      display: none;
+    }
+
+    .dropdown-menu {
+      display: block;
+      position: unset;
+      box-shadow: none;
+      background: none;
+      border: none;
+      min-width: unset;
+      padding: 0;
+    }
+
+    .dropdown-item {
+      display: inline;
+      width: 100%;
+      padding: .25rem 0.25rem;
+      margin: .25rem;
+      clear: both;
+      font-weight: 400;
+      color: #212529;
+      text-align: inherit;
+      white-space: nowrap;
+      background-color: transparent;
+      border: 0;
+    }
+  }
+}
+// fim dropbox das actions abertas no desktop
