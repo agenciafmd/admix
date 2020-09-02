@@ -8,7 +8,8 @@ class UserService
 {
     public function all()
     {
-        return User::withTrashed()->get();
+        return User::withTrashed()
+            ->get();
     }
 
     public function toSelect()

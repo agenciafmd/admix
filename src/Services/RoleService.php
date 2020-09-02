@@ -8,7 +8,9 @@ class RoleService
 {
     public function toSelect()
     {
-        return Role::orderBy('name', 'asc')->pluck('name', 'id')->toArray();
+        return Role::orderBy('name', 'asc')
+            ->pluck('name', 'id')
+            ->toArray();
     }
 
     public function rules()
