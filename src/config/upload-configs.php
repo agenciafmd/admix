@@ -3,11 +3,14 @@
 return [
     'user' => [
         'image' => [
-            'width' => 400,
-            'height' => 400,
-            'quality' => 100,
-            'optimize' => true,
-            'crop' => true,
+            'sources' => [
+                [
+                    'conversion' => 'thumb',
+                    'media' => '(min-width: 1366px)',
+                    'width' => 400,
+                    'height' => 400,
+                ],
+            ],
         ],
     ],
 ];
