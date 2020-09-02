@@ -23,7 +23,7 @@ class AdmixUser extends Command
             'name' => $name,
             'email' => $email,
             'password' => $password,
-            'type' => 'admix'
+            'type' => 'admix',
         ])) {
             $this->info('Usuário criado');
             $this->line($name . ' (' . $email . ')' . "\n");

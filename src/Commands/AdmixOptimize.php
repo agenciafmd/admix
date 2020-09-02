@@ -17,9 +17,7 @@ class AdmixOptimize extends Command
         $this->call('optimize');
         $this->call('event:cache');
         $this->call('view:cache');
-        $this->line('Cache gerado com sucesso');
 
         $this->call('queue:restart');
-        $this->line('Fila reiniciada com sucesso');
     }
 }
