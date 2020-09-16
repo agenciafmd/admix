@@ -13,7 +13,7 @@
                         <div class="card-body p-6">
                             <div class="card-title">Painel Administrativo</div>
                             <div class="form-group">
-                                <label class="form-label">E-mail</label>
+                                <label class="form-label" for="email">E-mail</label>
                                 <input type="email" name="email" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" id="email"
                                        value="{{ old('email') }}" required autofocus />
                                 @if ($errors->has('email'))
@@ -21,11 +21,8 @@
                                 @endif
                             </div>
                             <div class="form-group {{ $errors->has('password') ? ' has-error' : '' }}">
-                                <label class="form-label">
+                                <label class="form-label" for="password">
                                     Senha
-                                    <a href="{{ route('admix.recover.form') }}" class="float-right small" tabindex="1">
-                                        Esqueci minha senha
-                                    </a>
                                 </label>
                                 <input type="password" name="password" class="form-control" id="password" required />
                                 @if ($errors->has('password'))
@@ -39,8 +36,13 @@
                                     <span class="custom-control-label">Permanecer logado</span>
                                 </label>
                             </div>
-                            <div class="form-footer">
+                            <div class="form-footer mt-0">
                                 <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+
+                                <a href="{{ route('admix.recover.form') }}" class="btn btn-link btn-block text-lowercase">
+                                    Esqueci minha senha
+                                </a>
+
                             </div>
                         </div>
                     </form>
@@ -48,5 +50,4 @@
             </div>
         </div>
     </div>
-    {{-- TODO: no blur, remover o is-invalid --}}
 @endsection

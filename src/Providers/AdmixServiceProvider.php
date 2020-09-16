@@ -3,9 +3,7 @@
 namespace Agenciafmd\Admix\Providers;
 
 use Agenciafmd\Admix\User;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace;
 use RenatoMarinho\LaravelPageSpeed\Middleware\RemoveComments;
@@ -23,21 +21,11 @@ class AdmixServiceProvider extends ServiceProvider
 
         $this->setMiddlewares();
 
-        $this->setPaginator();
-
-        $this->loadViews();
-
         $this->loadMigrations();
 
         $this->loadTranslations();
 
-        $this->loadBladeDirectives();
-
         $this->publish();
-
-        if ($this->app->environment(['local', 'testing']) && $this->app->runningInConsole()) {
-            $this->setLocalFactories();
-        }
 
         if ($this->app->environment(['local']) && !$this->app->runningInConsole()) {
             $user = new User();
@@ -68,15 +56,10 @@ class AdmixServiceProvider extends ServiceProvider
         });
     }
 
-    public function setLocalFactories()
-    {
-        $this->app->make('Illuminate\Database\Eloquent\Factory')
-            ->load(__DIR__ . '/../database/factories');
-    }
-
     protected function providers()
     {
         $this->app->register(AuthServiceProvider::class);
+        $this->app->register(BladeServiceProvider::class);
         $this->app->register(BroadcastServiceProvider::class);
         $this->app->register(CommandServiceProvider::class);
         $this->app->register(LivewireServiceProvider::class);
@@ -119,17 +102,6 @@ class AdmixServiceProvider extends ServiceProvider
         $this->app->router->middlewareGroup('turbo', $turboGroup);
     }
 
-    protected function setPaginator()
-    {
-        Paginator::defaultView('agenciafmd/admix::partials.paginate.simple');
-    }
-
-    protected function loadViews()
-    {
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'agenciafmd/admix');
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'agenciafmd/flash');
-    }
-
     protected function loadMigrations()
     {
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
@@ -152,13 +124,6 @@ class AdmixServiceProvider extends ServiceProvider
         config(['auth.providers' => array_merge(config('admix.auth.providers'), config('auth.providers'))]);
         config(['auth.passwords' => array_merge(config('admix.auth.passwords'), config('auth.passwords'))]);
         config(['logging.channels' => array_merge(config('admix.logging.channels'), config('logging.channels'))]);
-    }
-
-    protected function loadBladeDirectives()
-    {
-        Blade::directive('render', function ($component) {
-            return "<?php echo (app($component))->toHtml(); ?>";
-        });
     }
 
     protected function publish()

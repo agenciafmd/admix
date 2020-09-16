@@ -25,11 +25,10 @@
                             <div class="col-md-6 p-0 text-right">
                                 <div class="form-row float-right">
                                     <div class="js-batch col-auto d-none">
-                                        {{ Form::open(['url' => '', 'method' => 'post', 'class' => 'js-batch-form']) }}
-
-                                        @yield('batch')
-
-                                        {{ Form::close() }}
+                                        <form method="post" action="" class="js-batch-form" accept-charset="UTF-8">
+                                            @csrf
+                                            @yield('batch')
+                                        </form>
                                     </div>
 
                                     @yield('bar')
@@ -38,50 +37,37 @@
                                         <div class="dropdown">
                                             <button type="button" class="btn btn-secondary dropdown-toggle"
                                                     data-toggle="dropdown">
-                                                <i class="icon fe-filter"></i>
+                                                <i class="icon fe-filter d-md-none"></i>
+                                                <span class="d-none d-md-inline">Filtrar</span>
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-right p-0">
-                                                {{ Form::open(['url' => $route, 'method' => 'get']) }}
-                                                {{ Form::hidden('query', request()->get('query')) }}
-                                                <h6 class="dropdown-header bg-gray-lightest p-2">#</h6>
-                                                <div class="p-2">
-                                                    {{ Form::text('filter[id]', filter('id'), [
-                                                            'class' => 'form-control form-control-sm'
-                                                        ]) }}
-                                                </div>
-                                                <h6 class="dropdown-header bg-gray-lightest p-2">Ativo</h6>
-                                                <div class="p-2">
-                                                    {{ Form::select('filter[is_active]', [
-                                                            '' => '-',
-                                                            '1' => 'Sim',
-                                                            '0' => 'Não'
-                                                        ], filter('is_active'), [
-                                                            'class' => 'form-control form-control-sm'
-                                                        ]) }}
-                                                </div>
-                                                <h6 class="dropdown-header bg-gray-lightest p-2">Nome</h6>
-                                                <div class="p-2">
-                                                    {{ Form::text('filter[name]', filter('name'), [
-                                                            'class' => 'form-control form-control-sm'
-                                                        ]) }}
-                                                </div>
+                                                <form method="get" action="{{ $route }}" accept-charset="UTF-8">
+                                                    <input type="hidden" name="query"
+                                                           value="{{ request()->get('query') }}">
 
-                                                @yield('filters')
+                                                    <x-admix::filters.input label="#" name="id"/>
 
-                                                <div class="bg-gray-lightest p-2">
-                                                    <div class="row">
-                                                        <div class="col-6">
-                                                            <a href="{{ $route }}"
-                                                               class="btn btn-secondary btn-sm">limpar</a>
-                                                        </div>
-                                                        <div class="text-right col-6">
-                                                            <button type="submit" class="btn btn-primary btn-sm">
-                                                                filtrar
-                                                            </button>
+                                                    <x-admix::filters.select label="ativo" name="is_active"
+                                                                             :options="['' => '-', '1' => 'Sim', '0' => 'Não']"/>
+
+                                                    <x-admix::filters.input label="nome" name="name"/>
+
+                                                    @yield('filters')
+
+                                                    <div class="bg-gray-lightest p-2">
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <a href="{{ $route }}"
+                                                                   class="btn btn-secondary btn-sm">limpar</a>
+                                                            </div>
+                                                            <div class="text-right col-6">
+                                                                <button type="submit" class="btn btn-primary btn-sm">
+                                                                    filtrar
+                                                                </button>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                {{ Form::close() }}
+                                                </form>
                                             </div>
                                         </div>
                                     </div>

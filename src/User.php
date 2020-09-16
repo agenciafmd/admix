@@ -11,7 +11,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
@@ -25,6 +25,10 @@ class User extends Authenticatable implements AuditableContract, HasMedia, Searc
 
     protected $hidden = [
         'password', 'remember_token', 'api_token', 'type',
+    ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
     ];
 
     protected $attributes = [
