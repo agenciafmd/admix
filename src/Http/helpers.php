@@ -1,156 +1,179 @@
 <?php
 
-function admix_is_active($route = '')
-{
-    $url = parse_url($route);
-    $path = trim($url['path'], '/');
+if (!function_exists('admix_is_active')) {
+    function admix_is_active($route = '')
+    {
+        $url = parse_url($route);
+        $path = trim($url['path'], '/');
 
-    return request()->is($path . '*');
+        return request()->is($path . '*');
+    }
 }
 
-function admix_cannot($action, $place)
-{
-    return auth('admix-web')
-        ->user()
-        ->cannot($action, $place);
+if (!function_exists('admix_cannot')) {
+    function admix_cannot($action, $place)
+    {
+        return auth('admix-web')
+            ->user()
+            ->cannot($action, $place);
+    }
 }
 
-function audit_events($event = '')
-{
-    $events['created'] = 'Criou';
-    $events['updated'] = 'Alterou';
-    $events['deleted'] = 'Removeu';
-    $events['restored'] = 'Restaurou';
+if (!function_exists('audit_events')) {
+    function audit_events($event = '')
+    {
+        $events['created'] = 'Criou';
+        $events['updated'] = 'Alterou';
+        $events['deleted'] = 'Removeu';
+        $events['restored'] = 'Restaurou';
 
-    if (!$event) {
-        return $events;
-    }
-
-    if (isset($events[$event])) {
-        return $events[$event];
-    }
-
-    return $event;
-}
-
-function audit_alias($model = '')
-{
-    $alias = config('audit-alias');
-
-    if (!$model) {
-        return $alias;
-    }
-
-    if (isset($alias[$model])) {
-        return $alias[$model];
-    }
-
-    return $model;
-}
-
-function human_number($num, $places = 2, $type = 'metric')
-{
-    if ('metric' === $type) {
-        $k = 'K';
-        $m = 'M';
-    } else {
-        $k = ' thousand';
-        $m = ' million';
-    }
-    if ($num < 1000) {
-        $num_format = number_format($num);
-    } elseif ($num < 1000000) {
-        $num_format = number_format($num / 1000, $places) . $k;
-    } else {
-        $num_format = number_format($num / 1000000, $places) . $m;
-    }
-
-    return $num_format;
-}
-
-function remove_accents($string)
-{
-    if (is_array($string)) {
-        foreach ($string as $key => $value) {
-            $array[$key] = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $value);
+        if (!$event) {
+            return $events;
         }
 
-        return $array;
-    }
+        if (isset($events[$event])) {
+            return $events[$event];
+        }
 
-    return iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $string);
+        return $event;
+    }
 }
 
-function only_numbers($string)
-{
-    return preg_replace('/[^0-9]/', '', $string);
+if (!function_exists('audit_alias')) {
+    function audit_alias($model = '')
+    {
+        $alias = config('audit-alias');
+
+        if (!$model) {
+            return $alias;
+        }
+
+        if (isset($alias[$model])) {
+            return $alias[$model];
+        }
+
+        return $model;
+    }
 }
 
-function states($state = null)
-{
-    $states = [
-        'AC' => 'Acre',
-        'AL' => 'Alagoas',
-        'AP' => 'Amapá',
-        'AM' => 'Amazonas',
-        'BA' => 'Bahia',
-        'CE' => 'Ceará',
-        'DF' => 'Distrito Federal',
-        'ES' => 'Espírito Santo',
-        'GO' => 'Goiás',
-        'MA' => 'Maranhão',
-        'MT' => 'Mato Grosso',
-        'MS' => 'Mato Grosso do Sul',
-        'MG' => 'Minas Gerais',
-        'PA' => 'Pará',
-        'PB' => 'Paraíba',
-        'PR' => 'Paraná',
-        'PE' => 'Pernambuco',
-        'PI' => 'Piauí',
-        'RJ' => 'Rio de Janeiro',
-        'RN' => 'Rio Grande do Norte',
-        'RS' => 'Rio Grande do Sul',
-        'RO' => 'Rondônia',
-        'RR' => 'Roraima',
-        'SC' => 'Santa Catarina',
-        'SP' => 'São Paulo',
-        'SE' => 'Sergipe',
-        'TO' => 'Tocantins',
-    ];
+if (!function_exists('human_number')) {
 
-    if (isset($states[$state])) {
-        return $states[$state];
+    function human_number($num, $places = 2, $type = 'metric')
+    {
+        if ('metric' === $type) {
+            $k = 'K';
+            $m = 'M';
+        } else {
+            $k = ' thousand';
+            $m = ' million';
+        }
+        if ($num < 1000) {
+            $num_format = number_format($num);
+        } elseif ($num < 1000000) {
+            $num_format = number_format($num / 1000, $places) . $k;
+        } else {
+            $num_format = number_format($num / 1000000, $places) . $m;
+        }
+
+        return $num_format;
     }
-
-    return $states;
 }
 
-function float_to_db($value)
-{
-    if (!$value) {
-        return null;
-    }
+if (!function_exists('remove_accents')) {
+    function remove_accents($string)
+    {
+        if (is_array($string)) {
+            foreach ($string as $key => $value) {
+                $array[$key] = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $value);
+            }
 
-    return trim(str_replace('R$', '', str_replace(',', '.', str_replace('.', '', $value))));
+            return $array;
+        }
+
+        return iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $string);
+    }
 }
 
-function db_to_float($value)
-{
-    if (!$value) {
-        return null;
+if (!function_exists('only_numbers')) {
+    function only_numbers($string)
+    {
+        return preg_replace('/[^0-9]/', '', $string);
     }
-
-    return number_format($value, 2, ',', '.');
 }
 
-function date_to_db($value, $formFormat = 'd/m/Y H:i')
-{
-    if (!$value) {
-        return null;
-    }
+if (!function_exists('states')) {
+    function states($state = null)
+    {
+        $states = [
+            'AC' => 'Acre',
+            'AL' => 'Alagoas',
+            'AP' => 'Amapá',
+            'AM' => 'Amazonas',
+            'BA' => 'Bahia',
+            'CE' => 'Ceará',
+            'DF' => 'Distrito Federal',
+            'ES' => 'Espírito Santo',
+            'GO' => 'Goiás',
+            'MA' => 'Maranhão',
+            'MT' => 'Mato Grosso',
+            'MS' => 'Mato Grosso do Sul',
+            'MG' => 'Minas Gerais',
+            'PA' => 'Pará',
+            'PB' => 'Paraíba',
+            'PR' => 'Paraná',
+            'PE' => 'Pernambuco',
+            'PI' => 'Piauí',
+            'RJ' => 'Rio de Janeiro',
+            'RN' => 'Rio Grande do Norte',
+            'RS' => 'Rio Grande do Sul',
+            'RO' => 'Rondônia',
+            'RR' => 'Roraima',
+            'SC' => 'Santa Catarina',
+            'SP' => 'São Paulo',
+            'SE' => 'Sergipe',
+            'TO' => 'Tocantins',
+        ];
 
-    return \Carbon\Carbon::createFromFormat($formFormat, $value)
-        ->toDateTimeString();
+        if (isset($states[$state])) {
+            return $states[$state];
+        }
+
+        return $states;
+    }
+}
+
+if (!function_exists('float_to_db')) {
+    function float_to_db($value)
+    {
+        if (!$value) {
+            return null;
+        }
+
+        return trim(str_replace('R$', '', str_replace(',', '.', str_replace('.', '', $value))));
+    }
+}
+
+if (!function_exists('db_to_float')) {
+    function db_to_float($value)
+    {
+        if (!$value) {
+            return null;
+        }
+
+        return number_format($value, 2, ',', '.');
+    }
+}
+
+if (!function_exists('date_to_db')) {
+    function date_to_db($value, $formFormat = 'd/m/Y H:i')
+    {
+        if (!$value) {
+            return null;
+        }
+
+        return \Carbon\Carbon::createFromFormat($formFormat, $value)
+            ->toDateTimeString();
+    }
 }
 
 if (!function_exists('db_to_date')) {
