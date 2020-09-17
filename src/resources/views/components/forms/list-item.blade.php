@@ -1,5 +1,6 @@
+@props(['multiple' => false])
 <li class="list-group-item">
-    <div class="row gutters-sm">
+    <div class="row gutters-sm {{ ($multiple) ? 'multiple-upload' : 'single-upload' }}">
         {{ $label }}
 
         <div class="col-xl-5">

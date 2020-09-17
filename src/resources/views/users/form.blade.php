@@ -19,9 +19,12 @@
                 <x-admix::forms.email name="email" required="required" :value="$model->email ?? ''"/>
             </x-admix::forms.group>
 
-            <x-admix::forms.group label="imagem" for="image">
-                <!-- TODO: input image -->
-            </x-admix::forms.group>
+            @foreach(config('upload-configs.user') as $field => $upload)
+                <x-admix::forms.group :multiple="$upload['multiple']" label="{{ $upload['label'] }} ({{ $upload['sources'][0]['width'] }}x{{ $upload['sources'][0]['height'] }})" for="{{ $field }}">
+                    <x-ui.image name="{{ $field }}" :model="$model"/>
+{{--                    <x-dynamic-component :component="$componentName" class="mt-4" />--}}
+                </x-admix::forms.group>
+            @endforeach
 
             <x-admix::forms.group label="senha" for="password">
                 <x-admix::forms.password name="password"/>

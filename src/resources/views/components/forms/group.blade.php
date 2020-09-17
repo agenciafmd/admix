@@ -1,4 +1,5 @@
-<x-admix::forms.list-item>
+@props(['label', 'for', 'multiple' => false])
+<x-admix::forms.list-item :multiple="$multiple">
     <x-slot name="label">
         <x-admix::forms.label label="{{ $label }}" for="{{ $for }}"/>
     </x-slot>

@@ -3,6 +3,8 @@
 return [
     'user' => [
         'image' => [
+            'label' => 'imagem',
+            'multiple' => false,
             'sources' => [
                 [
                     'conversion' => 'thumb',
