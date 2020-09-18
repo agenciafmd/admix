@@ -2,36 +2,22 @@
 
 namespace Agenciafmd\Admix\Providers;
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Route;
 
 class RouteServiceProvider extends ServiceProvider
 {
-    protected $namespace = 'Agenciafmd\Admix\Http\Controllers';
-
     public function boot()
     {
         parent::boot();
-    }
 
-    public function map()
-    {
-        $this->mapApiRoutes();
+        $this->routes(function () {
+            Route::middleware('web')
+                ->group(__DIR__ . '/../routes/web.php');
 
-        $this->mapWebRoutes();
-    }
-
-    protected function mapApiRoutes()
-    {
-        Route::middleware('api')
-             ->namespace($this->namespace)
-             ->group(__DIR__ . '/../routes/api.php');
-    }
-
-    protected function mapWebRoutes()
-    {
-        Route::middleware('web')
-            ->namespace($this->namespace)
-            ->group(__DIR__ . '/../routes/web.php');
+            Route::prefix('api')
+                ->middleware('api')
+                ->group(__DIR__ . '/../routes/api.php');
+        });
     }
 }
