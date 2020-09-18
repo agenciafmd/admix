@@ -2,15 +2,15 @@
 
 namespace Agenciafmd\Admix\Http\Controllers;
 
+use Agenciafmd\Admix\Http\Requests\ProfilesRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
-use Agenciafmd\Admix\Http\Requests\ProfilesRequest;
 
 class ProfileController extends Controller
 {
     public function index()
     {
-        $view['user'] = auth('admix-web')->user();
+        $view['model'] = auth('admix-web')->user();
 
         return view('agenciafmd/admix::pages.profile', $view);
     }
