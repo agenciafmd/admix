@@ -15,36 +15,14 @@
 @endsection
 
 @section('filters')
-    <h6 class="dropdown-header bg-gray-lightest p-2">Local</h6>
-    <div class="p-2">
-        {{ Form::select('filter[auditable_type]', ['' => '-'] + audit_alias(), filter('auditable_type'), [
-                'class' => 'form-control form-control-sm'
-            ]) }}
-    </div>
-    <h6 class="dropdown-header bg-gray-lightest p-2">Usuário</h6>
-    <div class="p-2">
-        {{ Form::select('filter[user_id]', ['' => '-'] + $users->toSelect(), filter('user_id'), [
-                'class' => 'form-control form-control-sm'
-            ]) }}
-    </div>
-    <h6 class="dropdown-header bg-gray-lightest p-2">Evento</h6>
-    <div class="p-2">
-        {{ Form::select('filter[event]', ['' => '-'] + audit_events(), filter('event'), [
-                'class' => 'form-control form-control-sm'
-            ]) }}
-    </div>
-    <h6 class="dropdown-header bg-gray-lightest p-2">Registro</h6>
-    <div class="p-2">
-        {{ Form::text('filter[auditable_id]', filter('auditable_id'), [
-                'class' => 'form-control form-control-sm'
-            ]) }}
-    </div>
-    <h6 class="dropdown-header bg-gray-lightest p-2">Data</h6>
-    <div class="p-2"> <!-- TODO Datetime range picker -->
-        {{ Form::date('filter[created_at]', filter('created_at'), [
-                'class' => 'form-control form-control-sm'
-            ]) }}
-    </div>
+    <x-admix::filters.select label="local" name="auditable_type"
+                             :options="['' => '-'] + audit_alias()"/>
+    <x-admix::filters.select label="usuário" name="user_id"
+                             :options="['' => '-'] + $users->toSelect()"/>
+    <x-admix::filters.select label="evento" name="event"
+                             :options="['' => '-'] + audit_events()"/>
+    <x-admix::filters.input label="registro" name="auditable_id"/>
+    <x-admix::filters.date label="Data" name="created_at"/>
 @endsection
 
 @section('table')
