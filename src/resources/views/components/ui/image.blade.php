@@ -18,15 +18,15 @@
                 maxImageHeight: '{{ $height*1.2 }}',
                 resizeImage: true,
                 resizeImageQuality: '{{ number_format($quality/100, 2, '.', '') }}',
-                @if ($preview && $download && $uuid)
-                initialPreview: ['{{ $preview }}'],
+                @if ($preview)
+                initialPreview: ['{{ $preview->getUrl('thumb') }}'],
                 initialPreviewAsData: true,
                 initialPreviewConfig: [
                     {
-                        caption: '',
-                        downloadUrl: '{{ $download }}',
-                        size: '',
-                        key: '{{ $uuid }}',
+                        caption: '{{ $preview->name }}',
+                        downloadUrl: '{{ asset($preview->getUrl('thumb')) }}',
+                        size: '{{ $preview->size }}',
+                        key: '{{ $preview->getCustomProperty('uuid') }}'
                     },
                 ],
                 @endif

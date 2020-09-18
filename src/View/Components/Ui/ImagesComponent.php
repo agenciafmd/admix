@@ -2,16 +2,17 @@
 
 namespace Agenciafmd\Admix\View\Components\Ui;
 
+use Illuminate\Support\Collection;
 use Illuminate\View\Component;
 
-class ImageComponent extends Component
+class ImagesComponent extends Component
 {
     public string $name;
     public int $width;
     public int $height;
     public int $quality;
     public string $conversion;
-    public $preview;
+    public Collection $preview;
 
     public function __construct(string $name, object $model = null)
     {
@@ -24,14 +25,14 @@ class ImageComponent extends Component
         $this->height = $source['height'];
         $this->quality = $source['quality'] ?? 100;
         $this->conversion = $source['conversion'];
-        $this->preview = null;
-        if ($model->getFirstMedia($name)) {
-            $this->preview = $model->getFirstMedia($name);
+        $this->preview = collect([]);
+        if ($model->getMedia($name)) {
+            $this->preview = $model->getMedia($name);
         }
     }
 
     public function render()
     {
-        return view('agenciafmd/admix::components.ui.image');
+        return view('agenciafmd/admix::components.ui.images');
     }
 }

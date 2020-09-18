@@ -20,9 +20,14 @@
             </x-admix::forms.group>
 
             @foreach(config('upload-configs.user') as $field => $upload)
-                <x-admix::forms.group :multiple="$upload['multiple']" label="{{ $upload['label'] }} ({{ $upload['sources'][0]['width'] }}x{{ $upload['sources'][0]['height'] }})" for="{{ $field }}">
-                    <x-ui.image name="{{ $field }}" :model="$model"/>
-{{--                    <x-dynamic-component :component="$componentName" class="mt-4" />--}}
+                <x-admix::forms.group :multiple="$upload['multiple']"
+                                      label="{{ $upload['label'] }} ({{ $upload['sources'][0]['width'] }}x{{ $upload['sources'][0]['height'] }})"
+                                      for="{{ $field }}">
+                    @if($upload['multiple'])
+                        <x-ui.images name="{{ $field }}" :model="$model"/>
+                    @else
+                        <x-ui.image name="{{ $field }}" :model="$model"/>
+                    @endif
                 </x-admix::forms.group>
             @endforeach
 

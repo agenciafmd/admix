@@ -33,6 +33,7 @@ class BladeServiceProvider extends ServiceProvider
     {
         Blade::component('ui.select', Ui\SelectComponent::class);
         Blade::component('ui.image', Ui\ImageComponent::class);
+        Blade::component('ui.images', Ui\ImagesComponent::class);
     }
 
     protected function loadBladeComposers()
