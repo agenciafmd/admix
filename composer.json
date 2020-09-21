@@ -17,6 +17,7 @@
     "hmazter/laravel-schedule-list": "^2.0",
     "laracasts/flash": "^3.0",
     "laravel/framework": "^8.0",
+    "laravel/ui": "^3.0",
     "laravelcollective/html": "^6.0",
     "livewire/livewire": "^2.0",
     "owen-it/laravel-auditing": "^10.0",

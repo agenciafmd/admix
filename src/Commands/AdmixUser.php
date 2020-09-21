@@ -19,11 +19,12 @@ class AdmixUser extends Command
         $password = $this->secret('Senha');
         $password = Hash::make($password);
 
-        if (User::create([
-            'name' => $name,
+        if (User::updateOrCreate([
             'email' => $email,
-            'password' => $password,
             'type' => 'admix',
+        ], [
+            'name' => $name,
+            'password' => $password,
         ])) {
             $this->info('Usuário criado');
             $this->line($name . ' (' . $email . ')' . "\n");

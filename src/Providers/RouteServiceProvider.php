@@ -9,13 +9,12 @@ class RouteServiceProvider extends ServiceProvider
 {
     public function boot()
     {
-        parent::boot();
-
         $this->routes(function () {
-            Route::middleware('web')
+            Route::prefix(config('admix.url'))
+                ->middleware(['web', 'auth:admix-web'])
                 ->group(__DIR__ . '/../routes/web.php');
 
-            Route::prefix('api')
+            Route::prefix(config('admix.url') . '/api')
                 ->middleware('api')
                 ->group(__DIR__ . '/../routes/api.php');
         });

@@ -12,7 +12,8 @@ class IsActive extends Component
     public function mount($myModel, $myId)
     {
         $model = new $myModel();
-        $this->item = $model->where('id', $myId)
+        $this->item = $model->withTrashed()
+            ->where('id', $myId)
             ->first();
         $this->isActive = $this->item->is_active;
     }
