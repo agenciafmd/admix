@@ -15,10 +15,10 @@
     @if(request()->is('*/trash'))
         @include('agenciafmd/admix::partials.btn.back', ['url' => route('admix.users.index')])
     @else
-        @can('create', '\Agenciafmd\Admix\User')
+        @can('create', \Agenciafmd\Admix\Models\User::class)
             @include('agenciafmd/admix::partials.btn.create', ['url' => route('admix.users.create'), 'label' => 'Usuário'])
         @endcan
-        @can('restore', '\Agenciafmd\Admix\User')
+        @can('restore', \Agenciafmd\Admix\Models\User::class)
             @include('agenciafmd/admix::partials.btn.trash', ['url' => route('admix.users.trash')])
         @endcan
     @endif
@@ -87,10 +87,10 @@
                                         <i class="icon fe-more-vertical text-muted"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        @can('edit', '\Agenciafmd\Admix\User')
+                                        @can('update', \Agenciafmd\Admix\Models\User::class)
                                             @include('agenciafmd/admix::partials.btn.edit', ['url' => route('admix.users.edit', $item->id)])
                                         @endcan
-                                        @can('delete', '\Agenciafmd\Admix\User')
+                                        @can('delete', \Agenciafmd\Admix\Models\User::class)
                                             @include('agenciafmd/admix::partials.btn.remove', ['url' => route('admix.users.destroy', $item->id)])
                                         @endcan
                                     </div>

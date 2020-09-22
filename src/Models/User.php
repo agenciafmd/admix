@@ -1,6 +1,6 @@
 <?php
 
-namespace Agenciafmd\Admix;
+namespace Agenciafmd\Admix\Models;
 
 use Agenciafmd\Admix\Notifications\ResetPasswordNotification;
 use Agenciafmd\Media\Traits\MediaTrait;
@@ -14,6 +14,7 @@ use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
+use Agenciafmd\Admix\Role;
 
 class User extends Authenticatable implements AuditableContract, HasMedia, Searchable
 {
@@ -68,7 +69,7 @@ class User extends Authenticatable implements AuditableContract, HasMedia, Searc
         $fileName = Str::limit($base5, 2, ''); // pegamos os dois primeiros caracteres que deve ser algo entre 01 e 50
         $avatar = asset("/images/avatar-{$fileName}.svg");
 
-        if (!app()->environment(['local', 'testing'])) {
+        if (!app()->environment(['local', 'testing', 'develop'])) {
             $avatar = "https://unavatar.now.sh/{$email}?fallback=" . $avatar;
         }
 

@@ -2,7 +2,7 @@
 
 namespace Agenciafmd\Admix\Http\Controllers;
 
-use Agenciafmd\Admix\Audit;
+use Agenciafmd\Admix\Models\Audit;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;

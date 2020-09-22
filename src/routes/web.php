@@ -8,6 +8,8 @@ use Agenciafmd\Admix\Http\Controllers\Auth\ResetPasswordController;
 use Agenciafmd\Admix\Http\Controllers\ProfileController;
 use Agenciafmd\Admix\Http\Controllers\RolesController;
 use Agenciafmd\Admix\Http\Controllers\UsersController;
+use Agenciafmd\Admix\Models\Audit;
+use Agenciafmd\Admix\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,7 +55,7 @@ Route::put('profile', [ProfileController::class, 'update'])
     ->name('admix.profile.update');
 Route::get('audit', [AuditController::class, 'index'])
     ->name('admix.audit.index')
-    ->middleware('can:view,\Agenciafmd\Admix\Audit');
+    ->middleware('can:view,' . Audit::class);
 
 /*
 |--------------------------------------------------------------------------
@@ -63,37 +65,37 @@ Route::get('audit', [AuditController::class, 'index'])
 
 Route::get('users', [UsersController::class, 'index'])
     ->name('admix.users.index')
-    ->middleware('can:view,\Agenciafmd\Admix\User');
+    ->middleware('can:view,' . User::class);
 Route::get('users/trash', [UsersController::class, 'index'])
     ->name('admix.users.trash')
-    ->middleware('can:restore,\Agenciafmd\Admix\User');
+    ->middleware('can:restore,' . User::class);
 Route::get('users/create', [UsersController::class, 'create'])
     ->name('admix.users.create')
-    ->middleware('can:create,\Agenciafmd\Admix\User');
+    ->middleware('can:create,' . User::class);
 Route::post('users', [UsersController::class, 'store'])
     ->name('admix.users.store')
-    ->middleware('can:create,\Agenciafmd\Admix\User');
+    ->middleware('can:create,' . User::class);
 Route::get('users/{user}', [UsersController::class, 'show'])
     ->name('admix.users.show')
-    ->middleware('can:view,\Agenciafmd\Admix\User');
+    ->middleware('can:view,' . User::class);
 Route::get('users/{user}/edit', [UsersController::class, 'edit'])
     ->name('admix.users.edit')
-    ->middleware('can:update,\Agenciafmd\Admix\User');
+    ->middleware('can:update,' . User::class);
 Route::put('users/{user}', [UsersController::class, 'update'])
     ->name('admix.users.update')
-    ->middleware('can:update,\Agenciafmd\Admix\User');
+    ->middleware('can:update,' . User::class);
 Route::delete('users/destroy/{user}', [UsersController::class, 'destroy'])
     ->name('admix.users.destroy')
-    ->middleware('can:delete,\Agenciafmd\Admix\User');
+    ->middleware('can:delete,' . User::class);
 Route::post('users/{id}/restore', [UsersController::class, 'restore'])
     ->name('admix.users.restore')
-    ->middleware('can:restore,\Agenciafmd\Admix\User');
+    ->middleware('can:restore,' . User::class);
 Route::post('users/batchDestroy', [UsersController::class, 'batchDestroy'])
     ->name('admix.users.batchDestroy')
-    ->middleware('can:delete,\Agenciafmd\Admix\User');
+    ->middleware('can:delete,' . User::class);
 Route::post('users/batchRestore', [UsersController::class, 'batchRestore'])
     ->name('admix.users.batchRestore')
-    ->middleware('can:restore,\Agenciafmd\Admix\User');
+    ->middleware('can:restore,' . User::class);
 
 /*
 |--------------------------------------------------------------------------

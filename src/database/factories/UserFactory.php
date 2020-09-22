@@ -2,8 +2,7 @@
 
 namespace Admix\Database\Factories;
 
-use Agenciafmd\Admix\User;
-use Faker\Generator as Faker;
+use Agenciafmd\Admix\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;

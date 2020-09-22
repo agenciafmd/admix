@@ -1,6 +1,6 @@
 <?php
 
 return [
-    'Agenciafmd\Admix\User' => 'Usuários » Usuários',
+    'Agenciafmd\Admix\Models\User' => 'Usuários » Usuários',
     'Agenciafmd\Admix\Role' => 'Usuários » Grupos',
 ];

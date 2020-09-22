@@ -3,7 +3,7 @@
 namespace Agenciafmd\Admix\Http\Controllers;
 
 use Agenciafmd\Admix\Http\Requests\UsersRequest;
-use Agenciafmd\Admix\User;
+use Agenciafmd\Admix\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;

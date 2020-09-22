@@ -2,7 +2,7 @@
 
 namespace Agenciafmd\Admix\Policies;
 
-use Agenciafmd\Admix\User;
+use Agenciafmd\Admix\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class AdmixPolicy

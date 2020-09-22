@@ -2,7 +2,7 @@
 
 namespace Agenciafmd\Admix\Services;
 
-use Agenciafmd\Admix\User;
+use Agenciafmd\Admix\Models\User;
 
 class UserService
 {

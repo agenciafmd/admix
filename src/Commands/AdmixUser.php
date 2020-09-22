@@ -2,7 +2,7 @@
 
 namespace Agenciafmd\Admix\Commands;
 
-use Agenciafmd\Admix\User;
+use Agenciafmd\Admix\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
 

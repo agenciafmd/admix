@@ -73,7 +73,7 @@
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         @include('agenciafmd/admix::partials.btn.show', ['url' => route('admix.roles.show', $item->id)])
-                                        @can('edit', '\Agenciafmd\Admix\Role')
+                                        @can('update', '\Agenciafmd\Admix\Role')
                                             @include('agenciafmd/admix::partials.btn.edit', ['url' => route('admix.roles.edit', $item->id)])
                                         @endcan
                                         @can('delete', '\Agenciafmd\Admix\Role')

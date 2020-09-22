@@ -1,4 +1,4 @@
-@if (!((admix_cannot('view', '\Agenciafmd\Admix\Audit'))
+@if (!((admix_cannot('view', '\Agenciafmd\Admix\Models\Audit'))
     && (admix_cannot('view', '\Agenciafmd\Postal\Postal'))
     /*&& (admix_cannot('view', '\Agenciafmd\Cache\Cache'))
     && (admix_cannot('view', '\Agenciafmd\Configurations\Configurations'))*/
@@ -26,7 +26,7 @@
             ) show @endif"
              id="sidebar-settings">
             <ul class="nav">
-                @can('view', '\Agenciafmd\Admix\Audit')
+                @can('view', '\Agenciafmd\Admix\Models\Audit')
                     <li class="nav-item">
                         <a class="nav-link {{ admix_is_active(route('admix.audit.index')) ? 'active' : '' }}"
                            href="{{ route('admix.audit.index') }}">

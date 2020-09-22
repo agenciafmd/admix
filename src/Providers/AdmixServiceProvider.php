@@ -2,7 +2,7 @@
 
 namespace Agenciafmd\Admix\Providers;
 
-use Agenciafmd\Admix\User;
+use Agenciafmd\Admix\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 use RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace;
