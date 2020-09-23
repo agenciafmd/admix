@@ -19,25 +19,25 @@ use Agenciafmd\Admix\Models\User;
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])
     ->name('admix.login.form')
-    ->withoutMiddleware(['auth:admix-web']);;
+    ->withoutMiddleware(['auth:admix-web']);
 Route::post('/login', [LoginController::class, 'login'])
     ->name('admix.login')
-    ->withoutMiddleware(['auth:admix-web']);;
+    ->withoutMiddleware(['auth:admix-web']);
 Route::get('/logout', [LoginController::class, 'logout'])
     ->name('admix.logout')
-    ->withoutMiddleware(['auth:admix-web']);;
+    ->withoutMiddleware(['auth:admix-web']);
 Route::get('/recover', [ForgotPasswordController::class, 'showLinkRequestForm'])
     ->name('admix.recover.form')
-    ->withoutMiddleware(['auth:admix-web']);;
+    ->withoutMiddleware(['auth:admix-web']);
 Route::post('/recover', [ForgotPasswordController::class, 'sendResetLinkEmail'])
     ->name('admix.recover')
-    ->withoutMiddleware(['auth:admix-web']);;
+    ->withoutMiddleware(['auth:admix-web']);
 Route::get('/recover/reset/{token?}', [ResetPasswordController::class, 'showResetForm'])
     ->name('admix.recover.reset.form')
-    ->withoutMiddleware(['auth:admix-web']);;
+    ->withoutMiddleware(['auth:admix-web']);
 Route::post('/recover/reset', [ResetPasswordController::class, 'reset'])
     ->name('admix.recover.reset')
-    ->withoutMiddleware(['auth:admix-web']);;
+    ->withoutMiddleware(['auth:admix-web']);
 
 /*
 |--------------------------------------------------------------------------

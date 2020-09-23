@@ -2,9 +2,11 @@
 
 namespace Agenciafmd\Admix\Models;
 
+use Agenciafmd\Admix\Database\Factories\UserFactory;
 use Agenciafmd\Admix\Notifications\ResetPasswordNotification;
 use Agenciafmd\Media\Traits\MediaTrait;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -18,7 +20,7 @@ use Agenciafmd\Admix\Role;
 
 class User extends Authenticatable implements AuditableContract, HasMedia, Searchable
 {
-    use Notifiable, SoftDeletes, Auditable, MediaTrait;
+    use Notifiable, SoftDeletes, HasFactory, Auditable, MediaTrait;
 
     protected $guarded = [
         'password_confirmation', 'media',
@@ -111,5 +113,10 @@ class User extends Authenticatable implements AuditableContract, HasMedia, Searc
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPasswordNotification($token));
+    }
+
+    protected static function newFactory()
+    {
+        return UserFactory::new();
     }
 }

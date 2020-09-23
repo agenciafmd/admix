@@ -133,10 +133,6 @@ class AdmixServiceProvider extends ServiceProvider
         // php artisan vendor:publish --tag="admix:assets" --force
 
         $this->publishes([
-            __DIR__ . '/../resources/views' => base_path('resources/views/vendor/agenciafmd/admix'),
-        ], 'admix:views');
-
-        $this->publishes([
             __DIR__ . '/../config' => base_path('config'),
         ], 'admix:config');
 
