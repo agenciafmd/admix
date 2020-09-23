@@ -56,6 +56,11 @@ return [
             ],
         ],
     ],
+    'mail' => [
+        'markdown' => [
+            'theme' => 'admix',
+        ],
+    ],
     'manifest' => [
         'name' => 'Admix',
         'short_name' => 'Admix',

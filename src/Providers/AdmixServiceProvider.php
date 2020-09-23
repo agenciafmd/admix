@@ -124,6 +124,10 @@ class AdmixServiceProvider extends ServiceProvider
         config(['auth.providers' => array_merge(config('admix.auth.providers'), config('auth.providers'))]);
         config(['auth.passwords' => array_merge(config('admix.auth.passwords'), config('auth.passwords'))]);
         config(['logging.channels' => array_merge(config('admix.logging.channels'), config('logging.channels'))]);
+
+        if (config('mail.markdown.theme') === 'default') {
+            config(['mail.markdown.theme' => config('admix.mail.markdown.theme')]);
+        }
     }
 
     protected function publish()
@@ -142,6 +146,7 @@ class AdmixServiceProvider extends ServiceProvider
             __DIR__ . '/../resources/images' => public_path() . '/images',
             __DIR__ . '/../resources/js' => public_path() . '/js',
             __DIR__ . '/../resources/json' => public_path() . '/json',
+            __DIR__ . '/../resources/views/markdown/themes' => resource_path() . '/views/vendor/mail/html/themes',
         ], 'admix:assets');
     }
 }
