@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="{{ asset('css/admix.css') }}"/>
 
     @livewireStyles
-
+    @bukStyles
     @stack('styles')
 </head>
 <body class="antialiased ">
@@ -73,6 +73,7 @@
 
 @include('agenciafmd/flash::partials.message')
 
+@bukScripts
 @stack('scripts')
 </body>
 </html>
