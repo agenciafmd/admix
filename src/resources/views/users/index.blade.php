@@ -52,7 +52,7 @@
                     <th>{!! column_sort('Nome', 'name') !!}</th>
                     <th>{!! column_sort('E-mail', 'email') !!}</th>
                     <th>{!! column_sort('Grupo', 'role_id', false) !!}</th>
-                    <th>{!! column_sort('Ativo', 'is_active') !!}</th>
+                    <th class="px-0">{!! column_sort('Ativo', 'is_active') !!}</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -73,7 +73,7 @@
                         <td>{{ $item->name }}</td>
                         <td>{{ $item->email }}</td>
                         <td>{{ ($item->role == null) ? 'Administrador' : $item->role->name }}</td>
-                        <td>
+                        <td class="px-0">
                             @livewire('admix::is-active', ['myModel' => get_class($item), 'myId' => $item->id])
                         </td>
                         @if(request()->is('*/trash'))
