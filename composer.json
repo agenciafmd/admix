@@ -44,8 +44,8 @@
     ],
     "psr-4": {
       "Agenciafmd\\Admix\\": "src/",
-      "Agenciafmd\\Admix\\Database\\Factories\\": "database/factories/",
-      "Agenciafmd\\Admix\\Database\\Seeders\\": "database/seeders/"
+      "Database\\Factories\\": "src/database/factories/",
+      "Database\\Seeders\\": "src/database/seeders/"
     }
   },
   "extra": {

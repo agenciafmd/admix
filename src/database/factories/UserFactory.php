@@ -1,6 +1,6 @@
 <?php
 
-namespace Agenciafmd\Admix\Database\Factories;
+namespace Database\Factories;
 
 use Agenciafmd\Admix\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
