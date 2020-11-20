@@ -19,12 +19,12 @@
                 resizeImage: true,
                 resizeImageQuality: '{{ number_format($quality/100, 2, '.', '') }}',
                 @if ($preview)
-                initialPreview: ['{{ $preview->getUrl('thumb') }}'],
+                initialPreview: ['{{ $preview->getUrl($conversion) }}'],
                 initialPreviewAsData: true,
                 initialPreviewConfig: [
                     {
                         caption: '{{ $preview->name }}',
-                        downloadUrl: '{{ asset($preview->getUrl('thumb')) }}',
+                        downloadUrl: '{{ asset($preview->getUrl($conversion)) }}',
                         size: '{{ $preview->size }}',
                         key: '{{ $preview->getCustomProperty('uuid') }}'
                     },

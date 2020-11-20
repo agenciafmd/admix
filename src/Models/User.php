@@ -2,7 +2,7 @@
 
 namespace Agenciafmd\Admix\Models;
 
-use Agenciafmd\Admix\Database\Factories\UserFactory;
+use Database\Factories\UserFactory;
 use Agenciafmd\Admix\Notifications\ResetPasswordNotification;
 use Agenciafmd\Media\Traits\MediaTrait;
 use Illuminate\Database\Eloquent\Builder;
