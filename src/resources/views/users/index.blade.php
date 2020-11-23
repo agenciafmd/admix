@@ -26,18 +26,25 @@
 
 @section('batch')
     @if(request()->is('*/trash'))
-        <x-admix::batchs.select name="batch" selected=""
-                                :options="['' => 'com os selecionados', route('admix.users.batchRestore') => '- restaurar']"/>
+        {{ Form::select('batch', ['' => 'com os selecionados', route('admix.users.batchRestore') => '- restaurar'], null, ['class' => 'js-batch-select form-control custom-select']) }}
     @else
-        <x-admix::batchs.select name="batch" selected=""
-                                :options="['' => 'com os selecionados', route('admix.users.batchDestroy') => '- remover']"/>
+        {{ Form::select('batch', ['' => 'com os selecionados', route('admix.users.batchDestroy') => '- remover'], null, ['class' => 'js-batch-select form-control custom-select']) }}
     @endif
 @endsection
 
 @section('filters')
-    <x-admix::filters.input label="email" name="email"/>
-    <x-admix::filters.select label="grupo" name="role_id"
-                             :options="['' => '-', '0' => 'Administrador'] + $roles->toSelect()"/>
+    <h6 class="dropdown-header bg-gray-lightest p-2">E-mail</h6>
+    <div class="p-2">
+        {{ Form::text('filter[email]', filter('email'), [
+                'class' => 'form-control form-control-sm'
+            ]) }}
+    </div>
+    <h6 class="dropdown-header bg-gray-lightest p-2">Grupo</h6>
+    <div class="p-2">
+        {{ Form::select('filter[role_id]', ['' => '-', '0' => 'Administrador'] + $roles->toSelect(), filter('role_id'), [
+                'class' => 'form-control form-control-sm'
+            ]) }}
+    </div>
 @endsection
 
 @section('table')
@@ -52,7 +59,7 @@
                     <th>{!! column_sort('Nome', 'name') !!}</th>
                     <th>{!! column_sort('E-mail', 'email') !!}</th>
                     <th>{!! column_sort('Grupo', 'role_id', false) !!}</th>
-                    <th class="px-0">{!! column_sort('Ativo', 'is_active') !!}</th>
+                    <th>{!! column_sort('Status', 'is_active') !!}</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -73,7 +80,7 @@
                         <td>{{ $item->name }}</td>
                         <td>{{ $item->email }}</td>
                         <td>{{ ($item->role == null) ? 'Administrador' : $item->role->name }}</td>
-                        <td class="px-0">
+                        <td>
                             @livewire('admix::is-active', ['myModel' => get_class($item), 'myId' => $item->id])
                         </td>
                         @if(request()->is('*/trash'))
@@ -87,7 +94,7 @@
                                         <i class="icon fe-more-vertical text-muted"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        @can('update', \Agenciafmd\Admix\Models\User::class)
+                                        @can('edit', \Agenciafmd\Admix\Models\User::class)
                                             @include('agenciafmd/admix::partials.btn.edit', ['url' => route('admix.users.edit', $item->id)])
                                         @endcan
                                         @can('delete', \Agenciafmd\Admix\Models\User::class)

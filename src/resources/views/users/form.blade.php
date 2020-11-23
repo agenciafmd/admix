@@ -3,49 +3,50 @@
 @inject('roles', '\Agenciafmd\Admix\Services\RoleService')
 
 @section('form')
-    <x-admix::cards.form title="Usuário"
-                         :create="route('admix.users.store')"
-                         :update="route('admix.users.update', ['user' => ($model->id) ?? 0])">
-        <x-admix::forms.list-group>
-            <x-admix::forms.group label="ativo" for="is_active">
-                <x-admix::forms.boolean name="is_active" required="required" :selected="$model->is_active ?? ''"/>
-            </x-admix::forms.group>
+    {{ Form::bsOpen(['model' => optional($model), 'create' => route('admix.users.store'), 'update' => route('admix.users.update', ['user' => ($model->id) ?? 0])]) }}
+    <div class="card-header bg-gray-lightest">
+        <h3 class="card-title">
+            @if(request()->is('*/create'))
+                Criar
+            @elseif(request()->is('*/edit'))
+                Editar
+            @else
+                Visualizar
+            @endif
+            Usuário
+        </h3>
+        <div class="card-options">
+            @include('agenciafmd/admix::partials.btn.save')
+        </div>
+    </div>
+    <ul class="list-group list-group-flush">
+        {{ Form::bsIsActive('Ativo', 'is_active', null, ['required']) }}
 
-            <x-admix::forms.group label="nome" for="name">
-                <x-admix::forms.input name="name" required="required" :value="$model->name ?? ''"/>
-            </x-admix::forms.group>
+        {{ Form::bsText('Nome', 'name', null, ['required']) }}
 
-            <x-admix::forms.group label="email" for="email">
-                <x-admix::forms.email name="email" required="required" :value="$model->email ?? ''"/>
-            </x-admix::forms.group>
+        {{ Form::bsEmail('E-mail', 'email', null, ['required']) }}
 
-            @foreach(config('upload-configs.user') as $field => $upload)
-                <x-admix::forms.group :multiple="$upload['multiple']"
-                                      label="{{ $upload['label'] }} ({{ $upload['sources'][0]['width'] }}x{{ $upload['sources'][0]['height'] }})"
-                                      for="{{ $field }}">
-                    @if($upload['multiple'])
-                        <x-ui.images name="{{ $field }}" :model="$model"/>
-                    @else
-                        <x-ui.image name="{{ $field }}" :model="$model"/>
-                    @endif
-                </x-admix::forms.group>
-            @endforeach
+        {{ Form::bsImage('Avatar', 'image', $model) }}
+    </ul>
+    <div class="card-header bg-gray-lightest">
+        <h3 class="card-title">Alterar senha</h3>
+    </div>
+    <ul class="list-group list-group-flush">
+        {{ Form::bsPassword('Senha', 'password') }}
 
-            <x-admix::forms.group label="senha" for="password">
-                <x-admix::forms.password name="password"/>
-            </x-admix::forms.group>
-
-            <x-admix::forms.group label="confirmação de senha" for="password_confirmation">
-                <x-admix::forms.password name="password_confirmation"/>
-
-                <x-slot name="help">
-                    esta senha deve ser a mesma digitada acima
-                </x-slot>
-            </x-admix::forms.group>
-            <x-admix::forms.group label="permissões" for="role_id">
-                <x-admix::forms.select name="role_id" :options="['0' => 'Administrador'] + $roles->toSelect()"
-                                       :selected="$model->role_id ?? 0"/>
-            </x-admix::forms.group>
-        </x-admix::forms.list-group>
-    </x-admix::cards.form>
+        {{ Form::bsPassword('Confirmação de Senha', 'password_confirmation') }}
+    </ul>
+    <div class="card-header bg-gray-lightest">
+        <h3 class="card-title">Permissões</h3>
+    </div>
+    <ul class="list-group list-group-flush">
+        {{ Form::bsSelect('Grupo', 'role_id', ['0' => 'Administrador'] + $roles->toSelect()) }}
+    </ul>
+    <div class="card-footer bg-gray-lightest text-right">
+        <div class="d-flex">
+            @include('agenciafmd/admix::partials.btn.back')
+            @include('agenciafmd/admix::partials.btn.save')
+        </div>
+    </div>
+    {{ Form::close() }}
 @endsection
