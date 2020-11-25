@@ -6,7 +6,7 @@ use Agenciafmd\Admix\Models\Audit;
 use Agenciafmd\Admix\Policies\AuditPolicy;
 use Agenciafmd\Admix\Policies\RolePolicy;
 use Agenciafmd\Admix\Policies\UserPolicy;
-use Agenciafmd\Admix\Role;
+use Agenciafmd\Admix\Models\Role;
 use Agenciafmd\Admix\Models\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 

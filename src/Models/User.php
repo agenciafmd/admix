@@ -16,7 +16,6 @@ use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
-use Agenciafmd\Admix\Role;
 
 class User extends Authenticatable implements AuditableContract, HasMedia, Searchable
 {

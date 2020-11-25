@@ -25,7 +25,7 @@
                         </a>
                     </li>
                 @endcan
-                @can('view', '\Agenciafmd\Admix\Role')
+                @can('view', '\Agenciafmd\Admix\Models\Role')
                     <li class="nav-item">
                         <a class="nav-link {{ admix_is_active(route('admix.roles.index')) ? 'active' : '' }}"
                            href="{{ route('admix.roles.index') }}">

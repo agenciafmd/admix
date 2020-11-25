@@ -2,15 +2,12 @@
 
 namespace Agenciafmd\Admix\Models;
 
-use OwenIt\Auditing\Auditable;
 use Illuminate\Database\Eloquent\Model;
-use Agenciafmd\Sortable\Traits\Sortable;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
-class Role extends Model implements AuditableContract
+class Role extends Model
 {
-    use SoftDeletes, Sortable, Auditable;
+    use SoftDeletes;
 
     protected $dates = [
         'deleted_at',

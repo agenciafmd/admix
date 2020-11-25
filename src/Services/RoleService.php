@@ -2,13 +2,14 @@
 
 namespace Agenciafmd\Admix\Services;
 
-use Agenciafmd\Admix\Role;
+use Agenciafmd\Admix\Models\Role;
 
 class RoleService
 {
     public function toSelect()
     {
-        return Role::orderBy('name', 'asc')
+        return Role::query()
+            ->orderBy('name', 'asc')
             ->pluck('name', 'id')
             ->toArray();
     }
