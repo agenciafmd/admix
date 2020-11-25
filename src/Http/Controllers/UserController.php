@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class UsersController extends Controller
+class UserController extends Controller
 {
     public function index(Request $request)
     {

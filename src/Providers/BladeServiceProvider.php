@@ -2,7 +2,6 @@
 
 namespace Agenciafmd\Admix\Providers;
 
-use Agenciafmd\Admix\View\Components\Ui;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -31,9 +30,7 @@ class BladeServiceProvider extends ServiceProvider
 
     protected function loadBladeComponents()
     {
-        Blade::component('ui.select', Ui\SelectComponent::class);
-        Blade::component('ui.image', Ui\ImageComponent::class);
-        Blade::component('ui.images', Ui\ImagesComponent::class);
+        //
     }
 
     protected function loadBladeComposers()

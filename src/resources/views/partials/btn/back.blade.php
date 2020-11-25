@@ -1,3 +1,3 @@
-<a href="{{ ($url) ?? URL::previous() }}" class="js-loading btn btn-secondary">
+<a href="{{ ($url) ?? URL::previous() }}" class="btn btn-secondary">
     Voltar
 </a>

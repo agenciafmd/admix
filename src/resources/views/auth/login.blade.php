@@ -14,8 +14,9 @@
                             <div class="card-title">Painel Administrativo</div>
                             <div class="form-group">
                                 <label class="form-label" for="email">E-mail</label>
-                                <input type="email" name="email" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" id="email"
-                                       value="{{ old('email') }}" required autofocus />
+                                <input type="email" name="email"
+                                       class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" id="email"
+                                       value="{{ old('email') }}" required autofocus/>
                                 @if ($errors->has('email'))
                                     <div class="invalid-feedback">{{ $errors->first('email') }}</div>
                                 @endif
@@ -24,7 +25,7 @@
                                 <label class="form-label" for="password">
                                     Senha
                                 </label>
-                                <input type="password" name="password" class="form-control" id="password" required />
+                                <input type="password" name="password" class="form-control" id="password" required/>
                                 @if ($errors->has('password'))
                                     <div class="invalid-feedback">{{ $errors->first('password') }}</div>
                                 @endif
@@ -38,11 +39,10 @@
                             </div>
                             <div class="form-footer mt-0">
                                 <button type="submit" class="btn btn-primary btn-block">Entrar</button>
-
-                                <a href="{{ route('admix.recover.form') }}" class="btn btn-link btn-block text-lowercase">
+                                <a href="{{ route('admix.recover.form') }}"
+                                   class="btn btn-link btn-block text-lowercase">
                                     Esqueci minha senha
                                 </a>
-
                             </div>
                         </div>
                     </form>

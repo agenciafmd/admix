@@ -6,9 +6,10 @@ use Agenciafmd\Admix\Http\Controllers\Auth\ForgotPasswordController;
 use Agenciafmd\Admix\Http\Controllers\Auth\LoginController;
 use Agenciafmd\Admix\Http\Controllers\Auth\ResetPasswordController;
 use Agenciafmd\Admix\Http\Controllers\ProfileController;
-use Agenciafmd\Admix\Http\Controllers\RolesController;
-use Agenciafmd\Admix\Http\Controllers\UsersController;
+use Agenciafmd\Admix\Http\Controllers\RoleController;
+use Agenciafmd\Admix\Http\Controllers\UserController;
 use Agenciafmd\Admix\Models\Audit;
+use Agenciafmd\Admix\Models\Role;
 use Agenciafmd\Admix\Models\User;
 
 /*
@@ -63,37 +64,37 @@ Route::get('audit', [AuditController::class, 'index'])
 |--------------------------------------------------------------------------
 */
 
-Route::get('users', [UsersController::class, 'index'])
+Route::get('users', [UserController::class, 'index'])
     ->name('admix.users.index')
     ->middleware('can:view,' . User::class);
-Route::get('users/trash', [UsersController::class, 'index'])
+Route::get('users/trash', [UserController::class, 'index'])
     ->name('admix.users.trash')
     ->middleware('can:restore,' . User::class);
-Route::get('users/create', [UsersController::class, 'create'])
+Route::get('users/create', [UserController::class, 'create'])
     ->name('admix.users.create')
     ->middleware('can:create,' . User::class);
-Route::post('users', [UsersController::class, 'store'])
+Route::post('users', [UserController::class, 'store'])
     ->name('admix.users.store')
     ->middleware('can:create,' . User::class);
-Route::get('users/{user}', [UsersController::class, 'show'])
+Route::get('users/{user}', [UserController::class, 'show'])
     ->name('admix.users.show')
     ->middleware('can:view,' . User::class);
-Route::get('users/{user}/edit', [UsersController::class, 'edit'])
+Route::get('users/{user}/edit', [UserController::class, 'edit'])
     ->name('admix.users.edit')
     ->middleware('can:update,' . User::class);
-Route::put('users/{user}', [UsersController::class, 'update'])
+Route::put('users/{user}', [UserController::class, 'update'])
     ->name('admix.users.update')
     ->middleware('can:update,' . User::class);
-Route::delete('users/destroy/{user}', [UsersController::class, 'destroy'])
+Route::delete('users/destroy/{user}', [UserController::class, 'destroy'])
     ->name('admix.users.destroy')
     ->middleware('can:delete,' . User::class);
-Route::post('users/{id}/restore', [UsersController::class, 'restore'])
+Route::post('users/{id}/restore', [UserController::class, 'restore'])
     ->name('admix.users.restore')
     ->middleware('can:restore,' . User::class);
-Route::post('users/batchDestroy', [UsersController::class, 'batchDestroy'])
+Route::post('users/batchDestroy', [UserController::class, 'batchDestroy'])
     ->name('admix.users.batchDestroy')
     ->middleware('can:delete,' . User::class);
-Route::post('users/batchRestore', [UsersController::class, 'batchRestore'])
+Route::post('users/batchRestore', [UserController::class, 'batchRestore'])
     ->name('admix.users.batchRestore')
     ->middleware('can:restore,' . User::class);
 
@@ -103,36 +104,36 @@ Route::post('users/batchRestore', [UsersController::class, 'batchRestore'])
 |--------------------------------------------------------------------------
 */
 
-Route::get('roles', [RolesController::class, 'index'])
+Route::get('roles', [RoleController::class, 'index'])
     ->name('admix.roles.index')
-    ->middleware('can:view,\Agenciafmd\Admix\Role');
-Route::get('roles/trash', [RolesController::class, 'index'])
+    ->middleware('can:view' . Role::class);
+Route::get('roles/trash', [RoleController::class, 'index'])
     ->name('admix.roles.trash')
-    ->middleware('can:restore,\Agenciafmd\Admix\Role');
-Route::get('roles/create', [RolesController::class, 'create'])
+    ->middleware('can:restore' . Role::class);
+Route::get('roles/create', [RoleController::class, 'create'])
     ->name('admix.roles.create')
-    ->middleware('can:create,\Agenciafmd\Admix\Role');
-Route::post('roles', [RolesController::class, 'store'])
+    ->middleware('can:create' . Role::class);
+Route::post('roles', [RoleController::class, 'store'])
     ->name('admix.roles.store')
-    ->middleware('can:create,\Agenciafmd\Admix\Role');
-Route::get('roles/{role}', [RolesController::class, 'show'])
+    ->middleware('can:create' . Role::class);
+Route::get('roles/{role}', [RoleController::class, 'show'])
     ->name('admix.roles.show')
-    ->middleware('can:view,\Agenciafmd\Admix\Role');
-Route::get('roles/{role}/edit', [RolesController::class, 'edit'])
+    ->middleware('can:view' . Role::class);
+Route::get('roles/{role}/edit', [RoleController::class, 'edit'])
     ->name('admix.roles.edit')
-    ->middleware('can:update,\Agenciafmd\Admix\Role');
-Route::put('roles/{role}', [RolesController::class, 'update'])
+    ->middleware('can:update' . Role::class);
+Route::put('roles/{role}', [RoleController::class, 'update'])
     ->name('admix.roles.update')
-    ->middleware('can:update,\Agenciafmd\Admix\Role');
-Route::delete('roles/destroy/{role}', [RolesController::class, 'destroy'])
+    ->middleware('can:update' . Role::class);
+Route::delete('roles/destroy/{role}', [RoleController::class, 'destroy'])
     ->name('admix.roles.destroy')
-    ->middleware('can:delete,\Agenciafmd\Admix\Role');
-Route::post('roles/{id}/restore', [RolesController::class, 'restore'])
+    ->middleware('can:delete' . Role::class);
+Route::post('roles/{id}/restore', [RoleController::class, 'restore'])
     ->name('admix.roles.restore')
-    ->middleware('can:restore,\Agenciafmd\Admix\Role');
-Route::post('roles/batchDestroy', [RolesController::class, 'batchDestroy'])
+    ->middleware('can:restore' . Role::class);
+Route::post('roles/batchDestroy', [RoleController::class, 'batchDestroy'])
     ->name('admix.roles.batchDestroy')
-    ->middleware('can:delete,\Agenciafmd\Admix\Role');
-Route::post('roles/batchRestore', [RolesController::class, 'batchRestore'])
+    ->middleware('can:delete' . Role::class);
+Route::post('roles/batchRestore', [RoleController::class, 'batchRestore'])
     ->name('admix.roles.batchRestore')
-    ->middleware('can:restore,\Agenciafmd\Admix\Role');
+    ->middleware('can:restore' . Role::class);

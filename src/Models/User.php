@@ -23,11 +23,15 @@ class User extends Authenticatable implements AuditableContract, HasMedia, Searc
     use Notifiable, SoftDeletes, HasFactory, Auditable, MediaTrait;
 
     protected $guarded = [
-        'password_confirmation', 'media',
+        'password_confirmation',
+        'media',
     ];
 
     protected $hidden = [
-        'password', 'remember_token', 'api_token', 'type',
+        'password',
+        'remember_token',
+        'api_token',
+        'type',
     ];
 
     protected $casts = [

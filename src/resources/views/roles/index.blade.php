@@ -13,10 +13,10 @@
     @if(request()->is('*/trash'))
         @include('agenciafmd/admix::partials.btn.back', ['url' => route('admix.roles.index')])
     @else
-        @can('create', '\Agenciafmd\Admix\Role')
+        @can('create', \Agenciafmd\Admix\Models\Role::class)
             @include('agenciafmd/admix::partials.btn.create', ['url' => route('admix.roles.create'), 'label' => 'Grupo'])
         @endcan
-        @can('restore', '\Agenciafmd\Admix\Role')
+        @can('restore', \Agenciafmd\Admix\Models\Role::class)
             @include('agenciafmd/admix::partials.btn.trash', ['url' => route('admix.roles.trash')])
         @endcan
     @endif
@@ -73,10 +73,10 @@
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
                                         @include('agenciafmd/admix::partials.btn.show', ['url' => route('admix.roles.show', $item->id)])
-                                        @can('update', '\Agenciafmd\Admix\Role')
+                                        @can('update', \Agenciafmd\Admix\Models\Role::class)
                                             @include('agenciafmd/admix::partials.btn.edit', ['url' => route('admix.roles.edit', $item->id)])
                                         @endcan
-                                        @can('delete', '\Agenciafmd\Admix\Role')
+                                        @can('delete', \Agenciafmd\Admix\Models\Role::class)
                                             @include('agenciafmd/admix::partials.btn.remove', ['url' => route('admix.roles.destroy', $item->id)])
                                         @endcan
                                     </div>

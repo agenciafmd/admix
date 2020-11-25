@@ -2,13 +2,14 @@
 
 namespace Agenciafmd\Admix\Http\Controllers;
 
+use Agenciafmd\Analytics\Providers\AnalyticsServiceProvider;
 use App\Http\Controllers\Controller;
 
 class AdmixController extends Controller
 {
     public function dashboard()
     {
-        if (class_exists(\Agenciafmd\Analytics\Providers\AnalyticsServiceProvider::class) && (config('analytics.view_id') !== '')) {
+        if (class_exists(AnalyticsServiceProvider::class) && (config('analytics.view_id') !== '')) {
             return view('agenciafmd/analytics::dashboard');
         }
 

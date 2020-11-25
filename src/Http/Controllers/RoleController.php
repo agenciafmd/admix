@@ -3,14 +3,14 @@
 namespace Agenciafmd\Admix\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Agenciafmd\Admix\Role;
+use Agenciafmd\Admix\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Agenciafmd\Admix\Http\Requests\RolesRequest;
 use App\Http\Controllers\Controller;
 use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Support\Str;
 
-class RolesController extends Controller
+class RoleController extends Controller
 {
     public function index(Request $request)
     {
