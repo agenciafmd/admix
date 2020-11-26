@@ -2,7 +2,10 @@
 
 namespace Agenciafmd\Admix\Providers;
 
+use Agenciafmd\Admix\Models\Role;
 use Agenciafmd\Admix\Models\User;
+use Agenciafmd\Admix\Observers\RoleObserver;
+use Agenciafmd\Admix\Observers\UserObserver;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 use RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace;
@@ -16,6 +19,8 @@ class AdmixServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->providers();
+
+        $this->setObservers();
 
         $this->setMenu();
 
@@ -64,6 +69,12 @@ class AdmixServiceProvider extends ServiceProvider
         $this->app->register(CommandServiceProvider::class);
         $this->app->register(LivewireServiceProvider::class);
         $this->app->register(RouteServiceProvider::class);
+    }
+
+    protected function setObservers()
+    {
+        User::observe(UserObserver::class);
+        Role::observe(RoleObserver::class);
     }
 
     protected function setMenu()

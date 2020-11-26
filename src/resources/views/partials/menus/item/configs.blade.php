@@ -9,7 +9,7 @@
                 Configurações
             </span>
         </a>
-        <div class="navbar-subnav collapse {{ (Str::startsWith(request()->route()->getName(), ['admix.audit', 'admix.postal'])) ? 'active' : '' }}"
+        <div class="navbar-subnav collapse {{ (Str::startsWith(request()->route()->getName(), ['admix.audit', 'admix.postal'])) ? 'show' : '' }}"
              id="sidebar-settings">
             <ul class="nav">
                 @can('view', \Agenciafmd\Admix\Models\Audit::class)
