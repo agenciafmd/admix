@@ -1,7 +1,11 @@
-@if (!((admix_cannot('view', '\Agenciafmd\Admix\Models\User')) && (admix_cannot('view', '\Agenciafmd\Admix\Role'))))
+@canany('view', [\Agenciafmd\Admix\Models\User::class, \Agenciafmd\Admix\Models\Role::class])
     <li class="nav-item">
-        <a class="nav-link {{ (admix_is_active(route('admix.users.index')) || admix_is_active(route('admix.roles.index'))) ? 'active' : '' }}"
-           href="#sidebar-user" data-toggle="collapse" data-parent="#menu" role="button" aria-expanded="{{ (admix_is_active(route('admix.users.index')) || admix_is_active(route('admix.roles.index'))) ? 'true' : 'false' }}">
+        <a class="nav-link {{ (Str::startsWith(request()->route()->getName(), ['admix.users', 'admix.roles'])) ? 'active' : '' }}"
+           href="#sidebar-user"
+           data-toggle="collapse"
+           data-parent="#menu"
+           role="button"
+           aria-expanded=" {{ (Str::startsWith(request()->route()->getName(), ['admix.users', 'admix.roles'])) ? 'true' : 'false' }}">
             <span class="nav-icon">
                 <i class="icon fe-users"></i>
             </span>
@@ -9,12 +13,12 @@
                 Usuários
             </span>
         </a>
-        <div class="navbar-subnav collapse {{ (admix_is_active(route('admix.users.index')) || admix_is_active(route('admix.roles.index'))) ? 'show' : '' }}"
+        <div class="navbar-subnav collapse {{ (Str::startsWith(request()->route()->getName(), ['admix.users', 'admix.roles'])) ? 'show' : '' }}"
              id="sidebar-user">
             <ul class="nav">
-                @can('view', '\Agenciafmd\Admix\Models\User')
+                @can('view', \Agenciafmd\Admix\Models\User::class)
                     <li class="nav-item">
-                        <a class="nav-link {{ admix_is_active(route('admix.users.index')) ? 'active' : '' }}"
+                        <a class="nav-link {{ (Str::startsWith(request()->route()->getName(), 'admix.users')) ? 'active' : '' }}"
                            href="{{ route('admix.users.index') }}">
                             <span class="nav-icon">
                                 <i class="icon fe-minus"></i>
@@ -25,9 +29,9 @@
                         </a>
                     </li>
                 @endcan
-                @can('view', '\Agenciafmd\Admix\Models\Role')
+                @can('view', \Agenciafmd\Admix\Models\Role::class)
                     <li class="nav-item">
-                        <a class="nav-link {{ admix_is_active(route('admix.roles.index')) ? 'active' : '' }}"
+                        <a class="nav-link {{ (Str::startsWith(request()->route()->getName(), 'admix.roles')) ? 'active' : '' }}"
                            href="{{ route('admix.roles.index') }}">
                             <span class="nav-icon">
                                 <i class="icon fe-minus"></i>
@@ -41,4 +45,4 @@
             </ul>
         </div>
     </li>
-@endif
+@endcanany

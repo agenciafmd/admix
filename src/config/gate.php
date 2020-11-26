@@ -2,7 +2,7 @@
 
 return [
     [
-        'name' => 'Usuários',
+        'name' => 'Usuários » Usuários',
         'policy' => '\Agenciafmd\Admix\Policies\UserPolicy',
         'abilities' => [
             [
@@ -29,7 +29,7 @@ return [
         'sort' => 0,
     ],
     [
-        'name' => 'Grupos',
+        'name' => 'Usuários » Grupos',
         'policy' => '\Agenciafmd\Admix\Policies\RolePolicy',
         'abilities' => [
             [
@@ -56,7 +56,7 @@ return [
         'sort' => 1,
     ],
     [
-        'name' => 'Logs',
+        'name' => 'Configurações » Logs',
         'policy' => '\Agenciafmd\Admix\Policies\AuditPolicy',
         'abilities' => [
             [

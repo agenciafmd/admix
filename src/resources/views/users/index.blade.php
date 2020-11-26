@@ -59,7 +59,7 @@
                     <th>{!! column_sort('Nome', 'name') !!}</th>
                     <th>{!! column_sort('E-mail', 'email') !!}</th>
                     <th>{!! column_sort('Grupo', 'role_id', false) !!}</th>
-                    <th>{!! column_sort('Status', 'is_active') !!}</th>
+                    <th class="w-1">{!! column_sort('Status', 'is_active') !!}</th>
                     <th></th>
                 </tr>
                 </thead>

@@ -106,34 +106,34 @@ Route::post('users/batchRestore', [UserController::class, 'batchRestore'])
 
 Route::get('roles', [RoleController::class, 'index'])
     ->name('admix.roles.index')
-    ->middleware('can:view' . Role::class);
+    ->middleware('can:view,' . Role::class);
 Route::get('roles/trash', [RoleController::class, 'index'])
     ->name('admix.roles.trash')
-    ->middleware('can:restore' . Role::class);
+    ->middleware('can:restore,' . Role::class);
 Route::get('roles/create', [RoleController::class, 'create'])
     ->name('admix.roles.create')
-    ->middleware('can:create' . Role::class);
+    ->middleware('can:create,' . Role::class);
 Route::post('roles', [RoleController::class, 'store'])
     ->name('admix.roles.store')
-    ->middleware('can:create' . Role::class);
+    ->middleware('can:create,' . Role::class);
 Route::get('roles/{role}', [RoleController::class, 'show'])
     ->name('admix.roles.show')
-    ->middleware('can:view' . Role::class);
+    ->middleware('can:view,' . Role::class);
 Route::get('roles/{role}/edit', [RoleController::class, 'edit'])
     ->name('admix.roles.edit')
-    ->middleware('can:update' . Role::class);
+    ->middleware('can:update,' . Role::class);
 Route::put('roles/{role}', [RoleController::class, 'update'])
     ->name('admix.roles.update')
-    ->middleware('can:update' . Role::class);
+    ->middleware('can:update,' . Role::class);
 Route::delete('roles/destroy/{role}', [RoleController::class, 'destroy'])
     ->name('admix.roles.destroy')
-    ->middleware('can:delete' . Role::class);
+    ->middleware('can:delete,' . Role::class);
 Route::post('roles/{id}/restore', [RoleController::class, 'restore'])
     ->name('admix.roles.restore')
-    ->middleware('can:restore' . Role::class);
+    ->middleware('can:restore,' . Role::class);
 Route::post('roles/batchDestroy', [RoleController::class, 'batchDestroy'])
     ->name('admix.roles.batchDestroy')
-    ->middleware('can:delete' . Role::class);
+    ->middleware('can:delete,' . Role::class);
 Route::post('roles/batchRestore', [RoleController::class, 'batchRestore'])
     ->name('admix.roles.batchRestore')
-    ->middleware('can:restore' . Role::class);
+    ->middleware('can:restore,' . Role::class);
