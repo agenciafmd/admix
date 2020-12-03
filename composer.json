@@ -12,10 +12,10 @@
     }
   ],
   "require": {
-    "agenciafmd/admix-form": "dev-master",
-    "agenciafmd/admix-postal": "dev-master",
-    "agenciafmd/admix-analytics": "dev-master",
-    "agenciafmd/admix-leads": "dev-master",
+    "agenciafmd/admix-form": "v6.x-dev",
+    "agenciafmd/admix-postal": "v6.x-dev",
+    "agenciafmd/admix-analytics": "v6.x-dev",
+    "agenciafmd/admix-leads": "v6.x-dev",
     "geekcom/validator-docs": "^3.4",
     "hmazter/laravel-schedule-list": "^2.0",
     "laracasts/flash": "^3.0",
