@@ -15,10 +15,10 @@
     @if(request()->is('*/trash'))
         @include('agenciafmd/admix::partials.btn.back', ['url' => route('admix.users.index')])
     @else
-        @can('create', '\Agenciafmd\Admix\User')
+        @can('create', \Agenciafmd\Admix\Models\User::class)
             @include('agenciafmd/admix::partials.btn.create', ['url' => route('admix.users.create'), 'label' => 'Usuário'])
         @endcan
-        @can('restore', '\Agenciafmd\Admix\User')
+        @can('restore', \Agenciafmd\Admix\Models\User::class)
             @include('agenciafmd/admix::partials.btn.trash', ['url' => route('admix.users.trash')])
         @endcan
     @endif
@@ -55,10 +55,11 @@
                 <tr>
                     <th class="w-1 d-none d-md-table-cell">&nbsp;</th>
                     <th class="w-1">{!! column_sort('#', 'id') !!}</th>
+                    <th class="w-1"></th>
                     <th>{!! column_sort('Nome', 'name') !!}</th>
                     <th>{!! column_sort('E-mail', 'email') !!}</th>
                     <th>{!! column_sort('Grupo', 'role_id', false) !!}</th>
-                    <th>{!! column_sort('Status', 'is_active') !!}</th>
+                    <th class="w-1">{!! column_sort('Status', 'is_active') !!}</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -73,11 +74,14 @@
                             </label>
                         </td>
                         <td><span class="text-muted">{{ $item->id }}</span></td>
+                        <td>
+                            <span class="avatar w-5 h-5" style="background-image: url({{ $item->avatar }})"></span>
+                        </td>
                         <td>{{ $item->name }}</td>
                         <td>{{ $item->email }}</td>
                         <td>{{ ($item->role == null) ? 'Administrador' : $item->role->name }}</td>
                         <td>
-                            @include('agenciafmd/admix::partials.label.status', ['status' => $item->is_active])
+                            @livewire('admix::is-active', ['myModel' => get_class($item), 'myId' => $item->id])
                         </td>
                         @if(request()->is('*/trash'))
                             <td class="w-1 text-right">
@@ -90,11 +94,10 @@
                                         <i class="icon fe-more-vertical text-muted"></i>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-right">
-                                        @include('agenciafmd/admix::partials.btn.show', ['url' => route('admix.users.show', $item->id)])
-                                        @can('edit', '\Agenciafmd\Admix\User')
+                                        @can('edit', \Agenciafmd\Admix\Models\User::class)
                                             @include('agenciafmd/admix::partials.btn.edit', ['url' => route('admix.users.edit', $item->id)])
                                         @endcan
-                                        @can('delete', '\Agenciafmd\Admix\User')
+                                        @can('delete', \Agenciafmd\Admix\Models\User::class)
                                             @include('agenciafmd/admix::partials.btn.remove', ['url' => route('admix.users.destroy', $item->id)])
                                         @endcan
                                     </div>

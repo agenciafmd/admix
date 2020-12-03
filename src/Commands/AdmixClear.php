@@ -17,7 +17,5 @@ class AdmixClear extends Command
         $this->call('event:clear');
         $this->call('notifications:clear');
         $this->call('page-cache:clear');
-
-        $this->line('Cache limpo com sucesso');
     }
 }

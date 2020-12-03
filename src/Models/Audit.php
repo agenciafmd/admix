@@ -1,6 +1,6 @@
 <?php
 
-namespace Agenciafmd\Admix;
+namespace Agenciafmd\Admix\Models;
 
 use OwenIt\Auditing\Models\Audit as AuditModel;
 

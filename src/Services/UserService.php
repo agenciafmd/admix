@@ -2,13 +2,14 @@
 
 namespace Agenciafmd\Admix\Services;
 
-use Agenciafmd\Admix\User;
+use Agenciafmd\Admix\Models\User;
 
 class UserService
 {
     public function all()
     {
-        return User::withTrashed()->get();
+        return User::withTrashed()
+            ->get();
     }
 
     public function toSelect()

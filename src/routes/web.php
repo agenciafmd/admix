@@ -1,29 +1,44 @@
 <?php
 
+use Agenciafmd\Admix\Http\Controllers\AdmixController;
+use Agenciafmd\Admix\Http\Controllers\AuditController;
+use Agenciafmd\Admix\Http\Controllers\Auth\ForgotPasswordController;
+use Agenciafmd\Admix\Http\Controllers\Auth\LoginController;
+use Agenciafmd\Admix\Http\Controllers\Auth\ResetPasswordController;
+use Agenciafmd\Admix\Http\Controllers\ProfileController;
+use Agenciafmd\Admix\Http\Controllers\RoleController;
+use Agenciafmd\Admix\Http\Controllers\UserController;
+use Agenciafmd\Admix\Models\Audit;
+use Agenciafmd\Admix\Models\Role;
+use Agenciafmd\Admix\Models\User;
+
 /*
 |--------------------------------------------------------------------------
 | AUTH Routes
 |--------------------------------------------------------------------------
 */
 
-Route::prefix(config('admix.url'))
-    ->name('admix.')
-    ->group(function () {
-        Route::get('/login', 'Auth\LoginController@showLoginForm')
-            ->name('login.form');
-        Route::post('/login', 'Auth\LoginController@login')
-            ->name('login');
-        Route::get('/logout', 'Auth\LoginController@logout')
-            ->name('logout');
-        Route::get('/recover', 'Auth\ForgotPasswordController@showLinkRequestForm')
-            ->name('recover.form');
-        Route::post('/recover', 'Auth\ForgotPasswordController@sendResetLinkEmail')
-            ->name('recover');
-        Route::get('/recover/reset/{token?}', 'Auth\ResetPasswordController@showResetForm')
-            ->name('recover.reset.form');
-        Route::post('/recover/reset', 'Auth\ResetPasswordController@reset')
-            ->name('recover.reset');
-    });
+Route::get('/login', [LoginController::class, 'showLoginForm'])
+    ->name('admix.login.form')
+    ->withoutMiddleware(['auth:admix-web']);
+Route::post('/login', [LoginController::class, 'login'])
+    ->name('admix.login')
+    ->withoutMiddleware(['auth:admix-web']);
+Route::get('/logout', [LoginController::class, 'logout'])
+    ->name('admix.logout')
+    ->withoutMiddleware(['auth:admix-web']);
+Route::get('/recover', [ForgotPasswordController::class, 'showLinkRequestForm'])
+    ->name('admix.recover.form')
+    ->withoutMiddleware(['auth:admix-web']);
+Route::post('/recover', [ForgotPasswordController::class, 'sendResetLinkEmail'])
+    ->name('admix.recover')
+    ->withoutMiddleware(['auth:admix-web']);
+Route::get('/recover/reset/{token?}', [ResetPasswordController::class, 'showResetForm'])
+    ->name('admix.recover.reset.form')
+    ->withoutMiddleware(['auth:admix-web']);
+Route::post('/recover/reset', [ResetPasswordController::class, 'reset'])
+    ->name('admix.recover.reset')
+    ->withoutMiddleware(['auth:admix-web']);
 
 /*
 |--------------------------------------------------------------------------
@@ -31,40 +46,17 @@ Route::prefix(config('admix.url'))
 |--------------------------------------------------------------------------
 */
 
-Route::prefix(config('admix.url'))
-    ->name('admix.')
-    ->middleware(['auth:admix-web'])
-    ->group(function () {
-        Route::get('', 'AdmixController@redirect')
-            ->name('redirect');
-        Route::get('dashboard', 'AdmixController@dashboard')
-            ->name('dashboard');
-        Route::get('profile', 'ProfileController@index')
-            ->name('profile');
-        Route::put('profile', 'ProfileController@update')
-            ->name('profile.update');
-        Route::get('audit', 'AuditController@index')
-            ->name('audit.index')
-            ->middleware('can:view,\Agenciafmd\Admix\Audit');
-
-        Route::post('upload', 'UploadController@index')
-            ->name('upload.index');
-        Route::post('destroy', 'UploadController@destroy')
-            ->name('upload.destroy');
-        Route::get('meta/{uuid?}', 'UploadController@metaForm')
-            ->name('upload.meta');
-        Route::post('meta/{uuid?}', 'UploadController@metaPost')
-            ->name('upload.meta.post');
-        Route::post('sort', 'UploadController@sort')
-            ->name('upload.sort');
-        Route::post('medium', 'UploadController@medium')
-            ->name('upload.medium');
-    });
-
-// resize route
-Route::get('/media/{path}', 'MediaController@show')
-    ->name('media.show')
-    ->where('path', '.*');
+Route::get('', [AdmixController::class, 'redirect'])
+    ->name('admix.redirect');
+Route::get('dashboard', [AdmixController::class, 'dashboard'])
+    ->name('admix.dashboard');
+Route::get('profile', [ProfileController::class, 'index'])
+    ->name('admix.profile');
+Route::put('profile', [ProfileController::class, 'update'])
+    ->name('admix.profile.update');
+Route::get('audit', [AuditController::class, 'index'])
+    ->name('admix.audit.index')
+    ->middleware('can:view,' . Audit::class);
 
 /*
 |--------------------------------------------------------------------------
@@ -72,44 +64,39 @@ Route::get('/media/{path}', 'MediaController@show')
 |--------------------------------------------------------------------------
 */
 
-Route::prefix(config('admix.url') . '/users')
-    ->name('admix.users.')
-    ->middleware(['auth:admix-web'])
-    ->group(function () {
-        Route::get('', 'UsersController@index')
-            ->name('index')
-            ->middleware('can:view,\Agenciafmd\Admix\User');
-        Route::get('trash', 'UsersController@index')
-            ->name('trash')
-            ->middleware('can:restore,\Agenciafmd\Admix\User');
-        Route::get('create', 'UsersController@create')
-            ->name('create')
-            ->middleware('can:create,\Agenciafmd\Admix\User');
-        Route::post('', 'UsersController@store')
-            ->name('store')
-            ->middleware('can:create,\Agenciafmd\Admix\User');
-        Route::get('{user}', 'UsersController@show')
-            ->name('show')
-            ->middleware('can:view,\Agenciafmd\Admix\User');
-        Route::get('{user}/edit', 'UsersController@edit')
-            ->name('edit')
-            ->middleware('can:update,\Agenciafmd\Admix\User');
-        Route::put('{user}', 'UsersController@update')
-            ->name('update')
-            ->middleware('can:update,\Agenciafmd\Admix\User');
-        Route::delete('destroy/{user}', 'UsersController@destroy')
-            ->name('destroy')
-            ->middleware('can:delete,\Agenciafmd\Admix\User');
-        Route::post('{id}/restore', 'UsersController@restore')
-            ->name('restore')
-            ->middleware('can:restore,\Agenciafmd\Admix\User');
-        Route::post('batchDestroy', 'UsersController@batchDestroy')
-            ->name('batchDestroy')
-            ->middleware('can:delete,\Agenciafmd\Admix\User');
-        Route::post('batchRestore', 'UsersController@batchRestore')
-            ->name('batchRestore')
-            ->middleware('can:restore,\Agenciafmd\Admix\User');
-    });
+Route::get('users', [UserController::class, 'index'])
+    ->name('admix.users.index')
+    ->middleware('can:view,' . User::class);
+Route::get('users/trash', [UserController::class, 'index'])
+    ->name('admix.users.trash')
+    ->middleware('can:restore,' . User::class);
+Route::get('users/create', [UserController::class, 'create'])
+    ->name('admix.users.create')
+    ->middleware('can:create,' . User::class);
+Route::post('users', [UserController::class, 'store'])
+    ->name('admix.users.store')
+    ->middleware('can:create,' . User::class);
+Route::get('users/{user}', [UserController::class, 'show'])
+    ->name('admix.users.show')
+    ->middleware('can:view,' . User::class);
+Route::get('users/{user}/edit', [UserController::class, 'edit'])
+    ->name('admix.users.edit')
+    ->middleware('can:update,' . User::class);
+Route::put('users/{user}', [UserController::class, 'update'])
+    ->name('admix.users.update')
+    ->middleware('can:update,' . User::class);
+Route::delete('users/destroy/{user}', [UserController::class, 'destroy'])
+    ->name('admix.users.destroy')
+    ->middleware('can:delete,' . User::class);
+Route::post('users/{id}/restore', [UserController::class, 'restore'])
+    ->name('admix.users.restore')
+    ->middleware('can:restore,' . User::class);
+Route::post('users/batchDestroy', [UserController::class, 'batchDestroy'])
+    ->name('admix.users.batchDestroy')
+    ->middleware('can:delete,' . User::class);
+Route::post('users/batchRestore', [UserController::class, 'batchRestore'])
+    ->name('admix.users.batchRestore')
+    ->middleware('can:restore,' . User::class);
 
 /*
 |--------------------------------------------------------------------------
@@ -117,41 +104,36 @@ Route::prefix(config('admix.url') . '/users')
 |--------------------------------------------------------------------------
 */
 
-Route::prefix(config('admix.url') . '/roles')
-    ->name('admix.roles.')
-    ->middleware(['auth:admix-web'])
-    ->group(function () {
-        Route::get('', 'RolesController@index')
-            ->name('index')
-            ->middleware('can:view,\Agenciafmd\Admix\Role');
-        Route::get('trash', 'RolesController@index')
-            ->name('trash')
-            ->middleware('can:restore,\Agenciafmd\Admix\Role');
-        Route::get('create', 'RolesController@create')
-            ->name('create')
-            ->middleware('can:create,\Agenciafmd\Admix\Role');
-        Route::post('', 'RolesController@store')
-            ->name('store')
-            ->middleware('can:create,\Agenciafmd\Admix\Role');
-        Route::get('{role}', 'RolesController@show')
-            ->name('show')
-            ->middleware('can:view,\Agenciafmd\Admix\Role');
-        Route::get('{role}/edit', 'RolesController@edit')
-            ->name('edit')
-            ->middleware('can:update,\Agenciafmd\Admix\Role');
-        Route::put('{role}', 'RolesController@update')
-            ->name('update')
-            ->middleware('can:update,\Agenciafmd\Admix\Role');
-        Route::delete('destroy/{role}', 'RolesController@destroy')
-            ->name('destroy')
-            ->middleware('can:delete,\Agenciafmd\Admix\Role');
-        Route::post('{id}/restore', 'RolesController@restore')
-            ->name('restore')
-            ->middleware('can:restore,\Agenciafmd\Admix\Role');
-        Route::post('batchDestroy', 'RolesController@batchDestroy')
-            ->name('batchDestroy')
-            ->middleware('can:delete,\Agenciafmd\Admix\Role');
-        Route::post('batchRestore', 'RolesController@batchRestore')
-            ->name('batchRestore')
-            ->middleware('can:restore,\Agenciafmd\Admix\Role');
-    });
+Route::get('roles', [RoleController::class, 'index'])
+    ->name('admix.roles.index')
+    ->middleware('can:view,' . Role::class);
+Route::get('roles/trash', [RoleController::class, 'index'])
+    ->name('admix.roles.trash')
+    ->middleware('can:restore,' . Role::class);
+Route::get('roles/create', [RoleController::class, 'create'])
+    ->name('admix.roles.create')
+    ->middleware('can:create,' . Role::class);
+Route::post('roles', [RoleController::class, 'store'])
+    ->name('admix.roles.store')
+    ->middleware('can:create,' . Role::class);
+Route::get('roles/{role}', [RoleController::class, 'show'])
+    ->name('admix.roles.show')
+    ->middleware('can:view,' . Role::class);
+Route::get('roles/{role}/edit', [RoleController::class, 'edit'])
+    ->name('admix.roles.edit')
+    ->middleware('can:update,' . Role::class);
+Route::put('roles/{role}', [RoleController::class, 'update'])
+    ->name('admix.roles.update')
+    ->middleware('can:update,' . Role::class);
+Route::delete('roles/destroy/{role}', [RoleController::class, 'destroy'])
+    ->name('admix.roles.destroy')
+    ->middleware('can:delete,' . Role::class);
+Route::post('roles/{id}/restore', [RoleController::class, 'restore'])
+    ->name('admix.roles.restore')
+    ->middleware('can:restore,' . Role::class);
+Route::post('roles/batchDestroy', [RoleController::class, 'batchDestroy'])
+    ->name('admix.roles.batchDestroy')
+    ->middleware('can:delete,' . Role::class);
+Route::post('roles/batchRestore', [RoleController::class, 'batchRestore'])
+    ->name('admix.roles.batchRestore')
+    ->middleware('can:restore,' . Role::class);

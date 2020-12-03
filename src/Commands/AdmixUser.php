@@ -2,7 +2,7 @@
 
 namespace Agenciafmd\Admix\Commands;
 
-use Agenciafmd\Admix\User;
+use Agenciafmd\Admix\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
 
@@ -19,11 +19,12 @@ class AdmixUser extends Command
         $password = $this->secret('Senha');
         $password = Hash::make($password);
 
-        if (User::create([
-            'name' => $name,
+        if (User::updateOrCreate([
             'email' => $email,
+            'type' => 'admix',
+        ], [
+            'name' => $name,
             'password' => $password,
-            'type' => 'admix'
         ])) {
             $this->info('Usuário criado');
             $this->line($name . ' (' . $email . ')' . "\n");

@@ -13,16 +13,17 @@ class AdmixMediaClear extends Command
 
     public function handle()
     {
-        if (File::deleteDirectory(public_path('/media'), true)) {
-            $this->info('Thumbs removidos com sucesso');
-        } else {
-            $this->info('Falha na remoção dos thumbs');
-        }
-
-        if (File::deleteDirectory(storage_path('/app/.cache'), true)) {
-            $this->info('Cache do Glide removido com sucesso');
-        } else {
-            $this->info('Falha na remoção do cache do Glide');
-        }
+        $this->info('Refatorar para um alias do spatie/medialibrary');
+//        if (File::deleteDirectory(public_path('/media'), true)) {
+//            $this->info('Thumbs removidos com sucesso');
+//        } else {
+//            $this->info('Falha na remoção dos thumbs');
+//        }
+//
+//        if (File::deleteDirectory(storage_path('/app/.cache'), true)) {
+//            $this->info('Cache do Glide removido com sucesso');
+//        } else {
+//            $this->info('Falha na remoção do cache do Glide');
+//        }
     }
 }

@@ -3,13 +3,14 @@
 namespace Agenciafmd\Admix\Http\Controllers;
 
 use Agenciafmd\Admix\Http\Requests\UsersRequest;
-use Agenciafmd\Admix\User;
+use Agenciafmd\Admix\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class UsersController extends Controller
+class UserController extends Controller
 {
     public function index(Request $request)
     {
@@ -18,7 +19,11 @@ class UsersController extends Controller
         $query = QueryBuilder::for(User::class)
             ->defaultSort('-is_active', 'name')
             ->allowedSorts($request->sort)
-            ->allowedFilters((($request->filter) ? array_keys($request->filter) : []));
+            ->allowedFilters(array_merge((($request->filter) ? array_keys(array_diff_key($request->filter, array_flip(['id', 'is_active', 'role_id']))) : []), [
+                AllowedFilter::exact('id'),
+                AllowedFilter::exact('is_active'),
+                AllowedFilter::exact('role_id'),
+            ]));
 
         if ($request->is('*/trash')) {
             $query->onlyTrashed();

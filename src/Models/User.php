@@ -1,31 +1,40 @@
 <?php
 
-namespace Agenciafmd\Admix;
+namespace Agenciafmd\Admix\Models;
 
+use Database\Factories\UserFactory;
 use Agenciafmd\Admix\Notifications\ResetPasswordNotification;
+use Agenciafmd\Media\Traits\MediaTrait;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
+use Spatie\MediaLibrary\HasMedia;
 use Spatie\Searchable\Searchable;
 use Spatie\Searchable\SearchResult;
 
 class User extends Authenticatable implements AuditableContract, HasMedia, Searchable
 {
-    use Notifiable, SoftDeletes, Auditable, HasMediaTrait, MediaThumbTrait, MediaTrait {
-        MediaTrait::registerMediaConversions insteadof HasMediaTrait;
-    }
+    use Notifiable, SoftDeletes, HasFactory, Auditable, MediaTrait;
 
     protected $guarded = [
-        'password_confirmation', 'media'
+        'password_confirmation',
+        'media',
     ];
 
     protected $hidden = [
-        'password', 'remember_token', 'api_token', 'type',
+        'password',
+        'remember_token',
+        'api_token',
+        'type',
+    ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
     ];
 
     protected $attributes = [
@@ -55,6 +64,21 @@ class User extends Authenticatable implements AuditableContract, HasMedia, Searc
     public function role()
     {
         return $this->belongsTo(Role::class);
+    }
+
+    public function getAvatarAttribute()
+    {
+        $email = $this->attributes['email'];
+        $md5 = md5($email); // md5 é base 16
+        $base5 = base_convert($md5, 16, 5); // converte para base5, porque temos 50 avatares
+        $fileName = Str::limit($base5, 2, ''); // pegamos os dois primeiros caracteres que deve ser algo entre 01 e 50
+        $avatar = asset("/images/avatar-{$fileName}.svg");
+
+        if (!app()->environment(['local', 'testing', 'develop'])) {
+            $avatar = "https://unavatar.now.sh/{$email}?fallback=" . $avatar;
+        }
+
+        return $this->getFirstMediaUrl('image', 'thumb@2x') ?: $avatar;
     }
 
     public function hasAbility($ability)
@@ -92,5 +116,10 @@ class User extends Authenticatable implements AuditableContract, HasMedia, Searc
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPasswordNotification($token));
+    }
+
+    protected static function newFactory()
+    {
+        return UserFactory::new();
     }
 }

@@ -9,7 +9,12 @@
         'class' => 'card-list-group card needs-validation' . ((count($errors) > 0) ? ' was-validated' : ''),
         'novalidate' => true, 'id' => 'formCrud', 'files' => true]) }}
     <div class="card-header bg-gray-lightest">
-        <h3 class="card-title">Meu Perfil</h3>
+        <h3 class="card-title">
+            Meu Perfil
+        </h3>
+        <div class="card-options">
+            @include('agenciafmd/admix::partials.btn.save')
+        </div>
     </div>
     <ul class="list-group list-group-flush">
         {{ Form::bsText('Nome', 'name', null, ['-required']) }}
@@ -28,13 +33,8 @@
     </ul>
     <div class="card-footer bg-gray-lightest text-right">
         <div class="d-flex">
-            <a href="{{ route('admix.dashboard') }}" class="js-loading btn btn-secondary">
-                Voltar
-            </a>
-
-            @if(strpos(request()->route()->getName(), 'show') === false)
-                @include('agenciafmd/admix::partials.btn.save')
-            @endif
+            @include('agenciafmd/admix::partials.btn.back')
+            @include('agenciafmd/admix::partials.btn.save')
         </div>
     </div>
     {{ Form::close() }}

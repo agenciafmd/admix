@@ -2,10 +2,11 @@
 
 namespace Agenciafmd\Admix\Providers;
 
-use Agenciafmd\Admix\User;
-use Illuminate\Pagination\Paginator;
+use Agenciafmd\Admix\Models\Role;
+use Agenciafmd\Admix\Models\User;
+use Agenciafmd\Admix\Observers\RoleObserver;
+use Agenciafmd\Admix\Observers\UserObserver;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace;
 use RenatoMarinho\LaravelPageSpeed\Middleware\RemoveComments;
@@ -19,25 +20,17 @@ class AdmixServiceProvider extends ServiceProvider
     {
         $this->providers();
 
+        $this->setObservers();
+
         $this->setMenu();
 
         $this->setMiddlewares();
-
-        $this->setPaginator();
-
-        $this->loadViews();
 
         $this->loadMigrations();
 
         $this->loadTranslations();
 
-        $this->loadBladeDirectives();
-
         $this->publish();
-
-        if ($this->app->environment(['local', 'testing']) && $this->app->runningInConsole()) {
-            $this->setLocalFactories();
-        }
 
         if ($this->app->environment(['local']) && !$this->app->runningInConsole()) {
             $user = new User();
@@ -68,19 +61,20 @@ class AdmixServiceProvider extends ServiceProvider
         });
     }
 
-    public function setLocalFactories()
-    {
-        $this->app->make('Illuminate\Database\Eloquent\Factory')
-            ->load(__DIR__ . '/../database/factories');
-    }
-
     protected function providers()
     {
         $this->app->register(AuthServiceProvider::class);
+        $this->app->register(BladeServiceProvider::class);
         $this->app->register(BroadcastServiceProvider::class);
         $this->app->register(CommandServiceProvider::class);
         $this->app->register(LivewireServiceProvider::class);
         $this->app->register(RouteServiceProvider::class);
+    }
+
+    protected function setObservers()
+    {
+        User::observe(UserObserver::class);
+        Role::observe(RoleObserver::class);
     }
 
     protected function setMenu()
@@ -119,17 +113,6 @@ class AdmixServiceProvider extends ServiceProvider
         $this->app->router->middlewareGroup('turbo', $turboGroup);
     }
 
-    protected function setPaginator()
-    {
-        Paginator::defaultView('agenciafmd/admix::partials.paginate.simple');
-    }
-
-    protected function loadViews()
-    {
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'agenciafmd/admix');
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'agenciafmd/flash');
-    }
-
     protected function loadMigrations()
     {
         $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
@@ -152,13 +135,10 @@ class AdmixServiceProvider extends ServiceProvider
         config(['auth.providers' => array_merge(config('admix.auth.providers'), config('auth.providers'))]);
         config(['auth.passwords' => array_merge(config('admix.auth.passwords'), config('auth.passwords'))]);
         config(['logging.channels' => array_merge(config('admix.logging.channels'), config('logging.channels'))]);
-    }
 
-    protected function loadBladeDirectives()
-    {
-        Blade::directive('render', function ($component) {
-            return "<?php echo (app($component))->toHtml(); ?>";
-        });
+        if (config('mail.markdown.theme') === 'default') {
+            config(['mail.markdown.theme' => config('admix.mail.markdown.theme')]);
+        }
     }
 
     protected function publish()
@@ -166,10 +146,6 @@ class AdmixServiceProvider extends ServiceProvider
         // cd ~/code/packages/agenciafmd/admix/resources
         // npm run dev && php ~/code/starter/artisan vendor:publish --tag="admix:assets" --force
         // php artisan vendor:publish --tag="admix:assets" --force
-
-        $this->publishes([
-            __DIR__ . '/../resources/views' => base_path('resources/views/vendor/agenciafmd/admix'),
-        ], 'admix:views');
 
         $this->publishes([
             __DIR__ . '/../config' => base_path('config'),
@@ -181,6 +157,7 @@ class AdmixServiceProvider extends ServiceProvider
             __DIR__ . '/../resources/images' => public_path() . '/images',
             __DIR__ . '/../resources/js' => public_path() . '/js',
             __DIR__ . '/../resources/json' => public_path() . '/json',
+            __DIR__ . '/../resources/views/markdown/themes' => resource_path() . '/views/vendor/mail/html/themes',
         ], 'admix:assets');
     }
 }

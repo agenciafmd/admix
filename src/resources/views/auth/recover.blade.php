@@ -31,7 +31,7 @@
                                     <div class="invalid-feedback">{{ $errors->first('email') }}</div>
                                 @endif
                             </div>
-                            <div class="form-footer">
+                            <div class="form-footer mt-0">
                                 <button type="submit" class="btn btn-primary btn-block">Enviar</button>
                             </div>
                         </div>

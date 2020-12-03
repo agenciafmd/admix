@@ -15,7 +15,7 @@
                 <a href="#" data-toggle="dropdown"
                    class="nav-link d-flex align-items-center py-0 px-lg-0 px-2 text-color ml-2">
                     <span class="avatar"
-                          style="background-image: url({{ (auth('admix-web')->user()->getFirstMediaUrl('image', 'thumb') ?: '/images/avatar-' . Str::limit(base_convert(md5(auth('admix-web')->user()->email), 16, 5), 2, '') . '.svg') }})"></span>
+                          style="background-image: url({!! (auth('admix-web')->user()->avatar) !!})"></span>
                     <span class="ml-2 d-none d-lg-block leading-none">
                         <span>{{ auth('admix-web')->user()->name }}</span>
                         <span class="text-muted d-block mt-1 text-h6">

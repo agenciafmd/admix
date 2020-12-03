@@ -19,7 +19,7 @@ return [
         'providers' => [
             'admix-users' => [
                 'driver' => 'eloquent',
-                'model' => \Agenciafmd\Admix\User::class,
+                'model' => \Agenciafmd\Admix\Models\User::class,
             ],
         ],
 
@@ -54,6 +54,11 @@ return [
                     //
                 ],
             ],
+        ],
+    ],
+    'mail' => [
+        'markdown' => [
+            'theme' => 'admix',
         ],
     ],
     'manifest' => [
