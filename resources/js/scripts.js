@@ -10,7 +10,7 @@ module.exports = (function () {
         'node_modules/select2/dist/js/i18n/pt-BR.js',
         'node_modules/bootstrap-fileinput/js/plugins/piexif.js',
         'node_modules/bootstrap-fileinput/js/plugins/sortable.js',
-        'node_modules/bootstrap-fileinput/js/plugins/purify.js',
+        // 'node_modules/bootstrap-fileinput/js/plugins/purify.js',
         'node_modules/bootstrap-fileinput/js/fileinput.js',
         'js/vendor/bootstrap-fileinput/themes/fe/theme.js',
         'node_modules/bootstrap-fileinput/js/locales/pt-BR.js',
