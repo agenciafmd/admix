@@ -1,59 +1,64 @@
 {
-  "name": "agenciafmd/admix",
-  "description": "Admix - Agência F&MD",
-  "homepage": "https://github.com/agenciafmd/admix",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Irineu Junior",
-      "email": "irineu@fmd.ag",
-      "homepage": "https://fmd.ag/",
-      "role": "Developer"
-    }
-  ],
-  "require": {
-    "geekcom/validator-docs": "^3.4",
-    "hmazter/laravel-schedule-list": "^2.0",
-    "laracasts/flash": "^3.0",
-    "laravel/framework": "^8.0",
-    "laravel/ui": "^3.0",
-    "laravelcollective/html": "^6.0",
-    "league/commonmark": "^1.4",
-    "livewire/livewire": "^2.0",
-    "owen-it/laravel-auditing": "^10.0",
-    "renatomarinho/laravel-page-speed": "^1.8",
-    "silber/page-cache": "^1.0",
-    "spatie/laravel-query-builder": "^2.3",
-    "spatie/laravel-searchable": "^1.6",
-    "spatie/laravel-sitemap": "^5.3",
-    "spatie/laravel-translatable": "^4.1"
-  },
-  "require-dev": {
-    "beyondcode/laravel-dump-server": "^1.0",
-    "itsgoingd/clockwork": "^4.0"
-  },
-  "config": {
-    "optimize-autoloader": true,
-    "preferred-install": "dist",
-    "sort-packages": true
-  },
-  "autoload": {
-    "files": [
-      "src/Http/helpers.php"
+    "name": "agenciafmd/admix",
+    "description": "Admix - Agência F&MD",
+    "homepage": "https://github.com/agenciafmd/admix",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Irineu Junior",
+            "email": "irineu@fmd.ag",
+            "homepage": "https://fmd.ag/",
+            "role": "Developer"
+        }
     ],
-    "psr-4": {
-      "Agenciafmd\\Admix\\": "src/",
-      "Database\\Factories\\": "src/database/factories/",
-      "Database\\Seeders\\": "src/database/seeders/"
+    "require": {
+        "agenciafmd/admix-analytics": "v8.x-dev",
+        "agenciafmd/admix-form": "v8.x-dev",
+        "agenciafmd/admix-leads": "v8.x-dev",
+        "agenciafmd/admix-media": "v8.x-dev",
+        "agenciafmd/admix-postal": "v8.x-dev",
+        "geekcom/validator-docs": "^3.4",
+        "hmazter/laravel-schedule-list": "^2.0",
+        "laracasts/flash": "^3.0",
+        "laravel/framework": "^8.0",
+        "laravel/ui": "^3.0",
+        "laravelcollective/html": "^6.0",
+        "league/commonmark": "^1.4",
+        "livewire/livewire": "^2.0",
+        "owen-it/laravel-auditing": "^10.0",
+        "renatomarinho/laravel-page-speed": "^1.8",
+        "silber/page-cache": "^1.0",
+        "spatie/laravel-query-builder": "^2.3",
+        "spatie/laravel-searchable": "^1.6",
+        "spatie/laravel-sitemap": "^5.3",
+        "spatie/laravel-translatable": "^4.1"
+    },
+    "require-dev": {
+        "beyondcode/laravel-dump-server": "^1.0",
+        "itsgoingd/clockwork": "^4.0"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "autoload": {
+        "files": [
+            "src/Http/helpers.php"
+        ],
+        "psr-4": {
+            "Agenciafmd\\Admix\\": "src/",
+            "Database\\Factories\\": "src/database/factories/",
+            "Database\\Seeders\\": "src/database/seeders/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Agenciafmd\\Admix\\Providers\\AdmixServiceProvider"
+            ],
+            "aliases": {
+            }
+        }
     }
-  },
-  "extra": {
-    "laravel": {
-      "providers": [
-        "Agenciafmd\\Admix\\Providers\\AdmixServiceProvider"
-      ],
-      "aliases": {
-      }
-    }
-  }
 }
