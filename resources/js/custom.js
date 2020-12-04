@@ -62,7 +62,6 @@ $(function () {
     };
 
     $('.js-batch-select').on('change', function () {
-        $('.dimmer').addClass('active');
         $('.js-batch-form input[name="id[]"]').remove();
         $('.js-check:checked').each(function (index) {
             $('.js-batch-form').append('<input type="hidden" name="id[]" value="' + $(this).val() + '" />');
