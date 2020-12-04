@@ -12,11 +12,11 @@
         }
     ],
     "require": {
-        "agenciafmd/admix-analytics": "v8.x-dev",
-        "agenciafmd/admix-form": "v8.x-dev",
-        "agenciafmd/admix-leads": "v8.x-dev",
-        "agenciafmd/admix-media": "v8.x-dev",
-        "agenciafmd/admix-postal": "v8.x-dev",
+        "agenciafmd/admix-analytics": "dev-master",
+        "agenciafmd/admix-form": "dev-master",
+        "agenciafmd/admix-leads": "dev-master",
+        "agenciafmd/admix-media": "dev-master",
+        "agenciafmd/admix-postal": "dev-master",
         "geekcom/validator-docs": "^3.4",
         "hmazter/laravel-schedule-list": "^2.0",
         "laracasts/flash": "^3.0",
@@ -47,9 +47,7 @@
             "src/Http/helpers.php"
         ],
         "psr-4": {
-            "Agenciafmd\\Admix\\": "src/",
-            "Database\\Factories\\": "src/database/factories/",
-            "Database\\Seeders\\": "src/database/seeders/"
+            "Agenciafmd\\Admix\\": "src/"
         }
     },
     "extra": {
