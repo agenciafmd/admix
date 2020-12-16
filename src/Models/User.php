@@ -72,7 +72,7 @@ class User extends Authenticatable implements AuditableContract, HasMedia, Searc
         $md5 = md5($email); // md5 é base 16
         $base5 = base_convert($md5, 16, 5); // converte para base5, porque temos 50 avatares
         $fileName = Str::limit($base5, 2, ''); // pegamos os dois primeiros caracteres que deve ser algo entre 01 e 50
-        $avatar = asset("/images/avatar-{$fileName}.svg");
+        $avatar = asset("/images/avatars/{$fileName}.svg");
 
         if (!app()->environment(['local', 'testing', 'develop'])) {
             $avatar = "https://unavatar.now.sh/{$email}?fallback=" . $avatar;

@@ -8,8 +8,8 @@
     <meta name="description" content="Painel Administrativo Agência F&MD">
     <meta name="author" content="Agência F&MD">
 
-    <link rel="shortcut icon" href="/images/icons/favicon.ico">
-    <link rel="apple-touch-icon" href="/images/icons/icon-512x512.png">
+    <link rel="shortcut icon" href="{{ asset('/images/admix/favicon.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('/images/admix/favicon.png') }}">
 
     <!--cdn-->
     {{--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"/>--}}

@@ -20,4 +20,4 @@ mix.babel(scripts, '../src/resources/js/admix.js');
 /*
 * Copiando arquivos locais
 * */
-mix.copyDirectory('images/local', '../src/resources/images');
+mix.copyDirectory('images', '../src/resources/images');

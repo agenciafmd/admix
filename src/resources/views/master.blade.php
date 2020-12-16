@@ -14,8 +14,8 @@
     <meta name="upload-meta" content="{{ route('admix.upload.meta') }}">
     <meta name="upload-destroy" content="{{ route('admix.upload.destroy') }}">
 
-    <link rel="shortcut icon" href="/images/favicon.png">
-    <link rel="apple-touch-icon" href="/images/favicon.png">
+    <link rel="shortcut icon" href="{{ asset('/images/admix/favicon.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('/images/admix/favicon.png') }}">
 
     <!--cdn-->
     <link rel="stylesheet"

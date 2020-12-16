@@ -5,7 +5,7 @@
            data-toggle="collapse"
            data-parent="#menu"
            role="button"
-           aria-expanded=" {{ (Str::startsWith(request()->route()->getName(), ['admix.users', 'admix.roles'])) ? 'true' : 'false' }}">
+           aria-expanded="{{ (Str::startsWith(request()->route()->getName(), ['admix.users', 'admix.roles'])) ? 'true' : 'false' }}">
             <span class="nav-icon">
                 <i class="icon fe-users"></i>
             </span>
