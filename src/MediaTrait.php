@@ -12,26 +12,22 @@ trait MediaTrait
         static::saved(function ($model) {
             $request = request();
 
-            if (!$request->has('media')) {
-                return false;
-            }
+            if ($request->has('media')) {
+                foreach ($request->get('media') as $media) {
+                    if (is_array($media['collection'])) {
+                        $collection = reset($media['collection']);
+                        $file = storage_path('admix/tmp') . "/" . reset($media['name']);
 
-            foreach ($request->get('media') as $media) {
-                if (is_array($media['collection'])) {
-                    $collection = reset($media['collection']);
-                    $file = storage_path('admix/tmp') . "/" . reset($media['name']);
+                        $model->doUploadMultiple($file, $collection);
 
-                    $model->doUploadMultiple($file, $collection);
+                    } else {
+                        $collection = $media['collection'];
+                        $file = storage_path('admix/tmp') . "/{$media['name']}";
 
-                } else {
-                    $collection = $media['collection'];
-                    $file = storage_path('admix/tmp') . "/{$media['name']}";
-
-                    $model->doUpload($file, $collection);
+                        $model->doUpload($file, $collection);
+                    }
                 }
             }
-
-            return true;
         });
     }
 
