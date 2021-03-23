@@ -14,31 +14,39 @@ trait TurboTrait
         }
 
         static::created(function ($model) {
-            if ($model->is_active) {
-                dispatch(function () use ($model) {
-                    with(new GuzzleClient())->request('GET', $model->url);
-                })
-                    ->delay(now()->addSeconds(5))
-                    ->onQueue('low');
+            try {
+                if ($model->is_active) {
+                    dispatch(function () use ($model) {
+                        (new GuzzleClient)->request('GET', $model->url);
+                    })
+                        ->delay(now()->addSeconds(5))
+                        ->onQueue('low');
+                }
+            } catch (\Exception $e) {
+                // não tem problema
             }
         });
 
         static::saved(function ($model) {
-            if ($model->is_active) {
-                dispatch(function () use ($model) {
-                    Artisan::call('page-cache:clear', [
-                        'slug' => str_replace(config('app.url'), '', $model->url)
-                    ]);
+            try {
+                if ($model->is_active) {
+                    dispatch(function () use ($model) {
+                        Artisan::call('page-cache:clear', [
+                            'slug' => str_replace(config('app.url'), '', $model->url),
+                        ]);
 
-                    with(new GuzzleClient())->request('GET', $model->url);
-                })
-                    ->delay(now()->addSeconds(5))
-                    ->onQueue('low');
+                        (new GuzzleClient)->request('GET', $model->url);
+                    })
+                        ->delay(now()->addSeconds(5))
+                        ->onQueue('low');
+                }
+            } catch (\Exception $e) {
+                // não tem problema
             }
         });
 
         static::deleted(function ($model) {
-            if ($model->is_active) {
+            try {
                 dispatch(function () use ($model) {
                     Artisan::call('page-cache:clear', [
                         'slug' => str_replace(config('app.url'), '', $model->url),
@@ -46,16 +54,22 @@ trait TurboTrait
                 })
                     ->delay(now()->addSeconds(5))
                     ->onQueue('low');
+            } catch (\Exception $e) {
+                // não tem problema
             }
         });
 
         static::restored(function ($model) {
-            if ($model->is_active) {
-                dispatch(function () use ($model) {
-                    with(new GuzzleClient())->request('GET', $model->url);
-                })
-                    ->delay(now()->addSeconds(5))
-                    ->onQueue('low');
+            try {
+                if ($model->is_active) {
+                    dispatch(function () use ($model) {
+                        (new GuzzleClient)->request('GET', $model->url);
+                    })
+                        ->delay(now()->addSeconds(5))
+                        ->onQueue('low');
+                }
+            } catch (\Exception $e) {
+                // não tem problema
             }
         });
     }
