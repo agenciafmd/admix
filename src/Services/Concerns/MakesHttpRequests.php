@@ -2,6 +2,7 @@
 
 namespace Agenciafmd\Admix\Services\Concerns;
 
+use Agenciafmd\Admix\Events\GuzzleRequestFailedEvent;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
@@ -69,13 +70,13 @@ trait MakesHttpRequests
     {
         try {
             return $this->guzzleClient->request($method, $url, $options);
-        } catch (ClientException $exception) {
-            $response = $exception->getResponse();
-        } catch (ServerException $exception) {
+        } catch (ClientException | ServerException $exception) {
+            GuzzleRequestFailedEvent::dispatch($exception);
+
+            Log::warning("Retorno {$response->getStatusCode()} em request.");
+
             $response = $exception->getResponse();
         }
-
-        Log::warning("Retorno {$response->getStatusCode()} em request.");
 
         if (in_array($response->getStatusCode(), $this->ignoredHttpCodes())) {
             report($exception);
