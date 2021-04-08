@@ -35,15 +35,17 @@ class CommandServiceProvider extends ServiceProvider
                 return str_pad(rand(0, 59), 2, 0, STR_PAD_LEFT);
             });
 
-            $schedule->command('queue:restart')
-                ->everyThirtyMinutes();
+            if (!class_exists(\App\Providers\HorizonServiceProvider::class)) {
+                $schedule->command('queue:restart')
+                    ->everyThirtyMinutes();
 
-            $schedule->command('queue:work --tries=3 --delay=5 --timeout=60 --queue=high,default,low')
-                ->name(now()->format('H:i') . ' Rotina de processamento de fila')
-                ->runInBackground()
-                ->withoutOverlapping(30)
-                ->everyMinute()
-                ->appendOutputTo(storage_path('logs/command-queue-work-' . date('Y-m-d') . '.log'));
+                $schedule->command('queue:work --tries=3 --delay=5 --timeout=60 --queue=high,default,low')
+                    ->name(now()->format('H:i') . ' Rotina de processamento de fila')
+                    ->runInBackground()
+                    ->withoutOverlapping(30)
+                    ->everyMinute()
+                    ->appendOutputTo(storage_path('logs/command-queue-work-' . date('Y-m-d') . '.log'));
+            }
 
             $schedule->command('admix:optimize')
                 ->withoutOverlapping()
