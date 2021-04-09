@@ -73,9 +73,9 @@ trait MakesHttpRequests
         } catch (ClientException | ServerException $exception) {
             GuzzleRequestFailedEvent::dispatch($exception);
 
-            Log::warning("Retorno {$response->getStatusCode()} em request.");
-
             $response = $exception->getResponse();
+
+            Log::warning("Retorno {$response->getStatusCode()} em request.");
         }
 
         if (in_array($response->getStatusCode(), $this->ignoredHttpCodes())) {
