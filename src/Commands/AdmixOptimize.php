@@ -19,5 +19,9 @@ class AdmixOptimize extends Command
         $this->call('view:cache');
 
         $this->call('queue:restart');
+
+        if (class_exists(\App\Providers\HorizonServiceProvider::class)) {
+            $this->call('horizon:terminate');
+        }
     }
 }

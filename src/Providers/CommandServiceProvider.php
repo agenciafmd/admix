@@ -39,12 +39,15 @@ class CommandServiceProvider extends ServiceProvider
                 $schedule->command('queue:restart')
                     ->everyThirtyMinutes();
 
-                $schedule->command('queue:work --tries=3 --delay=5 --timeout=60 --queue=high,default,low')
+                $schedule->command('queue:work --tries=3 --delay=5 --timeout=60 --max-jobs=1000 --max-time=1800 --queue=high,default,low')
                     ->name(now()->format('H:i') . ' Rotina de processamento de fila')
                     ->runInBackground()
                     ->withoutOverlapping(30)
                     ->everyMinute()
                     ->appendOutputTo(storage_path('logs/command-queue-work-' . date('Y-m-d') . '.log'));
+            } else {
+                $schedule->command('horizon:snapshot')
+                    ->everyFiveMinutes();
             }
 
             $schedule->command('admix:optimize')
@@ -54,18 +57,13 @@ class CommandServiceProvider extends ServiceProvider
 
             $schedule->command('admix:media-clear')
                 ->withoutOverlapping()
-                ->dailyAt("02:{$minutes}")
+                ->dailyAt("03:{$minutes}")
                 ->appendOutputTo(storage_path('logs/command-admix-media-clear-' . date('Y-m-d') . '.log'));
 
             $schedule->command('sitemap:generate')
                 ->withoutOverlapping()
-                ->dailyAt("03:{$minutes}")
-                ->appendOutputTo(storage_path('logs/command-sitemap-generate-' . date('Y-m-d') . '.log'));
-
-            $schedule->command('notifications:clear')
-                ->withoutOverlapping()
                 ->dailyAt("04:{$minutes}")
-                ->appendOutputTo(storage_path('logs/command-notifications-clear-' . date('Y-m-d') . '.log'));
+                ->appendOutputTo(storage_path('logs/command-sitemap-generate-' . date('Y-m-d') . '.log'));
         });
     }
 }
