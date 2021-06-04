@@ -15,7 +15,10 @@ class NotificationsClear extends Command
 
     public function handle()
     {
-        DB::table('notifications')->where('created_at', '<=', Carbon::now()->subDays($this->option('days')))->delete();
+        DB::table('notifications')
+            ->where('created_at', '<=', Carbon::now()
+                ->subDays($this->option('days')))
+            ->delete();
 
         $this->info('Notificações removidas');
     }
