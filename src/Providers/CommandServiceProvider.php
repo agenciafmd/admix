@@ -52,18 +52,18 @@ class CommandServiceProvider extends ServiceProvider
 
             $schedule->command('admix:optimize')
                 ->withoutOverlapping()
-                ->dailyAt("02:{$minutes}")
-                ->appendOutputTo(storage_path('logs/command-admix-optimize-' . date('Y-m-d') . '.log'));
-
-            $schedule->command('admix:media-clear')
-                ->withoutOverlapping()
                 ->dailyAt("03:{$minutes}")
-                ->appendOutputTo(storage_path('logs/command-admix-media-clear-' . date('Y-m-d') . '.log'));
+                ->appendOutputTo(storage_path('logs/command-admix-optimize-' . date('Y-m-d') . '.log'));
 
             $schedule->command('sitemap:generate')
                 ->withoutOverlapping()
                 ->dailyAt("04:{$minutes}")
                 ->appendOutputTo(storage_path('logs/command-sitemap-generate-' . date('Y-m-d') . '.log'));
+
+            $schedule->command('admix:media-clear')
+                ->withoutOverlapping()
+                ->dailyAt("05:{$minutes}")
+                ->appendOutputTo(storage_path('logs/command-admix-media-clear-' . date('Y-m-d') . '.log'));
         });
     }
 }
