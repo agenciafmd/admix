@@ -157,7 +157,7 @@ class AdmixServiceProvider extends ServiceProvider
             __DIR__ . '/../resources/images' => public_path() . '/images',
             __DIR__ . '/../resources/js' => public_path() . '/js',
             __DIR__ . '/../resources/json' => public_path() . '/json',
-            __DIR__ . '/../resources/views/markdown/themes' => resource_path() . '/views/vendor/mail/html/themes',
+//            __DIR__ . '/../resources/views/markdown/themes' => resource_path() . '/views/vendor/mail/html/themes',
         ], 'admix:assets');
     }
 }
