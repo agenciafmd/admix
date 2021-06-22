@@ -15,7 +15,8 @@ class GenerateSitemap extends Command
     {
         dispatch(function () {
             SitemapGenerator::create(config('app.url'))
-                ->writeToFile(public_path('sitemap.xml'));
+                ->getSitemap()
+                ->writeToDisk(config('filesystems.default'), 'sitemap.xml');
         })->onQueue('low');
     }
 }
