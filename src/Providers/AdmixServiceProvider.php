@@ -115,7 +115,7 @@ class AdmixServiceProvider extends ServiceProvider
 
     protected function loadMigrations()
     {
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
     }
 
     protected function loadTranslations()

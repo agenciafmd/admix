@@ -2,7 +2,7 @@
 
 namespace Agenciafmd\Admix\Models;
 
-use Database\Factories\UserFactory;
+use Agenciafmd\Admix\Database\Factories\UserFactory;
 use Agenciafmd\Admix\Notifications\ResetPasswordNotification;
 use Agenciafmd\Media\Traits\MediaTrait;
 use Illuminate\Database\Eloquent\Builder;
@@ -120,6 +120,10 @@ class User extends Authenticatable implements AuditableContract, HasMedia, Searc
 
     protected static function newFactory()
     {
+        if (class_exists(\Database\Factories\AdmixUserFactory::class)) {
+            return \Database\Factories\AdmixUserFactory::new();
+        }
+
         return UserFactory::new();
     }
 }
