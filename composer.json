@@ -25,7 +25,7 @@
         "laravelcollective/html": "^6.0",
         "league/commonmark": "^1.4",
         "livewire/livewire": "^2.0",
-        "owen-it/laravel-auditing": "^10.0",
+        "owen-it/laravel-auditing": "^12.0",
         "renatomarinho/laravel-page-speed": "^2.0",
         "silber/page-cache": "^1.0",
         "spatie/laravel-query-builder": "^3.5",
