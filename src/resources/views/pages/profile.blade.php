@@ -5,7 +5,7 @@
 @endsection
 
 @section('form')
-    {{ Form::model($user, ['url' => route('admix.profile.update'), 'method' => 'PUT',
+    {{ Form::model($model, ['url' => route('admix.profile.update'), 'method' => 'PUT',
         'class' => 'card-list-group card needs-validation' . ((count($errors) > 0) ? ' was-validated' : ''),
         'novalidate' => true, 'id' => 'formCrud', 'files' => true]) }}
     <div class="card-header bg-gray-lightest">
@@ -21,7 +21,7 @@
 
         {{ Form::bsEmail('E-mail', 'email', null, ['required']) }}
 
-        {{ Form::bsImage('Avatar', 'image', $user) }}
+        {{ Form::bsImage('Avatar', 'image', $model) }}
     </ul>
     <div class="card-header bg-gray-lightest">
         <h3 class="card-title">Alterar senha</h3>
