@@ -317,7 +317,7 @@ $(function () {
     });
 
     editor.subscribe('editableDrop', function (event) {
-        var maxFileSize = 50000; //Set to ~10kb bytes for testing
+        var maxFileSize = 150000; //Set to ~10kb bytes for testing
 
         for (let index = 0; index < event.dataTransfer.files.length; index++) {
             var file = event.dataTransfer.files[index];
