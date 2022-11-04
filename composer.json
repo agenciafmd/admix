@@ -1,0 +1,29 @@
+{
+    "name": "agenciafmd/admix",
+    "description": "Admix - Agência F&MD",
+    "homepage": "https://github.com/agenciafmd/admix",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Irineu Martins Junior",
+            "email": "irineu@fmd",
+            "homepage": "https://fmd.ag/",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "laravel/framework": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Agenciafmd\\Admix\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Agenciafmd\\Admix\\Providers\\AdmixServiceProvider"
+            ]
+        }
+    }
+}
