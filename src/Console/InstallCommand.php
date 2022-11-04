@@ -32,8 +32,8 @@ class InstallCommand extends Command
             'laravel/horizon:^5.7',
         ]);
         $this->call('horizon:install');
-        $this->updateConfigHorizon();
 
+        $this->updateConfigHorizon();
         $this->updateConfigApp();
         $this->updateConfigAuth();
 
@@ -46,7 +46,51 @@ class InstallCommand extends Command
 
     protected function updateConfigHorizon(): void
     {
-        //
+        $this->replaceInFile(
+            "'middleware' => ['web']",
+            "'middleware' => [\n        'web',\n        'auth:admix-web',\n    ]",
+            config_path('horizon.php'),
+        );
+
+        $this->replaceInFile(
+            "'queue' => ['default']",
+            "'queue' => [\n                'high',\n                'default',\n                'low',\n            ]",
+            config_path('horizon.php'),
+        );
+
+        collect([
+            [
+                'key' => 'memory_limit',
+                'from' => '64',
+                'to' => '51200',
+            ],
+            [
+                'key' => 'memory',
+                'from' => '128',
+                'to' => '512',
+            ],
+            [
+                'key' => 'maxTime',
+                'from' => '0',
+                'to' => '3600',
+            ],
+            [
+                'key' => 'maxJobs',
+                'from' => '0',
+                'to' => '500',
+            ],
+            [
+                'key' => 'timeout',
+                'from' => '60',
+                'to' => '180',
+            ],
+        ])->each(function ($config) {
+            $this->replaceInFile(
+                "'{$config['key']}' => {$config['from']}",
+                "'{$config['key']}' => {$config['to']}",
+                config_path('horizon.php'),
+            );
+        });
     }
 
     protected function updateConfigApp(): void
