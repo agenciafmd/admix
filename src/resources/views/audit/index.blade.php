@@ -17,7 +17,7 @@
 @section('filters')
     <h6 class="dropdown-header bg-gray-lightest p-2">Local</h6>
     <div class="p-2">
-        {{ Form::select('filter[auditable_type]', ['' => '-'] + audit_alias(), filter('auditable_type'), [
+        {{ Form::select('filter[auditable_type]', ['' => '-'] + collect(audit_alias())->mapWithKeys(function($item, $key) { return [addslashes($key) => $item]; })->toArray(), filter('auditable_type'), [
                 'class' => 'form-control form-control-sm'
             ]) }}
     </div>
