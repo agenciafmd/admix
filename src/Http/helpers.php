@@ -1,6 +1,6 @@
 <?php
 
-if (!function_exists('admix_is_active')) {
+if (! function_exists('admix_is_active')) {
     function admix_is_active($route = '')
     {
         $url = parse_url($route);
@@ -10,7 +10,7 @@ if (!function_exists('admix_is_active')) {
     }
 }
 
-if (!function_exists('admix_cannot')) {
+if (! function_exists('admix_cannot')) {
     function admix_cannot($action, $place)
     {
         return auth('admix-web')
@@ -19,7 +19,7 @@ if (!function_exists('admix_cannot')) {
     }
 }
 
-if (!function_exists('audit_events')) {
+if (! function_exists('audit_events')) {
     function audit_events($event = '')
     {
         $events['created'] = 'Criou';
@@ -27,7 +27,7 @@ if (!function_exists('audit_events')) {
         $events['deleted'] = 'Removeu';
         $events['restored'] = 'Restaurou';
 
-        if (!$event) {
+        if (! $event) {
             return $events;
         }
 
@@ -39,12 +39,12 @@ if (!function_exists('audit_events')) {
     }
 }
 
-if (!function_exists('audit_alias')) {
+if (! function_exists('audit_alias')) {
     function audit_alias($model = '')
     {
         $alias = config('audit-alias');
 
-        if (!$model) {
+        if (! $model) {
             return $alias;
         }
 
@@ -56,8 +56,7 @@ if (!function_exists('audit_alias')) {
     }
 }
 
-if (!function_exists('human_number')) {
-
+if (! function_exists('human_number')) {
     function human_number($num, $places = 2, $type = 'metric')
     {
         if ('metric' === $type) {
@@ -79,7 +78,7 @@ if (!function_exists('human_number')) {
     }
 }
 
-if (!function_exists('remove_accents')) {
+if (! function_exists('remove_accents')) {
     function remove_accents($string)
     {
         if (is_array($string)) {
@@ -94,14 +93,14 @@ if (!function_exists('remove_accents')) {
     }
 }
 
-if (!function_exists('only_numbers')) {
+if (! function_exists('only_numbers')) {
     function only_numbers($string)
     {
         return preg_replace('/[^0-9]/', '', $string);
     }
 }
 
-if (!function_exists('states')) {
+if (! function_exists('states')) {
     function states($state = null)
     {
         $states = [
@@ -142,10 +141,10 @@ if (!function_exists('states')) {
     }
 }
 
-if (!function_exists('float_to_db')) {
+if (! function_exists('float_to_db')) {
     function float_to_db($value)
     {
-        if (!$value) {
+        if (! $value) {
             return null;
         }
 
@@ -153,10 +152,10 @@ if (!function_exists('float_to_db')) {
     }
 }
 
-if (!function_exists('db_to_float')) {
+if (! function_exists('db_to_float')) {
     function db_to_float($value)
     {
-        if (!$value) {
+        if (! $value) {
             return null;
         }
 
@@ -164,10 +163,10 @@ if (!function_exists('db_to_float')) {
     }
 }
 
-if (!function_exists('date_to_db')) {
+if (! function_exists('date_to_db')) {
     function date_to_db($value, $formFormat = 'd/m/Y H:i')
     {
-        if (!$value) {
+        if (! $value) {
             return null;
         }
 
@@ -176,10 +175,10 @@ if (!function_exists('date_to_db')) {
     }
 }
 
-if (!function_exists('db_to_date')) {
+if (! function_exists('db_to_date')) {
     function db_to_date($value, $default = null, $format = 'd/m/Y H:i')
     {
-        if (!$value) {
+        if (! $value) {
             return $default;
         }
 
@@ -187,8 +186,7 @@ if (!function_exists('db_to_date')) {
     }
 }
 
-
-if (!function_exists('filter')) {
+if (! function_exists('filter')) {
     function filter($field)
     {
         if (isset(request()->get('filter', [$field => ''])[$field])) {
@@ -197,10 +195,10 @@ if (!function_exists('filter')) {
     }
 }
 
-if (!function_exists('column_sort')) {
+if (! function_exists('column_sort')) {
     function column_sort($title, $field, $sort = true)
     {
-        if (!$sort) {
+        if (! $sort) {
             return '<span class="text-muted font-weight-bold">' . $title . '</span>';
         }
 
@@ -230,7 +228,7 @@ if (!function_exists('column_sort')) {
     }
 }
 
-if (!function_exists('default_sort')) {
+if (! function_exists('default_sort')) {
     function default_sort($fields)
     {
         return collect($fields)->map(function ($value) {
@@ -245,7 +243,7 @@ if (!function_exists('default_sort')) {
     }
 }
 
-if (!function_exists('thumb')) {
+if (! function_exists('thumb')) {
     function thumb($model, $name, $config = [], $placeholder = 'data:image/gif;base64,R0lGODlhAQABAIAAAMLCwgAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==')
     {
         $default = [
@@ -265,7 +263,7 @@ if (!function_exists('thumb')) {
 
         $image = $model->getFirstMedia($name) ?? null;
 
-        if (!$image) {
+        if (! $image) {
             return (object)[
                 'original' => $placeholder,
                 'name' => $placeholder,
@@ -281,7 +279,7 @@ if (!function_exists('thumb')) {
     }
 }
 
-if (!function_exists('thumbs')) {
+if (! function_exists('thumbs')) {
     function thumbs($model, $name, $config = [])
     {
         $default = [
@@ -302,7 +300,7 @@ if (!function_exists('thumbs')) {
 
         $images = $model->getMedia($name) ?? null;
 
-        if (!$images) {
+        if (! $images) {
             return collect([]);
         }
 
@@ -319,7 +317,7 @@ if (!function_exists('thumbs')) {
     }
 }
 
-if (!function_exists('image')) {
+if (! function_exists('image')) {
     function image($model, $name, $placeholder = '/images/sem-imagem.jpg')
     {
         $location = '/media/';
@@ -329,7 +327,7 @@ if (!function_exists('image')) {
 
         $image = $model->getFirstMedia($name) ?? null;
 
-        if (!$image) {
+        if (! $image) {
             return (object)[
                 'original' => $placeholder,
                 'name' => $placeholder,
@@ -345,11 +343,11 @@ if (!function_exists('image')) {
     }
 }
 
-if (!function_exists('media_file')) {
+if (! function_exists('media_file')) {
     function media_file($model, $name)
     {
         $file = optional($model->getFirstMedia($name))->name;
-        if (!$file) {
+        if (! $file) {
             return false;
         }
 
@@ -357,12 +355,38 @@ if (!function_exists('media_file')) {
     }
 }
 
-if (!function_exists('image_path_builder')) {
+if (! function_exists('image_path_builder')) {
     function image_path_builder($image, $config)
     {
         $configPath = str_replace('=', '.', http_build_query($config, null, '/'));
         $dirname = str_replace('/storage/', '/', dirname($image));
 
         return trim($dirname . '/' . $configPath . '/' . basename($image), './');
+    }
+}
+
+if (! function_exists('convert_bytes')) {
+    function convert_bytes($value)
+    {
+        if (is_numeric($value)) {
+            return $value;
+        }
+
+        $value_length = strlen($value);
+        $qty = substr($value, 0, $value_length - 1);
+        $unit = strtolower(substr($value, $value_length - 1));
+        switch ($unit) {
+            case 'k':
+                $qty *= 1024;
+                break;
+            case 'm':
+                $qty *= 1048576;
+                break;
+            case 'g':
+                $qty *= 1073741824;
+                break;
+        }
+
+        return $qty;
     }
 }
