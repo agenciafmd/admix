@@ -12,7 +12,17 @@
         }
     ],
     "require": {
-        "laravel/framework": "^9.0"
+        "laravel/framework": "^9.0",
+        "laravel/horizon": "^5.15"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.0",
+        "nunomaduro/collision": "^6.1",
+        "nunomaduro/larastan": "^2.5",
+        "nunomaduro/phpinsights": "^2.8",
+        "roave/security-advisories": "dev-latest",
+        "pestphp/pest": "^1.16",
+        "pestphp/pest-plugin-laravel": "^1.1"
     },
     "autoload": {
         "psr-4": {

@@ -26,71 +26,16 @@ class InstallCommand extends Command
 
     public function handle(): int
     {
-        $this->requireComposerPackages([
-            'pestphp/pest:^1.16',
-            'pestphp/pest-plugin-laravel:^1.1',
-            'laravel/horizon:^5.7',
-        ]);
-        $this->call('horizon:install');
-
-        $this->updateConfigHorizon();
         $this->updateConfigApp();
         $this->updateConfigAuth();
-
+        $this->publishConfigFiles();
+        $this->installHorizon();
+        $this->installAnalysisCommands();
 
         $this->line('');
         $this->components->info('Admix instalado com sucesso.');
 
         return static::SUCCESS;
-    }
-
-    protected function updateConfigHorizon(): void
-    {
-        $this->replaceInFile(
-            "'middleware' => ['web']",
-            "'middleware' => [\n        'web',\n        'auth:admix-web',\n    ]",
-            config_path('horizon.php'),
-        );
-
-        $this->replaceInFile(
-            "'queue' => ['default']",
-            "'queue' => [\n                'high',\n                'default',\n                'low',\n            ]",
-            config_path('horizon.php'),
-        );
-
-        collect([
-            [
-                'key' => 'memory_limit',
-                'from' => '64',
-                'to' => '51200',
-            ],
-            [
-                'key' => 'memory',
-                'from' => '128',
-                'to' => '512',
-            ],
-            [
-                'key' => 'maxTime',
-                'from' => '0',
-                'to' => '3600',
-            ],
-            [
-                'key' => 'maxJobs',
-                'from' => '0',
-                'to' => '500',
-            ],
-            [
-                'key' => 'timeout',
-                'from' => '60',
-                'to' => '180',
-            ],
-        ])->each(function ($config) {
-            $this->replaceInFile(
-                "'{$config['key']}' => {$config['from']}",
-                "'{$config['key']}' => {$config['to']}",
-                config_path('horizon.php'),
-            );
-        });
     }
 
     protected function updateConfigApp(): void
@@ -111,7 +56,7 @@ class InstallCommand extends Command
                 'from' => 'en_US',
                 'to' => 'pt_BR',
             ],
-        ])->each(function ($config) {
+        ])->each(function ($config): void {
             $this->replaceInFile(
                 "'{$config['key']}' => '{$config['from']}'",
                 "'{$config['key']}' => '{$config['to']}'",
@@ -148,42 +93,78 @@ class InstallCommand extends Command
         $this->replaceInFile($search, $replace, config_path('auth.php'));
     }
 
+    protected function publishConfigFiles(): void
+    {
+        $this->callSilent('vendor:publish', [
+            '--tag' => 'admix-config',
+//            '--force' => true,
+        ]);
+    }
+
+    protected function installHorizon(): void
+    {
+        (new Process([
+            'php',
+            'artisan',
+            'horizon:install',
+        ], base_path()))
+            ->setTimeout(null)
+            ->run(function ($type, $output): void {
+                $this->output->write($output);
+            });
+
+        $search = "return in_array(\$user->email, [\n\n            ]);";
+        $replace = 'return true;';
+        $this->replaceInFile($search, $replace, app_path('Providers/HorizonServiceProvider.php'));
+    }
+
+    protected function installAnalysisCommands(): void
+    {
+        $packages = json_decode(file_get_contents(base_path('composer.json')), true);
+
+        $packages['scripts']['phpstan'] = 'vendor/bin/phpstan analyse';
+        $packages['scripts']['pint'] = 'vendor/bin/pint packages -v';
+        $packages['scripts']['insights'] = 'vendor/bin/phpinsights analyse packages';
+
+        file_put_contents(
+            base_path('composer.json'),
+            json_encode($packages, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . PHP_EOL
+        );
+    }
+
     /**
      * Install Breeze's tests.
-     *
-     * @return void
      */
-    protected function installTests()
+    protected function installTests(): void
     {
-        (new Filesystem)->ensureDirectoryExists(base_path('tests/Feature/Auth'));
+        (new Filesystem())->ensureDirectoryExists(base_path('tests/Feature/Auth'));
 
         $stubStack = $this->argument('stack') === 'api' ? 'api' : 'default';
 
         if ($this->option('pest')) {
             $this->requireComposerPackages('pestphp/pest:^1.16', 'pestphp/pest-plugin-laravel:^1.1');
 
-            (new Filesystem)->copyDirectory(__DIR__ . '/../../stubs/' . $stubStack . '/pest-tests/Feature', base_path('tests/Feature/Auth'));
-            (new Filesystem)->copyDirectory(__DIR__ . '/../../stubs/' . $stubStack . '/pest-tests/Unit', base_path('tests/Unit'));
-            (new Filesystem)->copy(__DIR__ . '/../../stubs/' . $stubStack . '/pest-tests/Pest.php', base_path('tests/Pest.php'));
+            (new Filesystem())->copyDirectory(__DIR__ . '/../../stubs/' . $stubStack . '/pest-tests/Feature', base_path('tests/Feature/Auth'));
+            (new Filesystem())->copyDirectory(__DIR__ . '/../../stubs/' . $stubStack . '/pest-tests/Unit', base_path('tests/Unit'));
+            (new Filesystem())->copy(__DIR__ . '/../../stubs/' . $stubStack . '/pest-tests/Pest.php', base_path('tests/Pest.php'));
         } else {
-            (new Filesystem)->copyDirectory(__DIR__ . '/../../stubs/' . $stubStack . '/tests/Feature', base_path('tests/Feature/Auth'));
+            (new Filesystem())->copyDirectory(__DIR__ . '/../../stubs/' . $stubStack . '/tests/Feature', base_path('tests/Feature/Auth'));
         }
     }
 
     /**
      * Install the middleware to a group in the application Http Kernel.
      *
-     * @param string $after
-     * @param string $name
-     * @param string $group
-     * @return void
+     * @param  string  $after
+     * @param  string  $name
+     * @param  string  $group
      */
-    protected function installMiddlewareAfter($after, $name, $group = 'web')
+    protected function installMiddlewareAfter($after, $name, $group = 'web'): void
     {
         $httpKernel = file_get_contents(app_path('Http/Kernel.php'));
 
         $middlewareGroups = Str::before(Str::after($httpKernel, '$middlewareGroups = ['), '];');
-        $middlewareGroup = Str::before(Str::after($middlewareGroups, "'$group' => ["), '],');
+        $middlewareGroup = Str::before(Str::after($middlewareGroups, "'{$group}' => ["), '],');
 
         if (! Str::contains($middlewareGroup, $name)) {
             $modifiedMiddlewareGroup = str_replace(
@@ -203,10 +184,9 @@ class InstallCommand extends Command
     /**
      * Installs the given Composer Packages into the application.
      *
-     * @param mixed $packages
-     * @return void
+     * @param  mixed  $packages
      */
-    protected function requireComposerPackages($packages)
+    protected function requireComposerPackages($packages): void
     {
         $composer = $this->option('composer');
 
@@ -221,7 +201,7 @@ class InstallCommand extends Command
 
         (new Process($command, base_path(), ['COMPOSER_MEMORY_LIMIT' => '-1']))
             ->setTimeout(null)
-            ->run(function ($type, $output) {
+            ->run(function ($type, $output): void {
                 $this->output->write($output);
             });
     }
@@ -229,11 +209,9 @@ class InstallCommand extends Command
     /**
      * Update the "package.json" file.
      *
-     * @param callable $callback
-     * @param bool $dev
-     * @return void
+     * @param  bool  $dev
      */
-    protected static function updateNodePackages(callable $callback, $dev = true)
+    protected static function updateNodePackages(callable $callback, $dev = true): void
     {
         if (! file_exists(base_path('package.json'))) {
             return;
@@ -258,12 +236,10 @@ class InstallCommand extends Command
 
     /**
      * Delete the "node_modules" directory and remove the associated lock files.
-     *
-     * @return void
      */
-    protected static function flushNodeModules()
+    protected static function flushNodeModules(): void
     {
-        tap(new Filesystem, function ($files) {
+        tap(new Filesystem(), static function ($files): void {
             $files->deleteDirectory(base_path('node_modules'));
 
             $files->delete(base_path('yarn.lock'));
@@ -279,23 +255,12 @@ class InstallCommand extends Command
         file_put_contents($path, str_replace($search, $replace, file_get_contents($path)));
     }
 
-    /**
-     * Get the path to the appropriate PHP binary.
-     *
-     * @return string
-     */
-    protected function phpBinary()
+    protected function phpBinary(): string
     {
         return (new PhpExecutableFinder())->find(false) ?: 'php';
     }
 
-    /**
-     * Run the given commands.
-     *
-     * @param array $commands
-     * @return void
-     */
-    protected function runCommands($commands)
+    protected function runCommands(array $commands): void
     {
         $process = Process::fromShellCommandline(implode(' && ', $commands), null, null, null, null);
 
@@ -307,7 +272,7 @@ class InstallCommand extends Command
             }
         }
 
-        $process->run(function ($type, $line) {
+        $process->run(function ($type, $line): void {
             $this->output->write('    ' . $line);
         });
     }
