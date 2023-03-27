@@ -5,13 +5,11 @@ namespace Agenciafmd\Admix\Console;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
-use RuntimeException;
-use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\Process;
 
 class InstallCommand extends Command
 {
-    protected $signature = 'admix:install {--composer=global : Caminho absoluto do binario do composer que será utilizado para instalar os pacotes}';
+    protected $signature = 'admix:install';
 
     protected $description = 'Instala as controllers / views / assets do Admix';
 
@@ -41,6 +39,25 @@ class InstallCommand extends Command
 
     protected function requireComposerDevDependencies(): void
     {
+        $allowedPlugins = [
+            'dealerdirect/phpcodesniffer-composer-installer',
+            'pestphp/pest-plugin-laravel',
+        ];
+
+        foreach ($allowedPlugins as $plugin) {
+            (new Process([
+                'composer',
+                'config',
+                '--no-plugins',
+                'allow-plugins.' . $plugin,
+                'true',
+            ], base_path(), ['COMPOSER_MEMORY_LIMIT' => '-1']))
+                ->setTimeout(null)
+                ->run(function ($type, $output): void {
+                    $this->output->write($output);
+                });
+        }
+
         $packages = [
             'laravel/pint:^1.0',
             'nunomaduro/collision:^6.1',
@@ -49,6 +66,7 @@ class InstallCommand extends Command
             'roave/security-advisories:dev-latest',
             'pestphp/pest:^1.16',
             'pestphp/pest-plugin-laravel:^1.1',
+            'brianium/paratest:^6.0',
         ];
 
         (new Process([
@@ -176,35 +194,6 @@ class InstallCommand extends Command
     }
 
     /**
-     * Install the middleware to a group in the application Http Kernel.
-     *
-     * @param string $after
-     * @param string $name
-     * @param string $group
-     */
-    protected function installMiddlewareAfter($after, $name, $group = 'web'): void
-    {
-        $httpKernel = file_get_contents(app_path('Http/Kernel.php'));
-
-        $middlewareGroups = Str::before(Str::after($httpKernel, '$middlewareGroups = ['), '];');
-        $middlewareGroup = Str::before(Str::after($middlewareGroups, "'{$group}' => ["), '],');
-
-        if (! Str::contains($middlewareGroup, $name)) {
-            $modifiedMiddlewareGroup = str_replace(
-                $after . ',',
-                $after . ',' . PHP_EOL . '            ' . $name . ',',
-                $middlewareGroup,
-            );
-
-            file_put_contents(app_path('Http/Kernel.php'), str_replace(
-                $middlewareGroups,
-                str_replace($middlewareGroup, $modifiedMiddlewareGroup, $middlewareGroups),
-                $httpKernel
-            ));
-        }
-    }
-
-    /**
      * Installs the given Composer Packages into the application.
      *
      * @param mixed $packages
@@ -231,73 +220,10 @@ class InstallCommand extends Command
     }
 
     /**
-     * Update the "package.json" file.
-     *
-     * @param bool $dev
-     */
-    protected static function updateNodePackages(callable $callback, $dev = true): void
-    {
-        if (! file_exists(base_path('package.json'))) {
-            return;
-        }
-
-        $configurationKey = $dev ? 'devDependencies' : 'dependencies';
-
-        $packages = json_decode(file_get_contents(base_path('package.json')), true);
-
-        $packages[$configurationKey] = $callback(
-            array_key_exists($configurationKey, $packages) ? $packages[$configurationKey] : [],
-            $configurationKey
-        );
-
-        ksort($packages[$configurationKey]);
-
-        file_put_contents(
-            base_path('package.json'),
-            json_encode($packages, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . PHP_EOL
-        );
-    }
-
-    /**
-     * Delete the "node_modules" directory and remove the associated lock files.
-     */
-    protected static function flushNodeModules(): void
-    {
-        tap(new Filesystem(), static function ($files): void {
-            $files->deleteDirectory(base_path('node_modules'));
-
-            $files->delete(base_path('yarn.lock'));
-            $files->delete(base_path('package-lock.json'));
-        });
-    }
-
-    /**
      * Replace a given string within a given file.
      */
     protected function replaceInFile(string $search, string $replace, string $path): void
     {
         file_put_contents($path, str_replace($search, $replace, file_get_contents($path)));
-    }
-
-    protected function phpBinary(): string
-    {
-        return (new PhpExecutableFinder())->find(false) ?: 'php';
-    }
-
-    protected function runCommands(array $commands): void
-    {
-        $process = Process::fromShellCommandline(implode(' && ', $commands), null, null, null, null);
-
-        if ('\\' !== DIRECTORY_SEPARATOR && file_exists('/dev/tty') && is_readable('/dev/tty')) {
-            try {
-                $process->setTty(true);
-            } catch (RuntimeException $e) {
-                $this->output->writeln('  <bg=yellow;fg=black> WARN </> ' . $e->getMessage() . PHP_EOL);
-            }
-        }
-
-        $process->run(function ($type, $line): void {
-            $this->output->write('    ' . $line);
-        });
     }
 }
