@@ -26,6 +26,7 @@ class InstallCommand extends Command
 
     public function handle(): int
     {
+        $this->requireComposerDevDependencies();
         $this->updateConfigApp();
         $this->updateConfigAuth();
         $this->publishConfigFiles();
@@ -36,6 +37,28 @@ class InstallCommand extends Command
         $this->components->info('Admix instalado com sucesso.');
 
         return static::SUCCESS;
+    }
+
+    protected function requireComposerDevDependencies(): void
+    {
+        $packages = [
+            'laravel/pint:^1.0',
+            'nunomaduro/collision:^6.1',
+            'nunomaduro/larastan:^2.5',
+            'nunomaduro/phpinsights:^2.8',
+            'roave/security-advisories:dev-latest',
+            'pestphp/pest:^1.16',
+            'pestphp/pest-plugin-laravel:^1.1',
+        ];
+
+        (new Process([
+                'composer',
+                'require',
+            ] + $packages + ['--dev'], base_path(), ['COMPOSER_MEMORY_LIMIT' => '-1']))
+            ->setTimeout(null)
+            ->run(function ($type, $output): void {
+                $this->output->write($output);
+            });
     }
 
     protected function updateConfigApp(): void
@@ -155,9 +178,9 @@ class InstallCommand extends Command
     /**
      * Install the middleware to a group in the application Http Kernel.
      *
-     * @param  string  $after
-     * @param  string  $name
-     * @param  string  $group
+     * @param string $after
+     * @param string $name
+     * @param string $group
      */
     protected function installMiddlewareAfter($after, $name, $group = 'web'): void
     {
@@ -184,7 +207,7 @@ class InstallCommand extends Command
     /**
      * Installs the given Composer Packages into the application.
      *
-     * @param  mixed  $packages
+     * @param mixed $packages
      */
     protected function requireComposerPackages($packages): void
     {
@@ -196,7 +219,8 @@ class InstallCommand extends Command
 
         $command = array_merge(
             $command ?? ['composer', 'require'],
-            is_array($packages) ? $packages : func_get_args()
+            is_array($packages) ? $packages : func_get_args(),
+            ['--dev']
         );
 
         (new Process($command, base_path(), ['COMPOSER_MEMORY_LIMIT' => '-1']))
@@ -209,7 +233,7 @@ class InstallCommand extends Command
     /**
      * Update the "package.json" file.
      *
-     * @param  bool  $dev
+     * @param bool $dev
      */
     protected static function updateNodePackages(callable $callback, $dev = true): void
     {
