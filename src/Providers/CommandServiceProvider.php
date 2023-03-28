@@ -2,12 +2,12 @@
 
 namespace Agenciafmd\Admix\Providers;
 
-use Agenciafmd\Admix\Console\InstallCommand;
+use Agenciafmd\Admix\Commands\InstallCommand;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 
-class ConsoleServiceProvider extends ServiceProvider
+class CommandServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {

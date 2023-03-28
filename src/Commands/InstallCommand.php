@@ -1,6 +1,6 @@
 <?php
 
-namespace Agenciafmd\Admix\Console;
+namespace Agenciafmd\Admix\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
@@ -138,7 +138,7 @@ class InstallCommand extends Command
     {
         $this->callSilent('vendor:publish', [
             '--tag' => 'admix-config',
-//            '--force' => true,
+            '--force' => true,
         ]);
     }
 
