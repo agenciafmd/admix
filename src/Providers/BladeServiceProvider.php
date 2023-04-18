@@ -50,6 +50,7 @@ class BladeServiceProvider extends ServiceProvider
     protected function loadViews(): void
     {
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'admix');
+        $this->loadViewsFrom(__DIR__ . '/../../resources/mail', 'admix-mail');
     }
 
     protected function publish(): void

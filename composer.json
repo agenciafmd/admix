@@ -12,12 +12,13 @@
         }
     ],
     "require": {
+        "itsgoingd/clockwork": "^5.1",
         "laravel/framework": "^9.0",
-        "laravel/horizon": "^5.15"
+        "laravel/horizon": "^5.15",
+        "livewire/livewire": "^2.12"
     },
     "require-dev": {
         "laravel/pint": "^1.0",
-        "livewire/livewire": "^2.12",
         "nunomaduro/collision": "^6.1",
         "nunomaduro/larastan": "^2.5",
         "nunomaduro/phpinsights": "^2.8",
@@ -26,6 +27,9 @@
         "pestphp/pest-plugin-laravel": "^1.1"
     },
     "autoload": {
+        "files": [
+            "src/Http/helpers.php"
+        ],
         "psr-4": {
             "Agenciafmd\\Admix\\": "src/"
         }

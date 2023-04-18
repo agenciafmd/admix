@@ -2,6 +2,7 @@
 
 namespace Agenciafmd\Admix\Providers;
 
+use Agenciafmd\Admix\Http\Middleware\Authenticate;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\RateLimiter;
@@ -14,10 +15,11 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         $this->routes(function () {
-            Route::middleware('web')
+            Route::prefix(config('admix.path'))
+                ->middleware(['web', Authenticate::class . ':admix-web'])
                 ->group(__DIR__ . '/../../routes/web.php');
 
-            Route::prefix('api')
+            Route::prefix(config('admix.path') . '/api')
                 ->middleware('api')
                 ->group(__DIR__ . '/../../routes/api.php');
         });

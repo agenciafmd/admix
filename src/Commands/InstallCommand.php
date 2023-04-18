@@ -59,20 +59,21 @@ class InstallCommand extends Command
         }
 
         $packages = [
+            'brianium/paratest:^6.0',
             'laravel/pint:^1.0',
             'nunomaduro/collision:^6.1',
             'nunomaduro/larastan:^2.5',
             'nunomaduro/phpinsights:^2.8',
-            'roave/security-advisories:dev-latest',
-            'pestphp/pest:^1.16',
             'pestphp/pest-plugin-laravel:^1.1',
-            'brianium/paratest:^6.0',
+            'pestphp/pest:^1.16',
+            'roave/security-advisories:dev-latest',
+            '--dev', // install packages as dev dependencies
         ];
 
         (new Process([
                 'composer',
                 'require',
-            ] + $packages + ['--dev'], base_path(), ['COMPOSER_MEMORY_LIMIT' => '-1']))
+            ] + $packages, base_path(), ['COMPOSER_MEMORY_LIMIT' => '-1']))
             ->setTimeout(null)
             ->run(function ($type, $output): void {
                 $this->output->write($output);

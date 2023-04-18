@@ -10,6 +10,10 @@ class AdmixServiceProvider extends ServiceProvider
     {
         $this->providers();
 
+        $this->loadMigrations();
+
+        $this->loadTranslations();
+
         $this->publish();
     }
 
@@ -22,20 +26,36 @@ class AdmixServiceProvider extends ServiceProvider
     {
         $this->app->register(BladeServiceProvider::class);
         $this->app->register(CommandServiceProvider::class);
+        $this->app->register(LivewireServiceProvider::class);
         $this->app->register(RouteServiceProvider::class);
     }
 
     protected function publish(): void
     {
         $this->publishes([
-            __DIR__ . '/../../../resources/pint.json' => base_path('pint.json'),
-            __DIR__ . '/../../../resources/phpstan.neon' => base_path('phpstan.neon'),
+            __DIR__ . '/../../resources/pint.json' => base_path('pint.json'),
+            __DIR__ . '/../../resources/phpstan.neon' => base_path('phpstan.neon'),
             __DIR__ . '/../../config/horizon.php' => base_path('config/horizon.php'),
         ], 'admix-config');
 
         $this->publishes([
+            __DIR__ . '/../../lang/pt_BR' => lang_path('pt_BR'),
+        ], ['admix-translations']);
+
+        $this->publishes([
             __DIR__ . '/../../public' => public_path('vendor/admix'),
         ], ['admix-assets', 'laravel-assets']);
+    }
+
+    protected function loadMigrations(): void
+    {
+        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
+    }
+
+    protected function loadTranslations(): void
+    {
+        $this->loadTranslationsFrom(__DIR__ . '/../../lang', 'admix');
+        $this->loadJsonTranslationsFrom(__DIR__ . '/../../lang');
     }
 
     protected function loadConfigs(): void

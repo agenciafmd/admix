@@ -1,0 +1,19 @@
+{
+  "Password": "Senha",
+  "Keep me signed in": "Mantenha-me conectado",
+  "I am a custom message": "Eu sou uma mensagem customizada",
+  "Sign in": "Entrar",
+  "Forgot password. <a href=\":url\">Click here</a>.": "Esqueceu sua senha. <a href=\":url\">Clique aqui</a>.",
+  "Show/Hide password": "Mostrar/Ocultar senha",
+  "Enter your email address and we will send a link to reset your password.": "Digite seu endereço de e-mail e enviaremos um link para redefinir sua senha.",
+  "Send": "Enviar",
+  "Forget it, <a href=\":url\">send me back</a> to the sign in screen.": "Deixa pra lá, <a href=\":url\">me envie de volta</a> para a tela de login.",
+  "Login to your account": "Entre com sua conta",
+  "Reset password": "Redefinir senha",
+  "Enter your email address and your new password.": "Digite seu endereço de e-mail e sua nova senha.",
+  "Please, try again later.": "Por favor, aguarde alguns segundos para enviar os dados.",
+  "Forgot password": "Esqueceu sua senha",
+  "All rights reserved.": "Todos os direitos reservados.",
+  "You recently requested to reset a password for your account. Use the button below to reset it. This message will expire in 24 hours.": "Você recentemente solicitou a redefinição de senha para sua conta. Use o botão abaixo para redefini-la. Esta mensagem expirará em 24 horas.",
+  "If you didn't request a password reset, please ignore this message or contact us if you have any questions.": "Se você não solicitou a redefinição de senha, ignore esta mensagem ou entre em contato conosco se tiver alguma dúvida."
+}
