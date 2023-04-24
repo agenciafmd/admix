@@ -28,6 +28,7 @@ class InstallCommand extends Command
         $this->updateConfigApp();
         $this->updateConfigAuth();
         $this->publishConfigFiles();
+        $this->publishLangFiles();
         $this->installHorizon();
         $this->installAnalysisCommands();
 
@@ -139,6 +140,14 @@ class InstallCommand extends Command
     {
         $this->callSilent('vendor:publish', [
             '--tag' => 'admix-config',
+            '--force' => true,
+        ]);
+    }
+
+    protected function publishLangFiles(): void
+    {
+        $this->callSilent('vendor:publish', [
+            '--tag' => 'admix-translations',
             '--force' => true,
         ]);
     }
