@@ -13,12 +13,11 @@
                     <x-form-input name="email" label="{{ __('admix::fields.email') }}"/>
                 </div>
                 <div class="mb-3">
-                    <x-form-password name="password" label="{{ __('admix::fields.password') }}"
-                                     wire:model.defer="password"/>
+                    <x-form-password name="password" label="{{ __('admix::fields.password') }}"/>
                 </div>
                 <div class="mb-3">
-                    <x-form-password name="password_confirmation" label="{{ __('admix::fields.password_confirmation') }}"
-                                     wire:model.defer="password_confirmation"/>
+                    <x-form-password name="password_confirmation"
+                                     label="{{ __('admix::fields.password_confirmation') }}"/>
                 </div>
                 <div class="form-footer">
                     <x-form-submit class="btn btn-primary w-100">{{ __('Reset password') }}</x-form-submit>

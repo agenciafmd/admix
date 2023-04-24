@@ -12,8 +12,7 @@
                     <x-form-input name="email" label="{{ __('admix::fields.email') }}"/>
                 </div>
                 <div class="mb-3">
-                    <x-form-password name="password" label="{{ __('admix::fields.password') }}"
-                                     wire:model.defer="password"/>
+                    <x-form-password name="password" label="{{ __('admix::fields.password') }}"/>
                 </div>
                 <div class="mb-3">
                     <x-form-checkbox name="remember" label="{{ __('admix::fields.remember') }}"/>
