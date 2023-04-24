@@ -59,7 +59,7 @@
 
 <script src="{{ asset('/vendor/admix/vendor/tabler/js/tabler.min.js') }}" defer></script>
 <script src="{{ asset('/vendor/admix/vendor/bootstrap-toaster/js/bootstrap-toaster.min.js') }}" defer></script>
-
+<script src="{{ asset('/vendor/admix/vendor/alpinejs/js/alpinejs-3.12.0.min.js') }}" defer></script>
 <livewire:scripts/>
 
 @include('admix::partials.message')
