@@ -33,9 +33,11 @@ class AdmixServiceProvider extends ServiceProvider
     protected function publish(): void
     {
         $this->publishes([
-            __DIR__ . '/../../resources/pint.json' => base_path('pint.json'),
-            __DIR__ . '/../../resources/phpstan.neon' => base_path('phpstan.neon'),
+            __DIR__ . '/../../.env.example' => base_path('.env.example'),
+            __DIR__ . '/../../pint.json' => base_path('pint.json'),
+            __DIR__ . '/../../phpstan.neon' => base_path('phpstan.neon'),
             __DIR__ . '/../../config/horizon.php' => base_path('config/horizon.php'),
+            __DIR__ . '/../../config/livewire.php' => base_path('config/livewire.php'),
         ], 'admix-config');
 
         $this->publishes([
