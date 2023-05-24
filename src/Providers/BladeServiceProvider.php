@@ -3,6 +3,7 @@
 namespace Agenciafmd\Admix\Providers;
 
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class BladeServiceProvider extends ServiceProvider
@@ -15,6 +16,8 @@ class BladeServiceProvider extends ServiceProvider
 
         $this->loadBladeComposers();
 
+        $this->setMenu();
+
         $this->setPaginator();
 
         $this->loadViews();
@@ -24,12 +27,14 @@ class BladeServiceProvider extends ServiceProvider
 
     public function register(): void
     {
-        //
+        $this->app->singleton('admix-menu', function () {
+            return collect();
+        });
     }
 
     protected function loadBladeComponents(): void
     {
-        //
+        Blade::componentNamespace('Agenciafmd\\Admix\\Http\\Components', 'admix');
     }
 
     protected function loadBladeComposers(): void
@@ -40,6 +45,18 @@ class BladeServiceProvider extends ServiceProvider
     protected function loadBladeDirectives(): void
     {
         //
+    }
+
+    protected function setMenu(): void
+    {
+        $this->app->make('admix-menu')
+            ->push((object)[
+                'component' => 'admix::aside.dashboard',
+                'ord' => 1,
+            ])->push((object)[
+                'component' => 'admix::aside.users',
+                'ord' => 2,
+            ]);
     }
 
     protected function setPaginator(): void

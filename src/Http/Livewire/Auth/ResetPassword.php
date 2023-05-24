@@ -38,7 +38,7 @@ class ResetPassword extends Component
     public function render(): View
     {
         return view('admix::auth.reset-password')
-            ->layoutData([
+            ->extends('admix::master', [
                 'bodyClass' => 'd-flex flex-column',
                 'pageClass' => 'page page-center',
             ]);

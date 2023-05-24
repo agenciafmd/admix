@@ -7,18 +7,25 @@
     <div class="card card-md">
         <div class="card-body">
             <h2 class="h2 text-center mb-4">{{ __('Login to your account') }}</h2>
-            <x-form wire:submit.prevent="submit">
+            <x-form>
                 <div class="mb-3">
-                    <x-form-input name="email" label="{{ __('admix::fields.email') }}"/>
+                    <x-form.input type="email"
+                                  name="email"
+                                  label="{{ __('admix::fields.email') }}"
+                    />
                 </div>
                 <div class="mb-3">
-                    <x-form-password name="password" label="{{ __('admix::fields.password') }}"/>
+                    <x-form.password name="password"
+                                     label="{{ __('admix::fields.password') }}"
+                    />
                 </div>
                 <div class="mb-3">
-                    <x-form-checkbox name="remember" label="{{ __('admix::fields.remember') }}"/>
+                    <x-form.checkbox name="remember"
+                                     label="{{ __('admix::fields.remember') }}"
+                    />
                 </div>
                 <div class="form-footer">
-                    <x-form-submit class="btn btn-primary w-100">{{ __('Sign in') }}</x-form-submit>
+                    <x-btn.primary class="w-100">{{ __('Sign in') }}</x-btn.primary>
                 </div>
             </x-form>
         </div>

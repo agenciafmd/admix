@@ -25,7 +25,7 @@ class ForgotPassword extends Component
     public function render(): View
     {
         return view('admix::auth.forgot-password')
-            ->layoutData([
+            ->extends('admix::master', [
                 'bodyClass' => 'd-flex flex-column',
                 'pageClass' => 'page page-center',
             ]);

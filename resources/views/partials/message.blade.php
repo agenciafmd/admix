@@ -39,7 +39,7 @@
             },
         };
 
-        Toast.enableTimers(TOAST_TIMERS.COUNTDOWN);
+        Toast.enableTimers(TOAST_TIMERS.DISABLED);
         Toast.create({
             title: type[param.level]['title'],
             status: type[param.level]['status'],

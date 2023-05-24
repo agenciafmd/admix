@@ -7,20 +7,26 @@
     <div class="card card-md">
         <div class="card-body">
             <h2 class="h2 text-center mb-4">{{ __('Reset password') }}</h2>
-            <x-form wire:submit.prevent="submit">
+            <x-form>
                 <p class="text-muted mb-3">{{ __('Enter your email address and your new password.') }}</p>
                 <div class="mb-3">
-                    <x-form-input name="email" label="{{ __('admix::fields.email') }}"/>
+                    <x-form.input type="email"
+                                  name="email"
+                                  label="{{ __('admix::fields.email') }}"
+                    />
                 </div>
                 <div class="mb-3">
-                    <x-form-password name="password" label="{{ __('admix::fields.password') }}"/>
+                    <x-form.password name="password"
+                                     label="{{ __('admix::fields.password') }}"
+                    />
                 </div>
                 <div class="mb-3">
-                    <x-form-password name="password_confirmation"
-                                     label="{{ __('admix::fields.password_confirmation') }}"/>
+                    <x-form.password name="password_confirmation"
+                                     label="{{ __('admix::fields.password_confirmation') }}"
+                    />
                 </div>
                 <div class="form-footer">
-                    <x-form-submit class="btn btn-primary w-100">{{ __('Reset password') }}</x-form-submit>
+                    <x-btn.primary class="w-100">{{ __('Reset password') }}</x-btn.primary>
                 </div>
             </x-form>
         </div>

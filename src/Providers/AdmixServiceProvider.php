@@ -37,6 +37,7 @@ class AdmixServiceProvider extends ServiceProvider
             __DIR__ . '/../../pint.json' => base_path('pint.json'),
             __DIR__ . '/../../phpstan.neon' => base_path('phpstan.neon'),
             __DIR__ . '/../../config/horizon.php' => base_path('config/horizon.php'),
+            __DIR__ . '/../../config/media-library.php' => base_path('config/media-library.php'),
             __DIR__ . '/../../config/livewire.php' => base_path('config/livewire.php'),
         ], 'admix-config');
 

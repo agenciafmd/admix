@@ -21,6 +21,8 @@ return new class extends Migration {
                 $table->bigInteger('role_id')
                     ->unsigned()
                     ->default(0);
+                $table->boolean('can_notify')
+                    ->default(0);
             });
             $table->softDeletes();
         });

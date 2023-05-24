@@ -13,9 +13,7 @@ use Livewire\Redirector;
 class Login extends Component
 {
     public string $email;
-
     public string $password;
-
     public bool $remember = false;
 
 //    public function route()
@@ -28,7 +26,7 @@ class Login extends Component
     public function render(): View
     {
         return view('admix::auth.login')
-            ->layoutData([
+            ->extends('admix::master', [
                 'bodyClass' => 'd-flex flex-column',
                 'pageClass' => 'page page-center',
             ]);
