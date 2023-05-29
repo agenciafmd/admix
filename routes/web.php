@@ -1,10 +1,10 @@
 <?php
 
 use Agenciafmd\Admix\Http\Livewire\Auth;
+use Agenciafmd\Admix\Http\Livewire\Pages;
 use Agenciafmd\Admix\Http\Middleware\Authenticate;
 use Agenciafmd\Admix\Http\Middleware\RedirectIfAuthenticated;
 use Illuminate\Support\Facades\Route;
-use Agenciafmd\Admix\Http\Livewire\Pages;
 
 Route::withoutMiddleware([Authenticate::class . ':admix-web'])
     ->middleware([RedirectIfAuthenticated::class])
@@ -30,3 +30,9 @@ Route::get('/profile', Pages\Profile\MyAccount::class)
     ->name('admix.profile');
 Route::get('/profile/change-password', Pages\Profile\ChangePassword::class)
     ->name('admix.profile.change-password');
+Route::get('/users', Pages\User\Index::class)
+    ->name('admix.user.index');
+Route::get('/users/create', Pages\User\Form::class)
+    ->name('admix.user.create');
+Route::get('/users/{user}/edit', Pages\User\Form::class)
+    ->name('admix.user.edit');
