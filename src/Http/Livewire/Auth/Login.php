@@ -80,7 +80,8 @@ class Login extends Component
         if (!Auth::guard('admix-web')
             ->attempt([
                 'email' => $data['email'],
-                'password' => $data['password']
+                'password' => $data['password'],
+                'is_active' => true,
             ], $data['remember'] ?? false)) {
             RateLimiter::hit($throttleKey);
 
