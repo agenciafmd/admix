@@ -2,9 +2,9 @@
 
 namespace Agenciafmd\Admix\Http\Components\Aside;
 
+use Illuminate\Support\Str;
 use Illuminate\View\Component;
 use Illuminate\View\View;
-use Illuminate\Support\Str;
 
 class Users extends Component
 {
@@ -25,7 +25,7 @@ class Users extends Component
         $this->children = [
             [
                 'label' => __('Users'),
-                'url' => '', // route('admix.users.index'),
+                'url' => route('admix.user.index'),
                 'active' => (Str::startsWith(request()->route()->getName(), 'admix.users')),
                 'visible' => true,
             ],

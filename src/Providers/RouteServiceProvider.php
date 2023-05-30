@@ -32,12 +32,12 @@ class RouteServiceProvider extends ServiceProvider
         parent::register();
     }
 
-    protected function loadBindings(): void
+    private function loadBindings(): void
     {
         //
     }
 
-    protected function configureRateLimiting(): void
+    private function configureRateLimiting(): void
     {
         RateLimiter::for('api', static function () {
             return Limit::perMinute(120);

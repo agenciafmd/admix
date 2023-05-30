@@ -22,7 +22,7 @@ class AdmixServiceProvider extends ServiceProvider
         $this->loadConfigs();
     }
 
-    protected function providers(): void
+    private function providers(): void
     {
         $this->app->register(BladeServiceProvider::class);
         $this->app->register(CommandServiceProvider::class);
@@ -30,7 +30,7 @@ class AdmixServiceProvider extends ServiceProvider
         $this->app->register(RouteServiceProvider::class);
     }
 
-    protected function publish(): void
+    private function publish(): void
     {
         $this->publishes([
             __DIR__ . '/../../.env.example' => base_path('.env.example'),
@@ -50,18 +50,18 @@ class AdmixServiceProvider extends ServiceProvider
         ], ['admix-assets', 'laravel-assets']);
     }
 
-    protected function loadMigrations(): void
+    private function loadMigrations(): void
     {
         $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
     }
 
-    protected function loadTranslations(): void
+    private function loadTranslations(): void
     {
         $this->loadTranslationsFrom(__DIR__ . '/../../lang', 'admix');
         $this->loadJsonTranslationsFrom(__DIR__ . '/../../lang');
     }
 
-    protected function loadConfigs(): void
+    private function loadConfigs(): void
     {
         $this->mergeConfigFrom(__DIR__ . '/../../config/admix.php', 'admix');
 //        $this->mergeConfigFrom(__DIR__ . '/../config/local-operations.php', 'local-operations');
