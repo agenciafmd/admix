@@ -10,4 +10,4 @@
 
 Estamos usando o [Tabler](https://tabler.github.io/) como base para o nosso layout.
 
-O commit https://github.com/tabler/tabler/commit/e73415687629ab229eb253ddbdba36581045cb98 para ser mais específico.
+https://github.com/tabler/tabler/commit/fc91e6ae8cad5ed3d2b17181b48348753222ce14

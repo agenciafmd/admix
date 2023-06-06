@@ -1,218 +1,98 @@
 /*!
-* Tabler v1.0.0-beta17 (https://tabler.io)
-* @version 1.0.0-beta17
+* Tabler v1.0.0-beta19 (https://tabler.io)
+* @version 1.0.0-beta19
 * @link https://tabler.io
 * Copyright 2018-2023 The Tabler Authors
 * Copyright 2018-2023 codecalm.net Paweł Kuna
 * Licensed under MIT (https://github.com/tabler/tabler/blob/master/LICENSE)
 */
-var e, t, n = "function" == typeof Map ? new Map : (e = [], t = [], {
-  has: function (t) {
-    return e.indexOf(t) > -1
-  }, get: function (n) {
-    return t[e.indexOf(n)]
-  }, set: function (n, o) {
-    -1 === e.indexOf(n) && (e.push(n), t.push(o));
-  }, delete: function (n) {
-    var o = e.indexOf(n);
-    o > -1 && (e.splice(o, 1), t.splice(o, 1));
-  }
-}), o = function (e) {
-  return new Event(e, {bubbles: !0})
-};
-try {
-  new Event("test");
-} catch (e) {
-  o = function (e) {
-    var t = document.createEvent("Event");
-    return t.initEvent(e, !0, !1), t
-  };
+var e = new Map;
+
+function t(t) {
+    var o = e.get(t);
+    o && o.destroy();
 }
 
-function r(e) {
-  var t = n.get(e);
-  t && t.destroy();
+function o(t) {
+    var o = e.get(t);
+    o && o.update();
 }
 
-function i(e) {
-  var t = n.get(e);
-  t && t.update();
-}
-
-var l = null;
-"undefined" == typeof window || "function" != typeof window.getComputedStyle ? ((l = function (e) {
-  return e
+var r = null;
+"undefined" == typeof window ? ((r = function (e) {
+    return e
 }).destroy = function (e) {
-  return e
-}, l.update = function (e) {
-  return e
-}) : ((l = function (e, t) {
-  return e && Array.prototype.forEach.call(e.length ? e : [e], function (e) {
-    return function (e) {
-      if (e && e.nodeName && "TEXTAREA" === e.nodeName && !n.has(e)) {
-        var t, r = null, i = null, l = null, a = function () {
-          e.clientWidth !== i && p();
-        }, d = function (t) {
-          window.removeEventListener("resize", a, !1), e.removeEventListener("input", p, !1), e.removeEventListener("keyup", p, !1), e.removeEventListener("autosize:destroy", d, !1), e.removeEventListener("autosize:update", p, !1), Object.keys(t).forEach(function (n) {
-            e.style[n] = t[n];
-          }), n.delete(e);
-        }.bind(e, {
-          height: e.style.height,
-          resize: e.style.resize,
-          overflowY: e.style.overflowY,
-          overflowX: e.style.overflowX,
-          wordWrap: e.style.wordWrap
-        });
-        e.addEventListener("autosize:destroy", d, !1), "onpropertychange" in e && "oninput" in e && e.addEventListener("keyup", p, !1), window.addEventListener("resize", a, !1), e.addEventListener("input", p, !1), e.addEventListener("autosize:update", p, !1), e.style.overflowX = "hidden", e.style.wordWrap = "break-word", n.set(e, {
-          destroy: d,
-          update: p
-        }), "vertical" === (t = window.getComputedStyle(e, null)).resize ? e.style.resize = "none" : "both" === t.resize && (e.style.resize = "horizontal"), r = "content-box" === t.boxSizing ? -(parseFloat(t.paddingTop) + parseFloat(t.paddingBottom)) : parseFloat(t.borderTopWidth) + parseFloat(t.borderBottomWidth), isNaN(r) && (r = 0), p();
-      }
-
-      function s(t) {
-        var n = e.style.width;
-        e.style.width = "0px", e.style.width = n, e.style.overflowY = t;
-      }
-
-      function u() {
-        if (0 !== e.scrollHeight) {
-          var t = function (e) {
-            for (var t = []; e && e.parentNode && e.parentNode instanceof Element;) e.parentNode.scrollTop && (e.parentNode.style.scrollBehavior = "auto", t.push([e.parentNode, e.parentNode.scrollTop])), e = e.parentNode;
-            return function () {
-              return t.forEach(function (e) {
-                var t = e[0];
-                t.scrollTop = e[1], t.style.scrollBehavior = null;
-              })
+    return e
+}, r.update = function (e) {
+    return e
+}) : ((r = function (t, o) {
+    return t && Array.prototype.forEach.call(t.length ? t : [t], function (t) {
+        return function (t) {
+            if (t && t.nodeName && "TEXTAREA" === t.nodeName && !e.has(t)) {
+                var o, r = null, n = window.getComputedStyle(t), i = (o = t.value, function () {
+                    a({
+                        testForHeightReduction: "" === o || !t.value.startsWith(o),
+                        restoreTextAlign: null
+                    }), o = t.value;
+                }), l = function (o) {
+                    t.removeEventListener("autosize:destroy", l), t.removeEventListener("autosize:update", s), t.removeEventListener("input", i), window.removeEventListener("resize", s), Object.keys(o).forEach(function (e) {
+                        return t.style[e] = o[e]
+                    }), e.delete(t);
+                }.bind(t, {
+                    height: t.style.height,
+                    resize: t.style.resize,
+                    textAlign: t.style.textAlign,
+                    overflowY: t.style.overflowY,
+                    overflowX: t.style.overflowX,
+                    wordWrap: t.style.wordWrap
+                });
+                t.addEventListener("autosize:destroy", l), t.addEventListener("autosize:update", s), t.addEventListener("input", i), window.addEventListener("resize", s), t.style.overflowX = "hidden", t.style.wordWrap = "break-word", e.set(t, {
+                    destroy: l,
+                    update: s
+                }), s();
             }
-          }(e);
-          e.style.height = "", e.style.height = e.scrollHeight + r + "px", i = e.clientWidth, t();
-        }
-      }
 
-      function p() {
-        u();
-        var t = Math.round(parseFloat(e.style.height)), n = window.getComputedStyle(e, null),
-            r = "content-box" === n.boxSizing ? Math.round(parseFloat(n.height)) : e.offsetHeight;
-        if (r < t ? "hidden" === n.overflowY && (s("scroll"), u(), r = "content-box" === n.boxSizing ? Math.round(parseFloat(window.getComputedStyle(e, null).height)) : e.offsetHeight) : "hidden" !== n.overflowY && (s("hidden"), u(), r = "content-box" === n.boxSizing ? Math.round(parseFloat(window.getComputedStyle(e, null).height)) : e.offsetHeight), l !== r) {
-          l = r;
-          var i = o("autosize:resized");
-          try {
-            e.dispatchEvent(i);
-          } catch (e) {
-          }
-        }
-      }
-    }(e)
-  }), e
+            function a(e) {
+                var o, i, l = e.restoreTextAlign, s = void 0 === l ? null : l, d = e.testForHeightReduction,
+                    u = void 0 === d || d, c = n.overflowY;
+                if (0 !== t.scrollHeight && ("vertical" === n.resize ? t.style.resize = "none" : "both" === n.resize && (t.style.resize = "horizontal"), u && (o = function (e) {
+                    for (var t = []; e && e.parentNode && e.parentNode instanceof Element;) e.parentNode.scrollTop && t.push([e.parentNode, e.parentNode.scrollTop]), e = e.parentNode;
+                    return function () {
+                        return t.forEach(function (e) {
+                            var t = e[0], o = e[1];
+                            t.style.scrollBehavior = "auto", t.scrollTop = o, t.style.scrollBehavior = null;
+                        })
+                    }
+                }(t), t.style.height = ""), i = "content-box" === n.boxSizing ? t.scrollHeight - (parseFloat(n.paddingTop) + parseFloat(n.paddingBottom)) : t.scrollHeight + parseFloat(n.borderTopWidth) + parseFloat(n.borderBottomWidth), "none" !== n.maxHeight && i > parseFloat(n.maxHeight) ? ("hidden" === n.overflowY && (t.style.overflow = "scroll"), i = parseFloat(n.maxHeight)) : "hidden" !== n.overflowY && (t.style.overflow = "hidden"), t.style.height = i + "px", s && (t.style.textAlign = s), o && o(), r !== i && (t.dispatchEvent(new Event("autosize:resized", {bubbles: !0})), r = i), c !== n.overflow && !s)) {
+                    var v = n.textAlign;
+                    "hidden" === n.overflow && (t.style.textAlign = "start" === v ? "end" : "start"), a({
+                        restoreTextAlign: v,
+                        testForHeightReduction: !0
+                    });
+                }
+            }
+
+            function s() {
+                a({testForHeightReduction: !0, restoreTextAlign: null});
+            }
+        }(t)
+    }), t
 }).destroy = function (e) {
-  return e && Array.prototype.forEach.call(e.length ? e : [e], r), e
-}, l.update = function (e) {
-  return e && Array.prototype.forEach.call(e.length ? e : [e], i), e
+    return e && Array.prototype.forEach.call(e.length ? e : [e], t), e
+}, r.update = function (e) {
+    return e && Array.prototype.forEach.call(e.length ? e : [e], o), e
 });
-var a = l;
+var n = r;
 
 var elements = document.querySelectorAll('[data-bs-toggle="autosize"]');
 if (elements.length) {
-  elements.forEach(function (element) {
-    a(element);
-  });
-}
-
-function _typeof(obj) {
-  "@babel/helpers - typeof";
-  return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) {
-    return typeof obj;
-  } : function (obj) {
-    return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-  }, _typeof(obj);
-}
-
-function _classCallCheck(instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-}
-
-function _defineProperties(target, props) {
-  for (var i = 0; i < props.length; i++) {
-    var descriptor = props[i];
-    descriptor.enumerable = descriptor.enumerable || false;
-    descriptor.configurable = true;
-    if ("value" in descriptor) descriptor.writable = true;
-    Object.defineProperty(target, descriptor.key, descriptor);
-  }
-}
-
-function _createClass(Constructor, protoProps, staticProps) {
-  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-  if (staticProps) _defineProperties(Constructor, staticProps);
-  Object.defineProperty(Constructor, "prototype", {
-    writable: false
-  });
-  return Constructor;
-}
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
+    elements.forEach(function (element) {
+        n(element);
     });
-  } else {
-    obj[key] = value;
-  }
-  return obj;
-}
-
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function");
-  }
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      writable: true,
-      configurable: true
-    }
-  });
-  Object.defineProperty(subClass, "prototype", {
-    writable: false
-  });
-  if (superClass) _setPrototypeOf(subClass, superClass);
-}
-
-function _getPrototypeOf(o) {
-  _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf.bind() : function _getPrototypeOf(o) {
-    return o.__proto__ || Object.getPrototypeOf(o);
-  };
-  return _getPrototypeOf(o);
-}
-
-function _setPrototypeOf(o, p) {
-  _setPrototypeOf = Object.setPrototypeOf ? Object.setPrototypeOf.bind() : function _setPrototypeOf(o, p) {
-    o.__proto__ = p;
-    return o;
-  };
-  return _setPrototypeOf(o, p);
-}
-
-function _isNativeReflectConstruct() {
-  if (typeof Reflect === "undefined" || !Reflect.construct) return false;
-  if (Reflect.construct.sham) return false;
-  if (typeof Proxy === "function") return true;
-  try {
-    Boolean.prototype.valueOf.call(Reflect.construct(Boolean, [], function () {
-    }));
-    return true;
-  } catch (e) {
-    return false;
-  }
 }
 
 function _objectWithoutPropertiesLoose(source, excluded) {
-  if (source == null) return {};
+    if (source == null) return {};
   var target = {};
   var sourceKeys = Object.keys(source);
   var key, i;
@@ -224,227 +104,47 @@ function _objectWithoutPropertiesLoose(source, excluded) {
   return target;
 }
 
-function _objectWithoutProperties(source, excluded) {
-  if (source == null) return {};
-  var target = _objectWithoutPropertiesLoose(source, excluded);
-  var key, i;
-  if (Object.getOwnPropertySymbols) {
-    var sourceSymbolKeys = Object.getOwnPropertySymbols(source);
-    for (i = 0; i < sourceSymbolKeys.length; i++) {
-      key = sourceSymbolKeys[i];
-      if (excluded.indexOf(key) >= 0) continue;
-      if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue;
-      target[key] = source[key];
+function IMask(el) {
+    let opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    return new IMask.InputMask(el, opts);
+}
+
+class ChangeDetails {
+    constructor(details) {
+        Object.assign(this, {
+            inserted: '',
+            rawInserted: '',
+            skip: false,
+            tailShift: 0
+        }, details);
     }
-  }
-  return target;
-}
 
-function _assertThisInitialized(self) {
-  if (self === void 0) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-  return self;
-}
-
-function _possibleConstructorReturn(self, call) {
-  if (call && (typeof call === "object" || typeof call === "function")) {
-    return call;
-  } else if (call !== void 0) {
-    throw new TypeError("Derived constructors may only return object or undefined");
-  }
-  return _assertThisInitialized(self);
-}
-
-function _createSuper(Derived) {
-  var hasNativeReflectConstruct = _isNativeReflectConstruct();
-  return function _createSuperInternal() {
-    var Super = _getPrototypeOf(Derived),
-        result;
-    if (hasNativeReflectConstruct) {
-      var NewTarget = _getPrototypeOf(this).constructor;
-      result = Reflect.construct(Super, arguments, NewTarget);
-    } else {
-      result = Super.apply(this, arguments);
+    aggregate(details) {
+        this.rawInserted += details.rawInserted;
+        this.skip = this.skip || details.skip;
+        this.inserted += details.inserted;
+        this.tailShift += details.tailShift;
+        return this;
     }
-    return _possibleConstructorReturn(this, result);
-  };
-}
 
-function _superPropBase(object, property) {
-  while (!Object.prototype.hasOwnProperty.call(object, property)) {
-    object = _getPrototypeOf(object);
-    if (object === null) break;
-  }
-  return object;
-}
-
-function _get() {
-  if (typeof Reflect !== "undefined" && Reflect.get) {
-    _get = Reflect.get.bind();
-  } else {
-    _get = function _get(target, property, receiver) {
-      var base = _superPropBase(target, property);
-      if (!base) return;
-      var desc = Object.getOwnPropertyDescriptor(base, property);
-      if (desc.get) {
-        return desc.get.call(arguments.length < 3 ? target : receiver);
-      }
-      return desc.value;
-    };
-  }
-  return _get.apply(this, arguments);
-}
-
-function set(target, property, value, receiver) {
-  if (typeof Reflect !== "undefined" && Reflect.set) {
-    set = Reflect.set;
-  } else {
-    set = function set(target, property, value, receiver) {
-      var base = _superPropBase(target, property);
-      var desc;
-      if (base) {
-        desc = Object.getOwnPropertyDescriptor(base, property);
-        if (desc.set) {
-          desc.set.call(receiver, value);
-          return true;
-        } else if (!desc.writable) {
-          return false;
-        }
-      }
-      desc = Object.getOwnPropertyDescriptor(receiver, property);
-      if (desc) {
-        if (!desc.writable) {
-          return false;
-        }
-        desc.value = value;
-        Object.defineProperty(receiver, property, desc);
-      } else {
-        _defineProperty(receiver, property, value);
-      }
-      return true;
-    };
-  }
-  return set(target, property, value, receiver);
-}
-
-function _set(target, property, value, receiver, isStrict) {
-  var s = set(target, property, value, receiver || target);
-  if (!s && isStrict) {
-    throw new Error('failed to set property');
-  }
-  return value;
-}
-
-function _slicedToArray(arr, i) {
-  return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
-}
-
-function _toConsumableArray(arr) {
-  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
-}
-
-function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) return _arrayLikeToArray(arr);
-}
-
-function _arrayWithHoles(arr) {
-  if (Array.isArray(arr)) return arr;
-}
-
-function _iterableToArray(iter) {
-  if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter);
-}
-
-function _iterableToArrayLimit(arr, i) {
-  var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"];
-  if (_i == null) return;
-  var _arr = [];
-  var _n = true;
-  var _d = false;
-  var _s, _e;
-  try {
-    for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) {
-      _arr.push(_s.value);
-      if (i && _arr.length === i) break;
+    get offset() {
+        return this.tailShift + this.inserted.length;
     }
-  } catch (err) {
-    _d = true;
-    _e = err;
-  } finally {
-    try {
-      if (!_n && _i["return"] != null) _i["return"]();
-    } finally {
-      if (_d) throw _e;
-    }
-  }
-  return _arr;
 }
 
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return _arrayLikeToArray(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(o);
-  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
-}
-
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
-  for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
-  return arr2;
-}
-
-function _nonIterableSpread() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-
-function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
-}
-
-var ChangeDetails = function () {
-  function ChangeDetails(details) {
-    _classCallCheck(this, ChangeDetails);
-    Object.assign(this, {
-      inserted: '',
-      rawInserted: '',
-      skip: false,
-      tailShift: 0
-    }, details);
-  }
-
-  _createClass(ChangeDetails, [{
-    key: "aggregate",
-    value: function aggregate(details) {
-      this.rawInserted += details.rawInserted;
-      this.skip = this.skip || details.skip;
-      this.inserted += details.inserted;
-      this.tailShift += details.tailShift;
-      return this;
-    }
-  }, {
-    key: "offset",
-    get: function get() {
-      return this.tailShift + this.inserted.length;
-    }
-  }]);
-  return ChangeDetails;
-}();
+IMask.ChangeDetails = ChangeDetails;
 
 function isString(str) {
-  return typeof str === 'string' || str instanceof String;
+    return typeof str === 'string' || str instanceof String;
 }
 
-var DIRECTION = {
-  NONE: 'NONE',
-  LEFT: 'LEFT',
-  FORCE_LEFT: 'FORCE_LEFT',
-  RIGHT: 'RIGHT',
-  FORCE_RIGHT: 'FORCE_RIGHT'
+const DIRECTION = {
+    NONE: 'NONE',
+    LEFT: 'LEFT',
+    FORCE_LEFT: 'FORCE_LEFT',
+    RIGHT: 'RIGHT',
+    FORCE_RIGHT: 'FORCE_RIGHT'
 };
-
 function forceDirection(direction) {
   switch (direction) {
     case DIRECTION.LEFT:
@@ -455,486 +155,436 @@ function forceDirection(direction) {
       return direction;
   }
 }
-
 function escapeRegExp(str) {
   return str.replace(/([.*+?^=!:${}()|[\]\/\\])/g, '\\$1');
 }
-
 function normalizePrepare(prep) {
   return Array.isArray(prep) ? prep : [prep, new ChangeDetails()];
 }
-
 function objectIncludes(b, a) {
   if (a === b) return true;
-  var arrA = Array.isArray(a),
-      arrB = Array.isArray(b),
-      i;
+    var arrA = Array.isArray(a),
+        arrB = Array.isArray(b),
+        i;
   if (arrA && arrB) {
     if (a.length != b.length) return false;
-    for (i = 0; i < a.length; i++) {
-      if (!objectIncludes(a[i], b[i])) return false;
-    }
+      for (i = 0; i < a.length; i++) if (!objectIncludes(a[i], b[i])) return false;
     return true;
   }
-  if (arrA != arrB) return false;
-  if (a && b && _typeof(a) === 'object' && _typeof(b) === 'object') {
-    var dateA = a instanceof Date,
-        dateB = b instanceof Date;
-    if (dateA && dateB) return a.getTime() == b.getTime();
-    if (dateA != dateB) return false;
-    var regexpA = a instanceof RegExp,
-        regexpB = b instanceof RegExp;
-    if (regexpA && regexpB) return a.toString() == b.toString();
-    if (regexpA != regexpB) return false;
-    var keys = Object.keys(a);
-    for (i = 0; i < keys.length; i++) {
-      if (!Object.prototype.hasOwnProperty.call(b, keys[i])) return false;
-    }
-    for (i = 0; i < keys.length; i++) {
-      if (!objectIncludes(b[keys[i]], a[keys[i]])) return false;
-    }
-    return true;
-  } else if (a && b && typeof a === 'function' && typeof b === 'function') {
+    if (arrA != arrB) return false;
+    if (a && b && typeof a === 'object' && typeof b === 'object') {
+        var dateA = a instanceof Date,
+            dateB = b instanceof Date;
+        if (dateA && dateB) return a.getTime() == b.getTime();
+        if (dateA != dateB) return false;
+        var regexpA = a instanceof RegExp,
+            regexpB = b instanceof RegExp;
+        if (regexpA && regexpB) return a.toString() == b.toString();
+        if (regexpA != regexpB) return false;
+        var keys = Object.keys(a);
+        for (i = 0; i < keys.length; i++)
+            if (!Object.prototype.hasOwnProperty.call(b, keys[i])) return false;
+        for (i = 0; i < keys.length; i++) if (!objectIncludes(b[keys[i]], a[keys[i]])) return false;
+        return true;
+    } else if (a && b && typeof a === 'function' && typeof b === 'function') {
     return a.toString() === b.toString();
   }
   return false;
 }
 
-var ActionDetails = function () {
-  function ActionDetails(value, cursorPos, oldValue, oldSelection) {
-    _classCallCheck(this, ActionDetails);
-    this.value = value;
-    this.cursorPos = cursorPos;
-    this.oldValue = oldValue;
-    this.oldSelection = oldSelection;
-    while (this.value.slice(0, this.startChangePos) !== this.oldValue.slice(0, this.startChangePos)) {
-      --this.oldSelection.start;
+class ActionDetails {
+    constructor(value, cursorPos, oldValue, oldSelection) {
+        this.value = value;
+        this.cursorPos = cursorPos;
+        this.oldValue = oldValue;
+        this.oldSelection = oldSelection;
+        while (this.value.slice(0, this.startChangePos) !== this.oldValue.slice(0, this.startChangePos)) {
+            --this.oldSelection.start;
+        }
     }
-  }
 
-  _createClass(ActionDetails, [{
-    key: "startChangePos",
-    get: function get() {
-      return Math.min(this.cursorPos, this.oldSelection.start);
+    get startChangePos() {
+        return Math.min(this.cursorPos, this.oldSelection.start);
     }
-  }, {
-    key: "insertedCount",
-    get: function get() {
-      return this.cursorPos - this.startChangePos;
-    }
-  }, {
-    key: "inserted",
-    get: function get() {
-      return this.value.substr(this.startChangePos, this.insertedCount);
-    }
-  }, {
-    key: "removedCount",
-    get: function get() {
-      return Math.max(this.oldSelection.end - this.startChangePos ||
-          this.oldValue.length - this.value.length, 0);
-    }
-  }, {
-    key: "removed",
-    get: function get() {
-      return this.oldValue.substr(this.startChangePos, this.removedCount);
-    }
-  }, {
-    key: "head",
-    get: function get() {
-      return this.value.substring(0, this.startChangePos);
-    }
-  }, {
-    key: "tail",
-    get: function get() {
-      return this.value.substring(this.startChangePos + this.insertedCount);
-    }
-  }, {
-    key: "removeDirection",
-    get: function get() {
-      if (!this.removedCount || this.insertedCount) return DIRECTION.NONE;
-      return (this.oldSelection.end === this.cursorPos || this.oldSelection.start === this.cursorPos) &&
-      this.oldSelection.end === this.oldSelection.start ? DIRECTION.RIGHT : DIRECTION.LEFT;
-    }
-  }]);
-  return ActionDetails;
-}();
 
-var ContinuousTailDetails = function () {
-  function ContinuousTailDetails() {
-    var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-    var from = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-    var stop = arguments.length > 2 ? arguments[2] : undefined;
-    _classCallCheck(this, ContinuousTailDetails);
-    this.value = value;
-    this.from = from;
-    this.stop = stop;
-  }
+    get insertedCount() {
+        return this.cursorPos - this.startChangePos;
+    }
 
-  _createClass(ContinuousTailDetails, [{
-    key: "toString",
-    value: function toString() {
-      return this.value;
+    get inserted() {
+        return this.value.substr(this.startChangePos, this.insertedCount);
     }
-  }, {
-    key: "extend",
-    value: function extend(tail) {
-      this.value += String(tail);
-    }
-  }, {
-    key: "appendTo",
-    value: function appendTo(masked) {
-      return masked.append(this.toString(), {
-        tail: true
-      }).aggregate(masked._appendPlaceholder());
-    }
-  }, {
-    key: "state",
-    get: function get() {
-      return {
-        value: this.value,
-        from: this.from,
-        stop: this.stop
-      };
-    },
-    set: function set(state) {
-      Object.assign(this, state);
-    }
-  }, {
-    key: "unshift",
-    value: function unshift(beforePos) {
-      if (!this.value.length || beforePos != null && this.from >= beforePos) return '';
-      var shiftChar = this.value[0];
-      this.value = this.value.slice(1);
-      return shiftChar;
-    }
-  }, {
-    key: "shift",
-    value: function shift() {
-      if (!this.value.length) return '';
-      var shiftChar = this.value[this.value.length - 1];
-      this.value = this.value.slice(0, -1);
-      return shiftChar;
-    }
-  }]);
-  return ContinuousTailDetails;
-}();
 
-function IMask(el) {
-  var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-  return new IMask.InputMask(el, opts);
+    get removedCount() {
+        return Math.max(this.oldSelection.end - this.startChangePos ||
+            this.oldValue.length - this.value.length, 0);
+    }
+
+    get removed() {
+        return this.oldValue.substr(this.startChangePos, this.removedCount);
+    }
+
+    get head() {
+        return this.value.substring(0, this.startChangePos);
+    }
+
+    get tail() {
+        return this.value.substring(this.startChangePos + this.insertedCount);
+    }
+
+    get removeDirection() {
+        if (!this.removedCount || this.insertedCount) return DIRECTION.NONE;
+        return (this.oldSelection.end === this.cursorPos || this.oldSelection.start === this.cursorPos) &&
+        this.oldSelection.end === this.oldSelection.start ? DIRECTION.RIGHT : DIRECTION.LEFT;
+    }
 }
 
-var Masked = function () {
-  function Masked(opts) {
-    _classCallCheck(this, Masked);
-    this._value = '';
-    this._update(Object.assign({}, Masked.DEFAULTS, opts));
-    this.isInitialized = true;
-  }
+class ContinuousTailDetails {
+    constructor() {
+        let value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+        let from = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+        let stop = arguments.length > 2 ? arguments[2] : undefined;
+        this.value = value;
+        this.from = from;
+        this.stop = stop;
+    }
 
-  _createClass(Masked, [{
-    key: "updateOptions",
-    value: function updateOptions(opts) {
-      if (!Object.keys(opts).length) return;
-      this.withValueRefresh(this._update.bind(this, opts));
+    toString() {
+        return this.value;
     }
-  }, {
-    key: "_update",
-    value: function _update(opts) {
-      Object.assign(this, opts);
+
+    extend(tail) {
+        this.value += String(tail);
     }
-  }, {
-    key: "state",
-    get: function get() {
-      return {
-        _value: this.value
-      };
-    },
-    set: function set(state) {
-      this._value = state._value;
+
+    appendTo(masked) {
+        return masked.append(this.toString(), {
+            tail: true
+        }).aggregate(masked._appendPlaceholder());
     }
-  }, {
-    key: "reset",
-    value: function reset() {
-      this._value = '';
+
+    get state() {
+        return {
+            value: this.value,
+            from: this.from,
+            stop: this.stop
+        };
     }
-  }, {
-    key: "value",
-    get: function get() {
-      return this._value;
-    },
-    set: function set(value) {
-      this.resolve(value);
+
+    set state(state) {
+        Object.assign(this, state);
     }
-  }, {
-    key: "resolve",
-    value: function resolve(value) {
-      this.reset();
-      this.append(value, {
-        input: true
-      }, '');
-      this.doCommit();
-      return this.value;
+
+    unshift(beforePos) {
+        if (!this.value.length || beforePos != null && this.from >= beforePos) return '';
+        const shiftChar = this.value[0];
+        this.value = this.value.slice(1);
+        return shiftChar;
     }
-  }, {
-    key: "unmaskedValue",
-    get: function get() {
-      return this.value;
-    },
-    set: function set(value) {
-      this.reset();
-      this.append(value, {}, '');
-      this.doCommit();
+
+    shift() {
+        if (!this.value.length) return '';
+        const shiftChar = this.value[this.value.length - 1];
+        this.value = this.value.slice(0, -1);
+        return shiftChar;
     }
-  }, {
-    key: "typedValue",
-    get: function get() {
-      return this.doParse(this.value);
-    },
-    set: function set(value) {
-      this.value = this.doFormat(value);
+}
+
+class Masked {
+    constructor(opts) {
+        this._value = '';
+        this._update(Object.assign({}, Masked.DEFAULTS, opts));
+        this.isInitialized = true;
     }
-  }, {
-    key: "rawInputValue",
-    get: function get() {
-      return this.extractInput(0, this.value.length, {
-        raw: true
-      });
-    },
-    set: function set(value) {
-      this.reset();
-      this.append(value, {
-        raw: true
-      }, '');
-      this.doCommit();
+
+    updateOptions(opts) {
+        if (!Object.keys(opts).length) return;
+        this.withValueRefresh(this._update.bind(this, opts));
     }
-  }, {
-    key: "isComplete",
-    get: function get() {
-      return true;
+
+    _update(opts) {
+        Object.assign(this, opts);
     }
-  }, {
-    key: "isFilled",
-    get: function get() {
-      return this.isComplete;
+
+    get state() {
+        return {
+            _value: this.value
+        };
     }
-  }, {
-    key: "nearestInputPos",
-    value: function nearestInputPos(cursorPos, direction) {
-      return cursorPos;
+
+    set state(state) {
+        this._value = state._value;
     }
-  }, {
-    key: "extractInput",
-    value: function extractInput() {
-      var fromPos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-      var toPos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.value.length;
-      return this.value.slice(fromPos, toPos);
+
+    reset() {
+        this._value = '';
     }
-  }, {
-    key: "extractTail",
-    value: function extractTail() {
-      var fromPos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-      var toPos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.value.length;
-      return new ContinuousTailDetails(this.extractInput(fromPos, toPos), fromPos);
+
+    get value() {
+        return this._value;
     }
-  }, {
-    key: "appendTail",
-    value: function appendTail(tail) {
-      if (isString(tail)) tail = new ContinuousTailDetails(String(tail));
-      return tail.appendTo(this);
+
+    set value(value) {
+        this.resolve(value);
     }
-  }, {
-    key: "_appendCharRaw",
-    value: function _appendCharRaw(ch) {
-      if (!ch) return new ChangeDetails();
-      this._value += ch;
-      return new ChangeDetails({
-        inserted: ch,
-        rawInserted: ch
-      });
+
+    resolve(value) {
+        this.reset();
+        this.append(value, {
+            input: true
+        }, '');
+        this.doCommit();
+        return this.value;
     }
-  }, {
-    key: "_appendChar",
-    value: function _appendChar(ch) {
-      var flags = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      var checkTail = arguments.length > 2 ? arguments[2] : undefined;
-      var consistentState = this.state;
-      var details;
-      var _normalizePrepare = normalizePrepare(this.doPrepare(ch, flags));
-      var _normalizePrepare2 = _slicedToArray(_normalizePrepare, 2);
-      ch = _normalizePrepare2[0];
-      details = _normalizePrepare2[1];
-      details = details.aggregate(this._appendCharRaw(ch, flags));
-      if (details.inserted) {
-        var consistentTail;
-        var appended = this.doValidate(flags) !== false;
-        if (appended && checkTail != null) {
-          var beforeTailState = this.state;
-          if (this.overwrite === true) {
-            consistentTail = checkTail.state;
-            checkTail.unshift(this.value.length);
-          }
-          var tailDetails = this.appendTail(checkTail);
-          appended = tailDetails.rawInserted === checkTail.toString();
-          if (!(appended && tailDetails.inserted) && this.overwrite === 'shift') {
-            this.state = beforeTailState;
-            consistentTail = checkTail.state;
-            checkTail.shift();
-            tailDetails = this.appendTail(checkTail);
-            appended = tailDetails.rawInserted === checkTail.toString();
-          }
-          if (appended && tailDetails.inserted) this.state = beforeTailState;
-        }
-        if (!appended) {
-          details = new ChangeDetails();
-          this.state = consistentState;
-          if (checkTail && consistentTail) checkTail.state = consistentTail;
-        }
-      }
-      return details;
+
+    get unmaskedValue() {
+        return this.value;
     }
-  }, {
-    key: "_appendPlaceholder",
-    value: function _appendPlaceholder() {
-      return new ChangeDetails();
+
+    set unmaskedValue(value) {
+        this.reset();
+        this.append(value, {}, '');
+        this.doCommit();
     }
-  }, {
-    key: "_appendEager",
-    value: function _appendEager() {
-      return new ChangeDetails();
+
+    get typedValue() {
+        return this.doParse(this.value);
     }
-  }, {
-    key: "append",
-    value: function append(str, flags, tail) {
-      if (!isString(str)) throw new Error('value should be string');
-      var details = new ChangeDetails();
-      var checkTail = isString(tail) ? new ContinuousTailDetails(String(tail)) : tail;
-      if (flags !== null && flags !== void 0 && flags.tail) flags._beforeTailState = this.state;
-      for (var ci = 0; ci < str.length; ++ci) {
-        details.aggregate(this._appendChar(str[ci], flags, checkTail));
-      }
-      if (checkTail != null) {
-        details.tailShift += this.appendTail(checkTail).tailShift;
-      }
-      if (this.eager && flags !== null && flags !== void 0 && flags.input && str) {
-        details.aggregate(this._appendEager());
-      }
-      return details;
+
+    set typedValue(value) {
+        this.value = this.doFormat(value);
     }
-  }, {
-    key: "remove",
-    value: function remove() {
-      var fromPos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-      var toPos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.value.length;
-      this._value = this.value.slice(0, fromPos) + this.value.slice(toPos);
-      return new ChangeDetails();
-    }
-  }, {
-    key: "withValueRefresh",
-    value: function withValueRefresh(fn) {
-      if (this._refreshing || !this.isInitialized) return fn();
-      this._refreshing = true;
-      var rawInput = this.rawInputValue;
-      var value = this.value;
-      var ret = fn();
-      this.rawInputValue = rawInput;
-      if (this.value && this.value !== value && value.indexOf(this.value) === 0) {
-        this.append(value.slice(this.value.length), {}, '');
-      }
-      delete this._refreshing;
-      return ret;
-    }
-  }, {
-    key: "runIsolated",
-    value: function runIsolated(fn) {
-      if (this._isolated || !this.isInitialized) return fn(this);
-      this._isolated = true;
-      var state = this.state;
-      var ret = fn(this);
-      this.state = state;
-      delete this._isolated;
-      return ret;
-    }
-  }, {
-    key: "doPrepare",
-    value: function doPrepare(str) {
-      var flags = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      return this.prepare ? this.prepare(str, this, flags) : str;
-    }
-  }, {
-    key: "doValidate",
-    value: function doValidate(flags) {
-      return (!this.validate || this.validate(this.value, this, flags)) && (!this.parent || this.parent.doValidate(flags));
-    }
-  }, {
-    key: "doCommit",
-    value: function doCommit() {
-      if (this.commit) this.commit(this.value, this);
-    }
-  }, {
-    key: "doFormat",
-    value: function doFormat(value) {
-      return this.format ? this.format(value, this) : value;
-    }
-  }, {
-    key: "doParse",
-    value: function doParse(str) {
-      return this.parse ? this.parse(str, this) : str;
-    }
-  }, {
-    key: "splice",
-    value: function splice(start, deleteCount, inserted, removeDirection) {
-      var flags = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : {
-        input: true
-      };
-      var tailPos = start + deleteCount;
-      var tail = this.extractTail(tailPos);
-      var oldRawValue;
-      if (this.eager) {
-        removeDirection = forceDirection(removeDirection);
-        oldRawValue = this.extractInput(0, tailPos, {
-          raw: true
+
+    get rawInputValue() {
+        return this.extractInput(0, this.value.length, {
+            raw: true
         });
-      }
-      var startChangePos = this.nearestInputPos(start, deleteCount > 1 && start !== 0 && !this.eager ? DIRECTION.NONE : removeDirection);
-      var details = new ChangeDetails({
-        tailShift: startChangePos - start
-      }).aggregate(this.remove(startChangePos));
-      if (this.eager && removeDirection !== DIRECTION.NONE && oldRawValue === this.rawInputValue) {
-        if (removeDirection === DIRECTION.FORCE_LEFT) {
-          var valLength;
-          while (oldRawValue === this.rawInputValue && (valLength = this.value.length)) {
-            details.aggregate(new ChangeDetails({
-              tailShift: -1
-            })).aggregate(this.remove(valLength - 1));
-          }
-        } else if (removeDirection === DIRECTION.FORCE_RIGHT) {
-          tail.unshift();
+    }
+
+    set rawInputValue(value) {
+        this.reset();
+        this.append(value, {
+            raw: true
+        }, '');
+        this.doCommit();
+    }
+
+    get displayValue() {
+        return this.value;
+    }
+
+    get isComplete() {
+        return true;
+    }
+
+    get isFilled() {
+        return this.isComplete;
+    }
+
+    nearestInputPos(cursorPos, direction) {
+        return cursorPos;
+    }
+
+    totalInputPositions() {
+        let fromPos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+        let toPos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.value.length;
+        return Math.min(this.value.length, toPos - fromPos);
+    }
+
+    extractInput() {
+        let fromPos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+        let toPos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.value.length;
+        return this.value.slice(fromPos, toPos);
+    }
+
+    extractTail() {
+        let fromPos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+        let toPos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.value.length;
+        return new ContinuousTailDetails(this.extractInput(fromPos, toPos), fromPos);
+    }
+
+    appendTail(tail) {
+        if (isString(tail)) tail = new ContinuousTailDetails(String(tail));
+        return tail.appendTo(this);
+    }
+
+    _appendCharRaw(ch) {
+        if (!ch) return new ChangeDetails();
+        this._value += ch;
+        return new ChangeDetails({
+            inserted: ch,
+            rawInserted: ch
+        });
+    }
+
+    _appendChar(ch) {
+        let flags = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+        let checkTail = arguments.length > 2 ? arguments[2] : undefined;
+        const consistentState = this.state;
+        let details;
+        [ch, details] = normalizePrepare(this.doPrepare(ch, flags));
+        details = details.aggregate(this._appendCharRaw(ch, flags));
+        if (details.inserted) {
+            let consistentTail;
+            let appended = this.doValidate(flags) !== false;
+            if (appended && checkTail != null) {
+                const beforeTailState = this.state;
+                if (this.overwrite === true) {
+                    consistentTail = checkTail.state;
+                    checkTail.unshift(this.value.length - details.tailShift);
+                }
+                let tailDetails = this.appendTail(checkTail);
+                appended = tailDetails.rawInserted === checkTail.toString();
+                if (!(appended && tailDetails.inserted) && this.overwrite === 'shift') {
+                    this.state = beforeTailState;
+                    consistentTail = checkTail.state;
+                    checkTail.shift();
+                    tailDetails = this.appendTail(checkTail);
+                    appended = tailDetails.rawInserted === checkTail.toString();
+                }
+                if (appended && tailDetails.inserted) this.state = beforeTailState;
+            }
+            if (!appended) {
+                details = new ChangeDetails();
+                this.state = consistentState;
+                if (checkTail && consistentTail) checkTail.state = consistentTail;
+            }
         }
-      }
-      return details.aggregate(this.append(inserted, flags, tail));
+        return details;
     }
-  }, {
-    key: "maskEquals",
-    value: function maskEquals(mask) {
-      return this.mask === mask;
+
+    _appendPlaceholder() {
+        return new ChangeDetails();
     }
-  }, {
-    key: "typedValueEquals",
-    value: function typedValueEquals(value) {
-      var tval = this.typedValue;
-      return value === tval || Masked.EMPTY_VALUES.includes(value) && Masked.EMPTY_VALUES.includes(tval) || this.doFormat(value) === this.doFormat(this.typedValue);
+
+    _appendEager() {
+        return new ChangeDetails();
     }
-  }]);
-  return Masked;
-}();
+
+    append(str, flags, tail) {
+        if (!isString(str)) throw new Error('value should be string');
+        const details = new ChangeDetails();
+        const checkTail = isString(tail) ? new ContinuousTailDetails(String(tail)) : tail;
+        if (flags !== null && flags !== void 0 && flags.tail) flags._beforeTailState = this.state;
+        for (let ci = 0; ci < str.length; ++ci) {
+            const d = this._appendChar(str[ci], flags, checkTail);
+            if (!d.rawInserted && !this.doSkipInvalid(str[ci], flags, checkTail)) break;
+            details.aggregate(d);
+        }
+        if (checkTail != null) {
+            details.tailShift += this.appendTail(checkTail).tailShift;
+        }
+        if ((this.eager === true || this.eager === 'append') && flags !== null && flags !== void 0 && flags.input && str) {
+            details.aggregate(this._appendEager());
+        }
+        return details;
+    }
+
+    remove() {
+        let fromPos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+        let toPos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.value.length;
+        this._value = this.value.slice(0, fromPos) + this.value.slice(toPos);
+        return new ChangeDetails();
+    }
+
+    withValueRefresh(fn) {
+        if (this._refreshing || !this.isInitialized) return fn();
+        this._refreshing = true;
+        const rawInput = this.rawInputValue;
+        const value = this.value;
+        const ret = fn();
+        this.rawInputValue = rawInput;
+        if (this.value && this.value !== value && value.indexOf(this.value) === 0) {
+            this.append(value.slice(this.value.length), {}, '');
+        }
+        delete this._refreshing;
+        return ret;
+    }
+
+    runIsolated(fn) {
+        if (this._isolated || !this.isInitialized) return fn(this);
+        this._isolated = true;
+        const state = this.state;
+        const ret = fn(this);
+        this.state = state;
+        delete this._isolated;
+        return ret;
+    }
+
+    doSkipInvalid(ch) {
+        return this.skipInvalid;
+    }
+
+    doPrepare(str) {
+        let flags = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+        return this.prepare ? this.prepare(str, this, flags) : str;
+    }
+
+    doValidate(flags) {
+        return (!this.validate || this.validate(this.value, this, flags)) && (!this.parent || this.parent.doValidate(flags));
+    }
+
+    doCommit() {
+        if (this.commit) this.commit(this.value, this);
+    }
+
+    doFormat(value) {
+        return this.format ? this.format(value, this) : value;
+    }
+
+    doParse(str) {
+        return this.parse ? this.parse(str, this) : str;
+    }
+
+    splice(start, deleteCount, inserted, removeDirection) {
+        let flags = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : {
+            input: true
+        };
+        const tailPos = start + deleteCount;
+        const tail = this.extractTail(tailPos);
+        const eagerRemove = this.eager === true || this.eager === 'remove';
+        let oldRawValue;
+        if (eagerRemove) {
+            removeDirection = forceDirection(removeDirection);
+            oldRawValue = this.extractInput(0, tailPos, {
+                raw: true
+            });
+        }
+        let startChangePos = start;
+        const details = new ChangeDetails();
+        if (removeDirection !== DIRECTION.NONE) {
+            startChangePos = this.nearestInputPos(start, deleteCount > 1 && start !== 0 && !eagerRemove ? DIRECTION.NONE : removeDirection);
+            details.tailShift = startChangePos - start;
+        }
+        details.aggregate(this.remove(startChangePos));
+        if (eagerRemove && removeDirection !== DIRECTION.NONE && oldRawValue === this.rawInputValue) {
+            if (removeDirection === DIRECTION.FORCE_LEFT) {
+                let valLength;
+                while (oldRawValue === this.rawInputValue && (valLength = this.value.length)) {
+                    details.aggregate(new ChangeDetails({
+                        tailShift: -1
+                    })).aggregate(this.remove(valLength - 1));
+                }
+            } else if (removeDirection === DIRECTION.FORCE_RIGHT) {
+                tail.unshift();
+            }
+        }
+        return details.aggregate(this.append(inserted, flags, tail));
+    }
+
+    maskEquals(mask) {
+        return this.mask === mask;
+    }
+
+    typedValueEquals(value) {
+        const tval = this.typedValue;
+        return value === tval || Masked.EMPTY_VALUES.includes(value) && Masked.EMPTY_VALUES.includes(tval) || this.doFormat(value) === this.doFormat(this.typedValue);
+    }
+}
 Masked.DEFAULTS = {
-  format: function format(v) {
-    return v;
-  },
-  parse: function parse(v) {
-    return v;
-  }
+    format: String,
+    parse: v => v,
+    skipInvalid: true
 };
 Masked.EMPTY_VALUES = [undefined, null, ''];
 IMask.Masked = Masked;
@@ -954,1028 +604,934 @@ function maskedClass(mask) {
   console.warn('Mask not found for mask', mask);
   return IMask.Masked;
 }
-
 function createMask(opts) {
-  if (IMask.Masked && opts instanceof IMask.Masked) return opts;
-  opts = Object.assign({}, opts);
-  var mask = opts.mask;
-  if (IMask.Masked && mask instanceof IMask.Masked) return mask;
-  var MaskedClass = maskedClass(mask);
-  if (!MaskedClass) throw new Error('Masked class is not found for provided mask, appropriate module needs to be import manually before creating mask.');
-  return new MaskedClass(opts);
+    if (IMask.Masked && opts instanceof IMask.Masked) return opts;
+    opts = Object.assign({}, opts);
+    const mask = opts.mask;
+    if (IMask.Masked && mask instanceof IMask.Masked) return mask;
+    const MaskedClass = maskedClass(mask);
+    if (!MaskedClass) throw new Error('Masked class is not found for provided mask, appropriate module needs to be import manually before creating mask.');
+    return new MaskedClass(opts);
 }
 
 IMask.createMask = createMask;
 
-var _excluded$4 = ["mask"];
-var DEFAULT_INPUT_DEFINITIONS = {
-  '0': /\d/,
-  'a': /[\u0041-\u005A\u0061-\u007A\u00AA\u00B5\u00BA\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0370-\u0374\u0376\u0377\u037A-\u037D\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u048A-\u0527\u0531-\u0556\u0559\u0561-\u0587\u05D0-\u05EA\u05F0-\u05F2\u0620-\u064A\u066E\u066F\u0671-\u06D3\u06D5\u06E5\u06E6\u06EE\u06EF\u06FA-\u06FC\u06FF\u0710\u0712-\u072F\u074D-\u07A5\u07B1\u07CA-\u07EA\u07F4\u07F5\u07FA\u0800-\u0815\u081A\u0824\u0828\u0840-\u0858\u08A0\u08A2-\u08AC\u0904-\u0939\u093D\u0950\u0958-\u0961\u0971-\u0977\u0979-\u097F\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BD\u09CE\u09DC\u09DD\u09DF-\u09E1\u09F0\u09F1\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A59-\u0A5C\u0A5E\u0A72-\u0A74\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABD\u0AD0\u0AE0\u0AE1\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3D\u0B5C\u0B5D\u0B5F-\u0B61\u0B71\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BD0\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C33\u0C35-\u0C39\u0C3D\u0C58\u0C59\u0C60\u0C61\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBD\u0CDE\u0CE0\u0CE1\u0CF1\u0CF2\u0D05-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D\u0D4E\u0D60\u0D61\u0D7A-\u0D7F\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0E01-\u0E30\u0E32\u0E33\u0E40-\u0E46\u0E81\u0E82\u0E84\u0E87\u0E88\u0E8A\u0E8D\u0E94-\u0E97\u0E99-\u0E9F\u0EA1-\u0EA3\u0EA5\u0EA7\u0EAA\u0EAB\u0EAD-\u0EB0\u0EB2\u0EB3\u0EBD\u0EC0-\u0EC4\u0EC6\u0EDC-\u0EDF\u0F00\u0F40-\u0F47\u0F49-\u0F6C\u0F88-\u0F8C\u1000-\u102A\u103F\u1050-\u1055\u105A-\u105D\u1061\u1065\u1066\u106E-\u1070\u1075-\u1081\u108E\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u1380-\u138F\u13A0-\u13F4\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u1700-\u170C\u170E-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176C\u176E-\u1770\u1780-\u17B3\u17D7\u17DC\u1820-\u1877\u1880-\u18A8\u18AA\u18B0-\u18F5\u1900-\u191C\u1950-\u196D\u1970-\u1974\u1980-\u19AB\u19C1-\u19C7\u1A00-\u1A16\u1A20-\u1A54\u1AA7\u1B05-\u1B33\u1B45-\u1B4B\u1B83-\u1BA0\u1BAE\u1BAF\u1BBA-\u1BE5\u1C00-\u1C23\u1C4D-\u1C4F\u1C5A-\u1C7D\u1CE9-\u1CEC\u1CEE-\u1CF1\u1CF5\u1CF6\u1D00-\u1DBF\u1E00-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u2071\u207F\u2090-\u209C\u2102\u2107\u210A-\u2113\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u212F-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2183\u2184\u2C00-\u2C2E\u2C30-\u2C5E\u2C60-\u2CE4\u2CEB-\u2CEE\u2CF2\u2CF3\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D80-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u2E2F\u3005\u3006\u3031-\u3035\u303B\u303C\u3041-\u3096\u309D-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312D\u3131-\u318E\u31A0-\u31BA\u31F0-\u31FF\u3400-\u4DB5\u4E00-\u9FCC\uA000-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA61F\uA62A\uA62B\uA640-\uA66E\uA67F-\uA697\uA6A0-\uA6E5\uA717-\uA71F\uA722-\uA788\uA78B-\uA78E\uA790-\uA793\uA7A0-\uA7AA\uA7F8-\uA801\uA803-\uA805\uA807-\uA80A\uA80C-\uA822\uA840-\uA873\uA882-\uA8B3\uA8F2-\uA8F7\uA8FB\uA90A-\uA925\uA930-\uA946\uA960-\uA97C\uA984-\uA9B2\uA9CF\uAA00-\uAA28\uAA40-\uAA42\uAA44-\uAA4B\uAA60-\uAA76\uAA7A\uAA80-\uAAAF\uAAB1\uAAB5\uAAB6\uAAB9-\uAABD\uAAC0\uAAC2\uAADB-\uAADD\uAAE0-\uAAEA\uAAF2-\uAAF4\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uABC0-\uABE2\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D\uFB1F-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE70-\uFE74\uFE76-\uFEFC\uFF21-\uFF3A\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC]/,
-  '*': /./
+const _excluded$4 = ["parent", "isOptional", "placeholderChar", "displayChar", "lazy", "eager"];
+const DEFAULT_INPUT_DEFINITIONS = {
+    '0': /\d/,
+    'a': /[\u0041-\u005A\u0061-\u007A\u00AA\u00B5\u00BA\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0370-\u0374\u0376\u0377\u037A-\u037D\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u048A-\u0527\u0531-\u0556\u0559\u0561-\u0587\u05D0-\u05EA\u05F0-\u05F2\u0620-\u064A\u066E\u066F\u0671-\u06D3\u06D5\u06E5\u06E6\u06EE\u06EF\u06FA-\u06FC\u06FF\u0710\u0712-\u072F\u074D-\u07A5\u07B1\u07CA-\u07EA\u07F4\u07F5\u07FA\u0800-\u0815\u081A\u0824\u0828\u0840-\u0858\u08A0\u08A2-\u08AC\u0904-\u0939\u093D\u0950\u0958-\u0961\u0971-\u0977\u0979-\u097F\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BD\u09CE\u09DC\u09DD\u09DF-\u09E1\u09F0\u09F1\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A59-\u0A5C\u0A5E\u0A72-\u0A74\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABD\u0AD0\u0AE0\u0AE1\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3D\u0B5C\u0B5D\u0B5F-\u0B61\u0B71\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BD0\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C33\u0C35-\u0C39\u0C3D\u0C58\u0C59\u0C60\u0C61\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBD\u0CDE\u0CE0\u0CE1\u0CF1\u0CF2\u0D05-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D\u0D4E\u0D60\u0D61\u0D7A-\u0D7F\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0E01-\u0E30\u0E32\u0E33\u0E40-\u0E46\u0E81\u0E82\u0E84\u0E87\u0E88\u0E8A\u0E8D\u0E94-\u0E97\u0E99-\u0E9F\u0EA1-\u0EA3\u0EA5\u0EA7\u0EAA\u0EAB\u0EAD-\u0EB0\u0EB2\u0EB3\u0EBD\u0EC0-\u0EC4\u0EC6\u0EDC-\u0EDF\u0F00\u0F40-\u0F47\u0F49-\u0F6C\u0F88-\u0F8C\u1000-\u102A\u103F\u1050-\u1055\u105A-\u105D\u1061\u1065\u1066\u106E-\u1070\u1075-\u1081\u108E\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u1380-\u138F\u13A0-\u13F4\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u1700-\u170C\u170E-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176C\u176E-\u1770\u1780-\u17B3\u17D7\u17DC\u1820-\u1877\u1880-\u18A8\u18AA\u18B0-\u18F5\u1900-\u191C\u1950-\u196D\u1970-\u1974\u1980-\u19AB\u19C1-\u19C7\u1A00-\u1A16\u1A20-\u1A54\u1AA7\u1B05-\u1B33\u1B45-\u1B4B\u1B83-\u1BA0\u1BAE\u1BAF\u1BBA-\u1BE5\u1C00-\u1C23\u1C4D-\u1C4F\u1C5A-\u1C7D\u1CE9-\u1CEC\u1CEE-\u1CF1\u1CF5\u1CF6\u1D00-\u1DBF\u1E00-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u2071\u207F\u2090-\u209C\u2102\u2107\u210A-\u2113\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u212F-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2183\u2184\u2C00-\u2C2E\u2C30-\u2C5E\u2C60-\u2CE4\u2CEB-\u2CEE\u2CF2\u2CF3\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D80-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u2E2F\u3005\u3006\u3031-\u3035\u303B\u303C\u3041-\u3096\u309D-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312D\u3131-\u318E\u31A0-\u31BA\u31F0-\u31FF\u3400-\u4DB5\u4E00-\u9FCC\uA000-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA61F\uA62A\uA62B\uA640-\uA66E\uA67F-\uA697\uA6A0-\uA6E5\uA717-\uA71F\uA722-\uA788\uA78B-\uA78E\uA790-\uA793\uA7A0-\uA7AA\uA7F8-\uA801\uA803-\uA805\uA807-\uA80A\uA80C-\uA822\uA840-\uA873\uA882-\uA8B3\uA8F2-\uA8F7\uA8FB\uA90A-\uA925\uA930-\uA946\uA960-\uA97C\uA984-\uA9B2\uA9CF\uAA00-\uAA28\uAA40-\uAA42\uAA44-\uAA4B\uAA60-\uAA76\uAA7A\uAA80-\uAAAF\uAAB1\uAAB5\uAAB6\uAAB9-\uAABD\uAAC0\uAAC2\uAADB-\uAADD\uAAE0-\uAAEA\uAAF2-\uAAF4\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uABC0-\uABE2\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D\uFB1F-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE70-\uFE74\uFE76-\uFEFC\uFF21-\uFF3A\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC]/,
+    '*': /./
 };
-var PatternInputDefinition = function () {
-  function PatternInputDefinition(opts) {
-    _classCallCheck(this, PatternInputDefinition);
-    var mask = opts.mask,
-        blockOpts = _objectWithoutProperties(opts, _excluded$4);
-    this.masked = createMask({
-      mask: mask
-    });
-    Object.assign(this, blockOpts);
-  }
 
-  _createClass(PatternInputDefinition, [{
-    key: "reset",
-    value: function reset() {
-      this.isFilled = false;
-      this.masked.reset();
+class PatternInputDefinition {
+    constructor(opts) {
+        const {
+                parent,
+                isOptional,
+                placeholderChar,
+                displayChar,
+                lazy,
+                eager
+            } = opts,
+            maskOpts = _objectWithoutPropertiesLoose(opts, _excluded$4);
+        this.masked = createMask(maskOpts);
+        Object.assign(this, {
+            parent,
+            isOptional,
+            placeholderChar,
+            displayChar,
+            lazy,
+            eager
+        });
     }
-  }, {
-    key: "remove",
-    value: function remove() {
-      var fromPos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-      var toPos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.value.length;
-      if (fromPos === 0 && toPos >= 1) {
+
+    reset() {
         this.isFilled = false;
-        return this.masked.remove(fromPos, toPos);
-      }
-      return new ChangeDetails();
+        this.masked.reset();
     }
-  }, {
-    key: "value",
-    get: function get() {
-      return this.masked.value || (this.isFilled && !this.isOptional ? this.placeholderChar : '');
+
+    remove() {
+        let fromPos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+        let toPos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.value.length;
+        if (fromPos === 0 && toPos >= 1) {
+            this.isFilled = false;
+            return this.masked.remove(fromPos, toPos);
+        }
+        return new ChangeDetails();
     }
-  }, {
-    key: "unmaskedValue",
-    get: function get() {
-      return this.masked.unmaskedValue;
+
+    get value() {
+        return this.masked.value || (this.isFilled && !this.isOptional ? this.placeholderChar : '');
     }
-  }, {
-    key: "isComplete",
-    get: function get() {
-      return Boolean(this.masked.value) || this.isOptional;
+
+    get unmaskedValue() {
+        return this.masked.unmaskedValue;
     }
-  }, {
-    key: "_appendChar",
-    value: function _appendChar(ch) {
-      var flags = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      if (this.isFilled) return new ChangeDetails();
-      var state = this.masked.state;
-      var details = this.masked._appendChar(ch, flags);
-      if (details.inserted && this.doValidate(flags) === false) {
-        details.inserted = details.rawInserted = '';
-        this.masked.state = state;
-      }
-      if (!details.inserted && !this.isOptional && !this.lazy && !flags.input) {
+
+    get displayValue() {
+        return this.masked.value && this.displayChar || this.value;
+    }
+
+    get isComplete() {
+        return Boolean(this.masked.value) || this.isOptional;
+    }
+
+    _appendChar(ch) {
+        let flags = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+        if (this.isFilled) return new ChangeDetails();
+        const state = this.masked.state;
+        const details = this.masked._appendChar(ch, flags);
+        if (details.inserted && this.doValidate(flags) === false) {
+            details.inserted = details.rawInserted = '';
+            this.masked.state = state;
+        }
+        if (!details.inserted && !this.isOptional && !this.lazy && !flags.input) {
+            details.inserted = this.placeholderChar;
+        }
+        details.skip = !details.inserted && !this.isOptional;
+        this.isFilled = Boolean(details.inserted);
+        return details;
+    }
+
+    append() {
+        return this.masked.append(...arguments);
+    }
+
+    _appendPlaceholder() {
+        const details = new ChangeDetails();
+        if (this.isFilled || this.isOptional) return details;
+        this.isFilled = true;
         details.inserted = this.placeholderChar;
-      }
-      details.skip = !details.inserted && !this.isOptional;
-      this.isFilled = Boolean(details.inserted);
-      return details;
+        return details;
     }
-  }, {
-    key: "append",
-    value: function append() {
-      var _this$masked;
-      return (_this$masked = this.masked).append.apply(_this$masked, arguments);
-    }
-  }, {
-    key: "_appendPlaceholder",
-    value: function _appendPlaceholder() {
-      var details = new ChangeDetails();
-      if (this.isFilled || this.isOptional) return details;
-      this.isFilled = true;
-      details.inserted = this.placeholderChar;
-      return details;
-    }
-  }, {
-    key: "_appendEager",
-    value: function _appendEager() {
-      return new ChangeDetails();
-    }
-  }, {
-    key: "extractTail",
-    value: function extractTail() {
-      var _this$masked2;
-      return (_this$masked2 = this.masked).extractTail.apply(_this$masked2, arguments);
-    }
-  }, {
-    key: "appendTail",
-    value: function appendTail() {
-      var _this$masked3;
-      return (_this$masked3 = this.masked).appendTail.apply(_this$masked3, arguments);
-    }
-  }, {
-    key: "extractInput",
-    value: function extractInput() {
-      var fromPos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-      var toPos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.value.length;
-      var flags = arguments.length > 2 ? arguments[2] : undefined;
-      return this.masked.extractInput(fromPos, toPos, flags);
-    }
-  }, {
-    key: "nearestInputPos",
-    value: function nearestInputPos(cursorPos) {
-      var direction = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : DIRECTION.NONE;
-      var minPos = 0;
-      var maxPos = this.value.length;
-      var boundPos = Math.min(Math.max(cursorPos, minPos), maxPos);
-      switch (direction) {
-        case DIRECTION.LEFT:
-        case DIRECTION.FORCE_LEFT:
-          return this.isComplete ? boundPos : minPos;
-        case DIRECTION.RIGHT:
-        case DIRECTION.FORCE_RIGHT:
-          return this.isComplete ? boundPos : maxPos;
-        case DIRECTION.NONE:
-        default:
-          return boundPos;
-      }
-    }
-  }, {
-    key: "doValidate",
-    value: function doValidate() {
-      var _this$masked4, _this$parent;
-      return (_this$masked4 = this.masked).doValidate.apply(_this$masked4, arguments) && (!this.parent || (_this$parent = this.parent).doValidate.apply(_this$parent, arguments));
-    }
-  }, {
-    key: "doCommit",
-    value: function doCommit() {
-      this.masked.doCommit();
-    }
-  }, {
-    key: "state",
-    get: function get() {
-      return {
-        masked: this.masked.state,
-        isFilled: this.isFilled
-      };
-    },
-    set: function set(state) {
-      this.masked.state = state.masked;
-      this.isFilled = state.isFilled;
-    }
-  }]);
-  return PatternInputDefinition;
-}();
 
-var PatternFixedDefinition = function () {
-  function PatternFixedDefinition(opts) {
-    _classCallCheck(this, PatternFixedDefinition);
-    Object.assign(this, opts);
-    this._value = '';
-    this.isFixed = true;
-  }
+    _appendEager() {
+        return new ChangeDetails();
+    }
 
-  _createClass(PatternFixedDefinition, [{
-    key: "value",
-    get: function get() {
-      return this._value;
+    extractTail() {
+        return this.masked.extractTail(...arguments);
     }
-  }, {
-    key: "unmaskedValue",
-    get: function get() {
-      return this.isUnmasking ? this.value : '';
-    }
-  }, {
-    key: "reset",
-    value: function reset() {
-      this._isRawInput = false;
-      this._value = '';
-    }
-  }, {
-    key: "remove",
-    value: function remove() {
-      var fromPos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-      var toPos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this._value.length;
-      this._value = this._value.slice(0, fromPos) + this._value.slice(toPos);
-      if (!this._value) this._isRawInput = false;
-      return new ChangeDetails();
-    }
-  }, {
-    key: "nearestInputPos",
-    value: function nearestInputPos(cursorPos) {
-      var direction = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : DIRECTION.NONE;
-      var minPos = 0;
-      var maxPos = this._value.length;
-      switch (direction) {
-        case DIRECTION.LEFT:
-        case DIRECTION.FORCE_LEFT:
-          return minPos;
-        case DIRECTION.NONE:
-        case DIRECTION.RIGHT:
-        case DIRECTION.FORCE_RIGHT:
-        default:
-          return maxPos;
-      }
-    }
-  }, {
-    key: "extractInput",
-    value: function extractInput() {
-      var fromPos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-      var toPos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this._value.length;
-      var flags = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-      return flags.raw && this._isRawInput && this._value.slice(fromPos, toPos) || '';
-    }
-  }, {
-    key: "isComplete",
-    get: function get() {
-      return true;
-    }
-  }, {
-    key: "isFilled",
-    get: function get() {
-      return Boolean(this._value);
-    }
-  }, {
-    key: "_appendChar",
-    value: function _appendChar(ch) {
-      var flags = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      var details = new ChangeDetails();
-      if (this._value) return details;
-      var appended = this.char === ch;
-      var isResolved = appended && (this.isUnmasking || flags.input || flags.raw) && (!flags.raw || !this.eager) && !flags.tail;
-      if (isResolved) details.rawInserted = this.char;
-      this._value = details.inserted = this.char;
-      this._isRawInput = isResolved && (flags.raw || flags.input);
-      return details;
-    }
-  }, {
-    key: "_appendEager",
-    value: function _appendEager() {
-      return this._appendChar(this.char, {
-        tail: true
-      });
-    }
-  }, {
-    key: "_appendPlaceholder",
-    value: function _appendPlaceholder() {
-      var details = new ChangeDetails();
-      if (this._value) return details;
-      this._value = details.inserted = this.char;
-      return details;
-    }
-  }, {
-    key: "extractTail",
-    value: function extractTail() {
-      arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.value.length;
-      return new ContinuousTailDetails('');
-    }
-  }, {
-    key: "appendTail",
-    value: function appendTail(tail) {
-      if (isString(tail)) tail = new ContinuousTailDetails(String(tail));
-      return tail.appendTo(this);
-    }
-  }, {
-    key: "append",
-    value: function append(str, flags, tail) {
-      var details = this._appendChar(str[0], flags);
-      if (tail != null) {
-        details.tailShift += this.appendTail(tail).tailShift;
-      }
-      return details;
-    }
-  }, {
-    key: "doCommit",
-    value: function doCommit() {
-    }
-  }, {
-    key: "state",
-    get: function get() {
-      return {
-        _value: this._value,
-        _isRawInput: this._isRawInput
-      };
-    },
-    set: function set(state) {
-      Object.assign(this, state);
-    }
-  }]);
-  return PatternFixedDefinition;
-}();
 
-var _excluded$3 = ["chunks"];
-var ChunksTailDetails = function () {
-  function ChunksTailDetails() {
-    var chunks = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-    var from = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-    _classCallCheck(this, ChunksTailDetails);
-    this.chunks = chunks;
-    this.from = from;
-  }
+    appendTail() {
+        return this.masked.appendTail(...arguments);
+    }
 
-  _createClass(ChunksTailDetails, [{
-    key: "toString",
-    value: function toString() {
-      return this.chunks.map(String).join('');
+    extractInput() {
+        let fromPos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+        let toPos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.value.length;
+        let flags = arguments.length > 2 ? arguments[2] : undefined;
+        return this.masked.extractInput(fromPos, toPos, flags);
     }
-  }, {
-    key: "extend",
-    value: function extend(tailChunk) {
-      if (!String(tailChunk)) return;
-      if (isString(tailChunk)) tailChunk = new ContinuousTailDetails(String(tailChunk));
-      var lastChunk = this.chunks[this.chunks.length - 1];
-      var extendLast = lastChunk && (
-              lastChunk.stop === tailChunk.stop || tailChunk.stop == null) &&
-          tailChunk.from === lastChunk.from + lastChunk.toString().length;
-      if (tailChunk instanceof ContinuousTailDetails) {
-        if (extendLast) {
-          lastChunk.extend(tailChunk.toString());
-        } else {
-          this.chunks.push(tailChunk);
+
+    nearestInputPos(cursorPos) {
+        let direction = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : DIRECTION.NONE;
+        const minPos = 0;
+        const maxPos = this.value.length;
+        const boundPos = Math.min(Math.max(cursorPos, minPos), maxPos);
+        switch (direction) {
+            case DIRECTION.LEFT:
+            case DIRECTION.FORCE_LEFT:
+                return this.isComplete ? boundPos : minPos;
+            case DIRECTION.RIGHT:
+            case DIRECTION.FORCE_RIGHT:
+                return this.isComplete ? boundPos : maxPos;
+            case DIRECTION.NONE:
+            default:
+                return boundPos;
         }
-      } else if (tailChunk instanceof ChunksTailDetails) {
-        if (tailChunk.stop == null) {
-          var firstTailChunk;
-          while (tailChunk.chunks.length && tailChunk.chunks[0].stop == null) {
-            firstTailChunk = tailChunk.chunks.shift();
-            firstTailChunk.from += tailChunk.from;
-            this.extend(firstTailChunk);
-          }
-        }
-        if (tailChunk.toString()) {
-          tailChunk.stop = tailChunk.blockIndex;
-          this.chunks.push(tailChunk);
-        }
-      }
     }
-  }, {
-    key: "appendTo",
-    value: function appendTo(masked) {
-      if (!(masked instanceof IMask.MaskedPattern)) {
-        var tail = new ContinuousTailDetails(this.toString());
-        return tail.appendTo(masked);
-      }
-      var details = new ChangeDetails();
-      for (var ci = 0; ci < this.chunks.length && !details.skip; ++ci) {
-        var chunk = this.chunks[ci];
-        var lastBlockIter = masked._mapPosToBlock(masked.value.length);
-        var stop = chunk.stop;
-        var chunkBlock = void 0;
-        if (stop != null && (
-            !lastBlockIter || lastBlockIter.index <= stop)) {
-          if (chunk instanceof ChunksTailDetails ||
-              masked._stops.indexOf(stop) >= 0) {
-            details.aggregate(masked._appendPlaceholder(stop));
-          }
-          chunkBlock = chunk instanceof ChunksTailDetails && masked._blocks[stop];
+
+    totalInputPositions() {
+        let fromPos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+        let toPos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.value.length;
+        return this.value.slice(fromPos, toPos).length;
+    }
+
+    doValidate() {
+        return this.masked.doValidate(...arguments) && (!this.parent || this.parent.doValidate(...arguments));
+    }
+
+    doCommit() {
+        this.masked.doCommit();
+    }
+
+    get state() {
+        return {
+            masked: this.masked.state,
+            isFilled: this.isFilled
+        };
+    }
+
+    set state(state) {
+        this.masked.state = state.masked;
+        this.isFilled = state.isFilled;
+    }
+}
+
+class PatternFixedDefinition {
+    constructor(opts) {
+        Object.assign(this, opts);
+        this._value = '';
+        this.isFixed = true;
+    }
+
+    get value() {
+        return this._value;
+    }
+
+    get unmaskedValue() {
+        return this.isUnmasking ? this.value : '';
+    }
+
+    get displayValue() {
+        return this.value;
+    }
+
+    reset() {
+        this._isRawInput = false;
+        this._value = '';
+    }
+
+    remove() {
+        let fromPos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+        let toPos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this._value.length;
+        this._value = this._value.slice(0, fromPos) + this._value.slice(toPos);
+        if (!this._value) this._isRawInput = false;
+        return new ChangeDetails();
+    }
+
+    nearestInputPos(cursorPos) {
+        let direction = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : DIRECTION.NONE;
+        const minPos = 0;
+        const maxPos = this._value.length;
+        switch (direction) {
+            case DIRECTION.LEFT:
+            case DIRECTION.FORCE_LEFT:
+                return minPos;
+            case DIRECTION.NONE:
+            case DIRECTION.RIGHT:
+            case DIRECTION.FORCE_RIGHT:
+            default:
+                return maxPos;
         }
-        if (chunkBlock) {
-          var tailDetails = chunkBlock.appendTail(chunk);
-          tailDetails.skip = false;
-          details.aggregate(tailDetails);
-          masked._value += tailDetails.inserted;
-          var remainChars = chunk.toString().slice(tailDetails.rawInserted.length);
-          if (remainChars) details.aggregate(masked.append(remainChars, {
+    }
+
+    totalInputPositions() {
+        let fromPos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+        let toPos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this._value.length;
+        return this._isRawInput ? toPos - fromPos : 0;
+    }
+
+    extractInput() {
+        let fromPos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+        let toPos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this._value.length;
+        let flags = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+        return flags.raw && this._isRawInput && this._value.slice(fromPos, toPos) || '';
+    }
+
+    get isComplete() {
+        return true;
+    }
+
+    get isFilled() {
+        return Boolean(this._value);
+    }
+
+    _appendChar(ch) {
+        let flags = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+        const details = new ChangeDetails();
+        if (this.isFilled) return details;
+        const appendEager = this.eager === true || this.eager === 'append';
+        const appended = this.char === ch;
+        const isResolved = appended && (this.isUnmasking || flags.input || flags.raw) && (!flags.raw || !appendEager) && !flags.tail;
+        if (isResolved) details.rawInserted = this.char;
+        this._value = details.inserted = this.char;
+        this._isRawInput = isResolved && (flags.raw || flags.input);
+        return details;
+    }
+
+    _appendEager() {
+        return this._appendChar(this.char, {
             tail: true
-          }));
-        } else {
-          details.aggregate(masked.append(chunk.toString(), {
-            tail: true
-          }));
-        }
-      }
-      return details;
+        });
     }
-  }, {
-    key: "state",
-    get: function get() {
-      return {
-        chunks: this.chunks.map(function (c) {
-          return c.state;
-        }),
-        from: this.from,
-        stop: this.stop,
-        blockIndex: this.blockIndex
-      };
-    },
-    set: function set(state) {
-      var chunks = state.chunks,
-          props = _objectWithoutProperties(state, _excluded$3);
-      Object.assign(this, props);
-      this.chunks = chunks.map(function (cstate) {
-        var chunk = "chunks" in cstate ? new ChunksTailDetails() : new ContinuousTailDetails();
-        chunk.state = cstate;
-        return chunk;
-      });
-    }
-  }, {
-    key: "unshift",
-    value: function unshift(beforePos) {
-      if (!this.chunks.length || beforePos != null && this.from >= beforePos) return '';
-      var chunkShiftPos = beforePos != null ? beforePos - this.from : beforePos;
-      var ci = 0;
-      while (ci < this.chunks.length) {
-        var chunk = this.chunks[ci];
-        var shiftChar = chunk.unshift(chunkShiftPos);
-        if (chunk.toString()) {
-          if (!shiftChar) break;
-          ++ci;
-        } else {
-          this.chunks.splice(ci, 1);
-        }
-        if (shiftChar) return shiftChar;
-      }
-      return '';
-    }
-  }, {
-    key: "shift",
-    value: function shift() {
-      if (!this.chunks.length) return '';
-      var ci = this.chunks.length - 1;
-      while (0 <= ci) {
-        var chunk = this.chunks[ci];
-        var shiftChar = chunk.shift();
-        if (chunk.toString()) {
-          if (!shiftChar) break;
-          --ci;
-        } else {
-          this.chunks.splice(ci, 1);
-        }
-        if (shiftChar) return shiftChar;
-      }
-      return '';
-    }
-  }]);
-  return ChunksTailDetails;
-}();
 
-var PatternCursor = function () {
-  function PatternCursor(masked, pos) {
-    _classCallCheck(this, PatternCursor);
-    this.masked = masked;
-    this._log = [];
-    var _ref = masked._mapPosToBlock(pos) || (pos < 0 ?
+    _appendPlaceholder() {
+        const details = new ChangeDetails();
+        if (this.isFilled) return details;
+        this._value = details.inserted = this.char;
+        return details;
+    }
+
+    extractTail() {
+        arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.value.length;
+        return new ContinuousTailDetails('');
+    }
+
+    appendTail(tail) {
+        if (isString(tail)) tail = new ContinuousTailDetails(String(tail));
+        return tail.appendTo(this);
+    }
+
+    append(str, flags, tail) {
+        const details = this._appendChar(str[0], flags);
+        if (tail != null) {
+            details.tailShift += this.appendTail(tail).tailShift;
+        }
+        return details;
+    }
+
+    doCommit() {
+    }
+
+    get state() {
+        return {
+            _value: this._value,
+            _isRawInput: this._isRawInput
+        };
+    }
+
+    set state(state) {
+        Object.assign(this, state);
+    }
+}
+
+const _excluded$3 = ["chunks"];
+
+class ChunksTailDetails {
+    constructor() {
+        let chunks = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+        let from = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+        this.chunks = chunks;
+        this.from = from;
+    }
+
+    toString() {
+        return this.chunks.map(String).join('');
+    }
+
+    extend(tailChunk) {
+        if (!String(tailChunk)) return;
+        if (isString(tailChunk)) tailChunk = new ContinuousTailDetails(String(tailChunk));
+        const lastChunk = this.chunks[this.chunks.length - 1];
+        const extendLast = lastChunk && (
+                lastChunk.stop === tailChunk.stop || tailChunk.stop == null) &&
+            tailChunk.from === lastChunk.from + lastChunk.toString().length;
+        if (tailChunk instanceof ContinuousTailDetails) {
+            if (extendLast) {
+                lastChunk.extend(tailChunk.toString());
+            } else {
+                this.chunks.push(tailChunk);
+            }
+        } else if (tailChunk instanceof ChunksTailDetails) {
+            if (tailChunk.stop == null) {
+                let firstTailChunk;
+                while (tailChunk.chunks.length && tailChunk.chunks[0].stop == null) {
+                    firstTailChunk = tailChunk.chunks.shift();
+                    firstTailChunk.from += tailChunk.from;
+                    this.extend(firstTailChunk);
+                }
+            }
+            if (tailChunk.toString()) {
+                tailChunk.stop = tailChunk.blockIndex;
+                this.chunks.push(tailChunk);
+            }
+        }
+    }
+
+    appendTo(masked) {
+        if (!(masked instanceof IMask.MaskedPattern)) {
+            const tail = new ContinuousTailDetails(this.toString());
+            return tail.appendTo(masked);
+        }
+        const details = new ChangeDetails();
+        for (let ci = 0; ci < this.chunks.length && !details.skip; ++ci) {
+            const chunk = this.chunks[ci];
+            const lastBlockIter = masked._mapPosToBlock(masked.value.length);
+            const stop = chunk.stop;
+            let chunkBlock;
+            if (stop != null && (
+                !lastBlockIter || lastBlockIter.index <= stop)) {
+                if (chunk instanceof ChunksTailDetails ||
+                    masked._stops.indexOf(stop) >= 0) {
+                    const phDetails = masked._appendPlaceholder(stop);
+                    details.aggregate(phDetails);
+                }
+                chunkBlock = chunk instanceof ChunksTailDetails && masked._blocks[stop];
+            }
+            if (chunkBlock) {
+                const tailDetails = chunkBlock.appendTail(chunk);
+                tailDetails.skip = false;
+                details.aggregate(tailDetails);
+                masked._value += tailDetails.inserted;
+                const remainChars = chunk.toString().slice(tailDetails.rawInserted.length);
+                if (remainChars) details.aggregate(masked.append(remainChars, {
+                    tail: true
+                }));
+            } else {
+                details.aggregate(masked.append(chunk.toString(), {
+                    tail: true
+                }));
+            }
+        }
+        return details;
+    }
+
+    get state() {
+        return {
+            chunks: this.chunks.map(c => c.state),
+            from: this.from,
+            stop: this.stop,
+            blockIndex: this.blockIndex
+        };
+    }
+
+    set state(state) {
+        const {
+                chunks
+            } = state,
+            props = _objectWithoutPropertiesLoose(state, _excluded$3);
+        Object.assign(this, props);
+        this.chunks = chunks.map(cstate => {
+            const chunk = "chunks" in cstate ? new ChunksTailDetails() : new ContinuousTailDetails();
+            chunk.state = cstate;
+            return chunk;
+        });
+    }
+
+    unshift(beforePos) {
+        if (!this.chunks.length || beforePos != null && this.from >= beforePos) return '';
+        const chunkShiftPos = beforePos != null ? beforePos - this.from : beforePos;
+        let ci = 0;
+        while (ci < this.chunks.length) {
+            const chunk = this.chunks[ci];
+            const shiftChar = chunk.unshift(chunkShiftPos);
+            if (chunk.toString()) {
+                if (!shiftChar) break;
+                ++ci;
+            } else {
+                this.chunks.splice(ci, 1);
+            }
+            if (shiftChar) return shiftChar;
+        }
+        return '';
+    }
+
+    shift() {
+        if (!this.chunks.length) return '';
+        let ci = this.chunks.length - 1;
+        while (0 <= ci) {
+            const chunk = this.chunks[ci];
+            const shiftChar = chunk.shift();
+            if (chunk.toString()) {
+                if (!shiftChar) break;
+                --ci;
+            } else {
+                this.chunks.splice(ci, 1);
+            }
+            if (shiftChar) return shiftChar;
+        }
+        return '';
+    }
+}
+
+class PatternCursor {
+    constructor(masked, pos) {
+        this.masked = masked;
+        this._log = [];
+        const {
+            offset,
+            index
+        } = masked._mapPosToBlock(pos) || (pos < 0 ?
             {
-              index: 0,
-              offset: 0
+                index: 0,
+                offset: 0
             } :
             {
-              index: this.masked._blocks.length,
-              offset: 0
-            }),
-        offset = _ref.offset,
-        index = _ref.index;
-    this.offset = offset;
-    this.index = index;
-    this.ok = false;
-  }
+                index: this.masked._blocks.length,
+                offset: 0
+            });
+        this.offset = offset;
+        this.index = index;
+        this.ok = false;
+    }
 
-  _createClass(PatternCursor, [{
-    key: "block",
-    get: function get() {
-      return this.masked._blocks[this.index];
+    get block() {
+        return this.masked._blocks[this.index];
     }
-  }, {
-    key: "pos",
-    get: function get() {
-      return this.masked._blockStartPos(this.index) + this.offset;
-    }
-  }, {
-    key: "state",
-    get: function get() {
-      return {
-        index: this.index,
-        offset: this.offset,
-        ok: this.ok
-      };
-    },
-    set: function set(s) {
-      Object.assign(this, s);
-    }
-  }, {
-    key: "pushState",
-    value: function pushState() {
-      this._log.push(this.state);
-    }
-  }, {
-    key: "popState",
-    value: function popState() {
-      var s = this._log.pop();
-      this.state = s;
-      return s;
-    }
-  }, {
-    key: "bindBlock",
-    value: function bindBlock() {
-      if (this.block) return;
-      if (this.index < 0) {
-        this.index = 0;
-        this.offset = 0;
-      }
-      if (this.index >= this.masked._blocks.length) {
-        this.index = this.masked._blocks.length - 1;
-        this.offset = this.block.value.length;
-      }
-    }
-  }, {
-    key: "_pushLeft",
-    value: function _pushLeft(fn) {
-      this.pushState();
-      for (this.bindBlock(); 0 <= this.index; --this.index, this.offset = ((_this$block = this.block) === null || _this$block === void 0 ? void 0 : _this$block.value.length) || 0) {
-        var _this$block;
-        if (fn()) return this.ok = true;
-      }
-      return this.ok = false;
-    }
-  }, {
-    key: "_pushRight",
-    value: function _pushRight(fn) {
-      this.pushState();
-      for (this.bindBlock(); this.index < this.masked._blocks.length; ++this.index, this.offset = 0) {
-        if (fn()) return this.ok = true;
-      }
-      return this.ok = false;
-    }
-  }, {
-    key: "pushLeftBeforeFilled",
-    value: function pushLeftBeforeFilled() {
-      var _this = this;
-      return this._pushLeft(function () {
-        if (_this.block.isFixed || !_this.block.value) return;
-        _this.offset = _this.block.nearestInputPos(_this.offset, DIRECTION.FORCE_LEFT);
-        if (_this.offset !== 0) return true;
-      });
-    }
-  }, {
-    key: "pushLeftBeforeInput",
-    value: function pushLeftBeforeInput() {
-      var _this2 = this;
-      return this._pushLeft(function () {
-        if (_this2.block.isFixed) return;
-        _this2.offset = _this2.block.nearestInputPos(_this2.offset, DIRECTION.LEFT);
-        return true;
-      });
-    }
-  }, {
-    key: "pushLeftBeforeRequired",
-    value: function pushLeftBeforeRequired() {
-      var _this3 = this;
-      return this._pushLeft(function () {
-        if (_this3.block.isFixed || _this3.block.isOptional && !_this3.block.value) return;
-        _this3.offset = _this3.block.nearestInputPos(_this3.offset, DIRECTION.LEFT);
-        return true;
-      });
-    }
-  }, {
-    key: "pushRightBeforeFilled",
-    value: function pushRightBeforeFilled() {
-      var _this4 = this;
-      return this._pushRight(function () {
-        if (_this4.block.isFixed || !_this4.block.value) return;
-        _this4.offset = _this4.block.nearestInputPos(_this4.offset, DIRECTION.FORCE_RIGHT);
-        if (_this4.offset !== _this4.block.value.length) return true;
-      });
-    }
-  }, {
-    key: "pushRightBeforeInput",
-    value: function pushRightBeforeInput() {
-      var _this5 = this;
-      return this._pushRight(function () {
-        if (_this5.block.isFixed) return;
-        _this5.offset = _this5.block.nearestInputPos(_this5.offset, DIRECTION.NONE);
-        return true;
-      });
-    }
-  }, {
-    key: "pushRightBeforeRequired",
-    value: function pushRightBeforeRequired() {
-      var _this6 = this;
-      return this._pushRight(function () {
-        if (_this6.block.isFixed || _this6.block.isOptional && !_this6.block.value) return;
-        _this6.offset = _this6.block.nearestInputPos(_this6.offset, DIRECTION.NONE);
-        return true;
-      });
-    }
-  }]);
-  return PatternCursor;
-}();
 
-var MaskedRegExp = function (_Masked) {
-  _inherits(MaskedRegExp, _Masked);
-  var _super = _createSuper(MaskedRegExp);
+    get pos() {
+        return this.masked._blockStartPos(this.index) + this.offset;
+    }
 
-  function MaskedRegExp() {
-    _classCallCheck(this, MaskedRegExp);
-    return _super.apply(this, arguments);
-  }
+    get state() {
+        return {
+            index: this.index,
+            offset: this.offset,
+            ok: this.ok
+        };
+    }
 
-  _createClass(MaskedRegExp, [{
-    key: "_update",
-    value:
-        function _update(opts) {
-          if (opts.mask) opts.validate = function (value) {
-            return value.search(opts.mask) >= 0;
-          };
-          _get(_getPrototypeOf(MaskedRegExp.prototype), "_update", this).call(this, opts);
+    set state(s) {
+        Object.assign(this, s);
+    }
+
+    pushState() {
+        this._log.push(this.state);
+    }
+
+    popState() {
+        const s = this._log.pop();
+        this.state = s;
+        return s;
+    }
+
+    bindBlock() {
+        if (this.block) return;
+        if (this.index < 0) {
+            this.index = 0;
+            this.offset = 0;
         }
-  }]);
-  return MaskedRegExp;
-}(Masked);
+        if (this.index >= this.masked._blocks.length) {
+            this.index = this.masked._blocks.length - 1;
+            this.offset = this.block.value.length;
+        }
+    }
+
+    _pushLeft(fn) {
+        this.pushState();
+        for (this.bindBlock(); 0 <= this.index; --this.index, this.offset = ((_this$block = this.block) === null || _this$block === void 0 ? void 0 : _this$block.value.length) || 0) {
+            var _this$block;
+            if (fn()) return this.ok = true;
+        }
+        return this.ok = false;
+    }
+
+    _pushRight(fn) {
+        this.pushState();
+        for (this.bindBlock(); this.index < this.masked._blocks.length; ++this.index, this.offset = 0) {
+            if (fn()) return this.ok = true;
+        }
+        return this.ok = false;
+    }
+
+    pushLeftBeforeFilled() {
+        return this._pushLeft(() => {
+            if (this.block.isFixed || !this.block.value) return;
+            this.offset = this.block.nearestInputPos(this.offset, DIRECTION.FORCE_LEFT);
+            if (this.offset !== 0) return true;
+        });
+    }
+
+    pushLeftBeforeInput() {
+        return this._pushLeft(() => {
+            if (this.block.isFixed) return;
+            this.offset = this.block.nearestInputPos(this.offset, DIRECTION.LEFT);
+            return true;
+        });
+    }
+
+    pushLeftBeforeRequired() {
+        return this._pushLeft(() => {
+            if (this.block.isFixed || this.block.isOptional && !this.block.value) return;
+            this.offset = this.block.nearestInputPos(this.offset, DIRECTION.LEFT);
+            return true;
+        });
+    }
+
+    pushRightBeforeFilled() {
+        return this._pushRight(() => {
+            if (this.block.isFixed || !this.block.value) return;
+            this.offset = this.block.nearestInputPos(this.offset, DIRECTION.FORCE_RIGHT);
+            if (this.offset !== this.block.value.length) return true;
+        });
+    }
+
+    pushRightBeforeInput() {
+        return this._pushRight(() => {
+            if (this.block.isFixed) return;
+            this.offset = this.block.nearestInputPos(this.offset, DIRECTION.NONE);
+            return true;
+        });
+    }
+
+    pushRightBeforeRequired() {
+        return this._pushRight(() => {
+            if (this.block.isFixed || this.block.isOptional && !this.block.value) return;
+            this.offset = this.block.nearestInputPos(this.offset, DIRECTION.NONE);
+            return true;
+        });
+    }
+}
+
+class MaskedRegExp extends Masked {
+    _update(opts) {
+        if (opts.mask) opts.validate = value => value.search(opts.mask) >= 0;
+        super._update(opts);
+    }
+}
+
 IMask.MaskedRegExp = MaskedRegExp;
 
-var _excluded$2 = ["_blocks"];
-var MaskedPattern = function (_Masked) {
-  _inherits(MaskedPattern, _Masked);
-  var _super = _createSuper(MaskedPattern);
+const _excluded$2 = ["_blocks"];
 
-  function MaskedPattern() {
-    var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-    _classCallCheck(this, MaskedPattern);
-    opts.definitions = Object.assign({}, DEFAULT_INPUT_DEFINITIONS, opts.definitions);
-    return _super.call(this, Object.assign({}, MaskedPattern.DEFAULTS, opts));
-  }
-
-  _createClass(MaskedPattern, [{
-    key: "_update",
-    value: function _update() {
-      var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-      opts.definitions = Object.assign({}, this.definitions, opts.definitions);
-      _get(_getPrototypeOf(MaskedPattern.prototype), "_update", this).call(this, opts);
-      this._rebuildMask();
+class MaskedPattern extends Masked {
+    constructor() {
+        let opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+        opts.definitions = Object.assign({}, DEFAULT_INPUT_DEFINITIONS, opts.definitions);
+        super(Object.assign({}, MaskedPattern.DEFAULTS, opts));
     }
-  }, {
-    key: "_rebuildMask",
-    value: function _rebuildMask() {
-      var _this = this;
-      var defs = this.definitions;
-      this._blocks = [];
-      this._stops = [];
-      this._maskedBlocks = {};
-      var pattern = this.mask;
-      if (!pattern || !defs) return;
-      var unmaskingBlock = false;
-      var optionalBlock = false;
-      for (var i = 0; i < pattern.length; ++i) {
-        if (this.blocks) {
-          var _ret = function () {
-            var p = pattern.slice(i);
-            var bNames = Object.keys(_this.blocks).filter(function (bName) {
-              return p.indexOf(bName) === 0;
-            });
-            bNames.sort(function (a, b) {
-              return b.length - a.length;
-            });
-            var bName = bNames[0];
-            if (bName) {
-              var maskedBlock = createMask(Object.assign({
-                parent: _this,
-                lazy: _this.lazy,
-                eager: _this.eager,
-                placeholderChar: _this.placeholderChar,
-                overwrite: _this.overwrite
-              }, _this.blocks[bName]));
-              if (maskedBlock) {
-                _this._blocks.push(maskedBlock);
-                if (!_this._maskedBlocks[bName]) _this._maskedBlocks[bName] = [];
-                _this._maskedBlocks[bName].push(_this._blocks.length - 1);
-              }
-              i += bName.length - 1;
-              return "continue";
+
+    _update() {
+        let opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+        opts.definitions = Object.assign({}, this.definitions, opts.definitions);
+        super._update(opts);
+        this._rebuildMask();
+    }
+
+    _rebuildMask() {
+        const defs = this.definitions;
+        this._blocks = [];
+        this._stops = [];
+        this._maskedBlocks = {};
+        let pattern = this.mask;
+        if (!pattern || !defs) return;
+        let unmaskingBlock = false;
+        let optionalBlock = false;
+        for (let i = 0; i < pattern.length; ++i) {
+            var _defs$char, _defs$char2;
+            if (this.blocks) {
+                const p = pattern.slice(i);
+                const bNames = Object.keys(this.blocks).filter(bName => p.indexOf(bName) === 0);
+                bNames.sort((a, b) => b.length - a.length);
+                const bName = bNames[0];
+                if (bName) {
+                    const maskedBlock = createMask(Object.assign({
+                        parent: this,
+                        lazy: this.lazy,
+                        eager: this.eager,
+                        placeholderChar: this.placeholderChar,
+                        displayChar: this.displayChar,
+                        overwrite: this.overwrite
+                    }, this.blocks[bName]));
+                    if (maskedBlock) {
+                        this._blocks.push(maskedBlock);
+                        if (!this._maskedBlocks[bName]) this._maskedBlocks[bName] = [];
+                        this._maskedBlocks[bName].push(this._blocks.length - 1);
+                    }
+                    i += bName.length - 1;
+                    continue;
+                }
             }
-          }();
-          if (_ret === "continue") continue;
+            let char = pattern[i];
+            let isInput = (char in defs);
+            if (char === MaskedPattern.STOP_CHAR) {
+                this._stops.push(this._blocks.length);
+                continue;
+            }
+            if (char === '{' || char === '}') {
+                unmaskingBlock = !unmaskingBlock;
+                continue;
+            }
+            if (char === '[' || char === ']') {
+                optionalBlock = !optionalBlock;
+                continue;
+            }
+            if (char === MaskedPattern.ESCAPE_CHAR) {
+                ++i;
+                char = pattern[i];
+                if (!char) break;
+                isInput = false;
+            }
+            const maskOpts = (_defs$char = defs[char]) !== null && _defs$char !== void 0 && _defs$char.mask && !(((_defs$char2 = defs[char]) === null || _defs$char2 === void 0 ? void 0 : _defs$char2.mask.prototype) instanceof IMask.Masked) ? defs[char] : {
+                mask: defs[char]
+            };
+            const def = isInput ? new PatternInputDefinition(Object.assign({
+                parent: this,
+                isOptional: optionalBlock,
+                lazy: this.lazy,
+                eager: this.eager,
+                placeholderChar: this.placeholderChar,
+                displayChar: this.displayChar
+            }, maskOpts)) : new PatternFixedDefinition({
+                char,
+                eager: this.eager,
+                isUnmasking: unmaskingBlock
+            });
+            this._blocks.push(def);
         }
-        var char = pattern[i];
-        var isInput = (char in defs);
-        if (char === MaskedPattern.STOP_CHAR) {
-          this._stops.push(this._blocks.length);
-          continue;
-        }
-        if (char === '{' || char === '}') {
-          unmaskingBlock = !unmaskingBlock;
-          continue;
-        }
-        if (char === '[' || char === ']') {
-          optionalBlock = !optionalBlock;
-          continue;
-        }
-        if (char === MaskedPattern.ESCAPE_CHAR) {
-          ++i;
-          char = pattern[i];
-          if (!char) break;
-          isInput = false;
-        }
-        var def = isInput ? new PatternInputDefinition({
-          parent: this,
-          lazy: this.lazy,
-          eager: this.eager,
-          placeholderChar: this.placeholderChar,
-          mask: defs[char],
-          isOptional: optionalBlock
-        }) : new PatternFixedDefinition({
-          char: char,
-          eager: this.eager,
-          isUnmasking: unmaskingBlock
+    }
+
+    get state() {
+        return Object.assign({}, super.state, {
+            _blocks: this._blocks.map(b => b.state)
         });
-        this._blocks.push(def);
-      }
     }
-  }, {
-    key: "state",
-    get: function get() {
-      return Object.assign({}, _get(_getPrototypeOf(MaskedPattern.prototype), "state", this), {
-        _blocks: this._blocks.map(function (b) {
-          return b.state;
-        })
-      });
-    },
-    set: function set(state) {
-      var _blocks = state._blocks,
-          maskedState = _objectWithoutProperties(state, _excluded$2);
-      this._blocks.forEach(function (b, bi) {
-        return b.state = _blocks[bi];
-      });
-      _set(_getPrototypeOf(MaskedPattern.prototype), "state", maskedState, this, true);
+
+    set state(state) {
+        const {
+                _blocks
+            } = state,
+            maskedState = _objectWithoutPropertiesLoose(state, _excluded$2);
+        this._blocks.forEach((b, bi) => b.state = _blocks[bi]);
+        super.state = maskedState;
     }
-  }, {
-    key: "reset",
-    value: function reset() {
-      _get(_getPrototypeOf(MaskedPattern.prototype), "reset", this).call(this);
-      this._blocks.forEach(function (b) {
-        return b.reset();
-      });
+
+    reset() {
+        super.reset();
+        this._blocks.forEach(b => b.reset());
     }
-  }, {
-    key: "isComplete",
-    get: function get() {
-      return this._blocks.every(function (b) {
-        return b.isComplete;
-      });
+
+    get isComplete() {
+        return this._blocks.every(b => b.isComplete);
     }
-  }, {
-    key: "isFilled",
-    get: function get() {
-      return this._blocks.every(function (b) {
-        return b.isFilled;
-      });
+
+    get isFilled() {
+        return this._blocks.every(b => b.isFilled);
     }
-  }, {
-    key: "isFixed",
-    get: function get() {
-      return this._blocks.every(function (b) {
-        return b.isFixed;
-      });
+
+    get isFixed() {
+        return this._blocks.every(b => b.isFixed);
     }
-  }, {
-    key: "isOptional",
-    get: function get() {
-      return this._blocks.every(function (b) {
-        return b.isOptional;
-      });
+
+    get isOptional() {
+        return this._blocks.every(b => b.isOptional);
     }
-  }, {
-    key: "doCommit",
-    value: function doCommit() {
-      this._blocks.forEach(function (b) {
-        return b.doCommit();
-      });
-      _get(_getPrototypeOf(MaskedPattern.prototype), "doCommit", this).call(this);
+
+    doCommit() {
+        this._blocks.forEach(b => b.doCommit());
+        super.doCommit();
     }
-  }, {
-    key: "unmaskedValue",
-    get: function get() {
-      return this._blocks.reduce(function (str, b) {
-        return str += b.unmaskedValue;
-      }, '');
-    },
-    set: function set(unmaskedValue) {
-      _set(_getPrototypeOf(MaskedPattern.prototype), "unmaskedValue", unmaskedValue, this, true);
+
+    get unmaskedValue() {
+        return this._blocks.reduce((str, b) => str += b.unmaskedValue, '');
     }
-  }, {
-    key: "value",
-    get: function get() {
-      return this._blocks.reduce(function (str, b) {
-        return str += b.value;
-      }, '');
-    },
-    set: function set(value) {
-      _set(_getPrototypeOf(MaskedPattern.prototype), "value", value, this, true);
+
+    set unmaskedValue(unmaskedValue) {
+        super.unmaskedValue = unmaskedValue;
     }
-  }, {
-    key: "appendTail",
-    value: function appendTail(tail) {
-      return _get(_getPrototypeOf(MaskedPattern.prototype), "appendTail", this).call(this, tail).aggregate(this._appendPlaceholder());
+
+    get value() {
+        return this._blocks.reduce((str, b) => str += b.value, '');
     }
-  }, {
-    key: "_appendEager",
-    value: function _appendEager() {
-      var _this$_mapPosToBlock;
-      var details = new ChangeDetails();
-      var startBlockIndex = (_this$_mapPosToBlock = this._mapPosToBlock(this.value.length)) === null || _this$_mapPosToBlock === void 0 ? void 0 : _this$_mapPosToBlock.index;
-      if (startBlockIndex == null) return details;
-      if (this._blocks[startBlockIndex].isFilled) ++startBlockIndex;
-      for (var bi = startBlockIndex; bi < this._blocks.length; ++bi) {
-        var d = this._blocks[bi]._appendEager();
-        if (!d.inserted) break;
-        details.aggregate(d);
-      }
-      return details;
+
+    set value(value) {
+        super.value = value;
     }
-  }, {
-    key: "_appendCharRaw",
-    value: function _appendCharRaw(ch) {
-      var flags = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      var blockIter = this._mapPosToBlock(this.value.length);
-      var details = new ChangeDetails();
-      if (!blockIter) return details;
-      for (var bi = blockIter.index; ; ++bi) {
-        var _flags$_beforeTailSta, _flags$_beforeTailSta2;
-        var _block = this._blocks[bi];
-        if (!_block) break;
-        var blockDetails = _block._appendChar(ch, Object.assign({}, flags, {
-          _beforeTailState: (_flags$_beforeTailSta = flags._beforeTailState) === null || _flags$_beforeTailSta === void 0 ? void 0 : (_flags$_beforeTailSta2 = _flags$_beforeTailSta._blocks) === null || _flags$_beforeTailSta2 === void 0 ? void 0 : _flags$_beforeTailSta2[bi]
-        }));
-        var skip = blockDetails.skip;
-        details.aggregate(blockDetails);
-        if (skip || blockDetails.rawInserted) break;
-      }
-      return details;
+
+    get displayValue() {
+        return this._blocks.reduce((str, b) => str += b.displayValue, '');
     }
-  }, {
-    key: "extractTail",
-    value: function extractTail() {
-      var _this2 = this;
-      var fromPos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-      var toPos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.value.length;
-      var chunkTail = new ChunksTailDetails();
-      if (fromPos === toPos) return chunkTail;
-      this._forEachBlocksInRange(fromPos, toPos, function (b, bi, bFromPos, bToPos) {
-        var blockChunk = b.extractTail(bFromPos, bToPos);
-        blockChunk.stop = _this2._findStopBefore(bi);
-        blockChunk.from = _this2._blockStartPos(bi);
-        if (blockChunk instanceof ChunksTailDetails) blockChunk.blockIndex = bi;
-        chunkTail.extend(blockChunk);
-      });
-      return chunkTail;
+
+    appendTail(tail) {
+        return super.appendTail(tail).aggregate(this._appendPlaceholder());
     }
-  }, {
-    key: "extractInput",
-    value: function extractInput() {
-      var fromPos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-      var toPos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.value.length;
-      var flags = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-      if (fromPos === toPos) return '';
-      var input = '';
-      this._forEachBlocksInRange(fromPos, toPos, function (b, _, fromPos, toPos) {
-        input += b.extractInput(fromPos, toPos, flags);
-      });
-      return input;
-    }
-  }, {
-    key: "_findStopBefore",
-    value: function _findStopBefore(blockIndex) {
-      var stopBefore;
-      for (var si = 0; si < this._stops.length; ++si) {
-        var stop = this._stops[si];
-        if (stop <= blockIndex) stopBefore = stop; else break;
-      }
-      return stopBefore;
-    }
-  }, {
-    key: "_appendPlaceholder",
-    value: function _appendPlaceholder(toBlockIndex) {
-      var _this3 = this;
-      var details = new ChangeDetails();
-      if (this.lazy && toBlockIndex == null) return details;
-      var startBlockIter = this._mapPosToBlock(this.value.length);
-      if (!startBlockIter) return details;
-      var startBlockIndex = startBlockIter.index;
-      var endBlockIndex = toBlockIndex != null ? toBlockIndex : this._blocks.length;
-      this._blocks.slice(startBlockIndex, endBlockIndex).forEach(function (b) {
-        if (!b.lazy || toBlockIndex != null) {
-          var args = b._blocks != null ? [b._blocks.length] : [];
-          var bDetails = b._appendPlaceholder.apply(b, args);
-          _this3._value += bDetails.inserted;
-          details.aggregate(bDetails);
+
+    _appendEager() {
+        var _this$_mapPosToBlock;
+        const details = new ChangeDetails();
+        let startBlockIndex = (_this$_mapPosToBlock = this._mapPosToBlock(this.value.length)) === null || _this$_mapPosToBlock === void 0 ? void 0 : _this$_mapPosToBlock.index;
+        if (startBlockIndex == null) return details;
+        if (this._blocks[startBlockIndex].isFilled) ++startBlockIndex;
+        for (let bi = startBlockIndex; bi < this._blocks.length; ++bi) {
+            const d = this._blocks[bi]._appendEager();
+            if (!d.inserted) break;
+            details.aggregate(d);
         }
-      });
-      return details;
+        return details;
     }
-  }, {
-    key: "_mapPosToBlock",
-    value: function _mapPosToBlock(pos) {
-      var accVal = '';
-      for (var bi = 0; bi < this._blocks.length; ++bi) {
-        var _block2 = this._blocks[bi];
-        var blockStartPos = accVal.length;
-        accVal += _block2.value;
-        if (pos <= accVal.length) {
-          return {
-            index: bi,
-            offset: pos - blockStartPos
-          };
+
+    _appendCharRaw(ch) {
+        let flags = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+        const blockIter = this._mapPosToBlock(this.value.length);
+        const details = new ChangeDetails();
+        if (!blockIter) return details;
+        for (let bi = blockIter.index; ; ++bi) {
+            var _flags$_beforeTailSta, _flags$_beforeTailSta2;
+            const block = this._blocks[bi];
+            if (!block) break;
+            const blockDetails = block._appendChar(ch, Object.assign({}, flags, {
+                _beforeTailState: (_flags$_beforeTailSta = flags._beforeTailState) === null || _flags$_beforeTailSta === void 0 ? void 0 : (_flags$_beforeTailSta2 = _flags$_beforeTailSta._blocks) === null || _flags$_beforeTailSta2 === void 0 ? void 0 : _flags$_beforeTailSta2[bi]
+            }));
+            const skip = blockDetails.skip;
+            details.aggregate(blockDetails);
+            if (skip || blockDetails.rawInserted) break;
         }
-      }
+        return details;
     }
-  }, {
-    key: "_blockStartPos",
-    value: function _blockStartPos(blockIndex) {
-      return this._blocks.slice(0, blockIndex).reduce(function (pos, b) {
-        return pos += b.value.length;
-      }, 0);
+
+    extractTail() {
+        let fromPos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+        let toPos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.value.length;
+        const chunkTail = new ChunksTailDetails();
+        if (fromPos === toPos) return chunkTail;
+        this._forEachBlocksInRange(fromPos, toPos, (b, bi, bFromPos, bToPos) => {
+            const blockChunk = b.extractTail(bFromPos, bToPos);
+            blockChunk.stop = this._findStopBefore(bi);
+            blockChunk.from = this._blockStartPos(bi);
+            if (blockChunk instanceof ChunksTailDetails) blockChunk.blockIndex = bi;
+            chunkTail.extend(blockChunk);
+        });
+        return chunkTail;
     }
-  }, {
-    key: "_forEachBlocksInRange",
-    value: function _forEachBlocksInRange(fromPos) {
-      var toPos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.value.length;
-      var fn = arguments.length > 2 ? arguments[2] : undefined;
-      var fromBlockIter = this._mapPosToBlock(fromPos);
-      if (fromBlockIter) {
-        var toBlockIter = this._mapPosToBlock(toPos);
-        var isSameBlock = toBlockIter && fromBlockIter.index === toBlockIter.index;
-        var fromBlockStartPos = fromBlockIter.offset;
-        var fromBlockEndPos = toBlockIter && isSameBlock ? toBlockIter.offset : this._blocks[fromBlockIter.index].value.length;
-        fn(this._blocks[fromBlockIter.index], fromBlockIter.index, fromBlockStartPos, fromBlockEndPos);
-        if (toBlockIter && !isSameBlock) {
-          for (var bi = fromBlockIter.index + 1; bi < toBlockIter.index; ++bi) {
-            fn(this._blocks[bi], bi, 0, this._blocks[bi].value.length);
-          }
-          fn(this._blocks[toBlockIter.index], toBlockIter.index, 0, toBlockIter.offset);
+
+    extractInput() {
+        let fromPos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+        let toPos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.value.length;
+        let flags = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+        if (fromPos === toPos) return '';
+        let input = '';
+        this._forEachBlocksInRange(fromPos, toPos, (b, _, fromPos, toPos) => {
+            input += b.extractInput(fromPos, toPos, flags);
+        });
+        return input;
+    }
+
+    _findStopBefore(blockIndex) {
+        let stopBefore;
+        for (let si = 0; si < this._stops.length; ++si) {
+            const stop = this._stops[si];
+            if (stop <= blockIndex) stopBefore = stop; else break;
         }
-      }
+        return stopBefore;
     }
-  }, {
-    key: "remove",
-    value: function remove() {
-      var fromPos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-      var toPos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.value.length;
-      var removeDetails = _get(_getPrototypeOf(MaskedPattern.prototype), "remove", this).call(this, fromPos, toPos);
-      this._forEachBlocksInRange(fromPos, toPos, function (b, _, bFromPos, bToPos) {
-        removeDetails.aggregate(b.remove(bFromPos, bToPos));
-      });
-      return removeDetails;
+
+    _appendPlaceholder(toBlockIndex) {
+        const details = new ChangeDetails();
+        if (this.lazy && toBlockIndex == null) return details;
+        const startBlockIter = this._mapPosToBlock(this.value.length);
+        if (!startBlockIter) return details;
+        const startBlockIndex = startBlockIter.index;
+        const endBlockIndex = toBlockIndex != null ? toBlockIndex : this._blocks.length;
+        this._blocks.slice(startBlockIndex, endBlockIndex).forEach(b => {
+            if (!b.lazy || toBlockIndex != null) {
+                const args = b._blocks != null ? [b._blocks.length] : [];
+                const bDetails = b._appendPlaceholder(...args);
+                this._value += bDetails.inserted;
+                details.aggregate(bDetails);
+            }
+        });
+        return details;
     }
-  }, {
-    key: "nearestInputPos",
-    value: function nearestInputPos(cursorPos) {
-      var direction = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : DIRECTION.NONE;
-      if (!this._blocks.length) return 0;
-      var cursor = new PatternCursor(this, cursorPos);
-      if (direction === DIRECTION.NONE) {
-        if (cursor.pushRightBeforeInput()) return cursor.pos;
-        cursor.popState();
-        if (cursor.pushLeftBeforeInput()) return cursor.pos;
-        return this.value.length;
-      }
-      if (direction === DIRECTION.LEFT || direction === DIRECTION.FORCE_LEFT) {
-        if (direction === DIRECTION.LEFT) {
-          cursor.pushRightBeforeFilled();
-          if (cursor.ok && cursor.pos === cursorPos) return cursorPos;
-          cursor.popState();
+
+    _mapPosToBlock(pos) {
+        let accVal = '';
+        for (let bi = 0; bi < this._blocks.length; ++bi) {
+            const block = this._blocks[bi];
+            const blockStartPos = accVal.length;
+            accVal += block.value;
+            if (pos <= accVal.length) {
+                return {
+                    index: bi,
+                    offset: pos - blockStartPos
+                };
+            }
         }
-        cursor.pushLeftBeforeInput();
-        cursor.pushLeftBeforeRequired();
-        cursor.pushLeftBeforeFilled();
-        if (direction === DIRECTION.LEFT) {
-          cursor.pushRightBeforeInput();
-          cursor.pushRightBeforeRequired();
-          if (cursor.ok && cursor.pos <= cursorPos) return cursor.pos;
-          cursor.popState();
-          if (cursor.ok && cursor.pos <= cursorPos) return cursor.pos;
-          cursor.popState();
+    }
+
+    _blockStartPos(blockIndex) {
+        return this._blocks.slice(0, blockIndex).reduce((pos, b) => pos += b.value.length, 0);
+    }
+
+    _forEachBlocksInRange(fromPos) {
+        let toPos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.value.length;
+        let fn = arguments.length > 2 ? arguments[2] : undefined;
+        const fromBlockIter = this._mapPosToBlock(fromPos);
+        if (fromBlockIter) {
+            const toBlockIter = this._mapPosToBlock(toPos);
+            const isSameBlock = toBlockIter && fromBlockIter.index === toBlockIter.index;
+            const fromBlockStartPos = fromBlockIter.offset;
+            const fromBlockEndPos = toBlockIter && isSameBlock ? toBlockIter.offset : this._blocks[fromBlockIter.index].value.length;
+            fn(this._blocks[fromBlockIter.index], fromBlockIter.index, fromBlockStartPos, fromBlockEndPos);
+            if (toBlockIter && !isSameBlock) {
+                for (let bi = fromBlockIter.index + 1; bi < toBlockIter.index; ++bi) {
+                    fn(this._blocks[bi], bi, 0, this._blocks[bi].value.length);
+                }
+                fn(this._blocks[toBlockIter.index], toBlockIter.index, 0, toBlockIter.offset);
+            }
         }
-        if (cursor.ok) return cursor.pos;
-        if (direction === DIRECTION.FORCE_LEFT) return 0;
-        cursor.popState();
-        if (cursor.ok) return cursor.pos;
-        cursor.popState();
-        if (cursor.ok) return cursor.pos;
-        return 0;
-      }
-      if (direction === DIRECTION.RIGHT || direction === DIRECTION.FORCE_RIGHT) {
-        cursor.pushRightBeforeInput();
-        cursor.pushRightBeforeRequired();
-        if (cursor.pushRightBeforeFilled()) return cursor.pos;
-        if (direction === DIRECTION.FORCE_RIGHT) return this.value.length;
-        cursor.popState();
-        if (cursor.ok) return cursor.pos;
-        cursor.popState();
-        if (cursor.ok) return cursor.pos;
-        return this.nearestInputPos(cursorPos, DIRECTION.LEFT);
-      }
-      return cursorPos;
     }
-  }, {
-    key: "maskedBlock",
-    value: function maskedBlock(name) {
-      return this.maskedBlocks(name)[0];
+
+    remove() {
+        let fromPos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+        let toPos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.value.length;
+        const removeDetails = super.remove(fromPos, toPos);
+        this._forEachBlocksInRange(fromPos, toPos, (b, _, bFromPos, bToPos) => {
+            removeDetails.aggregate(b.remove(bFromPos, bToPos));
+        });
+        return removeDetails;
     }
-  }, {
-    key: "maskedBlocks",
-    value: function maskedBlocks(name) {
-      var _this4 = this;
-      var indices = this._maskedBlocks[name];
-      if (!indices) return [];
-      return indices.map(function (gi) {
-        return _this4._blocks[gi];
-      });
+
+    nearestInputPos(cursorPos) {
+        let direction = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : DIRECTION.NONE;
+        if (!this._blocks.length) return 0;
+        const cursor = new PatternCursor(this, cursorPos);
+        if (direction === DIRECTION.NONE) {
+            if (cursor.pushRightBeforeInput()) return cursor.pos;
+            cursor.popState();
+            if (cursor.pushLeftBeforeInput()) return cursor.pos;
+            return this.value.length;
+        }
+        if (direction === DIRECTION.LEFT || direction === DIRECTION.FORCE_LEFT) {
+            if (direction === DIRECTION.LEFT) {
+                cursor.pushRightBeforeFilled();
+                if (cursor.ok && cursor.pos === cursorPos) return cursorPos;
+                cursor.popState();
+            }
+            cursor.pushLeftBeforeInput();
+            cursor.pushLeftBeforeRequired();
+            cursor.pushLeftBeforeFilled();
+            if (direction === DIRECTION.LEFT) {
+                cursor.pushRightBeforeInput();
+                cursor.pushRightBeforeRequired();
+                if (cursor.ok && cursor.pos <= cursorPos) return cursor.pos;
+                cursor.popState();
+                if (cursor.ok && cursor.pos <= cursorPos) return cursor.pos;
+                cursor.popState();
+            }
+            if (cursor.ok) return cursor.pos;
+            if (direction === DIRECTION.FORCE_LEFT) return 0;
+            cursor.popState();
+            if (cursor.ok) return cursor.pos;
+            cursor.popState();
+            if (cursor.ok) return cursor.pos;
+            return 0;
+        }
+        if (direction === DIRECTION.RIGHT || direction === DIRECTION.FORCE_RIGHT) {
+            cursor.pushRightBeforeInput();
+            cursor.pushRightBeforeRequired();
+            if (cursor.pushRightBeforeFilled()) return cursor.pos;
+            if (direction === DIRECTION.FORCE_RIGHT) return this.value.length;
+            cursor.popState();
+            if (cursor.ok) return cursor.pos;
+            cursor.popState();
+            if (cursor.ok) return cursor.pos;
+            return this.nearestInputPos(cursorPos, DIRECTION.LEFT);
+        }
+        return cursorPos;
     }
-  }]);
-  return MaskedPattern;
-}(Masked);
+
+    totalInputPositions() {
+        let fromPos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+        let toPos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.value.length;
+        let total = 0;
+        this._forEachBlocksInRange(fromPos, toPos, (b, _, bFromPos, bToPos) => {
+            total += b.totalInputPositions(bFromPos, bToPos);
+        });
+        return total;
+    }
+
+    maskedBlock(name) {
+        return this.maskedBlocks(name)[0];
+    }
+
+    maskedBlocks(name) {
+        const indices = this._maskedBlocks[name];
+        if (!indices) return [];
+        return indices.map(gi => this._blocks[gi]);
+    }
+}
 MaskedPattern.DEFAULTS = {
   lazy: true,
   placeholderChar: '_'
@@ -1986,359 +1542,264 @@ MaskedPattern.InputDefinition = PatternInputDefinition;
 MaskedPattern.FixedDefinition = PatternFixedDefinition;
 IMask.MaskedPattern = MaskedPattern;
 
-var MaskedRange = function (_MaskedPattern) {
-  _inherits(MaskedRange, _MaskedPattern);
-  var _super = _createSuper(MaskedRange);
+class MaskedRange extends MaskedPattern {
+    get _matchFrom() {
+        return this.maxLength - String(this.from).length;
+    }
 
-  function MaskedRange() {
-    _classCallCheck(this, MaskedRange);
-    return _super.apply(this, arguments);
-  }
+    _update(opts) {
+        opts = Object.assign({
+            to: this.to || 0,
+            from: this.from || 0,
+            maxLength: this.maxLength || 0
+        }, opts);
+        let maxLength = String(opts.to).length;
+        if (opts.maxLength != null) maxLength = Math.max(maxLength, opts.maxLength);
+        opts.maxLength = maxLength;
+        const fromStr = String(opts.from).padStart(maxLength, '0');
+        const toStr = String(opts.to).padStart(maxLength, '0');
+        let sameCharsCount = 0;
+        while (sameCharsCount < toStr.length && toStr[sameCharsCount] === fromStr[sameCharsCount]) ++sameCharsCount;
+        opts.mask = toStr.slice(0, sameCharsCount).replace(/0/g, '\\0') + '0'.repeat(maxLength - sameCharsCount);
+        super._update(opts);
+    }
 
-  _createClass(MaskedRange, [{
-    key: "_matchFrom",
-    get:
-        function get() {
-          return this.maxLength - String(this.from).length;
+    get isComplete() {
+        return super.isComplete && Boolean(this.value);
+    }
+
+    boundaries(str) {
+        let minstr = '';
+        let maxstr = '';
+        const [, placeholder, num] = str.match(/^(\D*)(\d*)(\D*)/) || [];
+        if (num) {
+            minstr = '0'.repeat(placeholder.length) + num;
+            maxstr = '9'.repeat(placeholder.length) + num;
         }
-  }, {
-    key: "_update",
-    value: function _update(opts) {
-      opts = Object.assign({
-        to: this.to || 0,
-        from: this.from || 0,
-        maxLength: this.maxLength || 0
-      }, opts);
-      var maxLength = String(opts.to).length;
-      if (opts.maxLength != null) maxLength = Math.max(maxLength, opts.maxLength);
-      opts.maxLength = maxLength;
-      var fromStr = String(opts.from).padStart(maxLength, '0');
-      var toStr = String(opts.to).padStart(maxLength, '0');
-      var sameCharsCount = 0;
-      while (sameCharsCount < toStr.length && toStr[sameCharsCount] === fromStr[sameCharsCount]) {
-        ++sameCharsCount;
-      }
-      opts.mask = toStr.slice(0, sameCharsCount).replace(/0/g, '\\0') + '0'.repeat(maxLength - sameCharsCount);
-      _get(_getPrototypeOf(MaskedRange.prototype), "_update", this).call(this, opts);
+        minstr = minstr.padEnd(this.maxLength, '0');
+        maxstr = maxstr.padEnd(this.maxLength, '9');
+        return [minstr, maxstr];
     }
-  }, {
-    key: "isComplete",
-    get: function get() {
-      return _get(_getPrototypeOf(MaskedRange.prototype), "isComplete", this) && Boolean(this.value);
-    }
-  }, {
-    key: "boundaries",
-    value: function boundaries(str) {
-      var minstr = '';
-      var maxstr = '';
-      var _ref = str.match(/^(\D*)(\d*)(\D*)/) || [],
-          _ref2 = _slicedToArray(_ref, 3),
-          placeholder = _ref2[1],
-          num = _ref2[2];
-      if (num) {
-        minstr = '0'.repeat(placeholder.length) + num;
-        maxstr = '9'.repeat(placeholder.length) + num;
-      }
-      minstr = minstr.padEnd(this.maxLength, '0');
-      maxstr = maxstr.padEnd(this.maxLength, '9');
-      return [minstr, maxstr];
-    }
-  }, {
-    key: "doPrepare",
-    value: function doPrepare(ch) {
-      var flags = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      var details;
-      var _normalizePrepare = normalizePrepare(_get(_getPrototypeOf(MaskedRange.prototype), "doPrepare", this).call(this, ch.replace(/\D/g, ''), flags));
-      var _normalizePrepare2 = _slicedToArray(_normalizePrepare, 2);
-      ch = _normalizePrepare2[0];
-      details = _normalizePrepare2[1];
-      if (!this.autofix || !ch) return ch;
-      var fromStr = String(this.from).padStart(this.maxLength, '0');
-      var toStr = String(this.to).padStart(this.maxLength, '0');
-      var nextVal = this.value + ch;
-      if (nextVal.length > this.maxLength) return '';
-      var _this$boundaries = this.boundaries(nextVal),
-          _this$boundaries2 = _slicedToArray(_this$boundaries, 2),
-          minstr = _this$boundaries2[0],
-          maxstr = _this$boundaries2[1];
-      if (Number(maxstr) < this.from) return fromStr[nextVal.length - 1];
-      if (Number(minstr) > this.to) {
-        if (this.autofix === 'pad' && nextVal.length < this.maxLength) {
-          return ['', details.aggregate(this.append(fromStr[nextVal.length - 1] + ch, flags))];
+
+    doPrepare(ch) {
+        let flags = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+        let details;
+        [ch, details] = normalizePrepare(super.doPrepare(ch.replace(/\D/g, ''), flags));
+        if (!this.autofix || !ch) return ch;
+        const fromStr = String(this.from).padStart(this.maxLength, '0');
+        const toStr = String(this.to).padStart(this.maxLength, '0');
+        let nextVal = this.value + ch;
+        if (nextVal.length > this.maxLength) return '';
+        const [minstr, maxstr] = this.boundaries(nextVal);
+        if (Number(maxstr) < this.from) return fromStr[nextVal.length - 1];
+        if (Number(minstr) > this.to) {
+            if (this.autofix === 'pad' && nextVal.length < this.maxLength) {
+                return ['', details.aggregate(this.append(fromStr[nextVal.length - 1] + ch, flags))];
+            }
+            return toStr[nextVal.length - 1];
         }
-        return toStr[nextVal.length - 1];
-      }
-      return ch;
+        return ch;
     }
-  }, {
-    key: "doValidate",
-    value: function doValidate() {
-      var _get2;
-      var str = this.value;
-      var firstNonZero = str.search(/[^0]/);
-      if (firstNonZero === -1 && str.length <= this._matchFrom) return true;
-      var _this$boundaries3 = this.boundaries(str),
-          _this$boundaries4 = _slicedToArray(_this$boundaries3, 2),
-          minstr = _this$boundaries4[0],
-          maxstr = _this$boundaries4[1];
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-      return this.from <= Number(maxstr) && Number(minstr) <= this.to && (_get2 = _get(_getPrototypeOf(MaskedRange.prototype), "doValidate", this)).call.apply(_get2, [this].concat(args));
+
+    doValidate() {
+        const str = this.value;
+        const firstNonZero = str.search(/[^0]/);
+        if (firstNonZero === -1 && str.length <= this._matchFrom) return true;
+        const [minstr, maxstr] = this.boundaries(str);
+        return this.from <= Number(maxstr) && Number(minstr) <= this.to && super.doValidate(...arguments);
     }
-  }]);
-  return MaskedRange;
-}(MaskedPattern);
+}
 IMask.MaskedRange = MaskedRange;
 
-var MaskedDate = function (_MaskedPattern) {
-  _inherits(MaskedDate, _MaskedPattern);
-  var _super = _createSuper(MaskedDate);
+class MaskedDate extends MaskedPattern {
+    constructor(opts) {
+        super(Object.assign({}, MaskedDate.DEFAULTS, opts));
+    }
 
-  function MaskedDate(opts) {
-    _classCallCheck(this, MaskedDate);
-    return _super.call(this, Object.assign({}, MaskedDate.DEFAULTS, opts));
-  }
-
-  _createClass(MaskedDate, [{
-    key: "_update",
-    value: function _update(opts) {
-      if (opts.mask === Date) delete opts.mask;
-      if (opts.pattern) opts.mask = opts.pattern;
-      var blocks = opts.blocks;
-      opts.blocks = Object.assign({}, MaskedDate.GET_DEFAULT_BLOCKS());
-      if (opts.min) opts.blocks.Y.from = opts.min.getFullYear();
-      if (opts.max) opts.blocks.Y.to = opts.max.getFullYear();
-      if (opts.min && opts.max && opts.blocks.Y.from === opts.blocks.Y.to) {
-        opts.blocks.m.from = opts.min.getMonth() + 1;
-        opts.blocks.m.to = opts.max.getMonth() + 1;
-        if (opts.blocks.m.from === opts.blocks.m.to) {
-          opts.blocks.d.from = opts.min.getDate();
-          opts.blocks.d.to = opts.max.getDate();
+    _update(opts) {
+        if (opts.mask === Date) delete opts.mask;
+        if (opts.pattern) opts.mask = opts.pattern;
+        const blocks = opts.blocks;
+        opts.blocks = Object.assign({}, MaskedDate.GET_DEFAULT_BLOCKS());
+        if (opts.min) opts.blocks.Y.from = opts.min.getFullYear();
+        if (opts.max) opts.blocks.Y.to = opts.max.getFullYear();
+        if (opts.min && opts.max && opts.blocks.Y.from === opts.blocks.Y.to) {
+            opts.blocks.m.from = opts.min.getMonth() + 1;
+            opts.blocks.m.to = opts.max.getMonth() + 1;
+            if (opts.blocks.m.from === opts.blocks.m.to) {
+                opts.blocks.d.from = opts.min.getDate();
+                opts.blocks.d.to = opts.max.getDate();
+            }
         }
-      }
-      Object.assign(opts.blocks, this.blocks, blocks);
-      Object.keys(opts.blocks).forEach(function (bk) {
-        var b = opts.blocks[bk];
-        if (!('autofix' in b) && 'autofix' in opts) b.autofix = opts.autofix;
-      });
-      _get(_getPrototypeOf(MaskedDate.prototype), "_update", this).call(this, opts);
+        Object.assign(opts.blocks, this.blocks, blocks);
+        Object.keys(opts.blocks).forEach(bk => {
+            const b = opts.blocks[bk];
+            if (!('autofix' in b) && 'autofix' in opts) b.autofix = opts.autofix;
+        });
+        super._update(opts);
     }
-  }, {
-    key: "doValidate",
-    value: function doValidate() {
-      var _get2;
-      var date = this.date;
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-      return (_get2 = _get(_getPrototypeOf(MaskedDate.prototype), "doValidate", this)).call.apply(_get2, [this].concat(args)) && (!this.isComplete || this.isDateExist(this.value) && date != null && (this.min == null || this.min <= date) && (this.max == null || date <= this.max));
+
+    doValidate() {
+        const date = this.date;
+        return super.doValidate(...arguments) && (!this.isComplete || this.isDateExist(this.value) && date != null && (this.min == null || this.min <= date) && (this.max == null || date <= this.max));
     }
-  }, {
-    key: "isDateExist",
-    value: function isDateExist(str) {
-      return this.format(this.parse(str, this), this).indexOf(str) >= 0;
+
+    isDateExist(str) {
+        return this.format(this.parse(str, this), this).indexOf(str) >= 0;
     }
-  }, {
-    key: "date",
-    get: function get() {
-      return this.typedValue;
-    },
-    set: function set(date) {
-      this.typedValue = date;
+
+    get date() {
+        return this.typedValue;
     }
-  }, {
-    key: "typedValue",
-    get: function get() {
-      return this.isComplete ? _get(_getPrototypeOf(MaskedDate.prototype), "typedValue", this) : null;
-    },
-    set: function set(value) {
-      _set(_getPrototypeOf(MaskedDate.prototype), "typedValue", value, this, true);
+
+    set date(date) {
+        this.typedValue = date;
     }
-  }, {
-    key: "maskEquals",
-    value: function maskEquals(mask) {
-      return mask === Date || _get(_getPrototypeOf(MaskedDate.prototype), "maskEquals", this).call(this, mask);
+
+    get typedValue() {
+        return this.isComplete ? super.typedValue : null;
     }
-  }]);
-  return MaskedDate;
-}(MaskedPattern);
+
+    set typedValue(value) {
+        super.typedValue = value;
+    }
+
+    maskEquals(mask) {
+        return mask === Date || super.maskEquals(mask);
+    }
+}
 MaskedDate.DEFAULTS = {
-  pattern: 'd{.}`m{.}`Y',
-  format: function format(date) {
-    if (!date) return '';
-    var day = String(date.getDate()).padStart(2, '0');
-    var month = String(date.getMonth() + 1).padStart(2, '0');
-    var year = date.getFullYear();
-    return [day, month, year].join('.');
-  },
-  parse: function parse(str) {
-    var _str$split = str.split('.'),
-        _str$split2 = _slicedToArray(_str$split, 3),
-        day = _str$split2[0],
-        month = _str$split2[1],
-        year = _str$split2[2];
-    return new Date(year, month - 1, day);
-  }
+    pattern: 'd{.}`m{.}`Y',
+    format: date => {
+        if (!date) return '';
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+        return [day, month, year].join('.');
+    },
+    parse: str => {
+        const [day, month, year] = str.split('.');
+        return new Date(year, month - 1, day);
+    }
 };
-MaskedDate.GET_DEFAULT_BLOCKS = function () {
-  return {
+MaskedDate.GET_DEFAULT_BLOCKS = () => ({
     d: {
-      mask: MaskedRange,
-      from: 1,
-      to: 31,
-      maxLength: 2
+        mask: MaskedRange,
+        from: 1,
+        to: 31,
+        maxLength: 2
     },
     m: {
-      mask: MaskedRange,
-      from: 1,
-      to: 12,
-      maxLength: 2
+        mask: MaskedRange,
+        from: 1,
+        to: 12,
+        maxLength: 2
     },
     Y: {
-      mask: MaskedRange,
-      from: 1900,
-      to: 9999
+        mask: MaskedRange,
+        from: 1900,
+        to: 9999
     }
-  };
-};
+});
 IMask.MaskedDate = MaskedDate;
 
-var MaskElement = function () {
-  function MaskElement() {
-    _classCallCheck(this, MaskElement);
-  }
-
-  _createClass(MaskElement, [{
-    key: "selectionStart",
-    get:
-        function get() {
-          var start;
-          try {
+class MaskElement {
+    get selectionStart() {
+        let start;
+        try {
             start = this._unsafeSelectionStart;
-          } catch (e) {
-          }
-          return start != null ? start : this.value.length;
+        } catch (e) {
         }
-  }, {
-    key: "selectionEnd",
-    get: function get() {
-      var end;
-      try {
-        end = this._unsafeSelectionEnd;
-      } catch (e) {
-      }
-      return end != null ? end : this.value.length;
+        return start != null ? start : this.value.length;
     }
-  }, {
-    key: "select",
-    value: function select(start, end) {
-      if (start == null || end == null || start === this.selectionStart && end === this.selectionEnd) return;
-      try {
-        this._unsafeSelect(start, end);
-      } catch (e) {
-      }
+
+    get selectionEnd() {
+        let end;
+        try {
+            end = this._unsafeSelectionEnd;
+        } catch (e) {
+        }
+        return end != null ? end : this.value.length;
     }
-  }, {
-    key: "_unsafeSelect",
-    value: function _unsafeSelect(start, end) {
+
+    select(start, end) {
+        if (start == null || end == null || start === this.selectionStart && end === this.selectionEnd) return;
+        try {
+            this._unsafeSelect(start, end);
+        } catch (e) {
+        }
     }
-  }, {
-    key: "isActive",
-    get: function get() {
-      return false;
+
+    _unsafeSelect(start, end) {
     }
-  }, {
-    key: "bindEvents",
-    value: function bindEvents(handlers) {
+
+    get isActive() {
+        return false;
     }
-  }, {
-    key: "unbindEvents",
-    value: function unbindEvents() {
+
+    bindEvents(handlers) {
     }
-  }]);
-  return MaskElement;
-}();
+
+    unbindEvents() {
+    }
+}
 IMask.MaskElement = MaskElement;
 
-var HTMLMaskElement = function (_MaskElement) {
-  _inherits(HTMLMaskElement, _MaskElement);
-  var _super = _createSuper(HTMLMaskElement);
+class HTMLMaskElement extends MaskElement {
+    constructor(input) {
+        super();
+        this.input = input;
+        this._handlers = {};
+    }
 
-  function HTMLMaskElement(input) {
-    var _this;
-    _classCallCheck(this, HTMLMaskElement);
-    _this = _super.call(this);
-    _this.input = input;
-    _this._handlers = {};
-    return _this;
-  }
+    get rootElement() {
+        var _this$input$getRootNo, _this$input$getRootNo2, _this$input;
+        return (_this$input$getRootNo = (_this$input$getRootNo2 = (_this$input = this.input).getRootNode) === null || _this$input$getRootNo2 === void 0 ? void 0 : _this$input$getRootNo2.call(_this$input)) !== null && _this$input$getRootNo !== void 0 ? _this$input$getRootNo : document;
+    }
 
-  _createClass(HTMLMaskElement, [{
-    key: "rootElement",
-    get: function get() {
-      var _this$input$getRootNo, _this$input$getRootNo2, _this$input;
-      return (_this$input$getRootNo = (_this$input$getRootNo2 = (_this$input = this.input).getRootNode) === null || _this$input$getRootNo2 === void 0 ? void 0 : _this$input$getRootNo2.call(_this$input)) !== null && _this$input$getRootNo !== void 0 ? _this$input$getRootNo : document;
+    get isActive() {
+        return this.input === this.rootElement.activeElement;
     }
-  }, {
-    key: "isActive",
-    get: function get() {
-      return this.input === this.rootElement.activeElement;
+
+    get _unsafeSelectionStart() {
+        return this.input.selectionStart;
     }
-  }, {
-    key: "_unsafeSelectionStart",
-    get: function get() {
-      return this.input.selectionStart;
+
+    get _unsafeSelectionEnd() {
+        return this.input.selectionEnd;
     }
-  }, {
-    key: "_unsafeSelectionEnd",
-    get: function get() {
-      return this.input.selectionEnd;
+
+    _unsafeSelect(start, end) {
+        this.input.setSelectionRange(start, end);
     }
-  }, {
-    key: "_unsafeSelect",
-    value: function _unsafeSelect(start, end) {
-      this.input.setSelectionRange(start, end);
+
+    get value() {
+        return this.input.value;
     }
-  }, {
-    key: "value",
-    get: function get() {
-      return this.input.value;
-    },
-    set: function set(value) {
-      this.input.value = value;
+
+    set value(value) {
+        this.input.value = value;
     }
-  }, {
-    key: "bindEvents",
-    value: function bindEvents(handlers) {
-      var _this2 = this;
-      Object.keys(handlers).forEach(function (event) {
-        return _this2._toggleEventHandler(HTMLMaskElement.EVENTS_MAP[event], handlers[event]);
-      });
+
+    bindEvents(handlers) {
+        Object.keys(handlers).forEach(event => this._toggleEventHandler(HTMLMaskElement.EVENTS_MAP[event], handlers[event]));
     }
-  }, {
-    key: "unbindEvents",
-    value: function unbindEvents() {
-      var _this3 = this;
-      Object.keys(this._handlers).forEach(function (event) {
-        return _this3._toggleEventHandler(event);
-      });
+
+    unbindEvents() {
+        Object.keys(this._handlers).forEach(event => this._toggleEventHandler(event));
     }
-  }, {
-    key: "_toggleEventHandler",
-    value: function _toggleEventHandler(event, handler) {
-      if (this._handlers[event]) {
-        this.input.removeEventListener(event, this._handlers[event]);
-        delete this._handlers[event];
-      }
-      if (handler) {
-        this.input.addEventListener(event, handler);
-        this._handlers[event] = handler;
-      }
+
+    _toggleEventHandler(event, handler) {
+        if (this._handlers[event]) {
+            this.input.removeEventListener(event, this._handlers[event]);
+            delete this._handlers[event];
+        }
+        if (handler) {
+            this.input.addEventListener(event, handler);
+            this._handlers[event] = handler;
+        }
     }
-  }]);
-  return HTMLMaskElement;
-}(MaskElement);
+}
 HTMLMaskElement.EVENTS_MAP = {
   selectionChange: 'keydown',
   input: 'input',
@@ -2349,1004 +1810,883 @@ HTMLMaskElement.EVENTS_MAP = {
 };
 IMask.HTMLMaskElement = HTMLMaskElement;
 
-var HTMLContenteditableMaskElement = function (_HTMLMaskElement) {
-  _inherits(HTMLContenteditableMaskElement, _HTMLMaskElement);
-  var _super = _createSuper(HTMLContenteditableMaskElement);
-
-  function HTMLContenteditableMaskElement() {
-    _classCallCheck(this, HTMLContenteditableMaskElement);
-    return _super.apply(this, arguments);
-  }
-
-  _createClass(HTMLContenteditableMaskElement, [{
-    key: "_unsafeSelectionStart",
-    get:
-        function get() {
-          var root = this.rootElement;
-          var selection = root.getSelection && root.getSelection();
-          var anchorOffset = selection && selection.anchorOffset;
-          var focusOffset = selection && selection.focusOffset;
-          if (focusOffset == null || anchorOffset == null || anchorOffset < focusOffset) {
+class HTMLContenteditableMaskElement extends HTMLMaskElement {
+    get _unsafeSelectionStart() {
+        const root = this.rootElement;
+        const selection = root.getSelection && root.getSelection();
+        const anchorOffset = selection && selection.anchorOffset;
+        const focusOffset = selection && selection.focusOffset;
+        if (focusOffset == null || anchorOffset == null || anchorOffset < focusOffset) {
             return anchorOffset;
-          }
-          return focusOffset;
         }
-  }, {
-    key: "_unsafeSelectionEnd",
-    get: function get() {
-      var root = this.rootElement;
-      var selection = root.getSelection && root.getSelection();
-      var anchorOffset = selection && selection.anchorOffset;
-      var focusOffset = selection && selection.focusOffset;
-      if (focusOffset == null || anchorOffset == null || anchorOffset > focusOffset) {
-        return anchorOffset;
-      }
-      return focusOffset;
+        return focusOffset;
     }
-  }, {
-    key: "_unsafeSelect",
-    value: function _unsafeSelect(start, end) {
-      if (!this.rootElement.createRange) return;
-      var range = this.rootElement.createRange();
-      range.setStart(this.input.firstChild || this.input, start);
-      range.setEnd(this.input.lastChild || this.input, end);
-      var root = this.rootElement;
-      var selection = root.getSelection && root.getSelection();
-      if (selection) {
-        selection.removeAllRanges();
-        selection.addRange(range);
-      }
+
+    get _unsafeSelectionEnd() {
+        const root = this.rootElement;
+        const selection = root.getSelection && root.getSelection();
+        const anchorOffset = selection && selection.anchorOffset;
+        const focusOffset = selection && selection.focusOffset;
+        if (focusOffset == null || anchorOffset == null || anchorOffset > focusOffset) {
+            return anchorOffset;
+        }
+        return focusOffset;
     }
-  }, {
-    key: "value",
-    get: function get() {
-      return this.input.textContent;
-    },
-    set: function set(value) {
-      this.input.textContent = value;
+
+    _unsafeSelect(start, end) {
+        if (!this.rootElement.createRange) return;
+        const range = this.rootElement.createRange();
+        range.setStart(this.input.firstChild || this.input, start);
+        range.setEnd(this.input.lastChild || this.input, end);
+        const root = this.rootElement;
+        const selection = root.getSelection && root.getSelection();
+        if (selection) {
+            selection.removeAllRanges();
+            selection.addRange(range);
+        }
     }
-  }]);
-  return HTMLContenteditableMaskElement;
-}(HTMLMaskElement);
+
+    get value() {
+        return this.input.textContent;
+    }
+
+    set value(value) {
+        this.input.textContent = value;
+    }
+}
+
 IMask.HTMLContenteditableMaskElement = HTMLContenteditableMaskElement;
 
-var _excluded$1 = ["mask"];
-var InputMask = function () {
-  function InputMask(el, opts) {
-    _classCallCheck(this, InputMask);
-    this.el = el instanceof MaskElement ? el : el.isContentEditable && el.tagName !== 'INPUT' && el.tagName !== 'TEXTAREA' ? new HTMLContenteditableMaskElement(el) : new HTMLMaskElement(el);
-    this.masked = createMask(opts);
-    this._listeners = {};
-    this._value = '';
-    this._unmaskedValue = '';
-    this._saveSelection = this._saveSelection.bind(this);
-    this._onInput = this._onInput.bind(this);
-    this._onChange = this._onChange.bind(this);
-    this._onDrop = this._onDrop.bind(this);
-    this._onFocus = this._onFocus.bind(this);
-    this._onClick = this._onClick.bind(this);
-    this.alignCursor = this.alignCursor.bind(this);
-    this.alignCursorFriendly = this.alignCursorFriendly.bind(this);
-    this._bindEvents();
-    this.updateValue();
-    this._onChange();
-  }
+const _excluded$1 = ["mask"];
 
-  _createClass(InputMask, [{
-    key: "mask",
-    get: function get() {
-      return this.masked.mask;
-    },
-    set: function set(mask) {
-      if (this.maskEquals(mask)) return;
-      if (!(mask instanceof IMask.Masked) && this.masked.constructor === maskedClass(mask)) {
-        this.masked.updateOptions({
-          mask: mask
-        });
-        return;
-      }
-      var masked = createMask({
-        mask: mask
-      });
-      masked.unmaskedValue = this.masked.unmaskedValue;
-      this.masked = masked;
-    }
-  }, {
-    key: "maskEquals",
-    value: function maskEquals(mask) {
-      var _this$masked;
-      return mask == null || ((_this$masked = this.masked) === null || _this$masked === void 0 ? void 0 : _this$masked.maskEquals(mask));
-    }
-  }, {
-    key: "value",
-    get: function get() {
-      return this._value;
-    },
-    set: function set(str) {
-      if (this.value === str) return;
-      this.masked.value = str;
-      this.updateControl();
-      this.alignCursor();
-    }
-  }, {
-    key: "unmaskedValue",
-    get: function get() {
-      return this._unmaskedValue;
-    },
-    set: function set(str) {
-      if (this.unmaskedValue === str) return;
-      this.masked.unmaskedValue = str;
-      this.updateControl();
-      this.alignCursor();
-    }
-  }, {
-    key: "typedValue",
-    get: function get() {
-      return this.masked.typedValue;
-    },
-    set: function set(val) {
-      if (this.masked.typedValueEquals(val)) return;
-      this.masked.typedValue = val;
-      this.updateControl();
-      this.alignCursor();
-    }
-  }, {
-    key: "_bindEvents",
-    value: function _bindEvents() {
-      this.el.bindEvents({
-        selectionChange: this._saveSelection,
-        input: this._onInput,
-        drop: this._onDrop,
-        click: this._onClick,
-        focus: this._onFocus,
-        commit: this._onChange
-      });
-    }
-  }, {
-    key: "_unbindEvents",
-    value: function _unbindEvents() {
-      if (this.el) this.el.unbindEvents();
-    }
-  }, {
-    key: "_fireEvent",
-    value: function _fireEvent(ev) {
-      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
-      var listeners = this._listeners[ev];
-      if (!listeners) return;
-      listeners.forEach(function (l) {
-        return l.apply(void 0, args);
-      });
-    }
-  }, {
-    key: "selectionStart",
-    get: function get() {
-      return this._cursorChanging ? this._changingCursorPos : this.el.selectionStart;
-    }
-  }, {
-    key: "cursorPos",
-    get: function get() {
-      return this._cursorChanging ? this._changingCursorPos : this.el.selectionEnd;
-    },
-    set: function set(pos) {
-      if (!this.el || !this.el.isActive) return;
-      this.el.select(pos, pos);
-      this._saveSelection();
-    }
-  }, {
-    key: "_saveSelection",
-    value: function
-        _saveSelection() {
-      if (this.value !== this.el.value) {
-        console.warn('Element value was changed outside of mask. Syncronize mask using `mask.updateValue()` to work properly.');
-      }
-      this._selection = {
-        start: this.selectionStart,
-        end: this.cursorPos
-      };
-    }
-  }, {
-    key: "updateValue",
-    value: function updateValue() {
-      this.masked.value = this.el.value;
-      this._value = this.masked.value;
-    }
-  }, {
-    key: "updateControl",
-    value: function updateControl() {
-      var newUnmaskedValue = this.masked.unmaskedValue;
-      var newValue = this.masked.value;
-      var isChanged = this.unmaskedValue !== newUnmaskedValue || this.value !== newValue;
-      this._unmaskedValue = newUnmaskedValue;
-      this._value = newValue;
-      if (this.el.value !== newValue) this.el.value = newValue;
-      if (isChanged) this._fireChangeEvents();
-    }
-  }, {
-    key: "updateOptions",
-    value: function updateOptions(opts) {
-      var mask = opts.mask,
-          restOpts = _objectWithoutProperties(opts, _excluded$1);
-      var updateMask = !this.maskEquals(mask);
-      var updateOpts = !objectIncludes(this.masked, restOpts);
-      if (updateMask) this.mask = mask;
-      if (updateOpts) this.masked.updateOptions(restOpts);
-      if (updateMask || updateOpts) this.updateControl();
-    }
-  }, {
-    key: "updateCursor",
-    value: function updateCursor(cursorPos) {
-      if (cursorPos == null) return;
-      this.cursorPos = cursorPos;
-      this._delayUpdateCursor(cursorPos);
-    }
-  }, {
-    key: "_delayUpdateCursor",
-    value: function _delayUpdateCursor(cursorPos) {
-      var _this = this;
-      this._abortUpdateCursor();
-      this._changingCursorPos = cursorPos;
-      this._cursorChanging = setTimeout(function () {
-        if (!_this.el) return;
-        _this.cursorPos = _this._changingCursorPos;
-        _this._abortUpdateCursor();
-      }, 10);
-    }
-  }, {
-    key: "_fireChangeEvents",
-    value: function _fireChangeEvents() {
-      this._fireEvent('accept', this._inputEvent);
-      if (this.masked.isComplete) this._fireEvent('complete', this._inputEvent);
-    }
-  }, {
-    key: "_abortUpdateCursor",
-    value: function _abortUpdateCursor() {
-      if (this._cursorChanging) {
-        clearTimeout(this._cursorChanging);
-        delete this._cursorChanging;
-      }
-    }
-  }, {
-    key: "alignCursor",
-    value: function alignCursor() {
-      this.cursorPos = this.masked.nearestInputPos(this.masked.nearestInputPos(this.cursorPos, DIRECTION.LEFT));
-    }
-  }, {
-    key: "alignCursorFriendly",
-    value: function alignCursorFriendly() {
-      if (this.selectionStart !== this.cursorPos) return;
-      this.alignCursor();
-    }
-  }, {
-    key: "on",
-    value: function on(ev, handler) {
-      if (!this._listeners[ev]) this._listeners[ev] = [];
-      this._listeners[ev].push(handler);
-      return this;
-    }
-  }, {
-    key: "off",
-    value: function off(ev, handler) {
-      if (!this._listeners[ev]) return this;
-      if (!handler) {
-        delete this._listeners[ev];
-        return this;
-      }
-      var hIndex = this._listeners[ev].indexOf(handler);
-      if (hIndex >= 0) this._listeners[ev].splice(hIndex, 1);
-      return this;
-    }
-  }, {
-    key: "_onInput",
-    value: function _onInput(e) {
-      this._inputEvent = e;
-      this._abortUpdateCursor();
-      if (!this._selection) return this.updateValue();
-      var details = new ActionDetails(
-          this.el.value, this.cursorPos,
-          this.value, this._selection);
-      var oldRawValue = this.masked.rawInputValue;
-      var offset = this.masked.splice(details.startChangePos, details.removed.length, details.inserted, details.removeDirection, {
-        input: true,
-        raw: true
-      }).offset;
-      var removeDirection = oldRawValue === this.masked.rawInputValue ? details.removeDirection : DIRECTION.NONE;
-      var cursorPos = this.masked.nearestInputPos(details.startChangePos + offset, removeDirection);
-      if (removeDirection !== DIRECTION.NONE) cursorPos = this.masked.nearestInputPos(cursorPos, DIRECTION.NONE);
-      this.updateControl();
-      this.updateCursor(cursorPos);
-      delete this._inputEvent;
-    }
-  }, {
-    key: "_onChange",
-    value: function _onChange() {
-      if (this.value !== this.el.value) {
+class InputMask {
+    constructor(el, opts) {
+        this.el = el instanceof MaskElement ? el : el.isContentEditable && el.tagName !== 'INPUT' && el.tagName !== 'TEXTAREA' ? new HTMLContenteditableMaskElement(el) : new HTMLMaskElement(el);
+        this.masked = createMask(opts);
+        this._listeners = {};
+        this._value = '';
+        this._unmaskedValue = '';
+        this._saveSelection = this._saveSelection.bind(this);
+        this._onInput = this._onInput.bind(this);
+        this._onChange = this._onChange.bind(this);
+        this._onDrop = this._onDrop.bind(this);
+        this._onFocus = this._onFocus.bind(this);
+        this._onClick = this._onClick.bind(this);
+        this.alignCursor = this.alignCursor.bind(this);
+        this.alignCursorFriendly = this.alignCursorFriendly.bind(this);
+        this._bindEvents();
         this.updateValue();
-      }
-      this.masked.doCommit();
-      this.updateControl();
-      this._saveSelection();
+        this._onChange();
     }
-  }, {
-    key: "_onDrop",
-    value: function _onDrop(ev) {
-      ev.preventDefault();
-      ev.stopPropagation();
+
+    get mask() {
+        return this.masked.mask;
     }
-  }, {
-    key: "_onFocus",
-    value: function _onFocus(ev) {
-      this.alignCursorFriendly();
+
+    maskEquals(mask) {
+        var _this$masked;
+        return mask == null || ((_this$masked = this.masked) === null || _this$masked === void 0 ? void 0 : _this$masked.maskEquals(mask));
     }
-  }, {
-    key: "_onClick",
-    value: function _onClick(ev) {
-      this.alignCursorFriendly();
+
+    set mask(mask) {
+        if (this.maskEquals(mask)) return;
+        if (!(mask instanceof IMask.Masked) && this.masked.constructor === maskedClass(mask)) {
+            this.masked.updateOptions({
+                mask
+            });
+            return;
+        }
+        const masked = createMask({
+            mask
+        });
+        masked.unmaskedValue = this.masked.unmaskedValue;
+        this.masked = masked;
     }
-  }, {
-    key: "destroy",
-    value: function destroy() {
-      this._unbindEvents();
-      this._listeners.length = 0;
-      delete this.el;
+
+    get value() {
+        return this._value;
     }
-  }]);
-  return InputMask;
-}();
+
+    set value(str) {
+        if (this.value === str) return;
+        this.masked.value = str;
+        this.updateControl();
+        this.alignCursor();
+    }
+
+    get unmaskedValue() {
+        return this._unmaskedValue;
+    }
+
+    set unmaskedValue(str) {
+        if (this.unmaskedValue === str) return;
+        this.masked.unmaskedValue = str;
+        this.updateControl();
+        this.alignCursor();
+    }
+
+    get typedValue() {
+        return this.masked.typedValue;
+    }
+
+    set typedValue(val) {
+        if (this.masked.typedValueEquals(val)) return;
+        this.masked.typedValue = val;
+        this.updateControl();
+        this.alignCursor();
+    }
+
+    get displayValue() {
+        return this.masked.displayValue;
+    }
+
+    _bindEvents() {
+        this.el.bindEvents({
+            selectionChange: this._saveSelection,
+            input: this._onInput,
+            drop: this._onDrop,
+            click: this._onClick,
+            focus: this._onFocus,
+            commit: this._onChange
+        });
+    }
+
+    _unbindEvents() {
+        if (this.el) this.el.unbindEvents();
+    }
+
+    _fireEvent(ev) {
+        for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+            args[_key - 1] = arguments[_key];
+        }
+        const listeners = this._listeners[ev];
+        if (!listeners) return;
+        listeners.forEach(l => l(...args));
+    }
+
+    get selectionStart() {
+        return this._cursorChanging ? this._changingCursorPos : this.el.selectionStart;
+    }
+
+    get cursorPos() {
+        return this._cursorChanging ? this._changingCursorPos : this.el.selectionEnd;
+    }
+
+    set cursorPos(pos) {
+        if (!this.el || !this.el.isActive) return;
+        this.el.select(pos, pos);
+        this._saveSelection();
+    }
+
+    _saveSelection() {
+        if (this.displayValue !== this.el.value) {
+            console.warn('Element value was changed outside of mask. Syncronize mask using `mask.updateValue()` to work properly.');
+        }
+        this._selection = {
+            start: this.selectionStart,
+            end: this.cursorPos
+        };
+    }
+
+    updateValue() {
+        this.masked.value = this.el.value;
+        this._value = this.masked.value;
+    }
+
+    updateControl() {
+        const newUnmaskedValue = this.masked.unmaskedValue;
+        const newValue = this.masked.value;
+        const newDisplayValue = this.displayValue;
+        const isChanged = this.unmaskedValue !== newUnmaskedValue || this.value !== newValue;
+        this._unmaskedValue = newUnmaskedValue;
+        this._value = newValue;
+        if (this.el.value !== newDisplayValue) this.el.value = newDisplayValue;
+        if (isChanged) this._fireChangeEvents();
+    }
+
+    updateOptions(opts) {
+        const {
+                mask
+            } = opts,
+            restOpts = _objectWithoutPropertiesLoose(opts, _excluded$1);
+        const updateMask = !this.maskEquals(mask);
+        const updateOpts = !objectIncludes(this.masked, restOpts);
+        if (updateMask) this.mask = mask;
+        if (updateOpts) this.masked.updateOptions(restOpts);
+        if (updateMask || updateOpts) this.updateControl();
+    }
+
+    updateCursor(cursorPos) {
+        if (cursorPos == null) return;
+        this.cursorPos = cursorPos;
+        this._delayUpdateCursor(cursorPos);
+    }
+
+    _delayUpdateCursor(cursorPos) {
+        this._abortUpdateCursor();
+        this._changingCursorPos = cursorPos;
+        this._cursorChanging = setTimeout(() => {
+            if (!this.el) return;
+            this.cursorPos = this._changingCursorPos;
+            this._abortUpdateCursor();
+        }, 10);
+    }
+
+    _fireChangeEvents() {
+        this._fireEvent('accept', this._inputEvent);
+        if (this.masked.isComplete) this._fireEvent('complete', this._inputEvent);
+    }
+
+    _abortUpdateCursor() {
+        if (this._cursorChanging) {
+            clearTimeout(this._cursorChanging);
+            delete this._cursorChanging;
+        }
+    }
+
+    alignCursor() {
+        this.cursorPos = this.masked.nearestInputPos(this.masked.nearestInputPos(this.cursorPos, DIRECTION.LEFT));
+    }
+
+    alignCursorFriendly() {
+        if (this.selectionStart !== this.cursorPos) return;
+        this.alignCursor();
+    }
+
+    on(ev, handler) {
+        if (!this._listeners[ev]) this._listeners[ev] = [];
+        this._listeners[ev].push(handler);
+        return this;
+    }
+
+    off(ev, handler) {
+        if (!this._listeners[ev]) return this;
+        if (!handler) {
+            delete this._listeners[ev];
+            return this;
+        }
+        const hIndex = this._listeners[ev].indexOf(handler);
+        if (hIndex >= 0) this._listeners[ev].splice(hIndex, 1);
+        return this;
+    }
+
+    _onInput(e) {
+        this._inputEvent = e;
+        this._abortUpdateCursor();
+        if (!this._selection) return this.updateValue();
+        const details = new ActionDetails(
+            this.el.value, this.cursorPos,
+            this.displayValue, this._selection);
+        const oldRawValue = this.masked.rawInputValue;
+        const offset = this.masked.splice(details.startChangePos, details.removed.length, details.inserted, details.removeDirection, {
+            input: true,
+            raw: true
+        }).offset;
+        const removeDirection = oldRawValue === this.masked.rawInputValue ? details.removeDirection : DIRECTION.NONE;
+        let cursorPos = this.masked.nearestInputPos(details.startChangePos + offset, removeDirection);
+        if (removeDirection !== DIRECTION.NONE) cursorPos = this.masked.nearestInputPos(cursorPos, DIRECTION.NONE);
+        this.updateControl();
+        this.updateCursor(cursorPos);
+        delete this._inputEvent;
+    }
+
+    _onChange() {
+        if (this.displayValue !== this.el.value) {
+            this.updateValue();
+        }
+        this.masked.doCommit();
+        this.updateControl();
+        this._saveSelection();
+    }
+
+    _onDrop(ev) {
+        ev.preventDefault();
+        ev.stopPropagation();
+    }
+
+    _onFocus(ev) {
+        this.alignCursorFriendly();
+    }
+
+    _onClick(ev) {
+        this.alignCursorFriendly();
+    }
+
+    destroy() {
+        this._unbindEvents();
+        this._listeners.length = 0;
+        delete this.el;
+    }
+}
 IMask.InputMask = InputMask;
 
-var MaskedEnum = function (_MaskedPattern) {
-  _inherits(MaskedEnum, _MaskedPattern);
-  var _super = _createSuper(MaskedEnum);
-
-  function MaskedEnum() {
-    _classCallCheck(this, MaskedEnum);
-    return _super.apply(this, arguments);
-  }
-
-  _createClass(MaskedEnum, [{
-    key: "_update",
-    value:
-        function _update(opts) {
-          if (opts.enum) opts.mask = '*'.repeat(opts.enum[0].length);
-          _get(_getPrototypeOf(MaskedEnum.prototype), "_update", this).call(this, opts);
-        }
-  }, {
-    key: "doValidate",
-    value: function doValidate() {
-      var _this = this,
-          _get2;
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-      return this.enum.some(function (e) {
-        return e.indexOf(_this.unmaskedValue) >= 0;
-      }) && (_get2 = _get(_getPrototypeOf(MaskedEnum.prototype), "doValidate", this)).call.apply(_get2, [this].concat(args));
+class MaskedEnum extends MaskedPattern {
+    _update(opts) {
+        if (opts.enum) opts.mask = '*'.repeat(opts.enum[0].length);
+        super._update(opts);
     }
-  }]);
-  return MaskedEnum;
-}(MaskedPattern);
+
+    doValidate() {
+        return this.enum.some(e => e.indexOf(this.unmaskedValue) >= 0) && super.doValidate(...arguments);
+    }
+}
 IMask.MaskedEnum = MaskedEnum;
 
-var MaskedNumber = function (_Masked) {
-  _inherits(MaskedNumber, _Masked);
-  var _super = _createSuper(MaskedNumber);
+class MaskedNumber extends Masked {
+    constructor(opts) {
+        super(Object.assign({}, MaskedNumber.DEFAULTS, opts));
+    }
 
-  function MaskedNumber(opts) {
-    _classCallCheck(this, MaskedNumber);
-    return _super.call(this, Object.assign({}, MaskedNumber.DEFAULTS, opts));
-  }
+    _update(opts) {
+        super._update(opts);
+        this._updateRegExps();
+    }
 
-  _createClass(MaskedNumber, [{
-    key: "_update",
-    value: function _update(opts) {
-      _get(_getPrototypeOf(MaskedNumber.prototype), "_update", this).call(this, opts);
-      this._updateRegExps();
+    _updateRegExps() {
+        let start = '^' + (this.allowNegative ? '[+|\\-]?' : '');
+        let mid = '\\d*';
+        let end = (this.scale ? "(".concat(escapeRegExp(this.radix), "\\d{0,").concat(this.scale, "})?") : '') + '$';
+        this._numberRegExp = new RegExp(start + mid + end);
+        this._mapToRadixRegExp = new RegExp("[".concat(this.mapToRadix.map(escapeRegExp).join(''), "]"), 'g');
+        this._thousandsSeparatorRegExp = new RegExp(escapeRegExp(this.thousandsSeparator), 'g');
     }
-  }, {
-    key: "_updateRegExps",
-    value: function _updateRegExps() {
-      var start = '^' + (this.allowNegative ? '[+|\\-]?' : '');
-      var midInput = '(0|([1-9]+\\d*))?';
-      var mid = '\\d*';
-      var end = (this.scale ? '(' + escapeRegExp(this.radix) + '\\d{0,' + this.scale + '})?' : '') + '$';
-      this._numberRegExpInput = new RegExp(start + midInput + end);
-      this._numberRegExp = new RegExp(start + mid + end);
-      this._mapToRadixRegExp = new RegExp('[' + this.mapToRadix.map(escapeRegExp).join('') + ']', 'g');
-      this._thousandsSeparatorRegExp = new RegExp(escapeRegExp(this.thousandsSeparator), 'g');
+
+    _removeThousandsSeparators(value) {
+        return value.replace(this._thousandsSeparatorRegExp, '');
     }
-  }, {
-    key: "_removeThousandsSeparators",
-    value: function _removeThousandsSeparators(value) {
-      return value.replace(this._thousandsSeparatorRegExp, '');
+
+    _insertThousandsSeparators(value) {
+        const parts = value.split(this.radix);
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, this.thousandsSeparator);
+        return parts.join(this.radix);
     }
-  }, {
-    key: "_insertThousandsSeparators",
-    value: function _insertThousandsSeparators(value) {
-      var parts = value.split(this.radix);
-      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, this.thousandsSeparator);
-      return parts.join(this.radix);
+
+    doPrepare(ch) {
+        let flags = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+        ch = this._removeThousandsSeparators(this.scale && this.mapToRadix.length && (
+            flags.input && flags.raw || !flags.input && !flags.raw) ? ch.replace(this._mapToRadixRegExp, this.radix) : ch);
+        const [prepCh, details] = normalizePrepare(super.doPrepare(ch, flags));
+        if (ch && !prepCh) details.skip = true;
+        return [prepCh, details];
     }
-  }, {
-    key: "doPrepare",
-    value: function doPrepare(ch) {
-      var _get2;
-      ch = ch.replace(this._mapToRadixRegExp, this.radix);
-      var noSepCh = this._removeThousandsSeparators(ch);
-      for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        args[_key - 1] = arguments[_key];
-      }
-      var _normalizePrepare = normalizePrepare((_get2 = _get(_getPrototypeOf(MaskedNumber.prototype), "doPrepare", this)).call.apply(_get2, [this, noSepCh].concat(args))),
-          _normalizePrepare2 = _slicedToArray(_normalizePrepare, 2),
-          prepCh = _normalizePrepare2[0],
-          details = _normalizePrepare2[1];
-      if (ch && !noSepCh) details.skip = true;
-      return [prepCh, details];
-    }
-  }, {
-    key: "_separatorsCount",
-    value: function _separatorsCount(to) {
-      var extendOnSeparators = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-      var count = 0;
-      for (var pos = 0; pos < to; ++pos) {
-        if (this._value.indexOf(this.thousandsSeparator, pos) === pos) {
-          ++count;
-          if (extendOnSeparators) to += this.thousandsSeparator.length;
-        }
-      }
-      return count;
-    }
-  }, {
-    key: "_separatorsCountFromSlice",
-    value: function _separatorsCountFromSlice() {
-      var slice = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this._value;
-      return this._separatorsCount(this._removeThousandsSeparators(slice).length, true);
-    }
-  }, {
-    key: "extractInput",
-    value: function extractInput() {
-      var fromPos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-      var toPos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.value.length;
-      var flags = arguments.length > 2 ? arguments[2] : undefined;
-      var _this$_adjustRangeWit = this._adjustRangeWithSeparators(fromPos, toPos);
-      var _this$_adjustRangeWit2 = _slicedToArray(_this$_adjustRangeWit, 2);
-      fromPos = _this$_adjustRangeWit2[0];
-      toPos = _this$_adjustRangeWit2[1];
-      return this._removeThousandsSeparators(_get(_getPrototypeOf(MaskedNumber.prototype), "extractInput", this).call(this, fromPos, toPos, flags));
-    }
-  }, {
-    key: "_appendCharRaw",
-    value: function _appendCharRaw(ch) {
-      var flags = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      if (!this.thousandsSeparator) return _get(_getPrototypeOf(MaskedNumber.prototype), "_appendCharRaw", this).call(this, ch, flags);
-      var prevBeforeTailValue = flags.tail && flags._beforeTailState ? flags._beforeTailState._value : this._value;
-      var prevBeforeTailSeparatorsCount = this._separatorsCountFromSlice(prevBeforeTailValue);
-      this._value = this._removeThousandsSeparators(this.value);
-      var appendDetails = _get(_getPrototypeOf(MaskedNumber.prototype), "_appendCharRaw", this).call(this, ch, flags);
-      this._value = this._insertThousandsSeparators(this._value);
-      var beforeTailValue = flags.tail && flags._beforeTailState ? flags._beforeTailState._value : this._value;
-      var beforeTailSeparatorsCount = this._separatorsCountFromSlice(beforeTailValue);
-      appendDetails.tailShift += (beforeTailSeparatorsCount - prevBeforeTailSeparatorsCount) * this.thousandsSeparator.length;
-      appendDetails.skip = !appendDetails.rawInserted && ch === this.thousandsSeparator;
-      return appendDetails;
-    }
-  }, {
-    key: "_findSeparatorAround",
-    value: function _findSeparatorAround(pos) {
-      if (this.thousandsSeparator) {
-        var searchFrom = pos - this.thousandsSeparator.length + 1;
-        var separatorPos = this.value.indexOf(this.thousandsSeparator, searchFrom);
-        if (separatorPos <= pos) return separatorPos;
-      }
-      return -1;
-    }
-  }, {
-    key: "_adjustRangeWithSeparators",
-    value: function _adjustRangeWithSeparators(from, to) {
-      var separatorAroundFromPos = this._findSeparatorAround(from);
-      if (separatorAroundFromPos >= 0) from = separatorAroundFromPos;
-      var separatorAroundToPos = this._findSeparatorAround(to);
-      if (separatorAroundToPos >= 0) to = separatorAroundToPos + this.thousandsSeparator.length;
-      return [from, to];
-    }
-  }, {
-    key: "remove",
-    value: function remove() {
-      var fromPos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-      var toPos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.value.length;
-      var _this$_adjustRangeWit3 = this._adjustRangeWithSeparators(fromPos, toPos);
-      var _this$_adjustRangeWit4 = _slicedToArray(_this$_adjustRangeWit3, 2);
-      fromPos = _this$_adjustRangeWit4[0];
-      toPos = _this$_adjustRangeWit4[1];
-      var valueBeforePos = this.value.slice(0, fromPos);
-      var valueAfterPos = this.value.slice(toPos);
-      var prevBeforeTailSeparatorsCount = this._separatorsCount(valueBeforePos.length);
-      this._value = this._insertThousandsSeparators(this._removeThousandsSeparators(valueBeforePos + valueAfterPos));
-      var beforeTailSeparatorsCount = this._separatorsCountFromSlice(valueBeforePos);
-      return new ChangeDetails({
-        tailShift: (beforeTailSeparatorsCount - prevBeforeTailSeparatorsCount) * this.thousandsSeparator.length
-      });
-    }
-  }, {
-    key: "nearestInputPos",
-    value: function nearestInputPos(cursorPos, direction) {
-      if (!this.thousandsSeparator) return cursorPos;
-      switch (direction) {
-        case DIRECTION.NONE:
-        case DIRECTION.LEFT:
-        case DIRECTION.FORCE_LEFT: {
-          var separatorAtLeftPos = this._findSeparatorAround(cursorPos - 1);
-          if (separatorAtLeftPos >= 0) {
-            var separatorAtLeftEndPos = separatorAtLeftPos + this.thousandsSeparator.length;
-            if (cursorPos < separatorAtLeftEndPos || this.value.length <= separatorAtLeftEndPos || direction === DIRECTION.FORCE_LEFT) {
-              return separatorAtLeftPos;
+
+    _separatorsCount(to) {
+        let extendOnSeparators = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+        let count = 0;
+        for (let pos = 0; pos < to; ++pos) {
+            if (this._value.indexOf(this.thousandsSeparator, pos) === pos) {
+                ++count;
+                if (extendOnSeparators) to += this.thousandsSeparator.length;
             }
-          }
-          break;
         }
-        case DIRECTION.RIGHT:
-        case DIRECTION.FORCE_RIGHT: {
-          var separatorAtRightPos = this._findSeparatorAround(cursorPos);
-          if (separatorAtRightPos >= 0) {
-            return separatorAtRightPos + this.thousandsSeparator.length;
-          }
+        return count;
+    }
+
+    _separatorsCountFromSlice() {
+        let slice = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this._value;
+        return this._separatorsCount(this._removeThousandsSeparators(slice).length, true);
+    }
+
+    extractInput() {
+        let fromPos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+        let toPos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.value.length;
+        let flags = arguments.length > 2 ? arguments[2] : undefined;
+        [fromPos, toPos] = this._adjustRangeWithSeparators(fromPos, toPos);
+        return this._removeThousandsSeparators(super.extractInput(fromPos, toPos, flags));
+    }
+
+    _appendCharRaw(ch) {
+        let flags = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+        if (!this.thousandsSeparator) return super._appendCharRaw(ch, flags);
+        const prevBeforeTailValue = flags.tail && flags._beforeTailState ? flags._beforeTailState._value : this._value;
+        const prevBeforeTailSeparatorsCount = this._separatorsCountFromSlice(prevBeforeTailValue);
+        this._value = this._removeThousandsSeparators(this.value);
+        const appendDetails = super._appendCharRaw(ch, flags);
+        this._value = this._insertThousandsSeparators(this._value);
+        const beforeTailValue = flags.tail && flags._beforeTailState ? flags._beforeTailState._value : this._value;
+        const beforeTailSeparatorsCount = this._separatorsCountFromSlice(beforeTailValue);
+        appendDetails.tailShift += (beforeTailSeparatorsCount - prevBeforeTailSeparatorsCount) * this.thousandsSeparator.length;
+        appendDetails.skip = !appendDetails.rawInserted && ch === this.thousandsSeparator;
+        return appendDetails;
+    }
+
+    _findSeparatorAround(pos) {
+        if (this.thousandsSeparator) {
+            const searchFrom = pos - this.thousandsSeparator.length + 1;
+            const separatorPos = this.value.indexOf(this.thousandsSeparator, searchFrom);
+            if (separatorPos <= pos) return separatorPos;
         }
-      }
-      return cursorPos;
+        return -1;
     }
-  }, {
-    key: "doValidate",
-    value: function doValidate(flags) {
-      var regexp = flags.input ? this._numberRegExpInput : this._numberRegExp;
-      var valid = regexp.test(this._removeThousandsSeparators(this.value));
-      if (valid) {
-        var number = this.number;
-        valid = valid && !isNaN(number) && (
-            this.min == null || this.min >= 0 || this.min <= this.number) && (
-            this.max == null || this.max <= 0 || this.number <= this.max);
-      }
-      return valid && _get(_getPrototypeOf(MaskedNumber.prototype), "doValidate", this).call(this, flags);
+
+    _adjustRangeWithSeparators(from, to) {
+        const separatorAroundFromPos = this._findSeparatorAround(from);
+        if (separatorAroundFromPos >= 0) from = separatorAroundFromPos;
+        const separatorAroundToPos = this._findSeparatorAround(to);
+        if (separatorAroundToPos >= 0) to = separatorAroundToPos + this.thousandsSeparator.length;
+        return [from, to];
     }
-  }, {
-    key: "doCommit",
-    value: function doCommit() {
-      if (this.value) {
-        var number = this.number;
-        var validnum = number;
-        if (this.min != null) validnum = Math.max(validnum, this.min);
-        if (this.max != null) validnum = Math.min(validnum, this.max);
-        if (validnum !== number) this.unmaskedValue = String(validnum);
-        var formatted = this.value;
-        if (this.normalizeZeros) formatted = this._normalizeZeros(formatted);
-        if (this.padFractionalZeros && this.scale > 0) formatted = this._padFractionalZeros(formatted);
-        this._value = formatted;
-      }
-      _get(_getPrototypeOf(MaskedNumber.prototype), "doCommit", this).call(this);
+
+    remove() {
+        let fromPos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+        let toPos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.value.length;
+        [fromPos, toPos] = this._adjustRangeWithSeparators(fromPos, toPos);
+        const valueBeforePos = this.value.slice(0, fromPos);
+        const valueAfterPos = this.value.slice(toPos);
+        const prevBeforeTailSeparatorsCount = this._separatorsCount(valueBeforePos.length);
+        this._value = this._insertThousandsSeparators(this._removeThousandsSeparators(valueBeforePos + valueAfterPos));
+        const beforeTailSeparatorsCount = this._separatorsCountFromSlice(valueBeforePos);
+        return new ChangeDetails({
+            tailShift: (beforeTailSeparatorsCount - prevBeforeTailSeparatorsCount) * this.thousandsSeparator.length
+        });
     }
-  }, {
-    key: "_normalizeZeros",
-    value: function _normalizeZeros(value) {
-      var parts = this._removeThousandsSeparators(value).split(this.radix);
-      parts[0] = parts[0].replace(/^(\D*)(0*)(\d*)/, function (match, sign, zeros, num) {
-        return sign + num;
-      });
-      if (value.length && !/\d$/.test(parts[0])) parts[0] = parts[0] + '0';
-      if (parts.length > 1) {
-        parts[1] = parts[1].replace(/0*$/, '');
-        if (!parts[1].length) parts.length = 1;
-      }
-      return this._insertThousandsSeparators(parts.join(this.radix));
+
+    nearestInputPos(cursorPos, direction) {
+        if (!this.thousandsSeparator) return cursorPos;
+        switch (direction) {
+            case DIRECTION.NONE:
+            case DIRECTION.LEFT:
+            case DIRECTION.FORCE_LEFT: {
+                const separatorAtLeftPos = this._findSeparatorAround(cursorPos - 1);
+                if (separatorAtLeftPos >= 0) {
+                    const separatorAtLeftEndPos = separatorAtLeftPos + this.thousandsSeparator.length;
+                    if (cursorPos < separatorAtLeftEndPos || this.value.length <= separatorAtLeftEndPos || direction === DIRECTION.FORCE_LEFT) {
+                        return separatorAtLeftPos;
+                    }
+                }
+                break;
+            }
+            case DIRECTION.RIGHT:
+            case DIRECTION.FORCE_RIGHT: {
+                const separatorAtRightPos = this._findSeparatorAround(cursorPos);
+                if (separatorAtRightPos >= 0) {
+                    return separatorAtRightPos + this.thousandsSeparator.length;
+                }
+            }
+        }
+        return cursorPos;
     }
-  }, {
-    key: "_padFractionalZeros",
-    value: function _padFractionalZeros(value) {
-      if (!value) return value;
-      var parts = value.split(this.radix);
-      if (parts.length < 2) parts.push('');
-      parts[1] = parts[1].padEnd(this.scale, '0');
-      return parts.join(this.radix);
+
+    doValidate(flags) {
+        let valid = Boolean(this._removeThousandsSeparators(this.value).match(this._numberRegExp));
+        if (valid) {
+            const number = this.number;
+            valid = valid && !isNaN(number) && (
+                this.min == null || this.min >= 0 || this.min <= this.number) && (
+                this.max == null || this.max <= 0 || this.number <= this.max);
+        }
+        return valid && super.doValidate(flags);
     }
-  }, {
-    key: "unmaskedValue",
-    get: function get() {
-      return this._removeThousandsSeparators(this._normalizeZeros(this.value)).replace(this.radix, '.');
-    },
-    set: function set(unmaskedValue) {
-      _set(_getPrototypeOf(MaskedNumber.prototype), "unmaskedValue", unmaskedValue.replace('.', this.radix), this, true);
+
+    doCommit() {
+        if (this.value) {
+            const number = this.number;
+            let validnum = number;
+            if (this.min != null) validnum = Math.max(validnum, this.min);
+            if (this.max != null) validnum = Math.min(validnum, this.max);
+            if (validnum !== number) this.unmaskedValue = this.doFormat(validnum);
+            let formatted = this.value;
+            if (this.normalizeZeros) formatted = this._normalizeZeros(formatted);
+            if (this.padFractionalZeros && this.scale > 0) formatted = this._padFractionalZeros(formatted);
+            this._value = formatted;
+        }
+        super.doCommit();
     }
-  }, {
-    key: "typedValue",
-    get: function get() {
-      return Number(this.unmaskedValue);
-    },
-    set: function set(n) {
-      _set(_getPrototypeOf(MaskedNumber.prototype), "unmaskedValue", String(n), this, true);
+
+    _normalizeZeros(value) {
+        const parts = this._removeThousandsSeparators(value).split(this.radix);
+        parts[0] = parts[0].replace(/^(\D*)(0*)(\d*)/, (match, sign, zeros, num) => sign + num);
+        if (value.length && !/\d$/.test(parts[0])) parts[0] = parts[0] + '0';
+        if (parts.length > 1) {
+            parts[1] = parts[1].replace(/0*$/, '');
+            if (!parts[1].length) parts.length = 1;
+        }
+        return this._insertThousandsSeparators(parts.join(this.radix));
     }
-  }, {
-    key: "number",
-    get: function get() {
-      return this.typedValue;
-    },
-    set: function set(number) {
-      this.typedValue = number;
+
+    _padFractionalZeros(value) {
+        if (!value) return value;
+        const parts = value.split(this.radix);
+        if (parts.length < 2) parts.push('');
+        parts[1] = parts[1].padEnd(this.scale, '0');
+        return parts.join(this.radix);
     }
-  }, {
-    key: "allowNegative",
-    get: function get() {
-      return this.signed || this.min != null && this.min < 0 || this.max != null && this.max < 0;
+
+    doSkipInvalid(ch) {
+        let flags = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+        let checkTail = arguments.length > 2 ? arguments[2] : undefined;
+        const dropFractional = this.scale === 0 && ch !== this.thousandsSeparator && (ch === this.radix || ch === MaskedNumber.UNMASKED_RADIX || this.mapToRadix.includes(ch));
+        return super.doSkipInvalid(ch, flags, checkTail) && !dropFractional;
     }
-  }, {
-    key: "typedValueEquals",
-    value: function typedValueEquals(value) {
-      return (_get(_getPrototypeOf(MaskedNumber.prototype), "typedValueEquals", this).call(this, value) || MaskedNumber.EMPTY_VALUES.includes(value) && MaskedNumber.EMPTY_VALUES.includes(this.typedValue)) && !(value === 0 && this.value === '');
+
+    get unmaskedValue() {
+        return this._removeThousandsSeparators(this._normalizeZeros(this.value)).replace(this.radix, MaskedNumber.UNMASKED_RADIX);
     }
-  }]);
-  return MaskedNumber;
-}(Masked);
+
+    set unmaskedValue(unmaskedValue) {
+        super.unmaskedValue = unmaskedValue;
+    }
+
+    get typedValue() {
+        return this.doParse(this.unmaskedValue);
+    }
+
+    set typedValue(n) {
+        this.rawInputValue = this.doFormat(n).replace(MaskedNumber.UNMASKED_RADIX, this.radix);
+    }
+
+    get number() {
+        return this.typedValue;
+    }
+
+    set number(number) {
+        this.typedValue = number;
+    }
+
+    get allowNegative() {
+        return this.signed || this.min != null && this.min < 0 || this.max != null && this.max < 0;
+    }
+
+    typedValueEquals(value) {
+        return (super.typedValueEquals(value) || MaskedNumber.EMPTY_VALUES.includes(value) && MaskedNumber.EMPTY_VALUES.includes(this.typedValue)) && !(value === 0 && this.value === '');
+    }
+}
+
+MaskedNumber.UNMASKED_RADIX = '.';
 MaskedNumber.DEFAULTS = {
-  radix: ',',
-  thousandsSeparator: '',
-  mapToRadix: ['.'],
-  scale: 2,
-  signed: false,
-  normalizeZeros: true,
-  padFractionalZeros: false
+    radix: ',',
+    thousandsSeparator: '',
+    mapToRadix: [MaskedNumber.UNMASKED_RADIX],
+    scale: 2,
+    signed: false,
+    normalizeZeros: true,
+    padFractionalZeros: false,
+    parse: Number,
+    format: n => n.toLocaleString('en-US', {
+        useGrouping: false,
+        maximumFractionDigits: 20
+    })
 };
-MaskedNumber.EMPTY_VALUES = [].concat(_toConsumableArray(Masked.EMPTY_VALUES), [0]);
+MaskedNumber.EMPTY_VALUES = [...Masked.EMPTY_VALUES, 0];
 IMask.MaskedNumber = MaskedNumber;
 
-var MaskedFunction = function (_Masked) {
-  _inherits(MaskedFunction, _Masked);
-  var _super = _createSuper(MaskedFunction);
+class MaskedFunction extends Masked {
+    _update(opts) {
+        if (opts.mask) opts.validate = opts.mask;
+        super._update(opts);
+    }
+}
 
-  function MaskedFunction() {
-    _classCallCheck(this, MaskedFunction);
-    return _super.apply(this, arguments);
-  }
-
-  _createClass(MaskedFunction, [{
-    key: "_update",
-    value:
-        function _update(opts) {
-          if (opts.mask) opts.validate = opts.mask;
-          _get(_getPrototypeOf(MaskedFunction.prototype), "_update", this).call(this, opts);
-        }
-  }]);
-  return MaskedFunction;
-}(Masked);
 IMask.MaskedFunction = MaskedFunction;
 
-var _excluded = ["compiledMasks", "currentMaskRef", "currentMask"];
-var MaskedDynamic = function (_Masked) {
-  _inherits(MaskedDynamic, _Masked);
-  var _super = _createSuper(MaskedDynamic);
+const _excluded = ["compiledMasks", "currentMaskRef", "currentMask"],
+    _excluded2 = ["mask"];
 
-  function MaskedDynamic(opts) {
-    var _this;
-    _classCallCheck(this, MaskedDynamic);
-    _this = _super.call(this, Object.assign({}, MaskedDynamic.DEFAULTS, opts));
-    _this.currentMask = null;
-    return _this;
-  }
+class MaskedDynamic extends Masked {
+    constructor(opts) {
+        super(Object.assign({}, MaskedDynamic.DEFAULTS, opts));
+        this.currentMask = null;
+    }
 
-  _createClass(MaskedDynamic, [{
-    key: "_update",
-    value: function _update(opts) {
-      _get(_getPrototypeOf(MaskedDynamic.prototype), "_update", this).call(this, opts);
-      if ('mask' in opts) {
-        this.compiledMasks = Array.isArray(opts.mask) ? opts.mask.map(function (m) {
-          return createMask(m);
-        }) : [];
-      }
-    }
-  }, {
-    key: "_appendCharRaw",
-    value: function _appendCharRaw(ch) {
-      var flags = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      var details = this._applyDispatch(ch, flags);
-      if (this.currentMask) {
-        details.aggregate(this.currentMask._appendChar(ch, this.currentMaskFlags(flags)));
-      }
-      return details;
-    }
-  }, {
-    key: "_applyDispatch",
-    value: function _applyDispatch() {
-      var appended = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
-      var flags = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      var prevValueBeforeTail = flags.tail && flags._beforeTailState != null ? flags._beforeTailState._value : this.value;
-      var inputValue = this.rawInputValue;
-      var insertValue = flags.tail && flags._beforeTailState != null ?
-          flags._beforeTailState._rawInputValue : inputValue;
-      var tailValue = inputValue.slice(insertValue.length);
-      var prevMask = this.currentMask;
-      var details = new ChangeDetails();
-      var prevMaskState = prevMask === null || prevMask === void 0 ? void 0 : prevMask.state;
-      this.currentMask = this.doDispatch(appended, Object.assign({}, flags));
-      if (this.currentMask) {
-        if (this.currentMask !== prevMask) {
-          this.currentMask.reset();
-          if (insertValue) {
-            var d = this.currentMask.append(insertValue, {
-              raw: true
-            });
-            details.tailShift = d.inserted.length - prevValueBeforeTail.length;
-          }
-          if (tailValue) {
-            details.tailShift += this.currentMask.append(tailValue, {
-              raw: true,
-              tail: true
-            }).tailShift;
-          }
-        } else {
-          this.currentMask.state = prevMaskState;
+    _update(opts) {
+        super._update(opts);
+        if ('mask' in opts) {
+            this.compiledMasks = Array.isArray(opts.mask) ? opts.mask.map(m => createMask(m)) : [];
         }
-      }
-      return details;
     }
-  }, {
-    key: "_appendPlaceholder",
-    value: function _appendPlaceholder() {
-      var details = this._applyDispatch.apply(this, arguments);
-      if (this.currentMask) {
-        details.aggregate(this.currentMask._appendPlaceholder());
-      }
-      return details;
+
+    _appendCharRaw(ch) {
+        let flags = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+        const details = this._applyDispatch(ch, flags);
+        if (this.currentMask) {
+            details.aggregate(this.currentMask._appendChar(ch, this.currentMaskFlags(flags)));
+        }
+        return details;
     }
-  }, {
-    key: "_appendEager",
-    value: function _appendEager() {
-      var details = this._applyDispatch.apply(this, arguments);
-      if (this.currentMask) {
-        details.aggregate(this.currentMask._appendEager());
-      }
-      return details;
+
+    _applyDispatch() {
+        let appended = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+        let flags = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+        let tail = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+        const prevValueBeforeTail = flags.tail && flags._beforeTailState != null ? flags._beforeTailState._value : this.value;
+        const inputValue = this.rawInputValue;
+        const insertValue = flags.tail && flags._beforeTailState != null ?
+            flags._beforeTailState._rawInputValue : inputValue;
+        const tailValue = inputValue.slice(insertValue.length);
+        const prevMask = this.currentMask;
+        const details = new ChangeDetails();
+        const prevMaskState = prevMask === null || prevMask === void 0 ? void 0 : prevMask.state;
+        this.currentMask = this.doDispatch(appended, Object.assign({}, flags), tail);
+        if (this.currentMask) {
+            if (this.currentMask !== prevMask) {
+                this.currentMask.reset();
+                if (insertValue) {
+                    const d = this.currentMask.append(insertValue, {
+                        raw: true
+                    });
+                    details.tailShift = d.inserted.length - prevValueBeforeTail.length;
+                }
+                if (tailValue) {
+                    details.tailShift += this.currentMask.append(tailValue, {
+                        raw: true,
+                        tail: true
+                    }).tailShift;
+                }
+            } else {
+                this.currentMask.state = prevMaskState;
+            }
+        }
+        return details;
     }
-  }, {
-    key: "currentMaskFlags",
-    value: function currentMaskFlags(flags) {
-      var _flags$_beforeTailSta, _flags$_beforeTailSta2;
-      return Object.assign({}, flags, {
-        _beforeTailState: ((_flags$_beforeTailSta = flags._beforeTailState) === null || _flags$_beforeTailSta === void 0 ? void 0 : _flags$_beforeTailSta.currentMaskRef) === this.currentMask && ((_flags$_beforeTailSta2 = flags._beforeTailState) === null || _flags$_beforeTailSta2 === void 0 ? void 0 : _flags$_beforeTailSta2.currentMask) || flags._beforeTailState
-      });
+
+    _appendPlaceholder() {
+        const details = this._applyDispatch(...arguments);
+        if (this.currentMask) {
+            details.aggregate(this.currentMask._appendPlaceholder());
+        }
+        return details;
     }
-  }, {
-    key: "doDispatch",
-    value: function doDispatch(appended) {
-      var flags = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      return this.dispatch(appended, this, flags);
+
+    _appendEager() {
+        const details = this._applyDispatch(...arguments);
+        if (this.currentMask) {
+            details.aggregate(this.currentMask._appendEager());
+        }
+        return details;
     }
-  }, {
-    key: "doValidate",
-    value: function doValidate(flags) {
-      return _get(_getPrototypeOf(MaskedDynamic.prototype), "doValidate", this).call(this, flags) && (!this.currentMask || this.currentMask.doValidate(this.currentMaskFlags(flags)));
+
+    appendTail(tail) {
+        const details = new ChangeDetails();
+        if (tail) details.aggregate(this._applyDispatch('', {}, tail));
+        return details.aggregate(this.currentMask ? this.currentMask.appendTail(tail) : super.appendTail(tail));
     }
-  }, {
-    key: "doPrepare",
-    value: function doPrepare(str) {
-      var flags = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-      var _normalizePrepare = normalizePrepare(_get(_getPrototypeOf(MaskedDynamic.prototype), "doPrepare", this).call(this, str, flags)),
-          _normalizePrepare2 = _slicedToArray(_normalizePrepare, 2),
-          s = _normalizePrepare2[0],
-          details = _normalizePrepare2[1];
-      if (this.currentMask) {
-        var currentDetails;
-        var _normalizePrepare3 = normalizePrepare(_get(_getPrototypeOf(MaskedDynamic.prototype), "doPrepare", this).call(this, s, this.currentMaskFlags(flags)));
-        var _normalizePrepare4 = _slicedToArray(_normalizePrepare3, 2);
-        s = _normalizePrepare4[0];
-        currentDetails = _normalizePrepare4[1];
-        details = details.aggregate(currentDetails);
-      }
-      return [s, details];
+
+    currentMaskFlags(flags) {
+        var _flags$_beforeTailSta, _flags$_beforeTailSta2;
+        return Object.assign({}, flags, {
+            _beforeTailState: ((_flags$_beforeTailSta = flags._beforeTailState) === null || _flags$_beforeTailSta === void 0 ? void 0 : _flags$_beforeTailSta.currentMaskRef) === this.currentMask && ((_flags$_beforeTailSta2 = flags._beforeTailState) === null || _flags$_beforeTailSta2 === void 0 ? void 0 : _flags$_beforeTailSta2.currentMask) || flags._beforeTailState
+        });
     }
-  }, {
-    key: "reset",
-    value: function reset() {
-      var _this$currentMask;
-      (_this$currentMask = this.currentMask) === null || _this$currentMask === void 0 ? void 0 : _this$currentMask.reset();
-      this.compiledMasks.forEach(function (m) {
-        return m.reset();
-      });
+
+    doDispatch(appended) {
+        let flags = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+        let tail = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+        return this.dispatch(appended, this, flags, tail);
     }
-  }, {
-    key: "value",
-    get: function get() {
-      return this.currentMask ? this.currentMask.value : '';
-    },
-    set: function set(value) {
-      _set(_getPrototypeOf(MaskedDynamic.prototype), "value", value, this, true);
+
+    doValidate(flags) {
+        return super.doValidate(flags) && (!this.currentMask || this.currentMask.doValidate(this.currentMaskFlags(flags)));
     }
-  }, {
-    key: "unmaskedValue",
-    get: function get() {
-      return this.currentMask ? this.currentMask.unmaskedValue : '';
-    },
-    set: function set(unmaskedValue) {
-      _set(_getPrototypeOf(MaskedDynamic.prototype), "unmaskedValue", unmaskedValue, this, true);
+
+    doPrepare(str) {
+        let flags = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+        let [s, details] = normalizePrepare(super.doPrepare(str, flags));
+        if (this.currentMask) {
+            let currentDetails;
+            [s, currentDetails] = normalizePrepare(super.doPrepare(s, this.currentMaskFlags(flags)));
+            details = details.aggregate(currentDetails);
+        }
+        return [s, details];
     }
-  }, {
-    key: "typedValue",
-    get: function get() {
-      return this.currentMask ? this.currentMask.typedValue : '';
+
+    reset() {
+        var _this$currentMask;
+        (_this$currentMask = this.currentMask) === null || _this$currentMask === void 0 ? void 0 : _this$currentMask.reset();
+        this.compiledMasks.forEach(m => m.reset());
     }
-    ,
-    set: function set(value) {
-      var unmaskedValue = String(value);
-      if (this.currentMask) {
-        this.currentMask.typedValue = value;
-        unmaskedValue = this.currentMask.unmaskedValue;
-      }
-      this.unmaskedValue = unmaskedValue;
+
+    get value() {
+        return this.currentMask ? this.currentMask.value : '';
     }
-  }, {
-    key: "isComplete",
-    get: function get() {
-      var _this$currentMask2;
-      return Boolean((_this$currentMask2 = this.currentMask) === null || _this$currentMask2 === void 0 ? void 0 : _this$currentMask2.isComplete);
+
+    set value(value) {
+        super.value = value;
     }
-  }, {
-    key: "isFilled",
-    get: function get() {
-      var _this$currentMask3;
-      return Boolean((_this$currentMask3 = this.currentMask) === null || _this$currentMask3 === void 0 ? void 0 : _this$currentMask3.isFilled);
+
+    get unmaskedValue() {
+        return this.currentMask ? this.currentMask.unmaskedValue : '';
     }
-  }, {
-    key: "remove",
-    value: function remove() {
-      var details = new ChangeDetails();
-      if (this.currentMask) {
+
+    set unmaskedValue(unmaskedValue) {
+        super.unmaskedValue = unmaskedValue;
+    }
+
+    get typedValue() {
+        return this.currentMask ? this.currentMask.typedValue : '';
+    }
+
+    set typedValue(value) {
+        let unmaskedValue = String(value);
+        if (this.currentMask) {
+            this.currentMask.typedValue = value;
+            unmaskedValue = this.currentMask.unmaskedValue;
+        }
+        this.unmaskedValue = unmaskedValue;
+    }
+
+    get displayValue() {
+        return this.currentMask ? this.currentMask.displayValue : '';
+    }
+
+    get isComplete() {
+        var _this$currentMask2;
+        return Boolean((_this$currentMask2 = this.currentMask) === null || _this$currentMask2 === void 0 ? void 0 : _this$currentMask2.isComplete);
+    }
+
+    get isFilled() {
+        var _this$currentMask3;
+        return Boolean((_this$currentMask3 = this.currentMask) === null || _this$currentMask3 === void 0 ? void 0 : _this$currentMask3.isFilled);
+    }
+
+    remove() {
+        const details = new ChangeDetails();
+        if (this.currentMask) {
+            details.aggregate(this.currentMask.remove(...arguments))
+                .aggregate(this._applyDispatch());
+        }
+        return details;
+    }
+
+    get state() {
         var _this$currentMask4;
-        details.aggregate((_this$currentMask4 = this.currentMask).remove.apply(_this$currentMask4, arguments))
-            .aggregate(this._applyDispatch());
-      }
-      return details;
+        return Object.assign({}, super.state, {
+            _rawInputValue: this.rawInputValue,
+            compiledMasks: this.compiledMasks.map(m => m.state),
+            currentMaskRef: this.currentMask,
+            currentMask: (_this$currentMask4 = this.currentMask) === null || _this$currentMask4 === void 0 ? void 0 : _this$currentMask4.state
+        });
     }
-  }, {
-    key: "state",
-    get: function get() {
-      var _this$currentMask5;
-      return Object.assign({}, _get(_getPrototypeOf(MaskedDynamic.prototype), "state", this), {
-        _rawInputValue: this.rawInputValue,
-        compiledMasks: this.compiledMasks.map(function (m) {
-          return m.state;
-        }),
-        currentMaskRef: this.currentMask,
-        currentMask: (_this$currentMask5 = this.currentMask) === null || _this$currentMask5 === void 0 ? void 0 : _this$currentMask5.state
-      });
-    },
-    set: function set(state) {
-      var compiledMasks = state.compiledMasks,
-          currentMaskRef = state.currentMaskRef,
-          currentMask = state.currentMask,
-          maskedState = _objectWithoutProperties(state, _excluded);
-      this.compiledMasks.forEach(function (m, mi) {
-        return m.state = compiledMasks[mi];
-      });
-      if (currentMaskRef != null) {
-        this.currentMask = currentMaskRef;
-        this.currentMask.state = currentMask;
-      }
-      _set(_getPrototypeOf(MaskedDynamic.prototype), "state", maskedState, this, true);
+
+    set state(state) {
+        const {
+                compiledMasks,
+                currentMaskRef,
+                currentMask
+            } = state,
+            maskedState = _objectWithoutPropertiesLoose(state, _excluded);
+        this.compiledMasks.forEach((m, mi) => m.state = compiledMasks[mi]);
+        if (currentMaskRef != null) {
+            this.currentMask = currentMaskRef;
+            this.currentMask.state = currentMask;
+        }
+        super.state = maskedState;
     }
-  }, {
-    key: "extractInput",
-    value: function extractInput() {
-      var _this$currentMask6;
-      return this.currentMask ? (_this$currentMask6 = this.currentMask).extractInput.apply(_this$currentMask6, arguments) : '';
+
+    extractInput() {
+        return this.currentMask ? this.currentMask.extractInput(...arguments) : '';
     }
-  }, {
-    key: "extractTail",
-    value: function extractTail() {
-      var _this$currentMask7, _get2;
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-      return this.currentMask ? (_this$currentMask7 = this.currentMask).extractTail.apply(_this$currentMask7, args) : (_get2 = _get(_getPrototypeOf(MaskedDynamic.prototype), "extractTail", this)).call.apply(_get2, [this].concat(args));
+
+    extractTail() {
+        return this.currentMask ? this.currentMask.extractTail(...arguments) : super.extractTail(...arguments);
     }
-  }, {
-    key: "doCommit",
-    value: function doCommit() {
-      if (this.currentMask) this.currentMask.doCommit();
-      _get(_getPrototypeOf(MaskedDynamic.prototype), "doCommit", this).call(this);
+
+    doCommit() {
+        if (this.currentMask) this.currentMask.doCommit();
+        super.doCommit();
     }
-  }, {
-    key: "nearestInputPos",
-    value: function nearestInputPos() {
-      var _this$currentMask8, _get3;
-      for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-        args[_key2] = arguments[_key2];
-      }
-      return this.currentMask ? (_this$currentMask8 = this.currentMask).nearestInputPos.apply(_this$currentMask8, args) : (_get3 = _get(_getPrototypeOf(MaskedDynamic.prototype), "nearestInputPos", this)).call.apply(_get3, [this].concat(args));
+
+    nearestInputPos() {
+        return this.currentMask ? this.currentMask.nearestInputPos(...arguments) : super.nearestInputPos(...arguments);
     }
-  }, {
-    key: "overwrite",
-    get: function get() {
-      return this.currentMask ? this.currentMask.overwrite : _get(_getPrototypeOf(MaskedDynamic.prototype), "overwrite", this);
-    },
-    set: function set(overwrite) {
-      console.warn('"overwrite" option is not available in dynamic mask, use this option in siblings');
+
+    get overwrite() {
+        return this.currentMask ? this.currentMask.overwrite : super.overwrite;
     }
-  }, {
-    key: "eager",
-    get: function get() {
-      return this.currentMask ? this.currentMask.eager : _get(_getPrototypeOf(MaskedDynamic.prototype), "eager", this);
-    },
-    set: function set(eager) {
-      console.warn('"eager" option is not available in dynamic mask, use this option in siblings');
+
+    set overwrite(overwrite) {
+        console.warn('"overwrite" option is not available in dynamic mask, use this option in siblings');
     }
-  }, {
-    key: "maskEquals",
-    value: function maskEquals(mask) {
-      return Array.isArray(mask) && this.compiledMasks.every(function (m, mi) {
-        var _mask$mi;
-        return m.maskEquals((_mask$mi = mask[mi]) === null || _mask$mi === void 0 ? void 0 : _mask$mi.mask);
-      });
+
+    get eager() {
+        return this.currentMask ? this.currentMask.eager : super.eager;
     }
-  }, {
-    key: "typedValueEquals",
-    value: function typedValueEquals(value) {
-      var _this$currentMask9;
-      return Boolean((_this$currentMask9 = this.currentMask) === null || _this$currentMask9 === void 0 ? void 0 : _this$currentMask9.typedValueEquals(value));
+
+    set eager(eager) {
+        console.warn('"eager" option is not available in dynamic mask, use this option in siblings');
     }
-  }]);
-  return MaskedDynamic;
-}(Masked);
+
+    get skipInvalid() {
+        return this.currentMask ? this.currentMask.skipInvalid : super.skipInvalid;
+    }
+
+    set skipInvalid(skipInvalid) {
+        if (this.isInitialized || skipInvalid !== Masked.DEFAULTS.skipInvalid) {
+            console.warn('"skipInvalid" option is not available in dynamic mask, use this option in siblings');
+        }
+    }
+
+    maskEquals(mask) {
+        return Array.isArray(mask) && this.compiledMasks.every((m, mi) => {
+            if (!mask[mi]) return;
+            const _mask$mi = mask[mi],
+                {
+                    mask: oldMask
+                } = _mask$mi,
+                restOpts = _objectWithoutPropertiesLoose(_mask$mi, _excluded2);
+            return objectIncludes(m, restOpts) && m.maskEquals(oldMask);
+        });
+    }
+
+    typedValueEquals(value) {
+        var _this$currentMask5;
+        return Boolean((_this$currentMask5 = this.currentMask) === null || _this$currentMask5 === void 0 ? void 0 : _this$currentMask5.typedValueEquals(value));
+    }
+}
 MaskedDynamic.DEFAULTS = {
-  dispatch: function dispatch(appended, masked, flags) {
-    if (!masked.compiledMasks.length) return;
-    var inputValue = masked.rawInputValue;
-    var inputs = masked.compiledMasks.map(function (m, index) {
-      m.reset();
-      m.append(inputValue, {
-        raw: true
-      });
-      m.append(appended, masked.currentMaskFlags(flags));
-      var weight = m.rawInputValue.length;
-      return {
-        weight: weight,
-        index: index
-      };
-    });
-    inputs.sort(function (i1, i2) {
-      return i2.weight - i1.weight;
-    });
-    return masked.compiledMasks[inputs[0].index];
+    dispatch: (appended, masked, flags, tail) => {
+        if (!masked.compiledMasks.length) return;
+        const inputValue = masked.rawInputValue;
+        const inputs = masked.compiledMasks.map((m, index) => {
+            const isCurrent = masked.currentMask === m;
+            const startInputPos = isCurrent ? m.value.length : m.nearestInputPos(m.value.length, DIRECTION.FORCE_LEFT);
+            if (m.rawInputValue !== inputValue) {
+                m.reset();
+                m.append(inputValue, {
+                    raw: true
+                });
+            } else if (!isCurrent) {
+                m.remove(startInputPos);
+            }
+            m.append(appended, masked.currentMaskFlags(flags));
+            m.appendTail(tail);
+            return {
+                index,
+                weight: m.rawInputValue.length,
+                totalInputPositions: m.totalInputPositions(0, Math.max(startInputPos, m.nearestInputPos(m.value.length, DIRECTION.FORCE_LEFT)))
+            };
+        });
+        inputs.sort((i1, i2) => i2.weight - i1.weight || i2.totalInputPositions - i1.totalInputPositions);
+        return masked.compiledMasks[inputs[0].index];
   }
 };
 IMask.MaskedDynamic = MaskedDynamic;
 
-var PIPE_TYPE = {
-  MASKED: 'value',
-  UNMASKED: 'unmaskedValue',
-  TYPED: 'typedValue'
+const PIPE_TYPE = {
+    MASKED: 'value',
+    UNMASKED: 'unmaskedValue',
+    TYPED: 'typedValue'
 };
-
 function createPipe(mask) {
-  var from = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : PIPE_TYPE.MASKED;
-  var to = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : PIPE_TYPE.MASKED;
-  var masked = createMask(mask);
-  return function (value) {
-    return masked.runIsolated(function (m) {
-      m[from] = value;
-      return m[to];
+    let from = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : PIPE_TYPE.MASKED;
+    let to = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : PIPE_TYPE.MASKED;
+    const masked = createMask(mask);
+    return value => masked.runIsolated(m => {
+        m[from] = value;
+        return m[to];
     });
-  };
 }
-
 function pipe(value) {
   for (var _len = arguments.length, pipeArgs = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
     pipeArgs[_key - 1] = arguments[_key];
   }
-  return createPipe.apply(void 0, pipeArgs)(value);
+    return createPipe(...pipeArgs)(value);
 }
-
 IMask.PIPE_TYPE = PIPE_TYPE;
 IMask.createPipe = createPipe;
 IMask.pipe = pipe;
 
 try {
-  globalThis.IMask = IMask;
+    globalThis.IMask = IMask;
 } catch (e) {
 }
 
@@ -3406,12 +2746,10 @@ function isElement$1(node) {
   var OwnElement = getWindow(node).Element;
   return node instanceof OwnElement || node instanceof Element;
 }
-
 function isHTMLElement(node) {
   var OwnElement = getWindow(node).HTMLElement;
   return node instanceof OwnElement || node instanceof HTMLElement;
 }
-
 function isShadowRoot(node) {
   if (typeof ShadowRoot === 'undefined') {
     return false;
@@ -3440,7 +2778,6 @@ function applyStyles(_ref) {
     });
   });
 }
-
 function effect$2(_ref2) {
   var state = _ref2.state;
   var initialStyles = {
@@ -3479,7 +2816,6 @@ function effect$2(_ref2) {
     });
   };
 }
-
 var applyStyles$1 = {
   name: 'applyStyles',
   enabled: true,
@@ -3499,11 +2835,11 @@ var round = Math.round;
 
 function getUAString() {
   var uaData = navigator.userAgentData;
-  if (uaData != null && uaData.brands) {
-    return uaData.brands.map(function (item) {
-      return item.brand + "/" + item.version;
-    }).join(' ');
-  }
+    if (uaData != null && uaData.brands && Array.isArray(uaData.brands)) {
+        return uaData.brands.map(function (item) {
+            return item.brand + "/" + item.version;
+        }).join(' ');
+    }
   return navigator.userAgent;
 }
 
@@ -3564,17 +2900,17 @@ function getLayoutRect(element) {
 
 function contains(parent, child) {
   var rootNode = child.getRootNode && child.getRootNode();
-  if (parent.contains(child)) {
-    return true;
-  } else if (rootNode && isShadowRoot(rootNode)) {
-    var next = child;
-    do {
-      if (next && parent.isSameNode(next)) {
+    if (parent.contains(child)) {
         return true;
-      }
-      next = next.parentNode || next.host;
-    } while (next);
-  }
+    } else if (rootNode && isShadowRoot(rootNode)) {
+        var next = child;
+        do {
+            if (next && parent.isSameNode(next)) {
+                return true;
+            }
+            next = next.parentNode || next.host;
+        } while (next);
+    }
   return false;
 }
 
@@ -3587,8 +2923,8 @@ function isTableElement(element) {
 }
 
 function getDocumentElement(element) {
-  return ((isElement$1(element) ? element.ownerDocument :
-      element.document) || window.document).documentElement;
+    return ((isElement$1(element) ? element.ownerDocument :
+        element.document) || window.document).documentElement;
 }
 
 function getParentNode(element) {
@@ -3604,13 +2940,12 @@ function getParentNode(element) {
 }
 
 function getTrueOffsetParent(element) {
-  if (!isHTMLElement(element) ||
-      getComputedStyle$1(element).position === 'fixed') {
-    return null;
-  }
+    if (!isHTMLElement(element) ||
+        getComputedStyle$1(element).position === 'fixed') {
+        return null;
+    }
   return element.offsetParent;
 }
-
 function getContainingBlock(element) {
   var isFirefox = /firefox/i.test(getUAString());
   var isIE = /Trident/i.test(getUAString());
@@ -3634,7 +2969,6 @@ function getContainingBlock(element) {
   }
   return null;
 }
-
 function getOffsetParent(element) {
   var window = getWindow(element);
   var offsetParent = getTrueOffsetParent(element);
@@ -3654,7 +2988,6 @@ function getMainAxisFromPlacement(placement) {
 function within(min$1, value, max$1) {
   return max(min$1, min(value, max$1));
 }
-
 function withinMaxClamp(min, value, max) {
   var v = within(min, value, max);
   return v > max ? max : v;
@@ -3686,7 +3019,6 @@ var toPaddingObject = function toPaddingObject(padding, state) {
   })) : padding;
   return mergePaddingObject(typeof padding !== 'number' ? padding : expandToHashMap(padding, basePlacements));
 };
-
 function arrow(_ref) {
   var _state$modifiersData$;
   var state = _ref.state,
@@ -3717,7 +3049,6 @@ function arrow(_ref) {
   var axisProp = axis;
   state.modifiersData[name] = (_state$modifiersData$ = {}, _state$modifiersData$[axisProp] = offset, _state$modifiersData$.centerOffset = offset - center, _state$modifiersData$);
 }
-
 function effect$1(_ref2) {
   var state = _ref2.state,
       options = _ref2.options;
@@ -3737,7 +3068,6 @@ function effect$1(_ref2) {
   }
   state.elements.arrow = arrowElement;
 }
-
 var arrow$1 = {
   name: 'arrow',
   enabled: true,
@@ -3759,19 +3089,18 @@ var unsetSides = {
   left: 'auto'
 };
 
-function roundOffsetsByDPR(_ref) {
-  var x = _ref.x,
-      y = _ref.y;
-  var win = window;
-  var dpr = win.devicePixelRatio || 1;
-  return {
-    x: round(x * dpr) / dpr || 0,
-    y: round(y * dpr) / dpr || 0
-  };
+function roundOffsetsByDPR(_ref, win) {
+    var x = _ref.x,
+        y = _ref.y;
+    var dpr = win.devicePixelRatio || 1;
+    return {
+        x: round(x * dpr) / dpr || 0,
+        y: round(y * dpr) / dpr || 0
+    };
 }
 
 function mapToStyles(_ref2) {
-  var _Object$assign2;
+    var _Object$assign2;
   var popper = _ref2.popper,
       popperRect = _ref2.popperRect,
       placement = _ref2.placement,
@@ -3814,15 +3143,15 @@ function mapToStyles(_ref2) {
     offsetParent = offsetParent;
     if (placement === top || (placement === left || placement === right) && variation === end) {
       sideY = bottom;
-      var offsetY = isFixed && offsetParent === win && win.visualViewport ? win.visualViewport.height :
-          offsetParent[heightProp];
+        var offsetY = isFixed && offsetParent === win && win.visualViewport ? win.visualViewport.height :
+            offsetParent[heightProp];
       y -= offsetY - popperRect.height;
       y *= gpuAcceleration ? 1 : -1;
     }
     if (placement === left || (placement === top || placement === bottom) && variation === end) {
       sideX = right;
-      var offsetX = isFixed && offsetParent === win && win.visualViewport ? win.visualViewport.width :
-          offsetParent[widthProp];
+        var offsetX = isFixed && offsetParent === win && win.visualViewport ? win.visualViewport.width :
+            offsetParent[widthProp];
       x -= offsetX - popperRect.width;
       x *= gpuAcceleration ? 1 : -1;
     }
@@ -3831,11 +3160,11 @@ function mapToStyles(_ref2) {
     position: position
   }, adaptive && unsetSides);
   var _ref4 = roundOffsets === true ? roundOffsetsByDPR({
-    x: x,
-    y: y
-  }) : {
-    x: x,
-    y: y
+      x: x,
+      y: y
+  }, getWindow(popper)) : {
+      x: x,
+      y: y
   };
   x = _ref4.x;
   y = _ref4.y;
@@ -3845,7 +3174,6 @@ function mapToStyles(_ref2) {
   }
   return Object.assign({}, commonStyles, (_Object$assign2 = {}, _Object$assign2[sideY] = hasY ? y + "px" : '', _Object$assign2[sideX] = hasX ? x + "px" : '', _Object$assign2.transform = '', _Object$assign2));
 }
-
 function computeStyles(_ref5) {
   var state = _ref5.state,
       options = _ref5.options;
@@ -3883,7 +3211,6 @@ function computeStyles(_ref5) {
     'data-popper-placement': state.placement
   });
 }
-
 var computeStyles$1 = {
   name: 'computeStyles',
   enabled: true,
@@ -3895,7 +3222,6 @@ var computeStyles$1 = {
 var passive = {
   passive: true
 };
-
 function effect(_ref) {
   var state = _ref.state,
       instance = _ref.instance,
@@ -3925,15 +3251,14 @@ function effect(_ref) {
     }
   };
 }
-
 var eventListeners = {
-  name: 'eventListeners',
-  enabled: true,
-  phase: 'write',
-  fn: function fn() {
-  },
-  effect: effect,
-  data: {}
+    name: 'eventListeners',
+    enabled: true,
+    phase: 'write',
+    fn: function fn() {
+    },
+    effect: effect,
+    data: {}
 };
 
 var hash$1 = {
@@ -3942,7 +3267,6 @@ var hash$1 = {
   bottom: 'top',
   top: 'bottom'
 };
-
 function getOppositePlacement(placement) {
   return placement.replace(/left|right|bottom|top/g, function (matched) {
     return hash$1[matched];
@@ -3953,7 +3277,6 @@ var hash = {
   start: 'end',
   end: 'start'
 };
-
 function getOppositeVariationPlacement(placement) {
   return placement.replace(/start|end/g, function (matched) {
     return hash[matched];
@@ -4047,8 +3370,8 @@ function listScrollParents(element, list) {
   var win = getWindow(scrollParent);
   var target = isBody ? [win].concat(win.visualViewport || [], isScrollParent(scrollParent) ? scrollParent : []) : scrollParent;
   var updatedList = list.concat(target);
-  return isBody ? updatedList :
-      updatedList.concat(listScrollParents(getParentNode(target)));
+    return isBody ? updatedList :
+        updatedList.concat(listScrollParents(getParentNode(target)));
 }
 
 function rectToClientRect(rect) {
@@ -4072,11 +3395,9 @@ function getInnerBoundingClientRect(element, strategy) {
   rect.y = rect.top;
   return rect;
 }
-
 function getClientRectFromMixedType(element, clippingParent, strategy) {
   return clippingParent === viewport ? rectToClientRect(getViewportRect(element, strategy)) : isElement$1(clippingParent) ? getInnerBoundingClientRect(clippingParent, strategy) : rectToClientRect(getDocumentRect(getDocumentElement(element)));
 }
-
 function getClippingParents(element) {
   var clippingParents = listScrollParents(getParentNode(element));
   var canEscapeClipping = ['absolute', 'fixed'].indexOf(getComputedStyle$1(element).position) >= 0;
@@ -4088,7 +3409,6 @@ function getClippingParents(element) {
     return isElement$1(clippingParent) && contains(clippingParent, clipperElement) && getNodeName(clippingParent) !== 'body';
   });
 }
-
 function getClippingRect(element, boundary, rootBoundary, strategy) {
   var mainClippingParents = boundary === 'clippingParents' ? getClippingParents(element) : [].concat(boundary);
   var clippingParents = [].concat(mainClippingParents, [rootBoundary]);
@@ -4257,7 +3577,6 @@ function getExpandedFallbackPlacements(placement) {
   var oppositePlacement = getOppositePlacement(placement);
   return [getOppositeVariationPlacement(placement), oppositePlacement, getOppositeVariationPlacement(oppositePlacement)];
 }
-
 function flip(_ref) {
   var state = _ref.state,
       options = _ref.options,
@@ -4357,7 +3676,6 @@ function flip(_ref) {
     state.reset = true;
   }
 }
-
 var flip$1 = {
   name: 'flip',
   enabled: true,
@@ -4383,13 +3701,11 @@ function getSideOffsets(overflow, rect, preventedOffsets) {
     left: overflow.left - rect.width - preventedOffsets.x
   };
 }
-
 function isAnySideFullyClipped(overflow) {
   return [top, right, bottom, left].some(function (side) {
     return overflow[side] >= 0;
   });
 }
-
 function hide(_ref) {
   var state = _ref.state,
       name = _ref.name;
@@ -4417,7 +3733,6 @@ function hide(_ref) {
     'data-popper-escaped': hasPopperEscaped
   });
 }
-
 var hide$1 = {
   name: 'hide',
   enabled: true,
@@ -4428,12 +3743,12 @@ var hide$1 = {
 
 function distanceAndSkiddingToXY(placement, rects, offset) {
   var basePlacement = getBasePlacement(placement);
-  var invertDistance = [left, top].indexOf(basePlacement) >= 0 ? -1 : 1;
-  var _ref = typeof offset === 'function' ? offset(Object.assign({}, rects, {
-        placement: placement
-      })) : offset,
-      skidding = _ref[0],
-      distance = _ref[1];
+    var invertDistance = [left, top].indexOf(basePlacement) >= 0 ? -1 : 1;
+    var _ref = typeof offset === 'function' ? offset(Object.assign({}, rects, {
+            placement: placement
+        })) : offset,
+        skidding = _ref[0],
+        distance = _ref[1];
   skidding = skidding || 0;
   distance = (distance || 0) * invertDistance;
   return [left, right].indexOf(basePlacement) >= 0 ? {
@@ -4444,7 +3759,6 @@ function distanceAndSkiddingToXY(placement, rects, offset) {
     y: distance
   };
 }
-
 function offset(_ref2) {
   var state = _ref2.state,
       options = _ref2.options,
@@ -4464,7 +3778,6 @@ function offset(_ref2) {
   }
   state.modifiersData[name] = data;
 }
-
 var offset$1 = {
   name: 'offset',
   enabled: true,
@@ -4483,7 +3796,6 @@ function popperOffsets(_ref) {
     placement: state.placement
   });
 }
-
 var popperOffsets$1 = {
   name: 'popperOffsets',
   enabled: true,
@@ -4593,7 +3905,6 @@ function preventOverflow(_ref) {
   }
   state.modifiersData[name] = data;
 }
-
 var preventOverflow$1 = {
   name: 'preventOverflow',
   enabled: true,
@@ -4623,7 +3934,6 @@ function isElementScaled(element) {
   var scaleY = round(rect.height) / element.offsetHeight || 1;
   return scaleX !== 1 || scaleY !== 1;
 }
-
 function getCompositeRect(elementOrVirtualElement, offsetParent, isFixed) {
   if (isFixed === void 0) {
     isFixed = false;
@@ -4641,17 +3951,17 @@ function getCompositeRect(elementOrVirtualElement, offsetParent, isFixed) {
     y: 0
   };
   if (isOffsetParentAnElement || !isOffsetParentAnElement && !isFixed) {
-    if (getNodeName(offsetParent) !== 'body' ||
-        isScrollParent(documentElement)) {
-      scroll = getNodeScroll(offsetParent);
-    }
-    if (isHTMLElement(offsetParent)) {
-      offsets = getBoundingClientRect(offsetParent, true);
-      offsets.x += offsetParent.clientLeft;
-      offsets.y += offsetParent.clientTop;
-    } else if (documentElement) {
-      offsets.x = getWindowScrollBarX(documentElement);
-    }
+      if (getNodeName(offsetParent) !== 'body' ||
+          isScrollParent(documentElement)) {
+          scroll = getNodeScroll(offsetParent);
+      }
+      if (isHTMLElement(offsetParent)) {
+          offsets = getBoundingClientRect(offsetParent, true);
+          offsets.x += offsetParent.clientLeft;
+          offsets.y += offsetParent.clientTop;
+      } else if (documentElement) {
+          offsets.x = getWindowScrollBarX(documentElement);
+      }
   }
   return {
     x: rect.left + scroll.scrollLeft - offsets.x,
@@ -4668,7 +3978,6 @@ function order(modifiers) {
   modifiers.forEach(function (modifier) {
     map.set(modifier.name, modifier);
   });
-
   function sort(modifier) {
     visited.add(modifier.name);
     var requires = [].concat(modifier.requires || [], modifier.requiresIfExists || []);
@@ -4682,7 +3991,6 @@ function order(modifiers) {
     });
     result.push(modifier);
   }
-
   modifiers.forEach(function (modifier) {
     if (!visited.has(modifier.name)) {
       sort(modifier);
@@ -4690,7 +3998,6 @@ function order(modifiers) {
   });
   return result;
 }
-
 function orderModifiers(modifiers) {
   var orderedModifiers = order(modifiers);
   return modifierPhases.reduce(function (acc, phase) {
@@ -4734,7 +4041,6 @@ var DEFAULT_OPTIONS = {
   modifiers: [],
   strategy: 'absolute'
 };
-
 function areValidElements() {
   for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
     args[_key] = arguments[_key];
@@ -4743,7 +4049,6 @@ function areValidElements() {
     return !(element && typeof element.getBoundingClientRect === 'function');
   });
 }
-
 function popperGenerator(generatorOptions) {
   if (generatorOptions === void 0) {
     generatorOptions = {};
@@ -4847,7 +4152,6 @@ function popperGenerator(generatorOptions) {
         options.onFirstUpdate(state);
       }
     });
-
     function runModifierEffects() {
       state.orderedModifiers.forEach(function (_ref3) {
         var name = _ref3.name,
@@ -4855,30 +4159,27 @@ function popperGenerator(generatorOptions) {
             options = _ref3$options === void 0 ? {} : _ref3$options,
             effect = _ref3.effect;
         if (typeof effect === 'function') {
-          var cleanupFn = effect({
-            state: state,
-            name: name,
-            instance: instance,
-            options: options
-          });
-          var noopFn = function noopFn() {
-          };
+            var cleanupFn = effect({
+                state: state,
+                name: name,
+                instance: instance,
+                options: options
+            });
+            var noopFn = function noopFn() {
+            };
           effectCleanupFns.push(cleanupFn || noopFn);
         }
       });
     }
-
     function cleanupModifierEffects() {
       effectCleanupFns.forEach(function (fn) {
         return fn();
       });
       effectCleanupFns = [];
     }
-
     return instance;
   };
 }
-
 var createPopper$2 = popperGenerator();
 
 var defaultModifiers$1 = [eventListeners, popperOffsets$1, computeStyles$1, applyStyles$1];
@@ -4892,60 +4193,90 @@ var createPopper = popperGenerator({
 });
 
 var Popper = /*#__PURE__*/Object.freeze({
-  __proto__: null,
-  popperGenerator: popperGenerator,
-  detectOverflow: detectOverflow,
-  createPopperBase: createPopper$2,
-  createPopper: createPopper,
-  createPopperLite: createPopper$1,
-  top: top,
-  bottom: bottom,
-  right: right,
-  left: left,
-  auto: auto,
-  basePlacements: basePlacements,
-  start: start,
-  end: end,
-  clippingParents: clippingParents,
-  viewport: viewport,
-  popper: popper,
-  reference: reference,
-  variationPlacements: variationPlacements,
-  placements: placements,
-  beforeRead: beforeRead,
-  read: read,
-  afterRead: afterRead,
-  beforeMain: beforeMain,
-  main: main,
-  afterMain: afterMain,
-  beforeWrite: beforeWrite,
-  write: write,
-  afterWrite: afterWrite,
-  modifierPhases: modifierPhases,
-  applyStyles: applyStyles$1,
-  arrow: arrow$1,
-  computeStyles: computeStyles$1,
-  eventListeners: eventListeners,
-  flip: flip$1,
-  hide: hide$1,
-  offset: offset$1,
-  popperOffsets: popperOffsets$1,
-  preventOverflow: preventOverflow$1
+    __proto__: null,
+    popperGenerator: popperGenerator,
+    detectOverflow: detectOverflow,
+    createPopperBase: createPopper$2,
+    createPopper: createPopper,
+    createPopperLite: createPopper$1,
+    top: top,
+    bottom: bottom,
+    right: right,
+    left: left,
+    auto: auto,
+    basePlacements: basePlacements,
+    start: start,
+    end: end,
+    clippingParents: clippingParents,
+    viewport: viewport,
+    popper: popper,
+    reference: reference,
+    variationPlacements: variationPlacements,
+    placements: placements,
+    beforeRead: beforeRead,
+    read: read,
+    afterRead: afterRead,
+    beforeMain: beforeMain,
+    main: main,
+    afterMain: afterMain,
+    beforeWrite: beforeWrite,
+    write: write,
+    afterWrite: afterWrite,
+    modifierPhases: modifierPhases,
+    applyStyles: applyStyles$1,
+    arrow: arrow$1,
+    computeStyles: computeStyles$1,
+    eventListeners: eventListeners,
+    flip: flip$1,
+    hide: hide$1,
+    offset: offset$1,
+    popperOffsets: popperOffsets$1,
+    preventOverflow: preventOverflow$1
 });
 
 /*!
-  * Bootstrap v5.3.0-alpha1 (https://getbootstrap.com/)
-  * Copyright 2011-2022 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
+  * Bootstrap v5.3.0-alpha3 (https://getbootstrap.com/)
+  * Copyright 2011-2023 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
   */
+const elementMap = new Map();
+const Data = {
+    set(element, key, instance) {
+        if (!elementMap.has(element)) {
+            elementMap.set(element, new Map());
+        }
+        const instanceMap = elementMap.get(element);
+        if (!instanceMap.has(key) && instanceMap.size !== 0) {
+            console.error(`Bootstrap doesn't allow more than one instance per element. Bound instance: ${Array.from(instanceMap.keys())[0]}.`);
+            return;
+        }
+        instanceMap.set(key, instance);
+    },
+    get(element, key) {
+        if (elementMap.has(element)) {
+            return elementMap.get(element).get(key) || null;
+        }
+        return null;
+    },
+    remove(element, key) {
+        if (!elementMap.has(element)) {
+            return;
+        }
+        const instanceMap = elementMap.get(element);
+        instanceMap.delete(key);
+        if (instanceMap.size === 0) {
+            elementMap.delete(element);
+        }
+    }
+};
 const MAX_UID = 1000000;
 const MILLISECONDS_MULTIPLIER = 1000;
 const TRANSITION_END = 'transitionend';
 const parseSelector = selector => {
-  if (selector && window.CSS && window.CSS.escape) {
-    selector = selector.replace(/#([^\s"#']+)/g, (match, id) => `#${CSS.escape(id)}`);
-  }
-  return selector;
+    if (selector && window.CSS && window.CSS.escape) {
+        selector = selector.replace(/#([^\s"#']+)/g, (match, id) => `#${CSS.escape(id)}`);
+    }
+    return selector;
 };
 const toType = object => {
   if (object === null || object === undefined) {
@@ -5035,20 +4366,20 @@ const findShadowRoot = element => {
   }
   if (typeof element.getRootNode === 'function') {
     const root = element.getRootNode();
-    return root instanceof ShadowRoot ? root : null;
+      return root instanceof ShadowRoot ? root : null;
   }
-  if (element instanceof ShadowRoot) {
-    return element;
-  }
-  if (!element.parentNode) {
-    return null;
-  }
-  return findShadowRoot(element.parentNode);
+    if (element instanceof ShadowRoot) {
+        return element;
+    }
+    if (!element.parentNode) {
+        return null;
+    }
+    return findShadowRoot(element.parentNode);
 };
 const noop = () => {
 };
 const reflow = element => {
-  element.offsetHeight;
+    element.offsetHeight;
 };
 const getjQuery = () => {
   if (window.jQuery && !document.body.hasAttribute('data-bs-no-jquery')) {
@@ -5099,14 +4430,14 @@ const executeAfterTransition = (callback, transitionElement, waitForTransition =
   const emulatedDuration = getTransitionDurationFromElement(transitionElement) + durationPadding;
   let called = false;
   const handler = ({
-                     target
+                       target
                    }) => {
-    if (target !== transitionElement) {
-      return;
-    }
-    called = true;
-    transitionElement.removeEventListener(TRANSITION_END, handler);
-    execute(callback);
+      if (target !== transitionElement) {
+          return;
+      }
+      called = true;
+      transitionElement.removeEventListener(TRANSITION_END, handler);
+      execute(callback);
   };
   transitionElement.addEventListener(TRANSITION_END, handler);
   setTimeout(() => {
@@ -5137,18 +4468,15 @@ const customEvents = {
   mouseleave: 'mouseout'
 };
 const nativeEvents = new Set(['click', 'dblclick', 'mouseup', 'mousedown', 'contextmenu', 'mousewheel', 'DOMMouseScroll', 'mouseover', 'mouseout', 'mousemove', 'selectstart', 'selectend', 'keydown', 'keypress', 'keyup', 'orientationchange', 'touchstart', 'touchmove', 'touchend', 'touchcancel', 'pointerdown', 'pointermove', 'pointerup', 'pointerleave', 'pointercancel', 'gesturestart', 'gesturechange', 'gestureend', 'focus', 'blur', 'change', 'reset', 'select', 'submit', 'focusin', 'focusout', 'load', 'unload', 'beforeunload', 'resize', 'move', 'DOMContentLoaded', 'readystatechange', 'error', 'abort', 'scroll']);
-
 function makeEventUid(element, uid) {
   return uid && `${uid}::${uidEvent++}` || element.uidEvent || uidEvent++;
 }
-
 function getElementEvents(element) {
   const uid = makeEventUid(element);
   element.uidEvent = uid;
   eventRegistry[uid] = eventRegistry[uid] || {};
   return eventRegistry[uid];
 }
-
 function bootstrapHandler(element, fn) {
   return function handler(event) {
     hydrateObj(event, {
@@ -5160,7 +4488,6 @@ function bootstrapHandler(element, fn) {
     return fn.apply(element, [event]);
   };
 }
-
 function bootstrapDelegationHandler(element, selector, fn) {
   return function handler(event) {
     const domElements = element.querySelectorAll(selector);
@@ -5182,11 +4509,9 @@ function bootstrapDelegationHandler(element, selector, fn) {
     }
   };
 }
-
 function findHandler(events, callable, delegationSelector = null) {
   return Object.values(events).find(event => event.callable === callable && event.delegationSelector === delegationSelector);
 }
-
 function normalizeParameters(originalTypeEvent, handler, delegationFunction) {
   const isDelegated = typeof handler === 'string';
   const callable = isDelegated ? delegationFunction : handler || delegationFunction;
@@ -5196,7 +4521,6 @@ function normalizeParameters(originalTypeEvent, handler, delegationFunction) {
   }
   return [isDelegated, callable, typeEvent];
 }
-
 function addHandler(element, originalTypeEvent, handler, delegationFunction, oneOff) {
   if (typeof originalTypeEvent !== 'string' || !element) {
     return;
@@ -5228,7 +4552,6 @@ function addHandler(element, originalTypeEvent, handler, delegationFunction, one
   handlers[uid] = fn;
   element.addEventListener(typeEvent, fn, isDelegated);
 }
-
 function removeHandler(element, events, typeEvent, handler, delegationSelector) {
   const fn = findHandler(events[typeEvent], handler, delegationSelector);
   if (!fn) {
@@ -5237,7 +4560,6 @@ function removeHandler(element, events, typeEvent, handler, delegationSelector) 
   element.removeEventListener(typeEvent, fn, Boolean(delegationSelector));
   delete events[typeEvent][fn.uidEvent];
 }
-
 function removeNamespacedHandlers(element, events, typeEvent, namespace) {
   const storeElementEvent = events[typeEvent] || {};
   for (const [handlerKey, event] of Object.entries(storeElementEvent)) {
@@ -5246,12 +4568,10 @@ function removeNamespacedHandlers(element, events, typeEvent, namespace) {
     }
   }
 }
-
 function getTypeEvent(event) {
   event = event.replace(stripNameRegex, '');
   return customEvents[event] || event;
 }
-
 const EventHandler = {
   on(element, event, handler, delegationFunction) {
     addHandler(element, event, handler, delegationFunction, false);
@@ -5305,11 +4625,10 @@ const EventHandler = {
       nativeDispatch = !jQueryEvent.isImmediatePropagationStopped();
       defaultPrevented = jQueryEvent.isDefaultPrevented();
     }
-    let evt = new Event(event, {
-      bubbles,
-      cancelable: true
-    });
-    evt = hydrateObj(evt, args);
+      const evt = hydrateObj(new Event(event, {
+          bubbles,
+          cancelable: true
+      }), args);
     if (defaultPrevented) {
       evt.preventDefault();
     }
@@ -5322,7 +4641,6 @@ const EventHandler = {
     return evt;
   }
 };
-
 function hydrateObj(obj, meta = {}) {
   for (const [key, value] of Object.entries(meta)) {
     try {
@@ -5338,38 +4656,6 @@ function hydrateObj(obj, meta = {}) {
   }
   return obj;
 }
-
-const elementMap = new Map();
-const Data = {
-  set(element, key, instance) {
-    if (!elementMap.has(element)) {
-      elementMap.set(element, new Map());
-    }
-    const instanceMap = elementMap.get(element);
-    if (!instanceMap.has(key) && instanceMap.size !== 0) {
-      console.error(`Bootstrap doesn't allow more than one instance per element. Bound instance: ${Array.from(instanceMap.keys())[0]}.`);
-      return;
-    }
-    instanceMap.set(key, instance);
-  },
-  get(element, key) {
-    if (elementMap.has(element)) {
-      return elementMap.get(element).get(key) || null;
-    }
-    return null;
-  },
-  remove(element, key) {
-    if (!elementMap.has(element)) {
-      return;
-    }
-    const instanceMap = elementMap.get(element);
-    instanceMap.delete(key);
-    if (instanceMap.size === 0) {
-      elementMap.delete(element);
-    }
-  }
-};
-
 function normalizeData(value) {
   if (value === 'true') {
     return true;
@@ -5392,11 +4678,9 @@ function normalizeData(value) {
     return value;
   }
 }
-
 function normalizeDataKey(key) {
   return key.replace(/[A-Z]/g, chr => `-${chr.toLowerCase()}`);
 }
-
 const Manipulator = {
   setDataAttribute(element, key, value) {
     element.setAttribute(`data-bs-${normalizeDataKey(key)}`, value);
@@ -5421,31 +4705,25 @@ const Manipulator = {
     return normalizeData(element.getAttribute(`data-bs-${normalizeDataKey(key)}`));
   }
 };
-
 class Config {
   static get Default() {
     return {};
   }
-
   static get DefaultType() {
     return {};
   }
-
   static get NAME() {
     throw new Error('You have to implement the static method "NAME", for each component!');
   }
-
   _getConfig(config) {
     config = this._mergeConfigObj(config);
     config = this._configAfterMerge(config);
     this._typeCheckConfig(config);
     return config;
   }
-
   _configAfterMerge(config) {
     return config;
   }
-
   _mergeConfigObj(config, element) {
     const jsonConfig = isElement(element) ? Manipulator.getDataAttribute(element, 'config') : {};
     return {
@@ -5455,7 +4733,6 @@ class Config {
       ...(typeof config === 'object' ? config : {})
     };
   }
-
   _typeCheckConfig(config, configTypes = this.constructor.DefaultType) {
     for (const [property, expectedTypes] of Object.entries(configTypes)) {
       const value = config[property];
@@ -5467,8 +4744,7 @@ class Config {
   }
 }
 
-const VERSION = '5.3.0-alpha1';
-
+const VERSION = '5.3.0-alpha2';
 class BaseComponent extends Config {
   constructor(element, config) {
     super();
@@ -5480,7 +4756,6 @@ class BaseComponent extends Config {
     this._config = this._getConfig(config);
     Data.set(this._element, this.constructor.DATA_KEY, this);
   }
-
   dispose() {
     Data.remove(this._element, this.constructor.DATA_KEY);
     EventHandler.off(this._element, this.constructor.EVENT_KEY);
@@ -5488,43 +4763,34 @@ class BaseComponent extends Config {
       this[propertyName] = null;
     }
   }
-
   _queueCallback(callback, element, isAnimated = true) {
     executeAfterTransition(callback, element, isAnimated);
   }
-
   _getConfig(config) {
     config = this._mergeConfigObj(config, this._element);
     config = this._configAfterMerge(config);
     this._typeCheckConfig(config);
     return config;
   }
-
   static getInstance(element) {
     return Data.get(getElement(element), this.DATA_KEY);
   }
-
   static getOrCreateInstance(element, config = {}) {
     return this.getInstance(element) || new this(element, typeof config === 'object' ? config : null);
   }
-
   static get VERSION() {
     return VERSION;
   }
-
   static get DATA_KEY() {
     return `bs.${this.NAME}`;
   }
-
   static get EVENT_KEY() {
     return `.${this.DATA_KEY}`;
   }
-
   static eventName(name) {
     return `${name}${this.EVENT_KEY}`;
   }
 }
-
 const getSelector = element => {
   let selector = element.getAttribute('data-bs-target');
   if (!selector || selector === '#') {
@@ -5620,12 +4886,10 @@ const EVENT_CLOSE = `close${EVENT_KEY$b}`;
 const EVENT_CLOSED = `closed${EVENT_KEY$b}`;
 const CLASS_NAME_FADE$5 = 'fade';
 const CLASS_NAME_SHOW$8 = 'show';
-
 class Alert extends BaseComponent {
   static get NAME() {
     return NAME$f;
   }
-
   close() {
     const closeEvent = EventHandler.trigger(this._element, EVENT_CLOSE);
     if (closeEvent.defaultPrevented) {
@@ -5635,13 +4899,11 @@ class Alert extends BaseComponent {
     const isAnimated = this._element.classList.contains(CLASS_NAME_FADE$5);
     this._queueCallback(() => this._destroyElement(), this._element, isAnimated);
   }
-
   _destroyElement() {
     this._element.remove();
     EventHandler.trigger(this._element, EVENT_CLOSED);
     this.dispose();
   }
-
   static jQueryInterface(config) {
     return this.each(function () {
       const data = Alert.getOrCreateInstance(this);
@@ -5655,7 +4917,6 @@ class Alert extends BaseComponent {
     });
   }
 }
-
 enableDismissTrigger(Alert, 'close');
 defineJQueryPlugin(Alert);
 const NAME$e = 'button';
@@ -5665,16 +4926,13 @@ const DATA_API_KEY$6 = '.data-api';
 const CLASS_NAME_ACTIVE$3 = 'active';
 const SELECTOR_DATA_TOGGLE$5 = '[data-bs-toggle="button"]';
 const EVENT_CLICK_DATA_API$6 = `click${EVENT_KEY$a}${DATA_API_KEY$6}`;
-
 class Button extends BaseComponent {
   static get NAME() {
     return NAME$e;
   }
-
   toggle() {
     this._element.setAttribute('aria-pressed', this._element.classList.toggle(CLASS_NAME_ACTIVE$3));
   }
-
   static jQueryInterface(config) {
     return this.each(function () {
       const data = Button.getOrCreateInstance(this);
@@ -5684,7 +4942,6 @@ class Button extends BaseComponent {
     });
   }
 }
-
 EventHandler.on(document, EVENT_CLICK_DATA_API$6, SELECTOR_DATA_TOGGLE$5, event => {
   event.preventDefault();
   const button = event.target.closest(SELECTOR_DATA_TOGGLE$5);
@@ -5713,7 +4970,6 @@ const DefaultType$c = {
   leftCallback: '(function|null)',
   rightCallback: '(function|null)'
 };
-
 class Swipe extends Config {
   constructor(element, config) {
     super();
@@ -5726,23 +4982,18 @@ class Swipe extends Config {
     this._supportPointerEvents = Boolean(window.PointerEvent);
     this._initEvents();
   }
-
   static get Default() {
     return Default$c;
   }
-
   static get DefaultType() {
     return DefaultType$c;
   }
-
   static get NAME() {
     return NAME$d;
   }
-
   dispose() {
     EventHandler.off(this._element, EVENT_KEY$9);
   }
-
   _start(event) {
     if (!this._supportPointerEvents) {
       this._deltaX = event.touches[0].clientX;
@@ -5752,7 +5003,6 @@ class Swipe extends Config {
       this._deltaX = event.clientX;
     }
   }
-
   _end(event) {
     if (this._eventIsPointerPenTouch(event)) {
       this._deltaX = event.clientX - this._deltaX;
@@ -5760,11 +5010,9 @@ class Swipe extends Config {
     this._handleSwipe();
     execute(this._config.endCallback);
   }
-
   _move(event) {
     this._deltaX = event.touches && event.touches.length > 1 ? 0 : event.touches[0].clientX - this._deltaX;
   }
-
   _handleSwipe() {
     const absDeltaX = Math.abs(this._deltaX);
     if (absDeltaX <= SWIPE_THRESHOLD) {
@@ -5777,7 +5025,6 @@ class Swipe extends Config {
     }
     execute(direction > 0 ? this._config.rightCallback : this._config.leftCallback);
   }
-
   _initEvents() {
     if (this._supportPointerEvents) {
       EventHandler.on(this._element, EVENT_POINTERDOWN, event => this._start(event));
@@ -5789,16 +5036,13 @@ class Swipe extends Config {
       EventHandler.on(this._element, EVENT_TOUCHEND, event => this._end(event));
     }
   }
-
   _eventIsPointerPenTouch(event) {
     return this._supportPointerEvents && (event.pointerType === POINTER_TYPE_PEN || event.pointerType === POINTER_TYPE_TOUCH);
   }
-
   static isSupported() {
     return 'ontouchstart' in document.documentElement || navigator.maxTouchPoints > 0;
   }
 }
-
 const NAME$c = 'carousel';
 const DATA_KEY$8 = 'bs.carousel';
 const EVENT_KEY$8 = `.${DATA_KEY$8}`;
@@ -5852,7 +5096,6 @@ const DefaultType$b = {
   touch: 'boolean',
   wrap: 'boolean'
 };
-
 class Carousel extends BaseComponent {
   constructor(element, config) {
     super(element, config);
@@ -5867,46 +5110,37 @@ class Carousel extends BaseComponent {
       this.cycle();
     }
   }
-
   static get Default() {
     return Default$b;
   }
-
   static get DefaultType() {
     return DefaultType$b;
   }
-
   static get NAME() {
     return NAME$c;
   }
-
   next() {
     this._slide(ORDER_NEXT);
   }
-
   nextWhenVisible() {
     if (!document.hidden && isVisible(this._element)) {
       this.next();
     }
   }
-
   prev() {
     this._slide(ORDER_PREV);
   }
-
   pause() {
     if (this._isSliding) {
       triggerTransitionEnd(this._element);
     }
     this._clearInterval();
   }
-
   cycle() {
     this._clearInterval();
     this._updateInterval();
     this._interval = setInterval(() => this.nextWhenVisible(), this._config.interval);
   }
-
   _maybeEnableCycle() {
     if (!this._config.ride) {
       return;
@@ -5917,7 +5151,6 @@ class Carousel extends BaseComponent {
     }
     this.cycle();
   }
-
   to(index) {
     const items = this._getItems();
     if (index > items.length - 1 || index < 0) {
@@ -5934,19 +5167,16 @@ class Carousel extends BaseComponent {
     const order = index > activeIndex ? ORDER_NEXT : ORDER_PREV;
     this._slide(order, items[index]);
   }
-
   dispose() {
     if (this._swipeHelper) {
       this._swipeHelper.dispose();
     }
     super.dispose();
   }
-
   _configAfterMerge(config) {
     config.defaultInterval = config.interval;
     return config;
   }
-
   _addEventListeners() {
     if (this._config.keyboard) {
       EventHandler.on(this._element, EVENT_KEYDOWN$1, event => this._keydown(event));
@@ -5959,7 +5189,6 @@ class Carousel extends BaseComponent {
       this._addTouchEventListeners();
     }
   }
-
   _addTouchEventListeners() {
     for (const img of SelectorEngine.find(SELECTOR_ITEM_IMG, this._element)) {
       EventHandler.on(img, EVENT_DRAG_START, event => event.preventDefault());
@@ -5981,7 +5210,6 @@ class Carousel extends BaseComponent {
     };
     this._swipeHelper = new Swipe(this._element, swipeConfig);
   }
-
   _keydown(event) {
     if (/input|textarea/i.test(event.target.tagName)) {
       return;
@@ -5992,11 +5220,9 @@ class Carousel extends BaseComponent {
       this._slide(this._directionToOrder(direction));
     }
   }
-
   _getItemIndex(element) {
     return this._getItems().indexOf(element);
   }
-
   _setActiveIndicatorElement(index) {
     if (!this._indicatorsElement) {
       return;
@@ -6010,7 +5236,6 @@ class Carousel extends BaseComponent {
       newActiveIndicator.setAttribute('aria-current', 'true');
     }
   }
-
   _updateInterval() {
     const element = this._activeElement || this._getActive();
     if (!element) {
@@ -6019,7 +5244,6 @@ class Carousel extends BaseComponent {
     const elementInterval = Number.parseInt(element.getAttribute('data-bs-interval'), 10);
     this._config.interval = elementInterval || this._config.defaultInterval;
   }
-
   _slide(order, element = null) {
     if (this._isSliding) {
       return;
@@ -6069,40 +5293,33 @@ class Carousel extends BaseComponent {
       this.cycle();
     }
   }
-
   _isAnimated() {
     return this._element.classList.contains(CLASS_NAME_SLIDE);
   }
-
   _getActive() {
     return SelectorEngine.findOne(SELECTOR_ACTIVE_ITEM, this._element);
   }
-
   _getItems() {
     return SelectorEngine.find(SELECTOR_ITEM, this._element);
   }
-
   _clearInterval() {
     if (this._interval) {
       clearInterval(this._interval);
       this._interval = null;
     }
   }
-
   _directionToOrder(direction) {
     if (isRTL()) {
       return direction === DIRECTION_LEFT ? ORDER_PREV : ORDER_NEXT;
     }
     return direction === DIRECTION_LEFT ? ORDER_NEXT : ORDER_PREV;
   }
-
   _orderToDirection(order) {
     if (isRTL()) {
       return order === ORDER_PREV ? DIRECTION_LEFT : DIRECTION_RIGHT;
     }
     return order === ORDER_PREV ? DIRECTION_RIGHT : DIRECTION_LEFT;
   }
-
   static jQueryInterface(config) {
     return this.each(function () {
       const data = Carousel.getOrCreateInstance(this, config);
@@ -6119,7 +5336,6 @@ class Carousel extends BaseComponent {
     });
   }
 }
-
 EventHandler.on(document, EVENT_CLICK_DATA_API$5, SELECTOR_DATA_SLIDE, function (event) {
   const target = SelectorEngine.getElementFromSelector(this);
   if (!target || !target.classList.contains(CLASS_NAME_CAROUSEL)) {
@@ -6175,7 +5391,6 @@ const DefaultType$a = {
   parent: '(null|element)',
   toggle: 'boolean'
 };
-
 class Collapse extends BaseComponent {
   constructor(element, config) {
     super(element, config);
@@ -6197,19 +5412,15 @@ class Collapse extends BaseComponent {
       this.toggle();
     }
   }
-
   static get Default() {
     return Default$a;
   }
-
   static get DefaultType() {
     return DefaultType$a;
   }
-
   static get NAME() {
     return NAME$b;
   }
-
   toggle() {
     if (this._isShown()) {
       this.hide();
@@ -6217,7 +5428,6 @@ class Collapse extends BaseComponent {
       this.show();
     }
   }
-
   show() {
     if (this._isTransitioning || this._isShown()) {
       return;
@@ -6256,7 +5466,6 @@ class Collapse extends BaseComponent {
     this._queueCallback(complete, this._element, true);
     this._element.style[dimension] = `${this._element[scrollSize]}px`;
   }
-
   hide() {
     if (this._isTransitioning || !this._isShown()) {
       return;
@@ -6286,21 +5495,17 @@ class Collapse extends BaseComponent {
     this._element.style[dimension] = '';
     this._queueCallback(complete, this._element, true);
   }
-
   _isShown(element = this._element) {
     return element.classList.contains(CLASS_NAME_SHOW$7);
   }
-
   _configAfterMerge(config) {
     config.toggle = Boolean(config.toggle);
     config.parent = getElement(config.parent);
     return config;
   }
-
   _getDimension() {
     return this._element.classList.contains(CLASS_NAME_HORIZONTAL) ? WIDTH : HEIGHT;
   }
-
   _initializeChildren() {
     if (!this._config.parent) {
       return;
@@ -6313,12 +5518,10 @@ class Collapse extends BaseComponent {
       }
     }
   }
-
   _getFirstLevelChildren(selector) {
     const children = SelectorEngine.find(CLASS_NAME_DEEPER_CHILDREN, this._config.parent);
     return SelectorEngine.find(selector, this._config.parent).filter(element => !children.includes(element));
   }
-
   _addAriaAndCollapsedClass(triggerArray, isOpen) {
     if (!triggerArray.length) {
       return;
@@ -6328,7 +5531,6 @@ class Collapse extends BaseComponent {
       element.setAttribute('aria-expanded', isOpen);
     }
   }
-
   static jQueryInterface(config) {
     const _config = {};
     if (typeof config === 'string' && /show|hide/.test(config)) {
@@ -6345,7 +5547,6 @@ class Collapse extends BaseComponent {
     });
   }
 }
-
 EventHandler.on(document, EVENT_CLICK_DATA_API$4, SELECTOR_DATA_TOGGLE$4, function (event) {
   if (event.target.tagName === 'A' || event.delegateTarget && event.delegateTarget.tagName === 'A') {
     event.preventDefault();
@@ -6409,7 +5610,6 @@ const DefaultType$9 = {
   popperConfig: '(null|object|function)',
   reference: '(string|element|object)'
 };
-
 class Dropdown extends BaseComponent {
   constructor(element, config) {
     super(element, config);
@@ -6418,23 +5618,18 @@ class Dropdown extends BaseComponent {
     this._menu = SelectorEngine.next(this._element, SELECTOR_MENU)[0] || SelectorEngine.prev(this._element, SELECTOR_MENU)[0] || SelectorEngine.findOne(SELECTOR_MENU, this._parent);
     this._inNavbar = this._detectNavbar();
   }
-
   static get Default() {
     return Default$9;
   }
-
   static get DefaultType() {
     return DefaultType$9;
   }
-
   static get NAME() {
     return NAME$a;
   }
-
   toggle() {
     return this._isShown() ? this.hide() : this.show();
   }
-
   show() {
     if (isDisabled(this._element) || this._isShown()) {
       return;
@@ -6458,7 +5653,6 @@ class Dropdown extends BaseComponent {
     this._element.classList.add(CLASS_NAME_SHOW$6);
     EventHandler.trigger(this._element, EVENT_SHOWN$5, relatedTarget);
   }
-
   hide() {
     if (isDisabled(this._element) || !this._isShown()) {
       return;
@@ -6468,21 +5662,18 @@ class Dropdown extends BaseComponent {
     };
     this._completeHide(relatedTarget);
   }
-
   dispose() {
     if (this._popper) {
       this._popper.destroy();
     }
     super.dispose();
   }
-
   update() {
     this._inNavbar = this._detectNavbar();
     if (this._popper) {
       this._popper.update();
     }
   }
-
   _completeHide(relatedTarget) {
     const hideEvent = EventHandler.trigger(this._element, EVENT_HIDE$5, relatedTarget);
     if (hideEvent.defaultPrevented) {
@@ -6502,7 +5693,6 @@ class Dropdown extends BaseComponent {
     Manipulator.removeDataAttribute(this._menu, 'popper');
     EventHandler.trigger(this._element, EVENT_HIDDEN$5, relatedTarget);
   }
-
   _getConfig(config) {
     config = super._getConfig(config);
     if (typeof config.reference === 'object' && !isElement(config.reference) && typeof config.reference.getBoundingClientRect !== 'function') {
@@ -6510,7 +5700,6 @@ class Dropdown extends BaseComponent {
     }
     return config;
   }
-
   _createPopper() {
     if (typeof Popper === 'undefined') {
       throw new TypeError('Bootstrap\'s dropdowns require Popper (https://popper.js.org)');
@@ -6526,11 +5715,9 @@ class Dropdown extends BaseComponent {
     const popperConfig = this._getPopperConfig();
     this._popper = createPopper(referenceElement, this._menu, popperConfig);
   }
-
   _isShown() {
     return this._menu.classList.contains(CLASS_NAME_SHOW$6);
   }
-
   _getPlacement() {
     const parentDropdown = this._parent;
     if (parentDropdown.classList.contains(CLASS_NAME_DROPEND)) {
@@ -6551,11 +5738,9 @@ class Dropdown extends BaseComponent {
     }
     return isEnd ? PLACEMENT_BOTTOMEND : PLACEMENT_BOTTOM;
   }
-
   _detectNavbar() {
     return this._element.closest(SELECTOR_NAVBAR) !== null;
   }
-
   _getOffset() {
     const {
       offset
@@ -6568,7 +5753,6 @@ class Dropdown extends BaseComponent {
     }
     return offset;
   }
-
   _getPopperConfig() {
     const defaultBsPopperConfig = {
       placement: this._getPlacement(),
@@ -6587,31 +5771,31 @@ class Dropdown extends BaseComponent {
     if (this._inNavbar || this._config.display === 'static') {
       Manipulator.setDataAttribute(this._menu, 'popper', 'static');
       defaultBsPopperConfig.modifiers = [{
-        name: 'applyStyles',
-        enabled: false
+          name: 'applyStyles',
+          enabled: false
       }];
     }
-    return {
-      ...defaultBsPopperConfig,
-      ...execute(this._config.popperConfig, [defaultBsPopperConfig])
-    };
+      return {
+          ...defaultBsPopperConfig,
+          ...execute(this._config.popperConfig, [defaultBsPopperConfig])
+      };
   }
 
-  _selectMenuItem({
-                    key,
-                    target
-                  }) {
-    const items = SelectorEngine.find(SELECTOR_VISIBLE_ITEMS, this._menu).filter(element => isVisible(element));
-    if (!items.length) {
-      return;
+    _selectMenuItem({
+                        key,
+                        target
+                    }) {
+        const items = SelectorEngine.find(SELECTOR_VISIBLE_ITEMS, this._menu).filter(element => isVisible(element));
+        if (!items.length) {
+            return;
+        }
+        getNextActiveElement(items, target, key === ARROW_DOWN_KEY$1, !items.includes(target)).focus();
     }
-    getNextActiveElement(items, target, key === ARROW_DOWN_KEY$1, !items.includes(target)).focus();
-  }
 
-  static jQueryInterface(config) {
-    return this.each(function () {
-      const data = Dropdown.getOrCreateInstance(this, config);
-      if (typeof config !== 'string') {
+    static jQueryInterface(config) {
+        return this.each(function () {
+            const data = Dropdown.getOrCreateInstance(this, config);
+            if (typeof config !== 'string') {
         return;
       }
       if (typeof data[config] === 'undefined') {
@@ -6620,7 +5804,6 @@ class Dropdown extends BaseComponent {
       data[config]();
     });
   }
-
   static clearMenus(event) {
     if (event.button === RIGHT_MOUSE_BUTTON || event.type === 'keyup' && event.key !== TAB_KEY$1) {
       return;
@@ -6648,7 +5831,6 @@ class Dropdown extends BaseComponent {
       context._completeHide(relatedTarget);
     }
   }
-
   static dataApiKeydownHandler(event) {
     const isInput = /input|textarea/i.test(event.target.tagName);
     const isEscapeEvent = event.key === ESCAPE_KEY$2;
@@ -6675,7 +5857,6 @@ class Dropdown extends BaseComponent {
     }
   }
 }
-
 EventHandler.on(document, EVENT_KEYDOWN_DATA_API, SELECTOR_DATA_TOGGLE$3, Dropdown.dataApiKeydownHandler);
 EventHandler.on(document, EVENT_KEYDOWN_DATA_API, SELECTOR_MENU, Dropdown.dataApiKeydownHandler);
 EventHandler.on(document, EVENT_CLICK_DATA_API$3, Dropdown.clearMenus);
@@ -6685,89 +5866,6 @@ EventHandler.on(document, EVENT_CLICK_DATA_API$3, SELECTOR_DATA_TOGGLE$3, functi
   Dropdown.getOrCreateInstance(this).toggle();
 });
 defineJQueryPlugin(Dropdown);
-const SELECTOR_FIXED_CONTENT = '.fixed-top, .fixed-bottom, .is-fixed, .sticky-top';
-const SELECTOR_STICKY_CONTENT = '.sticky-top';
-const PROPERTY_PADDING = 'padding-right';
-const PROPERTY_MARGIN = 'margin-right';
-
-class ScrollBarHelper {
-  constructor() {
-    this._element = document.body;
-  }
-
-  getWidth() {
-    const documentWidth = document.documentElement.clientWidth;
-    return Math.abs(window.innerWidth - documentWidth);
-  }
-
-  hide() {
-    const width = this.getWidth();
-    this._disableOverFlow();
-    this._setElementAttributes(this._element, PROPERTY_PADDING, calculatedValue => calculatedValue + width);
-    this._setElementAttributes(SELECTOR_FIXED_CONTENT, PROPERTY_PADDING, calculatedValue => calculatedValue + width);
-    this._setElementAttributes(SELECTOR_STICKY_CONTENT, PROPERTY_MARGIN, calculatedValue => calculatedValue - width);
-  }
-
-  reset() {
-    this._resetElementAttributes(this._element, 'overflow');
-    this._resetElementAttributes(this._element, PROPERTY_PADDING);
-    this._resetElementAttributes(SELECTOR_FIXED_CONTENT, PROPERTY_PADDING);
-    this._resetElementAttributes(SELECTOR_STICKY_CONTENT, PROPERTY_MARGIN);
-  }
-
-  isOverflowing() {
-    return this.getWidth() > 0;
-  }
-
-  _disableOverFlow() {
-    this._saveInitialAttribute(this._element, 'overflow');
-    this._element.style.overflow = 'hidden';
-  }
-
-  _setElementAttributes(selector, styleProperty, callback) {
-    const scrollbarWidth = this.getWidth();
-    const manipulationCallBack = element => {
-      if (element !== this._element && window.innerWidth > element.clientWidth + scrollbarWidth) {
-        return;
-      }
-      this._saveInitialAttribute(element, styleProperty);
-      const calculatedValue = window.getComputedStyle(element).getPropertyValue(styleProperty);
-      element.style.setProperty(styleProperty, `${callback(Number.parseFloat(calculatedValue))}px`);
-    };
-    this._applyManipulationCallback(selector, manipulationCallBack);
-  }
-
-  _saveInitialAttribute(element, styleProperty) {
-    const actualValue = element.style.getPropertyValue(styleProperty);
-    if (actualValue) {
-      Manipulator.setDataAttribute(element, styleProperty, actualValue);
-    }
-  }
-
-  _resetElementAttributes(selector, styleProperty) {
-    const manipulationCallBack = element => {
-      const value = Manipulator.getDataAttribute(element, styleProperty);
-      if (value === null) {
-        element.style.removeProperty(styleProperty);
-        return;
-      }
-      Manipulator.removeDataAttribute(element, styleProperty);
-      element.style.setProperty(styleProperty, value);
-    };
-    this._applyManipulationCallback(selector, manipulationCallBack);
-  }
-
-  _applyManipulationCallback(selector, callBack) {
-    if (isElement(selector)) {
-      callBack(selector);
-      return;
-    }
-    for (const sel of SelectorEngine.find(selector, this._element)) {
-      callBack(sel);
-    }
-  }
-}
-
 const NAME$9 = 'backdrop';
 const CLASS_NAME_FADE$4 = 'fade';
 const CLASS_NAME_SHOW$5 = 'show';
@@ -6786,7 +5884,6 @@ const DefaultType$8 = {
   isVisible: 'boolean',
   rootElement: '(element|string)'
 };
-
 class Backdrop extends Config {
   constructor(config) {
     super();
@@ -6794,19 +5891,15 @@ class Backdrop extends Config {
     this._isAppended = false;
     this._element = null;
   }
-
   static get Default() {
     return Default$8;
   }
-
   static get DefaultType() {
     return DefaultType$8;
   }
-
   static get NAME() {
     return NAME$9;
   }
-
   show(callback) {
     if (!this._config.isVisible) {
       execute(callback);
@@ -6822,7 +5915,6 @@ class Backdrop extends Config {
       execute(callback);
     });
   }
-
   hide(callback) {
     if (!this._config.isVisible) {
       execute(callback);
@@ -6834,7 +5926,6 @@ class Backdrop extends Config {
       execute(callback);
     });
   }
-
   dispose() {
     if (!this._isAppended) {
       return;
@@ -6843,7 +5934,6 @@ class Backdrop extends Config {
     this._element.remove();
     this._isAppended = false;
   }
-
   _getElement() {
     if (!this._element) {
       const backdrop = document.createElement('div');
@@ -6855,12 +5945,10 @@ class Backdrop extends Config {
     }
     return this._element;
   }
-
   _configAfterMerge(config) {
     config.rootElement = getElement(config.rootElement);
     return config;
   }
-
   _append() {
     if (this._isAppended) {
       return;
@@ -6872,12 +5960,10 @@ class Backdrop extends Config {
     });
     this._isAppended = true;
   }
-
   _emulateAnimation(callback) {
     executeAfterTransition(callback, this._getElement(), this._config.isAnimated);
   }
 }
-
 const NAME$8 = 'focustrap';
 const DATA_KEY$5 = 'bs.focustrap';
 const EVENT_KEY$5 = `.${DATA_KEY$5}`;
@@ -6894,7 +5980,6 @@ const DefaultType$7 = {
   autofocus: 'boolean',
   trapElement: 'element'
 };
-
 class FocusTrap extends Config {
   constructor(config) {
     super();
@@ -6902,19 +5987,15 @@ class FocusTrap extends Config {
     this._isActive = false;
     this._lastTabNavDirection = null;
   }
-
   static get Default() {
     return Default$7;
   }
-
   static get DefaultType() {
     return DefaultType$7;
   }
-
   static get NAME() {
     return NAME$8;
   }
-
   activate() {
     if (this._isActive) {
       return;
@@ -6927,7 +6008,6 @@ class FocusTrap extends Config {
     EventHandler.on(document, EVENT_KEYDOWN_TAB, event => this._handleKeydown(event));
     this._isActive = true;
   }
-
   deactivate() {
     if (!this._isActive) {
       return;
@@ -6935,7 +6015,6 @@ class FocusTrap extends Config {
     this._isActive = false;
     EventHandler.off(document, EVENT_KEY$5);
   }
-
   _handleFocusin(event) {
     const {
       trapElement
@@ -6949,16 +6028,99 @@ class FocusTrap extends Config {
     } else if (this._lastTabNavDirection === TAB_NAV_BACKWARD) {
       elements[elements.length - 1].focus();
     } else {
-      elements[0].focus();
+        elements[0].focus();
     }
   }
 
-  _handleKeydown(event) {
-    if (event.key !== TAB_KEY) {
-      return;
+    _handleKeydown(event) {
+        if (event.key !== TAB_KEY) {
+            return;
+        }
+        this._lastTabNavDirection = event.shiftKey ? TAB_NAV_BACKWARD : TAB_NAV_FORWARD;
     }
-    this._lastTabNavDirection = event.shiftKey ? TAB_NAV_BACKWARD : TAB_NAV_FORWARD;
-  }
+}
+
+const SELECTOR_FIXED_CONTENT = '.fixed-top, .fixed-bottom, .is-fixed, .sticky-top';
+const SELECTOR_STICKY_CONTENT = '.sticky-top';
+const PROPERTY_PADDING = 'padding-right';
+const PROPERTY_MARGIN = 'margin-right';
+
+class ScrollBarHelper {
+    constructor() {
+        this._element = document.body;
+    }
+
+    getWidth() {
+        const documentWidth = document.documentElement.clientWidth;
+        return Math.abs(window.innerWidth - documentWidth);
+    }
+
+    hide() {
+        const width = this.getWidth();
+        this._disableOverFlow();
+        this._setElementAttributes(this._element, PROPERTY_PADDING, calculatedValue => calculatedValue + width);
+        this._setElementAttributes(SELECTOR_FIXED_CONTENT, PROPERTY_PADDING, calculatedValue => calculatedValue + width);
+        this._setElementAttributes(SELECTOR_STICKY_CONTENT, PROPERTY_MARGIN, calculatedValue => calculatedValue - width);
+    }
+
+    reset() {
+        this._resetElementAttributes(this._element, 'overflow');
+        this._resetElementAttributes(this._element, PROPERTY_PADDING);
+        this._resetElementAttributes(SELECTOR_FIXED_CONTENT, PROPERTY_PADDING);
+        this._resetElementAttributes(SELECTOR_STICKY_CONTENT, PROPERTY_MARGIN);
+    }
+
+    isOverflowing() {
+        return this.getWidth() > 0;
+    }
+
+    _disableOverFlow() {
+        this._saveInitialAttribute(this._element, 'overflow');
+        this._element.style.overflow = 'hidden';
+    }
+
+    _setElementAttributes(selector, styleProperty, callback) {
+        const scrollbarWidth = this.getWidth();
+        const manipulationCallBack = element => {
+            if (element !== this._element && window.innerWidth > element.clientWidth + scrollbarWidth) {
+                return;
+            }
+            this._saveInitialAttribute(element, styleProperty);
+            const calculatedValue = window.getComputedStyle(element).getPropertyValue(styleProperty);
+            element.style.setProperty(styleProperty, `${callback(Number.parseFloat(calculatedValue))}px`);
+        };
+        this._applyManipulationCallback(selector, manipulationCallBack);
+    }
+
+    _saveInitialAttribute(element, styleProperty) {
+        const actualValue = element.style.getPropertyValue(styleProperty);
+        if (actualValue) {
+            Manipulator.setDataAttribute(element, styleProperty, actualValue);
+        }
+    }
+
+    _resetElementAttributes(selector, styleProperty) {
+        const manipulationCallBack = element => {
+            const value = Manipulator.getDataAttribute(element, styleProperty);
+            if (value === null) {
+                element.style.removeProperty(styleProperty);
+                return;
+            }
+            Manipulator.removeDataAttribute(element, styleProperty);
+            element.style.setProperty(styleProperty, value);
+        };
+        this._applyManipulationCallback(selector, manipulationCallBack);
+    }
+
+    _applyManipulationCallback(selector, callBack) {
+        if (isElement(selector)) {
+            callBack(selector);
+            return;
+        }
+        for (const sel of SelectorEngine.find(selector, this._element)) {
+            callBack(sel);
+        }
+    }
 }
 
 const NAME$7 = 'modal';
@@ -6994,7 +6156,6 @@ const DefaultType$6 = {
   focus: 'boolean',
   keyboard: 'boolean'
 };
-
 class Modal extends BaseComponent {
   constructor(element, config) {
     super(element, config);
@@ -7006,23 +6167,18 @@ class Modal extends BaseComponent {
     this._scrollBar = new ScrollBarHelper();
     this._addEventListeners();
   }
-
   static get Default() {
     return Default$6;
   }
-
   static get DefaultType() {
     return DefaultType$6;
   }
-
   static get NAME() {
     return NAME$7;
   }
-
   toggle(relatedTarget) {
     return this._isShown ? this.hide() : this.show(relatedTarget);
   }
-
   show(relatedTarget) {
     if (this._isShown || this._isTransitioning) {
       return;
@@ -7040,7 +6196,6 @@ class Modal extends BaseComponent {
     this._adjustDialog();
     this._backdrop.show(() => this._showElement(relatedTarget));
   }
-
   hide() {
     if (!this._isShown || this._isTransitioning) {
       return;
@@ -7055,33 +6210,27 @@ class Modal extends BaseComponent {
     this._element.classList.remove(CLASS_NAME_SHOW$4);
     this._queueCallback(() => this._hideModal(), this._element, this._isAnimated());
   }
-
   dispose() {
-    for (const htmlElement of [window, this._dialog]) {
-      EventHandler.off(htmlElement, EVENT_KEY$4);
-    }
-    this._backdrop.dispose();
-    this._focustrap.deactivate();
-    super.dispose();
+      EventHandler.off(window, EVENT_KEY$4);
+      EventHandler.off(this._dialog, EVENT_KEY$4);
+      this._backdrop.dispose();
+      this._focustrap.deactivate();
+      super.dispose();
   }
-
   handleUpdate() {
     this._adjustDialog();
   }
-
   _initializeBackDrop() {
     return new Backdrop({
       isVisible: Boolean(this._config.backdrop),
       isAnimated: this._isAnimated()
     });
   }
-
   _initializeFocusTrap() {
     return new FocusTrap({
       trapElement: this._element
     });
   }
-
   _showElement(relatedTarget) {
     if (!document.body.contains(this._element)) {
       document.body.append(this._element);
@@ -7108,14 +6257,12 @@ class Modal extends BaseComponent {
     };
     this._queueCallback(transitionComplete, this._dialog, this._isAnimated());
   }
-
   _addEventListeners() {
     EventHandler.on(this._element, EVENT_KEYDOWN_DISMISS$1, event => {
       if (event.key !== ESCAPE_KEY$1) {
         return;
       }
       if (this._config.keyboard) {
-        event.preventDefault();
         this.hide();
         return;
       }
@@ -7141,7 +6288,6 @@ class Modal extends BaseComponent {
       });
     });
   }
-
   _hideModal() {
     this._element.style.display = 'none';
     this._element.setAttribute('aria-hidden', true);
@@ -7155,11 +6301,9 @@ class Modal extends BaseComponent {
       EventHandler.trigger(this._element, EVENT_HIDDEN$4);
     });
   }
-
   _isAnimated() {
     return this._element.classList.contains(CLASS_NAME_FADE$3);
   }
-
   _triggerBackdropTransition() {
     const hideEvent = EventHandler.trigger(this._element, EVENT_HIDE_PREVENTED$1);
     if (hideEvent.defaultPrevented) {
@@ -7182,7 +6326,6 @@ class Modal extends BaseComponent {
     }, this._dialog);
     this._element.focus();
   }
-
   _adjustDialog() {
     const isModalOverflowing = this._element.scrollHeight > document.documentElement.clientHeight;
     const scrollbarWidth = this._scrollBar.getWidth();
@@ -7196,12 +6339,10 @@ class Modal extends BaseComponent {
       this._element.style[property] = `${scrollbarWidth}px`;
     }
   }
-
   _resetAdjustments() {
     this._element.style.paddingLeft = '';
     this._element.style.paddingRight = '';
   }
-
   static jQueryInterface(config, relatedTarget) {
     return this.each(function () {
       const data = Modal.getOrCreateInstance(this, config);
@@ -7215,7 +6356,6 @@ class Modal extends BaseComponent {
     });
   }
 }
-
 EventHandler.on(document, EVENT_CLICK_DATA_API$2, SELECTOR_DATA_TOGGLE$2, function (event) {
   const target = SelectorEngine.getElementFromSelector(this);
   if (['A', 'AREA'].includes(this.tagName)) {
@@ -7270,7 +6410,6 @@ const DefaultType$5 = {
   keyboard: 'boolean',
   scroll: 'boolean'
 };
-
 class Offcanvas extends BaseComponent {
   constructor(element, config) {
     super(element, config);
@@ -7279,23 +6418,18 @@ class Offcanvas extends BaseComponent {
     this._focustrap = this._initializeFocusTrap();
     this._addEventListeners();
   }
-
   static get Default() {
     return Default$5;
   }
-
   static get DefaultType() {
     return DefaultType$5;
   }
-
   static get NAME() {
     return NAME$6;
   }
-
   toggle(relatedTarget) {
     return this._isShown ? this.hide() : this.show(relatedTarget);
   }
-
   show(relatedTarget) {
     if (this._isShown) {
       return;
@@ -7326,7 +6460,6 @@ class Offcanvas extends BaseComponent {
     };
     this._queueCallback(completeCallBack, this._element, true);
   }
-
   hide() {
     if (!this._isShown) {
       return;
@@ -7351,13 +6484,11 @@ class Offcanvas extends BaseComponent {
     };
     this._queueCallback(completeCallback, this._element, true);
   }
-
   dispose() {
     this._backdrop.dispose();
     this._focustrap.deactivate();
     super.dispose();
   }
-
   _initializeBackDrop() {
     const clickCallback = () => {
       if (this._config.backdrop === 'static') {
@@ -7375,26 +6506,23 @@ class Offcanvas extends BaseComponent {
       clickCallback: isVisible ? clickCallback : null
     });
   }
-
   _initializeFocusTrap() {
     return new FocusTrap({
       trapElement: this._element
     });
   }
-
   _addEventListeners() {
     EventHandler.on(this._element, EVENT_KEYDOWN_DISMISS, event => {
-      if (event.key !== ESCAPE_KEY) {
-        return;
-      }
-      if (!this._config.keyboard) {
+        if (event.key !== ESCAPE_KEY) {
+            return;
+        }
+        if (this._config.keyboard) {
+            this.hide();
+            return;
+        }
         EventHandler.trigger(this._element, EVENT_HIDE_PREVENTED);
-        return;
-      }
-      this.hide();
     });
   }
-
   static jQueryInterface(config) {
     return this.each(function () {
       const data = Offcanvas.getOrCreateInstance(this, config);
@@ -7408,7 +6536,6 @@ class Offcanvas extends BaseComponent {
     });
   }
 }
-
 EventHandler.on(document, EVENT_CLICK_DATA_API$1, SELECTOR_DATA_TOGGLE$1, function (event) {
   const target = SelectorEngine.getElementFromSelector(this);
   if (['A', 'AREA'].includes(this.tagName)) {
@@ -7444,29 +6571,29 @@ EventHandler.on(window, EVENT_RESIZE, () => {
 enableDismissTrigger(Offcanvas);
 defineJQueryPlugin(Offcanvas);
 const uriAttributes = new Set(['background', 'cite', 'href', 'itemtype', 'longdesc', 'poster', 'src', 'xlink:href']);
-const ARIA_ATTRIBUTE_PATTERN = /^aria-[\w-]*$/i;
 const SAFE_URL_PATTERN = /^(?:(?:https?|mailto|ftp|tel|file|sms):|[^#&/:?]*(?:[#/?]|$))/i;
 const DATA_URL_PATTERN = /^data:(?:image\/(?:bmp|gif|jpeg|jpg|png|tiff|webp)|video\/(?:mpeg|mp4|ogg|webm)|audio\/(?:mp3|oga|ogg|opus));base64,[\d+/a-z]+=*$/i;
 const allowedAttribute = (attribute, allowedAttributeList) => {
-  const attributeName = attribute.nodeName.toLowerCase();
-  if (allowedAttributeList.includes(attributeName)) {
-    if (uriAttributes.has(attributeName)) {
-      return Boolean(SAFE_URL_PATTERN.test(attribute.nodeValue) || DATA_URL_PATTERN.test(attribute.nodeValue));
+    const attributeName = attribute.nodeName.toLowerCase();
+    if (allowedAttributeList.includes(attributeName)) {
+        if (uriAttributes.has(attributeName)) {
+            return Boolean(SAFE_URL_PATTERN.test(attribute.nodeValue) || DATA_URL_PATTERN.test(attribute.nodeValue));
+        }
+        return true;
     }
-    return true;
-  }
-  return allowedAttributeList.filter(attributeRegex => attributeRegex instanceof RegExp).some(regex => regex.test(attributeName));
+    return allowedAttributeList.filter(attributeRegex => attributeRegex instanceof RegExp).some(regex => regex.test(attributeName));
 };
+const ARIA_ATTRIBUTE_PATTERN = /^aria-[\w-]*$/i;
 const DefaultAllowlist = {
-  '*': ['class', 'dir', 'id', 'lang', 'role', ARIA_ATTRIBUTE_PATTERN],
-  a: ['target', 'href', 'title', 'rel'],
-  area: [],
-  b: [],
-  br: [],
-  col: [],
-  code: [],
-  div: [],
-  em: [],
+    '*': ['class', 'dir', 'id', 'lang', 'role', ARIA_ATTRIBUTE_PATTERN],
+    a: ['target', 'href', 'title', 'rel'],
+    area: [],
+    b: [],
+    br: [],
+    col: [],
+    code: [],
+    div: [],
+    em: [],
   hr: [],
   h1: [],
   h2: [],
@@ -7489,7 +6616,6 @@ const DefaultAllowlist = {
   u: [],
   ul: []
 };
-
 function sanitizeHtml(unsafeHtml, allowList, sanitizeFunction) {
   if (!unsafeHtml.length) {
     return unsafeHtml;
@@ -7516,7 +6642,6 @@ function sanitizeHtml(unsafeHtml, allowList, sanitizeFunction) {
   }
   return createdDocument.body.innerHTML;
 }
-
 const NAME$5 = 'TemplateFactory';
 const Default$4 = {
   allowList: DefaultAllowlist,
@@ -7540,33 +6665,26 @@ const DefaultContentType = {
   entry: '(string|element|function|null)',
   selector: '(string|element)'
 };
-
 class TemplateFactory extends Config {
   constructor(config) {
     super();
     this._config = this._getConfig(config);
   }
-
   static get Default() {
     return Default$4;
   }
-
   static get DefaultType() {
     return DefaultType$4;
   }
-
   static get NAME() {
     return NAME$5;
   }
-
   getContent() {
     return Object.values(this._config.content).map(config => this._resolvePossibleFunction(config)).filter(Boolean);
   }
-
   hasContent() {
     return this.getContent().length > 0;
   }
-
   changeContent(content) {
     this._checkContent(content);
     this._config.content = {
@@ -7575,7 +6693,6 @@ class TemplateFactory extends Config {
     };
     return this;
   }
-
   toHtml() {
     const templateWrapper = document.createElement('div');
     templateWrapper.innerHTML = this._maybeSanitize(this._config.template);
@@ -7589,12 +6706,10 @@ class TemplateFactory extends Config {
     }
     return template;
   }
-
   _typeCheckConfig(config) {
     super._typeCheckConfig(config);
     this._checkContent(config.content);
   }
-
   _checkContent(arg) {
     for (const [selector, content] of Object.entries(arg)) {
       super._typeCheckConfig({
@@ -7603,7 +6718,6 @@ class TemplateFactory extends Config {
       }, DefaultContentType);
     }
   }
-
   _setContent(template, content, selector) {
     const templateElement = SelectorEngine.findOne(selector, template);
     if (!templateElement) {
@@ -7624,15 +6738,12 @@ class TemplateFactory extends Config {
     }
     templateElement.textContent = content;
   }
-
   _maybeSanitize(arg) {
     return this._config.sanitize ? sanitizeHtml(arg, this._config.allowList, this._config.sanitizeFn) : arg;
   }
-
   _resolvePossibleFunction(arg) {
     return execute(arg, [this]);
   }
-
   _putElementInTemplate(element, templateElement) {
     if (this._config.html) {
       templateElement.innerHTML = '';
@@ -7642,7 +6753,6 @@ class TemplateFactory extends Config {
     templateElement.textContent = element.textContent;
   }
 }
-
 const NAME$4 = 'tooltip';
 const DISALLOWED_ATTRIBUTES = new Set(['sanitize', 'allowList', 'sanitizeFn']);
 const CLASS_NAME_FADE$2 = 'fade';
@@ -7673,23 +6783,23 @@ const AttachmentMap = {
   LEFT: isRTL() ? 'right' : 'left'
 };
 const Default$3 = {
-  allowList: DefaultAllowlist,
-  animation: true,
-  boundary: 'clippingParents',
-  container: false,
-  customClass: '',
-  delay: 0,
-  fallbackPlacements: ['top', 'right', 'bottom', 'left'],
-  html: false,
-  offset: [0, 0],
-  placement: 'top',
-  popperConfig: null,
-  sanitize: true,
-  sanitizeFn: null,
-  selector: false,
-  template: '<div class="tooltip" role="tooltip">' + '<div class="tooltip-arrow"></div>' + '<div class="tooltip-inner"></div>' + '</div>',
-  title: '',
-  trigger: 'hover focus'
+    allowList: DefaultAllowlist,
+    animation: true,
+    boundary: 'clippingParents',
+    container: false,
+    customClass: '',
+    delay: 0,
+    fallbackPlacements: ['top', 'right', 'bottom', 'left'],
+    html: false,
+    offset: [0, 6],
+    placement: 'top',
+    popperConfig: null,
+    sanitize: true,
+    sanitizeFn: null,
+    selector: false,
+    template: '<div class="tooltip" role="tooltip">' + '<div class="tooltip-arrow"></div>' + '<div class="tooltip-inner"></div>' + '</div>',
+    title: '',
+    trigger: 'hover focus'
 };
 const DefaultType$3 = {
   allowList: 'object',
@@ -7710,7 +6820,6 @@ const DefaultType$3 = {
   title: '(string|element|function)',
   trigger: 'string'
 };
-
 class Tooltip extends BaseComponent {
   constructor(element, config) {
     if (typeof Popper === 'undefined') {
@@ -7730,31 +6839,24 @@ class Tooltip extends BaseComponent {
       this._fixTitle();
     }
   }
-
   static get Default() {
     return Default$3;
   }
-
   static get DefaultType() {
     return DefaultType$3;
   }
-
   static get NAME() {
     return NAME$4;
   }
-
   enable() {
     this._isEnabled = true;
   }
-
   disable() {
     this._isEnabled = false;
   }
-
   toggleEnabled() {
     this._isEnabled = !this._isEnabled;
   }
-
   toggle() {
     if (!this._isEnabled) {
       return;
@@ -7766,7 +6868,6 @@ class Tooltip extends BaseComponent {
     }
     this._enter();
   }
-
   dispose() {
     clearTimeout(this._timeout);
     EventHandler.off(this._element.closest(SELECTOR_MODAL), EVENT_MODAL_HIDE, this._hideModalHandler);
@@ -7776,7 +6877,6 @@ class Tooltip extends BaseComponent {
     this._disposePopper();
     super.dispose();
   }
-
   show() {
     if (this._element.style.display === 'none') {
       throw new Error('Please use show on visible elements');
@@ -7816,7 +6916,6 @@ class Tooltip extends BaseComponent {
     };
     this._queueCallback(complete, this.tip, this._isAnimated());
   }
-
   hide() {
     if (!this._isShown()) {
       return;
@@ -7848,24 +6947,20 @@ class Tooltip extends BaseComponent {
     };
     this._queueCallback(complete, this.tip, this._isAnimated());
   }
-
   update() {
     if (this._popper) {
       this._popper.update();
     }
   }
-
   _isWithContent() {
     return Boolean(this._getTitle());
   }
-
   _getTipElement() {
     if (!this.tip) {
       this.tip = this._createTipElement(this._newContent || this._getContentForTemplate());
     }
     return this.tip;
   }
-
   _createTipElement(content) {
     const tip = this._getTemplateFactory(content).toHtml();
     if (!tip) {
@@ -7880,7 +6975,6 @@ class Tooltip extends BaseComponent {
     }
     return tip;
   }
-
   setContent(content) {
     this._newContent = content;
     if (this._isShown()) {
@@ -7888,7 +6982,6 @@ class Tooltip extends BaseComponent {
       this.show();
     }
   }
-
   _getTemplateFactory(content) {
     if (this._templateFactory) {
       this._templateFactory.changeContent(content);
@@ -7901,35 +6994,28 @@ class Tooltip extends BaseComponent {
     }
     return this._templateFactory;
   }
-
   _getContentForTemplate() {
     return {
       [SELECTOR_TOOLTIP_INNER]: this._getTitle()
     };
   }
-
   _getTitle() {
     return this._resolvePossibleFunction(this._config.title) || this._element.getAttribute('data-bs-original-title');
   }
-
   _initializeOnDelegatedTarget(event) {
     return this.constructor.getOrCreateInstance(event.delegateTarget, this._getDelegateConfig());
   }
-
   _isAnimated() {
     return this._config.animation || this.tip && this.tip.classList.contains(CLASS_NAME_FADE$2);
   }
-
   _isShown() {
     return this.tip && this.tip.classList.contains(CLASS_NAME_SHOW$2);
   }
-
   _createPopper(tip) {
     const placement = execute(this._config.placement, [this, tip, this._element]);
     const attachment = AttachmentMap[placement.toUpperCase()];
     return createPopper(this._element, tip, this._getPopperConfig(attachment));
   }
-
   _getOffset() {
     const {
       offset
@@ -7942,11 +7028,9 @@ class Tooltip extends BaseComponent {
     }
     return offset;
   }
-
   _resolvePossibleFunction(arg) {
     return execute(arg, [this._element]);
   }
-
   _getPopperConfig(attachment) {
     const defaultBsPopperConfig = {
       placement: attachment,
@@ -7984,7 +7068,6 @@ class Tooltip extends BaseComponent {
       ...execute(this._config.popperConfig, [defaultBsPopperConfig])
     };
   }
-
   _setListeners() {
     const triggers = this._config.trigger.split(' ');
     for (const trigger of triggers) {
@@ -8015,7 +7098,6 @@ class Tooltip extends BaseComponent {
     };
     EventHandler.on(this._element.closest(SELECTOR_MODAL), EVENT_MODAL_HIDE, this._hideModalHandler);
   }
-
   _fixTitle() {
     const title = this._element.getAttribute('title');
     if (!title) {
@@ -8027,7 +7109,6 @@ class Tooltip extends BaseComponent {
     this._element.setAttribute('data-bs-original-title', title);
     this._element.removeAttribute('title');
   }
-
   _enter() {
     if (this._isShown() || this._isHovered) {
       this._isHovered = true;
@@ -8040,7 +7121,6 @@ class Tooltip extends BaseComponent {
       }
     }, this._config.delay.show);
   }
-
   _leave() {
     if (this._isWithActiveTrigger()) {
       return;
@@ -8052,16 +7132,13 @@ class Tooltip extends BaseComponent {
       }
     }, this._config.delay.hide);
   }
-
   _setTimeout(handler, timeout) {
     clearTimeout(this._timeout);
     this._timeout = setTimeout(handler, timeout);
   }
-
   _isWithActiveTrigger() {
     return Object.values(this._activeTrigger).includes(true);
   }
-
   _getConfig(config) {
     const dataAttributes = Manipulator.getDataAttributes(this._element);
     for (const dataAttribute of Object.keys(dataAttributes)) {
@@ -8078,7 +7155,6 @@ class Tooltip extends BaseComponent {
     this._typeCheckConfig(config);
     return config;
   }
-
   _configAfterMerge(config) {
     config.container = config.container === false ? document.body : getElement(config.container);
     if (typeof config.delay === 'number') {
@@ -8095,7 +7171,6 @@ class Tooltip extends BaseComponent {
     }
     return config;
   }
-
   _getDelegateConfig() {
     const config = {};
     for (const [key, value] of Object.entries(this._config)) {
@@ -8107,7 +7182,6 @@ class Tooltip extends BaseComponent {
     config.trigger = 'manual';
     return config;
   }
-
   _disposePopper() {
     if (this._popper) {
       this._popper.destroy();
@@ -8118,7 +7192,6 @@ class Tooltip extends BaseComponent {
       this.tip = null;
     }
   }
-
   static jQueryInterface(config) {
     return this.each(function () {
       const data = Tooltip.getOrCreateInstance(this, config);
@@ -8132,7 +7205,6 @@ class Tooltip extends BaseComponent {
     });
   }
 }
-
 defineJQueryPlugin(Tooltip);
 const NAME$3 = 'popover';
 const SELECTOR_TITLE = '.popover-header';
@@ -8149,35 +7221,28 @@ const DefaultType$2 = {
   ...Tooltip.DefaultType,
   content: '(null|string|element|function)'
 };
-
 class Popover extends Tooltip {
   static get Default() {
     return Default$2;
   }
-
   static get DefaultType() {
     return DefaultType$2;
   }
-
   static get NAME() {
     return NAME$3;
   }
-
   _isWithContent() {
     return this._getTitle() || this._getContent();
   }
-
   _getContentForTemplate() {
     return {
       [SELECTOR_TITLE]: this._getTitle(),
       [SELECTOR_CONTENT]: this._getContent()
     };
   }
-
   _getContent() {
     return this._resolvePossibleFunction(this._config.content);
   }
-
   static jQueryInterface(config) {
     return this.each(function () {
       const data = Popover.getOrCreateInstance(this, config);
@@ -8191,7 +7256,6 @@ class Popover extends Tooltip {
     });
   }
 }
-
 defineJQueryPlugin(Popover);
 const NAME$2 = 'scrollspy';
 const DATA_KEY$2 = 'bs.scrollspy';
@@ -8225,7 +7289,6 @@ const DefaultType$1 = {
   target: 'element',
   threshold: 'array'
 };
-
 class ScrollSpy extends BaseComponent {
   constructor(element, config) {
     super(element, config);
@@ -8240,19 +7303,15 @@ class ScrollSpy extends BaseComponent {
     };
     this.refresh();
   }
-
   static get Default() {
     return Default$1;
   }
-
   static get DefaultType() {
     return DefaultType$1;
   }
-
   static get NAME() {
     return NAME$2;
   }
-
   refresh() {
     this._initializeTargetsAndObservables();
     this._maybeEnableSmoothScroll();
@@ -8265,12 +7324,10 @@ class ScrollSpy extends BaseComponent {
       this._observer.observe(section);
     }
   }
-
   dispose() {
     this._observer.disconnect();
     super.dispose();
   }
-
   _configAfterMerge(config) {
     config.target = getElement(config.target) || document.body;
     config.rootMargin = config.offset ? `${config.offset}px 0px -30%` : config.rootMargin;
@@ -8279,7 +7336,6 @@ class ScrollSpy extends BaseComponent {
     }
     return config;
   }
-
   _maybeEnableSmoothScroll() {
     if (!this._config.smoothScroll) {
       return;
@@ -8302,7 +7358,6 @@ class ScrollSpy extends BaseComponent {
       }
     });
   }
-
   _getNewObserver() {
     const options = {
       root: this._rootElement,
@@ -8311,7 +7366,6 @@ class ScrollSpy extends BaseComponent {
     };
     return new IntersectionObserver(entries => this._observerCallback(entries), options);
   }
-
   _observerCallback(entries) {
     const targetElement = entry => this._targetLinks.get(`#${entry.target.id}`);
     const activate = entry => {
@@ -8340,7 +7394,6 @@ class ScrollSpy extends BaseComponent {
       }
     }
   }
-
   _initializeTargetsAndObservables() {
     this._targetLinks = new Map();
     this._observableSections = new Map();
@@ -8356,7 +7409,6 @@ class ScrollSpy extends BaseComponent {
       }
     }
   }
-
   _process(target) {
     if (this._activeTarget === target) {
       return;
@@ -8369,7 +7421,6 @@ class ScrollSpy extends BaseComponent {
       relatedTarget: target
     });
   }
-
   _activateParents(target) {
     if (target.classList.contains(CLASS_NAME_DROPDOWN_ITEM)) {
       SelectorEngine.findOne(SELECTOR_DROPDOWN_TOGGLE$1, target.closest(SELECTOR_DROPDOWN)).classList.add(CLASS_NAME_ACTIVE$1);
@@ -8381,7 +7432,6 @@ class ScrollSpy extends BaseComponent {
       }
     }
   }
-
   _clearActiveClass(parent) {
     parent.classList.remove(CLASS_NAME_ACTIVE$1);
     const activeNodes = SelectorEngine.find(`${SELECTOR_TARGET_LINKS}.${CLASS_NAME_ACTIVE$1}`, parent);
@@ -8389,7 +7439,6 @@ class ScrollSpy extends BaseComponent {
       node.classList.remove(CLASS_NAME_ACTIVE$1);
     }
   }
-
   static jQueryInterface(config) {
     return this.each(function () {
       const data = ScrollSpy.getOrCreateInstance(this, config);
@@ -8403,7 +7452,6 @@ class ScrollSpy extends BaseComponent {
     });
   }
 }
-
 EventHandler.on(window, EVENT_LOAD_DATA_API$1, () => {
   for (const spy of SelectorEngine.find(SELECTOR_DATA_SPY)) {
     ScrollSpy.getOrCreateInstance(spy);
@@ -8437,7 +7485,6 @@ const SELECTOR_INNER = `.nav-link${NOT_SELECTOR_DROPDOWN_TOGGLE}, .list-group-it
 const SELECTOR_DATA_TOGGLE = '[data-bs-toggle="tab"], [data-bs-toggle="pill"], [data-bs-toggle="list"]';
 const SELECTOR_INNER_ELEM = `${SELECTOR_INNER}, ${SELECTOR_DATA_TOGGLE}`;
 const SELECTOR_DATA_TOGGLE_ACTIVE = `.${CLASS_NAME_ACTIVE}[data-bs-toggle="tab"], .${CLASS_NAME_ACTIVE}[data-bs-toggle="pill"], .${CLASS_NAME_ACTIVE}[data-bs-toggle="list"]`;
-
 class Tab extends BaseComponent {
   constructor(element) {
     super(element);
@@ -8448,11 +7495,9 @@ class Tab extends BaseComponent {
     this._setInitialAttributes(this._parent, this._getChildren());
     EventHandler.on(this._element, EVENT_KEYDOWN, event => this._keydown(event));
   }
-
   static get NAME() {
     return NAME$1;
   }
-
   show() {
     const innerElem = this._element;
     if (this._elemIsActive(innerElem)) {
@@ -8471,7 +7516,6 @@ class Tab extends BaseComponent {
     this._deactivate(active, innerElem);
     this._activate(innerElem, active);
   }
-
   _activate(element, relatedElem) {
     if (!element) {
       return;
@@ -8492,7 +7536,6 @@ class Tab extends BaseComponent {
     };
     this._queueCallback(complete, element, element.classList.contains(CLASS_NAME_FADE$1));
   }
-
   _deactivate(element, relatedElem) {
     if (!element) {
       return;
@@ -8514,7 +7557,6 @@ class Tab extends BaseComponent {
     };
     this._queueCallback(complete, element, element.classList.contains(CLASS_NAME_FADE$1));
   }
-
   _keydown(event) {
     if (![ARROW_LEFT_KEY, ARROW_RIGHT_KEY, ARROW_UP_KEY, ARROW_DOWN_KEY].includes(event.key)) {
       return;
@@ -8530,22 +7572,18 @@ class Tab extends BaseComponent {
       Tab.getOrCreateInstance(nextActiveElement).show();
     }
   }
-
   _getChildren() {
     return SelectorEngine.find(SELECTOR_INNER_ELEM, this._parent);
   }
-
   _getActiveElem() {
     return this._getChildren().find(child => this._elemIsActive(child)) || null;
   }
-
   _setInitialAttributes(parent, children) {
     this._setAttributeIfNotExists(parent, 'role', 'tablist');
     for (const child of children) {
       this._setInitialAttributesOnChild(child);
     }
   }
-
   _setInitialAttributesOnChild(child) {
     child = this._getInnerElement(child);
     const isActive = this._elemIsActive(child);
@@ -8560,7 +7598,6 @@ class Tab extends BaseComponent {
     this._setAttributeIfNotExists(child, 'role', 'tab');
     this._setInitialAttributesOnTargetPanel(child);
   }
-
   _setInitialAttributesOnTargetPanel(child) {
     const target = SelectorEngine.getElementFromSelector(child);
     if (!target) {
@@ -8568,10 +7605,9 @@ class Tab extends BaseComponent {
     }
     this._setAttributeIfNotExists(target, 'role', 'tabpanel');
     if (child.id) {
-      this._setAttributeIfNotExists(target, 'aria-labelledby', `#${child.id}`);
+        this._setAttributeIfNotExists(target, 'aria-labelledby', `${child.id}`);
     }
   }
-
   _toggleDropDown(element, open) {
     const outerElem = this._getOuterElement(element);
     if (!outerElem.classList.contains(CLASS_DROPDOWN)) {
@@ -8587,25 +7623,20 @@ class Tab extends BaseComponent {
     toggle(SELECTOR_DROPDOWN_MENU, CLASS_NAME_SHOW$1);
     outerElem.setAttribute('aria-expanded', open);
   }
-
   _setAttributeIfNotExists(element, attribute, value) {
     if (!element.hasAttribute(attribute)) {
       element.setAttribute(attribute, value);
     }
   }
-
   _elemIsActive(elem) {
     return elem.classList.contains(CLASS_NAME_ACTIVE);
   }
-
   _getInnerElement(elem) {
     return elem.matches(SELECTOR_INNER_ELEM) ? elem : SelectorEngine.findOne(SELECTOR_INNER_ELEM, elem);
   }
-
   _getOuterElement(elem) {
     return elem.closest(SELECTOR_OUTER) || elem;
   }
-
   static jQueryInterface(config) {
     return this.each(function () {
       const data = Tab.getOrCreateInstance(this);
@@ -8619,7 +7650,6 @@ class Tab extends BaseComponent {
     });
   }
 }
-
 EventHandler.on(document, EVENT_CLICK_DATA_API, SELECTOR_DATA_TOGGLE, function (event) {
   if (['A', 'AREA'].includes(this.tagName)) {
     event.preventDefault();
@@ -8660,7 +7690,6 @@ const Default = {
   autohide: true,
   delay: 5000
 };
-
 class Toast extends BaseComponent {
   constructor(element, config) {
     super(element, config);
@@ -8669,19 +7698,15 @@ class Toast extends BaseComponent {
     this._hasKeyboardInteraction = false;
     this._setListeners();
   }
-
   static get Default() {
     return Default;
   }
-
   static get DefaultType() {
     return DefaultType;
   }
-
   static get NAME() {
     return NAME;
   }
-
   show() {
     const showEvent = EventHandler.trigger(this._element, EVENT_SHOW);
     if (showEvent.defaultPrevented) {
@@ -8701,7 +7726,6 @@ class Toast extends BaseComponent {
     this._element.classList.add(CLASS_NAME_SHOW, CLASS_NAME_SHOWING);
     this._queueCallback(complete, this._element, this._config.animation);
   }
-
   hide() {
     if (!this.isShown()) {
       return;
@@ -8718,7 +7742,6 @@ class Toast extends BaseComponent {
     this._element.classList.add(CLASS_NAME_SHOWING);
     this._queueCallback(complete, this._element, this._config.animation);
   }
-
   dispose() {
     this._clearTimeout();
     if (this.isShown()) {
@@ -8726,11 +7749,9 @@ class Toast extends BaseComponent {
     }
     super.dispose();
   }
-
   isShown() {
     return this._element.classList.contains(CLASS_NAME_SHOW);
   }
-
   _maybeScheduleHide() {
     if (!this._config.autohide) {
       return;
@@ -8742,20 +7763,19 @@ class Toast extends BaseComponent {
       this.hide();
     }, this._config.delay);
   }
-
   _onInteraction(event, isInteracting) {
-    switch (event.type) {
-      case 'mouseover':
-      case 'mouseout': {
-        this._hasMouseInteraction = isInteracting;
-        break;
+      switch (event.type) {
+          case 'mouseover':
+          case 'mouseout': {
+              this._hasMouseInteraction = isInteracting;
+              break;
+          }
+          case 'focusin':
+          case 'focusout': {
+              this._hasKeyboardInteraction = isInteracting;
+              break;
+          }
       }
-      case 'focusin':
-      case 'focusout': {
-        this._hasKeyboardInteraction = isInteracting;
-        break;
-      }
-    }
     if (isInteracting) {
       this._clearTimeout();
       return;
@@ -8766,19 +7786,16 @@ class Toast extends BaseComponent {
     }
     this._maybeScheduleHide();
   }
-
   _setListeners() {
     EventHandler.on(this._element, EVENT_MOUSEOVER, event => this._onInteraction(event, true));
     EventHandler.on(this._element, EVENT_MOUSEOUT, event => this._onInteraction(event, false));
     EventHandler.on(this._element, EVENT_FOCUSIN, event => this._onInteraction(event, true));
     EventHandler.on(this._element, EVENT_FOCUSOUT, event => this._onInteraction(event, false));
   }
-
   _clearTimeout() {
     clearTimeout(this._timeout);
     this._timeout = null;
   }
-
   static jQueryInterface(config) {
     return this.each(function () {
       const data = Toast.getOrCreateInstance(this, config);
@@ -8791,7 +7808,6 @@ class Toast extends BaseComponent {
     });
   }
 }
-
 enableDismissTrigger(Toast);
 defineJQueryPlugin(Toast);
 
