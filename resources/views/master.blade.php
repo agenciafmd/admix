@@ -13,6 +13,7 @@
     <link href="{{ asset('/vendor/admix/vendor/tabler/css/tabler.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('/vendor/admix/vendor/tabler/css/tabler-vendors.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('/vendor/admix/vendor/bootstrap-toaster/css/bootstrap-toaster.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('/vendor/admix/vendor/bootstrap-toaster/css/bootstrap-toaster.min.css') }}" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css"
           rel="stylesheet"/>
     <style>
@@ -25,21 +26,31 @@
         body {
             font-feature-settings: "cv03", "cv04", "cv11";
         }
+
+        [x-cloak] {
+            display: none !important;
+        }
+
+        /* livewire-tables */
+        /* reset .mb-3 */ /* bugou o all columns */
+        .before-toolbar div.d-md-flex.justify-content-between.mb-3 {
+            margin-bottom: 0 !important;
+        }
+
+        .btn.btn-ghost-secondary.btn-sm {
+            border-radius: 4px
+        }
     </style>
 
     {{--    <link rel="stylesheet" href="{{ asset('css/app.css') }}?v={{ config('app.version') }}">--}}
     {{--    <link rel="apple-touch-icon" href="{{ asset('images/icon-touch.png') }}?v={{ config('app.version') }}">--}}
     {{--    <link rel="icon" href="{{ asset('images/icon-fav.png') }}?v={{ config('app.version') }}">--}}
     {{--    <link rel="manifest" href="{{ asset('json/manifest.json') }}?v={{ config('app.version') }}">--}}
-
     <livewire:styles/>
     @stack('styles')
 </head>
-<body class="{{ $bodyClass ?? '' }} theme-light">
-<script>
-/*! troca o tema do painel administrativo */
-!function(e){"function"==typeof define&&define.amd?define(e):e()}((function(){"use strict";var e,t="tablerTheme",n=new Proxy(new URLSearchParams(window.location.search),{get:function(e,t){return e.get(t)}});if(n.theme)localStorage.setItem(t,n.theme),e=n.theme;else{var o=localStorage.getItem(t);e=o||"light"}document.body.classList.remove("theme-dark","theme-light"),document.body.classList.add("theme-".concat(e))}));
-</script>
+<body class="{{ $bodyClass ?? '' }}">
+<script src="{{ asset('/vendor/admix/vendor/tabler/js/theme.min.js') }}" defer></script>
 <div class="{{ $pageClass ?? '' }}">
     @yield('aside')
     @yield('header')

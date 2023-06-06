@@ -8,7 +8,7 @@ return [
     'email' => 'e-mail',
     'forgot_password' => 'esqueceu a senha?',
     'hide_at' => 'não mostrar após',
-    'id' => 'código do admix',
+    'id' => 'id',
     'is_active' => 'ativo',
     'login' => 'entrar',
     'logout' => 'sair',
