@@ -3,7 +3,7 @@
 namespace Agenciafmd\Admix\Http\Livewire\Pages\User;
 
 use Agenciafmd\Admix\Models\User;
-use Agenciafmd\Components\LaravelLivewireTables\Columns\ConfirmationColumn;
+use Agenciafmd\Components\LaravelLivewireTables\Columns\DeleteColumn;
 use Illuminate\Support\Arr;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
@@ -95,7 +95,7 @@ class Table extends DataTableComponent
                                 'class' => 'btn',
                             ];
                         }),
-                    ConfirmationColumn::make('Delete')
+                    DeleteColumn::make('Delete')
                         ->title(fn($row) => __('Delete'))
                         ->location(fn($row) => $row->id)
                         ->attributes(function ($row) {
