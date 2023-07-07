@@ -30,8 +30,13 @@ class Table extends DataTableComponent
 //        $this->setDebugStatus(true);
 //        $this->setPaginationMethod('simple');
 //        $this->setPaginationStatus(false);
+        $this->setSortingPillsDisabled();
+        $this->setFilterPillsDisabled();
+        $this->setSearchVisibilityDisabled();
+
         $this->setPrimaryKey('id');
         $this->setConfigurableAreas([
+            'toolbar-left-start' => 'admix::vendor.livewire-tables.toolbar-left-start',
             'before-toolbar' => 'admix::vendor.livewire-tables.before-toolbar',
             'after-toolbar' => 'admix::vendor.livewire-tables.after-toolbar',
         ]);
