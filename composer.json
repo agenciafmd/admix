@@ -15,7 +15,9 @@
         "itsgoingd/clockwork": "^5.1",
         "laravel/framework": "^9.0",
         "laravel/horizon": "^5.15",
-        "livewire/livewire": "^2.12"
+        "livewire/livewire": "^2.12",
+        "rap2hpoutre/fast-excel": "^5.2",
+        "rappasoft/laravel-livewire-tables": "^2.14"
     },
     "require-dev": {
     },

@@ -4,41 +4,46 @@ namespace Agenciafmd\Admix\Http\Livewire\Pages\User;
 
 use Agenciafmd\Admix\Models\User;
 use Agenciafmd\Components\LaravelLivewireTables\Columns\DeleteColumn;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
+use Rap2hpoutre\FastExcel\FastExcel;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
+use Rappasoft\LaravelLivewireTables\Views\Columns\BooleanColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\ButtonGroupColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class Table extends DataTableComponent
 {
-    protected $model = User::class;
-
     protected $listeners = [
         'bulkDelete' => 'bulkDelete',
     ];
 
+    public function builder(): Builder
+    {
+        return User::query();
+    }
+
     public function configure(): void
     {
+//        $this->setDebugStatus(true);
 //        $this->setPaginationMethod('simple');
 //        $this->setPaginationStatus(false);
         $this->setPrimaryKey('id');
         $this->setConfigurableAreas([
-//            'before-tools' => 'path.to.my.view',
-//            'toolbar-left-start' => 'path.to.my.view',
-//            'toolbar-left-end' => 'path.to.my.view',
-//            'toolbar-right-start' => 'path.to.my.view',
-//            'toolbar-right-end' => 'path.to.my.view',
             'before-toolbar' => 'admix::vendor.livewire-tables.before-toolbar',
             'after-toolbar' => 'admix::vendor.livewire-tables.after-toolbar',
-//            'before-pagination' => 'path.to.my.view',
-//            'after-pagination' => 'path.to.my.view',
         ]);
         $this->setTableAttributes([
             'class' => 'card-table table-vcenter text-nowrap datatable',
         ]);
         $this->setThAttributes(function (Column $column) {
-            if ($column->isField('id')) {
+            if (
+                $column->isField('id') ||
+                $column->isField('is_active') ||
+                ($column->getField() === null)
+            ) {
                 return [
                     'class' => 'w-1',
                 ];
@@ -50,6 +55,12 @@ class Table extends DataTableComponent
             if ($column->isField('id')) {
                 return [
                     'class' => 'text-secondary',
+                ];
+            }
+
+            if ($column->isField('is_active')) {
+                return [
+                    'align' => 'center',
                 ];
             }
 
@@ -65,20 +76,23 @@ class Table extends DataTableComponent
     public function columns(): array
     {
         return [
-            Column::make('Id', 'id')
+            Column::make(__('admix::fields.id'), 'id')
                 ->sortable()
                 ->searchable(),
-            Column::make('Nome', 'name')
+            Column::make(__('admix::fields.name'), 'name')
                 ->sortable()
                 ->searchable(),
-            Column::make('E-mail', 'email')
+            Column::make(__('admix::fields.email'), 'email')
                 ->sortable()
                 ->searchable(),
 //            Column::make('Address', 'address.address')
 //                ->sortable()
 //                ->searchable()
 //                ->collapseOnTablet(),
-
+            BooleanColumn::make(__('admix::fields.is_active'), 'is_active')
+                ->setView('admix-components::livewire-tables.columns.boolean')
+                ->sortable()
+                ->searchable(),
             ButtonGroupColumn::make('')
                 ->excludeFromColumnSelect()
                 ->attributes(function ($row) {
@@ -112,6 +126,7 @@ class Table extends DataTableComponent
         return [
             'bulkActivate' => __('Activate'),
             'bulkDeactivate' => __('Deactivate'),
+            'bulkExport' => __('Export'),
             'bulkDelete' => __('Delete'),
         ];
     }
@@ -131,7 +146,7 @@ class Table extends DataTableComponent
         $id = $id ? Arr::wrap($id) : $this->getSelected();
 
         try {
-            $model = User::query()
+            $model = $this->builder()
                 ->whereIn('id', $id)
                 ->get()->each->delete();
 
@@ -156,10 +171,30 @@ class Table extends DataTableComponent
         $this->clearSelected();
     }
 
+    public function bulkExport(): StreamedResponse
+    {
+        $builder = $this->builder();
+        $selectedItems = $this->getSelected();
+        $items = (static function () use ($builder, $selectedItems): \Generator {
+            foreach ($builder->whereIn('id', $selectedItems)
+                         ->cursor() as $item) {
+                yield $item;
+            }
+        })();
+        $this->clearSelected();
+
+        return response()->streamDownload(function () use ($items) {
+            return (new FastExcel($items)) // usa generator para diminuir o consumo de memória
+            ->export('php://output', $this->fieldsToExport());
+        }, sprintf('%s-%s.xlsx', date('YmdHi'), $this->builder()
+            ->getModel()
+            ->getTable()));
+    }
+
     private function markIsActiveAs(bool $flag = true): void
     {
         try {
-            $model = User::query()
+            $model = $this->builder()
                 ->whereIn('id', $this->getSelected())
                 ->get()->each->update(['is_active' => $flag]);
 
@@ -182,5 +217,17 @@ class Table extends DataTableComponent
         }
 
         $this->clearSelected();
+    }
+
+    public function fieldsToExport(): null|\Closure
+    {
+        return null;
+//        return static function($model) {
+//            return [
+//                __('admix::fields.id') => $model->id,
+//                __('admix::fields.name') => $model->name,
+//                __('admix::fields.email') => $model->email,
+//            ];
+//        };
     }
 }

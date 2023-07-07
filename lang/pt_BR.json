@@ -1,4 +1,5 @@
 {
+  "Active": "Ativo",
   "Activate": "Ativar",
   "All Columns": "Todas as colunas",
   "All rights reserved.": "Todos os direitos reservados.",
@@ -12,6 +13,7 @@
   "Deselect all": "Desmarcar todas",
   "Do you want to select all": "Você deseja selecionar todas as",
   "Edit": "Editar",
+  "Export": "Exportar",
   "Enable dark mode": "Ativar modo escuro",
   "Enable light mode": "Ativar modo claro",
   "Enter your email address and we will send a link to reset your password.": "Digite seu endereço de e-mail e enviaremos um link para redefinir sua senha.",
@@ -22,6 +24,7 @@
   "Give preference to your corporate email.": "Dê preferencia para o seu e-mail corporativo.",
   "Hide password": "Ocultar senha",
   "I am a custom message": "Eu sou uma mensagem customizada",
+  "Inactive": "Inativo",
   "If you didn't request a password reset, please ignore this message or contact us if you have any questions.": "Se você não solicitou a redefinição de senha, ignore esta mensagem ou entre em contato conosco se tiver alguma dúvida.",
   "Keep me signed in": "Mantenha-me conectado",
   "Login to your account": "Entre com sua conta",
