@@ -12,6 +12,8 @@ use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Columns\BooleanColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\ButtonGroupColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
+use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
+use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class Table extends DataTableComponent
@@ -76,6 +78,36 @@ class Table extends DataTableComponent
     public function customView(): string
     {
         return 'admix-components::livewire-tables.includes.custom';
+    }
+
+    public function filters(): array
+    {
+        $strongTableFromBuilder = $this->builder()
+            ->getModel()
+            ->getTable();
+
+        return [
+            TextFilter::make(__('admix::fields.id'), 'id')
+                ->config([
+                    'maxlength' => '50',
+                ])
+                ->filter(function (Builder $builder, string $value) use ($strongTableFromBuilder) {
+                    $builder->where("{$strongTableFromBuilder}.id", $value);
+                }),
+            SelectFilter::make(__('admix::fields.is_active'), 'is_active')
+                ->options([
+                    '' => __('-'),
+                    'true' => __('Yes'),
+                    'false' => __('No'),
+                ])
+                ->filter(function (Builder $builder, string $value) use ($strongTableFromBuilder) {
+                    if ($value === 'true') {
+                        $builder->where("{$strongTableFromBuilder}.is_active", true);
+                    } else {
+                        $builder->where("{$strongTableFromBuilder}.is_active", false);
+                    }
+                }),
+        ];
     }
 
     public function columns(): array
