@@ -86,9 +86,6 @@ class Table extends DataTableComponent
 
         return [
             TextFilter::make(__('admix::fields.id'), 'id')
-                ->config([
-                    'maxlength' => '50',
-                ])
                 ->filter(function (Builder $builder, string $value) use ($strongTableFromBuilder) {
                     $builder->where("{$strongTableFromBuilder}.id", $value);
                 }),
@@ -104,6 +101,14 @@ class Table extends DataTableComponent
                     } else {
                         $builder->where("{$strongTableFromBuilder}.is_active", false);
                     }
+                }),
+            TextFilter::make(__('admix::fields.name'), 'name')
+                ->filter(function (Builder $builder, string $value) use ($strongTableFromBuilder) {
+                    $builder->where("{$strongTableFromBuilder}.name", 'LIKE', "%{$value}%");
+                }),
+            TextFilter::make(__('admix::fields.email'), 'email')
+                ->filter(function (Builder $builder, string $value) use ($strongTableFromBuilder) {
+                    $builder->where("{$strongTableFromBuilder}.email", 'LIKE', "%{$value}%");
                 }),
         ];
     }
