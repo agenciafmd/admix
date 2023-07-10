@@ -1,3 +1,0 @@
-<!-- after toolbar -->
-</div>
-{{--</div>--}}

@@ -38,9 +38,9 @@ class Table extends DataTableComponent
 
         $this->setPrimaryKey('id');
         $this->setConfigurableAreas([
-            'toolbar-left-start' => 'admix::vendor.livewire-tables.toolbar-left-start',
-            'before-toolbar' => 'admix::vendor.livewire-tables.before-toolbar',
-            'after-toolbar' => 'admix::vendor.livewire-tables.after-toolbar',
+            'toolbar-left-start' => 'admix-components::livewire-tables.includes.toolbar-left-start',
+            'before-toolbar' => 'admix-components::livewire-tables.includes.before-toolbar',
+            'after-toolbar' => 'admix-components::livewire-tables.includes.after-toolbar',
         ]);
         $this->setTableAttributes([
             'class' => 'card-table table-vcenter text-nowrap datatable',

@@ -24,7 +24,7 @@
                 @lang('results')
             </p>
 
-            {{ $rows->links('admix::vendor.livewire-tables.pagination-items') }}
+            {{ $rows->links('admix-components::livewire-tables.includes.pagination-items') }}
         @else
             <p class="m-0 text-secondary">
                 @lang('Showing')
