@@ -46,9 +46,9 @@ class AdmixServiceProvider extends ServiceProvider
             __DIR__ . '/../../lang/pt_BR' => lang_path('pt_BR'),
         ], ['admix-translations']);
 
-        $this->publishes([
-            __DIR__ . '/../../resources/views/vendor/livewire-tables/components' => base_path('resources/views/vendor/livewire-tables/components'),
-        ], ['admix-views']);
+//        $this->publishes([
+//            __DIR__ . '/../../resources/views/vendor/livewire-tables/components' => base_path('resources/views/vendor/livewire-tables/components'),
+//        ], ['admix-views']);
 
         $this->publishes([
             __DIR__ . '/../../public' => public_path('vendor/admix'),
