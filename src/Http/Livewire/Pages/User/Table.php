@@ -4,6 +4,7 @@ namespace Agenciafmd\Admix\Http\Livewire\Pages\User;
 
 use Agenciafmd\Admix\Models\User;
 use Agenciafmd\Components\LaravelLivewireTables\Columns\DeleteColumn;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
 use Rap2hpoutre\FastExcel\FastExcel;
@@ -269,5 +270,12 @@ class Table extends DataTableComponent
 //                __('admix::fields.email') => $model->email,
 //            ];
 //        };
+    }
+
+    public function render(): View
+    {
+        session()->put('backUrl', route('admix.user.index', ['table' => $this->table]));
+
+        return parent::render();
     }
 }
