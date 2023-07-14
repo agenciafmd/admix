@@ -37,6 +37,7 @@ class Table extends DataTableComponent
 //        $this->setDebugStatus(true);
 //        $this->setPaginationMethod('simple');
 //        $this->setPaginationStatus(false);
+        $this->setPerPageAccepted([50, 100, 200]);
         $this->setSortingPillsDisabled();
         $this->setFilterPillsDisabled();
 
