@@ -4,6 +4,7 @@ namespace Agenciafmd\Admix\Http\Livewire\Pages\User;
 
 use Agenciafmd\Admix\Models\User;
 use Agenciafmd\Components\LaravelLivewireTables\Columns\DeleteColumn;
+use Agenciafmd\Components\LaravelLivewireTables\Columns\RestoreColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
 use Illuminate\View\View;
@@ -20,19 +21,24 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 class Table extends DataTableComponent
 {
     protected string $pageTitle = '';
+    public bool $isTrash;
 
     protected $listeners = [
         'bulkDelete' => 'bulkDelete',
+        'bulkRestore' => 'bulkRestore',
     ];
 
-    public function builder(): Builder
+    public function mount(): void
     {
-        return User::query();
+        $this->isTrash = request()?->is('*/trash');
     }
 
     public function configure(): void
     {
-        $this->pageTitle = config('admix.user.name');
+        if ($this->isTrash) {
+            $this->pageTitle = __('Trash of ');
+        }
+        $this->pageTitle .= __(config('admix.user.name'));
 
 //        $this->setDebugStatus(true);
 //        $this->setPaginationMethod('simple');
@@ -79,6 +85,13 @@ class Table extends DataTableComponent
         });
     }
 
+    public function builder(): Builder
+    {
+        return User::query()->when($this->isTrash, function (Builder $builder) {
+            $builder->onlyTrashed();
+        });
+    }
+
     public function customView(): string
     {
         return 'admix-components::livewire-tables.includes.custom';
@@ -121,6 +134,39 @@ class Table extends DataTableComponent
 
     public function columns(): array
     {
+        $actionButtons = [];
+        if ($this->isTrash) {
+            $actionButtons = [
+                RestoreColumn::make('Restore')
+                    ->title(fn($row) => __('Restore'))
+                    ->location(fn($row) => "window.livewire.emitTo('admix::user.table', 'bulkRestore', $row->id)")
+                    ->attributes(function ($row) {
+                        return [
+                            'class' => 'btn ms-0 ms-md-2',
+                        ];
+                    }),
+            ];
+        } else {
+            $actionButtons = [
+                LinkColumn::make('Edit')
+                    ->title(fn($row) => __('Edit'))
+                    ->location(fn($row) => route('admix.user.edit', $row))
+                    ->attributes(function ($row) {
+                        return [
+                            'class' => 'btn ms-0 ms-md-2',
+                        ];
+                    }),
+                DeleteColumn::make('Delete')
+                    ->title(fn($row) => __('Delete'))
+                    ->location(fn($row) => $row->id)
+                    ->attributes(function ($row) {
+                        return [
+                            'class' => 'btn ms-0 ms-md-2',
+                        ];
+                    }),
+            ];
+        }
+
         return [
             Column::make(__('admix::fields.id'), 'id')
                 ->sortable()
@@ -146,29 +192,18 @@ class Table extends DataTableComponent
                         'class' => 'text-end',
                     ];
                 })
-                ->buttons([
-                    LinkColumn::make('Edit')
-                        ->title(fn($row) => __('Edit'))
-                        ->location(fn($row) => route('admix.user.edit', $row))
-                        ->attributes(function ($row) {
-                            return [
-                                'class' => 'btn ms-0 ms-md-2',
-                            ];
-                        }),
-                    DeleteColumn::make('Delete')
-                        ->title(fn($row) => __('Delete'))
-                        ->location(fn($row) => $row->id)
-                        ->attributes(function ($row) {
-                            return [
-                                'class' => 'btn ms-0 ms-md-2',
-                            ];
-                        }),
-                ]),
+                ->buttons($actionButtons),
         ];
     }
 
     public function bulkActions(): array
     {
+        if ($this->isTrash) {
+            return [
+                'bulkRestore' => __('Restore'),
+            ];
+        }
+
         return [
             'bulkActivate' => __('Activate'),
             'bulkDeactivate' => __('Deactivate'),
@@ -217,6 +252,36 @@ class Table extends DataTableComponent
         $this->clearSelected();
     }
 
+    public function bulkRestore(mixed $id = null): void
+    {
+        $id = $id ? Arr::wrap($id) : $this->getSelected();
+
+        try {
+            $model = $this->builder()
+                ->whereIn('id', $id)
+                ->get()->each->restore();
+
+            if ($model->count()) {
+                $this->emit('toast', [
+                    'level' => 'success',
+                    'message' => __('crud.success.restore'),
+                ]);
+            } else {
+                $this->emit('toast', [
+                    'level' => 'error',
+                    'message' => __('crud.error.restore'),
+                ]);
+            }
+        } catch (\Exception $e) {
+            $this->emit('toast', [
+                'level' => 'danger',
+                'message' => $e->getMessage(),
+            ]);
+        }
+
+        $this->clearSelected();
+    }
+
     public function bulkExport(): StreamedResponse
     {
         $builder = $this->builder();
@@ -235,6 +300,59 @@ class Table extends DataTableComponent
         }, sprintf('%s-%s.xlsx', date('YmdHi'), $this->builder()
             ->getModel()
             ->getTable()));
+    }
+
+    public function fieldsToExport(): null|\Closure
+    {
+        return null;
+//        return static function($model) {
+//            return [
+//                __('admix::fields.id') => $model->id,
+//                __('admix::fields.name') => $model->name,
+//                __('admix::fields.email') => $model->email,
+//            ];
+//        };
+    }
+
+    public function headerActions(): array
+    {
+        if ($this->isTrash) {
+            return [
+                '<x-btn href="' . route('admix.user.index') . '"
+                    label="' . __('Back') . '"/>',
+            ];
+        }
+
+        return [
+            '<x-btn href="' . route('admix.user.create') . '" 
+                label="' . __('Create :name', ['name' => __(config('admix.user.name'))]) . '"
+                class="btn-primary" />',
+            '<x-btn href="' . route('admix.user.trash') . '" 
+                label="' . __('Trash') . '"
+                class="btn-warning" />',
+        ];
+    }
+
+    public function render(): View
+    {
+        session()->put('backUrl', route('admix.user.index', ['table' => $this->table]));
+
+        $this->setupColumnSelect();
+        $this->setupPagination();
+        $this->setupSecondaryHeader();
+        $this->setupFooter();
+        $this->setupReordering();
+
+        return view('admix-components::livewire-tables.datatable')
+            ->with([
+                'pageTitle' => $this->pageTitle,
+                'headerActions' => $this->headerActions(),
+                'columns' => $this->getColumns(),
+                'rows' => $this->getRows(),
+                'customView' => $this->customView(),
+            ])
+            ->extends('admix::internal')
+            ->section('internal-content');
     }
 
     private function markIsActiveAs(bool $flag = true): void
@@ -263,47 +381,5 @@ class Table extends DataTableComponent
         }
 
         $this->clearSelected();
-    }
-
-    public function fieldsToExport(): null|\Closure
-    {
-        return null;
-//        return static function($model) {
-//            return [
-//                __('admix::fields.id') => $model->id,
-//                __('admix::fields.name') => $model->name,
-//                __('admix::fields.email') => $model->email,
-//            ];
-//        };
-    }
-
-    public function headerActions(): array
-    {
-        return [
-            '<x-btn.create href="' . route('admix.user.create') . '" 
-                label="' . __(config('admix.user.name')) . '"/>',
-        ];
-    }
-
-    public function render(): View
-    {
-        session()->put('backUrl', route('admix.user.index', ['table' => $this->table]));
-
-        $this->setupColumnSelect();
-        $this->setupPagination();
-        $this->setupSecondaryHeader();
-        $this->setupFooter();
-        $this->setupReordering();
-
-        return view('admix-components::livewire-tables.datatable')
-            ->with([
-                'pageTitle' => $this->pageTitle,
-                'headerActions' => $this->headerActions(),
-                'columns' => $this->getColumns(),
-                'rows' => $this->getRows(),
-                'customView' => $this->customView(),
-            ])
-            ->extends('admix::internal')
-            ->section('internal-content');
     }
 }
