@@ -4,9 +4,9 @@ namespace Agenciafmd\Admix\Http\Livewire\Pages\User;
 
 use Agenciafmd\Admix\Models\User;
 use Agenciafmd\Components\LaravelLivewireTables\Columns\DeleteColumn;
-use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
+use Illuminate\View\View;
 use Rap2hpoutre\FastExcel\FastExcel;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
@@ -19,6 +19,8 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class Table extends DataTableComponent
 {
+    protected string $pageTitle = '';
+
     protected $listeners = [
         'bulkDelete' => 'bulkDelete',
     ];
@@ -30,6 +32,8 @@ class Table extends DataTableComponent
 
     public function configure(): void
     {
+        $this->pageTitle = config('admix.user.name');
+
 //        $this->setDebugStatus(true);
 //        $this->setPaginationMethod('simple');
 //        $this->setPaginationStatus(false);
@@ -147,7 +151,7 @@ class Table extends DataTableComponent
                         ->location(fn($row) => route('admix.user.edit', $row))
                         ->attributes(function ($row) {
                             return [
-                                'class' => 'btn',
+                                'class' => 'btn ms-0 ms-md-2',
                             ];
                         }),
                     DeleteColumn::make('Delete')
@@ -155,7 +159,7 @@ class Table extends DataTableComponent
                         ->location(fn($row) => $row->id)
                         ->attributes(function ($row) {
                             return [
-                                'class' => 'btn',
+                                'class' => 'btn ms-0 ms-md-2',
                             ];
                         }),
                 ]),
@@ -272,10 +276,33 @@ class Table extends DataTableComponent
 //        };
     }
 
+    public function headerActions(): array
+    {
+        return [
+            '<x-btn.create href="' . route('admix.user.create') . '" 
+                label="' . __(config('admix.user.name')) . '"/>',
+        ];
+    }
+
     public function render(): View
     {
         session()->put('backUrl', route('admix.user.index', ['table' => $this->table]));
 
-        return parent::render();
+        $this->setupColumnSelect();
+        $this->setupPagination();
+        $this->setupSecondaryHeader();
+        $this->setupFooter();
+        $this->setupReordering();
+
+        return view('admix-components::livewire-tables.datatable')
+            ->with([
+                'pageTitle' => $this->pageTitle,
+                'headerActions' => $this->headerActions(),
+                'columns' => $this->getColumns(),
+                'rows' => $this->getRows(),
+                'customView' => $this->customView(),
+            ])
+            ->extends('admix::internal')
+            ->section('internal-content');
     }
 }
