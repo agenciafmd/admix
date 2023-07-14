@@ -8,6 +8,8 @@
             <img src="{{ config('admix.logo.negative') }}" width="110" height="32" alt="logo"
                  class="navbar-brand-image">
         </h1>
+        <!-- TODO: hide this item os small screens (<990) -->
+        <!--h5 class="navbar-heading text-center text-uppercase text-muted">{{ config('app.name') }}</h5-->
 
         <x-admix::profile name="{{ auth('admix-web')->user()->name }}"
                           role="Administrador"

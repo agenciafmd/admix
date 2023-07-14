@@ -2,7 +2,6 @@
 
 namespace Agenciafmd\Admix\Http\Components\Aside;
 
-use Illuminate\Support\Str;
 use Illuminate\View\Component;
 use Illuminate\View\View;
 
@@ -14,25 +13,27 @@ class Users extends Component
         public bool   $active = false,
         public bool   $visible = false,
         public array  $children = [],
-    ) {}
+    )
+    {
+    }
 
     public function render(): View
     {
-        $this->icon = 'users';
-        $this->label = __('Users');
-        $this->active = Str::of(request()->route()->getName())->startsWith(['admix.users', 'admix.roles']);
+        $this->icon = config('admix.user.icon');
+        $this->label = __(config('admix.user.name'));
+        $this->active = request()?->currentRouteNameStartsWith(['admix.user', 'admix.role']);
         $this->visible = true;
         $this->children = [
             [
-                'label' => __('Users'),
+                'label' => __(config('admix.user.name')),
                 'url' => route('admix.user.index'),
-                'active' => (Str::startsWith(request()->route()->getName(), 'admix.users')),
+                'active' => request()?->currentRouteNameStartsWith('admix.user'),
                 'visible' => true,
             ],
             [
                 'label' => __('Roles'),
                 'url' => '', // route('admix.roles.index'),
-                'active' => (Str::startsWith(request()->route()->getName(), 'admix.roles')),
+                'active' => request()?->currentRouteNameStartsWith('admix.role'),
                 'visible' => true,
             ]
         ];
