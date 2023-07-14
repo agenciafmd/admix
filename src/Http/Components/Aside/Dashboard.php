@@ -4,7 +4,6 @@ namespace Agenciafmd\Admix\Http\Components\Aside;
 
 use Illuminate\View\Component;
 use Illuminate\View\View;
-use Illuminate\Support\Str;
 
 class Dashboard extends Component
 {
@@ -21,7 +20,7 @@ class Dashboard extends Component
         $this->icon = 'activity';
         $this->label = 'Dashboard';
         $this->url = route('admix.dashboard');
-        $this->active = Str::of(request()->route()->getName())->startsWith('admix.dashboard');
+        $this->active = request()?->currentRouteNameStartsWith('admix.dashboard');
         $this->visible = true;
 
         return view('admix::components.aside.item');
