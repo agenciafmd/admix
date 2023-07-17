@@ -153,7 +153,7 @@ class Table extends DataTableComponent
                     ->location(fn($row) => route('admix.user.edit', $row))
                     ->attributes(function ($row) {
                         return [
-                            'class' => 'btn ms-0 ms-md-2',
+                            'class' => 'btn ms-2',
                         ];
                     }),
                 DeleteColumn::make('Delete')
@@ -161,7 +161,7 @@ class Table extends DataTableComponent
                     ->location(fn($row) => $row->id)
                     ->attributes(function ($row) {
                         return [
-                            'class' => 'btn ms-0 ms-md-2',
+                            'class' => 'btn ms-2',
                         ];
                     }),
             ];
