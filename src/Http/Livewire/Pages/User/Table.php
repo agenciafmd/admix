@@ -4,6 +4,7 @@ namespace Agenciafmd\Admix\Http\Livewire\Pages\User;
 
 use Agenciafmd\Admix\Models\User;
 use Agenciafmd\Components\LaravelLivewireTables\Columns\DeleteColumn;
+use Agenciafmd\Components\LaravelLivewireTables\Columns\EditColumn;
 use Agenciafmd\Components\LaravelLivewireTables\Columns\RestoreColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
@@ -13,7 +14,6 @@ use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Columns\BooleanColumn;
 use Rappasoft\LaravelLivewireTables\Views\Columns\ButtonGroupColumn;
-use Rappasoft\LaravelLivewireTables\Views\Columns\LinkColumn;
 use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
 use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -148,7 +148,7 @@ class Table extends DataTableComponent
             ];
         } else {
             $actionButtons = [
-                LinkColumn::make('Edit')
+                EditColumn::make('Edit')
                     ->title(fn($row) => __('Edit'))
                     ->location(fn($row) => route('admix.user.edit', $row))
                     ->attributes(function ($row) {
@@ -324,12 +324,10 @@ class Table extends DataTableComponent
         }
 
         return [
-            '<x-btn href="' . route('admix.user.create') . '" 
-                label="' . __('Create :name', ['name' => __(config('admix.user.name'))]) . '"
-                class="btn-primary" />',
-            '<x-btn href="' . route('admix.user.trash') . '" 
-                label="' . __('Trash') . '"
-                class="btn-warning" />',
+            '<x-btn.create href="' . route('admix.user.create') . '" 
+                label="' . __(config('admix.user.name')) . '" />',
+            '<x-btn.trash href="' . route('admix.user.trash') . '" 
+                label="" />',
         ];
     }
 
