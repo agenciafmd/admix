@@ -30,9 +30,9 @@ Route::get('/profile', Pages\Profile\MyAccount::class)
     ->name('admix.profile');
 Route::get('/profile/change-password', Pages\Profile\ChangePassword::class)
     ->name('admix.profile.change-password');
-Route::get('/users', Pages\User\Table::class)
+Route::get('/users', Pages\User\Index::class)
     ->name('admix.user.index');
-Route::get('/users/trash', Pages\User\Table::class)
+Route::get('/users/trash', Pages\User\Index::class)
     ->name('admix.user.trash');
 Route::get('/users/create', Pages\User\Form::class)
     ->name('admix.user.create');
