@@ -31,8 +31,8 @@ class Users extends Component
                 'visible' => true,
             ],
             [
-                'label' => __('Roles'),
-                'url' => '', // route('admix.roles.index'),
+                'label' => __(config('admix.role.name')),
+                'url' => route('admix.role.index'),
                 'active' => request()?->currentRouteNameStartsWith('admix.role'),
                 'visible' => true,
             ]

@@ -38,3 +38,12 @@ Route::get('/users/create', Pages\User\Form::class)
     ->name('admix.user.create');
 Route::get('/users/{user}/edit', Pages\User\Form::class)
     ->name('admix.user.edit');
+
+Route::get('/roles', Pages\Role\Index::class)
+    ->name('admix.role.index');
+Route::get('/roles/trash', Pages\Role\Index::class)
+    ->name('admix.role.trash');
+Route::get('/roles/create', Pages\Role\Form::class)
+    ->name('admix.role.create');
+Route::get('/roles/{role}/edit', Pages\Role\Form::class)
+    ->name('admix.role.edit');

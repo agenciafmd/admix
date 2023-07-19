@@ -19,6 +19,8 @@ class LivewireServiceProvider extends ServiceProvider
         Livewire::component('agenciafmd.admix.http.livewire.pages.profile.change-password', Pages\Profile\ChangePassword::class);
         Livewire::component('agenciafmd.admix.http.livewire.pages.user.index', Pages\User\Index::class);
         Livewire::component('agenciafmd.admix.http.livewire.pages.user.form', Pages\User\Form::class);
+        Livewire::component('agenciafmd.admix.http.livewire.pages.role.index', Pages\Role\Index::class);
+        Livewire::component('agenciafmd.admix.http.livewire.pages.role.form', Pages\Role\Form::class);
     }
 
     public function register(): void

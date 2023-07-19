@@ -26,8 +26,9 @@ class AdmixServiceProvider extends ServiceProvider
     {
         $this->app->register(BladeServiceProvider::class);
         $this->app->register(CommandServiceProvider::class);
-        $this->app->register(LivewireServiceProvider::class);
         $this->app->register(RouteServiceProvider::class);
+        $this->app->register(AuthServiceProvider::class);
+        $this->app->register(LivewireServiceProvider::class);
     }
 
     private function publish(): void
