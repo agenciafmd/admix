@@ -25,6 +25,7 @@ class AdmixUser extends Command
             ], [
                 'name' => $name,
                 'password' => $password,
+                'is_active' => true,
                 'email_verified_at' => now(),
             ]);
 
