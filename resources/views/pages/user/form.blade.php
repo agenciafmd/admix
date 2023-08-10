@@ -44,7 +44,15 @@
             />
         </div>
     </div>
-
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <x-form.select name="user.role_id"
+                           :label="__('admix::fields.role_id')"
+                           :options="$roles"
+                           :placeholder="__('Administrator')"
+            />
+        </div>
+    </div>
     <x-slot:cardComplement>
         @if($user->id)
             <div class="mb-3">

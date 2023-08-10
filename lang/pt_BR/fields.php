@@ -27,6 +27,7 @@ return [
     'remember' => 'mantenha-me conectado',
     'request_another' => 'clique aqui para solicitar outro',
     'reset_password' => 'redefinir senha',
+    'role_id' => 'grupo',
     'rules' => 'permissões',
     'send_password_reset_link' => 'enviar link de redefinição de senha',
     'updated_at' => 'atualizado em',

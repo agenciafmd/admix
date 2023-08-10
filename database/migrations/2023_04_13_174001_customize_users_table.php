@@ -10,7 +10,8 @@ return new class extends Migration {
         Schema::table('users', static function (Blueprint $table) {
             $table->after('id', static function (Blueprint $table) {
                 $table->boolean('is_active')
-                    ->default(0);
+                    ->default(0)
+                    ->index();
                 $table->string('type')
                     ->nullable();
             });
@@ -18,9 +19,9 @@ return new class extends Migration {
                 $table->string('api_token', 80)
                     ->unique()
                     ->nullable();
-                $table->bigInteger('role_id')
-                    ->unsigned()
-                    ->default(0);
+                $table->foreignId('role_id')
+                    ->nullable()
+                    ->constrained();
                 $table->boolean('can_notify')
                     ->default(0);
             });
