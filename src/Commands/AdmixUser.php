@@ -26,7 +26,6 @@ class AdmixUser extends Command
                 'is_active' => true,
                 'name' => $name,
                 'password' => $password,
-                'is_active' => true,
                 'email_verified_at' => now(),
             ]);
 
