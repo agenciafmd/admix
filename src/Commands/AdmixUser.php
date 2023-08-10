@@ -23,6 +23,7 @@ class AdmixUser extends Command
             ->updateOrCreate([
                 'email' => $email
             ], [
+                'is_active' => true,
                 'name' => $name,
                 'password' => $password,
                 'is_active' => true,
