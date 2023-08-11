@@ -4,7 +4,9 @@ namespace Agenciafmd\Admix\Models;
 
 use Agenciafmd\Admix\Notifications\ResetPasswordNotification;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -45,25 +47,27 @@ class User extends Authenticatable implements HasMedia
         });
     }
 
-//    public function role(): BelongsTo
-//    {
-//        return $this->belongsTo(Role::class);
-//    }
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class);
+    }
 
-//    public function hasAbility(string $ability): bool
-//    {
-//        if (!$this->role) {
-//            return false;
-//        }
-//
-//        return in_array('\\' . $ability, $this->role->rules, true);
-//    }
+    public function hasAbility(string $ability): bool
+    {
+        if (!$this->role) {
+            return false;
+        }
 
-//    public function getIsAdminAttribute(): bool
-//    {
-//        return !(isset($this->attributes['role_id'])
-//            && $this->attributes['role_id']);
-//    }
+        return in_array($ability, $this->role->rules, true);
+    }
+
+    protected function isAdmin(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => !(isset($this->attributes['role_id'])
+                && $this->attributes['role_id']),
+        );
+    }
 
     public function sendPasswordResetNotification($token): void
     {

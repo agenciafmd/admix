@@ -11,7 +11,7 @@ class AdmixPolicy
 
     public function before(User $user, string $ability): bool|null
     {
-        if ($user->is_admin) {
+        if ($user->isAdmin) {
             return true;
         }
 

@@ -5,10 +5,11 @@ namespace Agenciafmd\Admix\Http\Livewire\Pages\Base;
 use Agenciafmd\Components\LaravelLivewireTables\Columns\DeleteColumn;
 use Agenciafmd\Components\LaravelLivewireTables\Columns\EditColumn;
 use Agenciafmd\Components\LaravelLivewireTables\Columns\RestoreColumn;
+use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use Illuminate\View\View;
 use Rap2hpoutre\FastExcel\FastExcel;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
@@ -146,10 +147,13 @@ class Index extends DataTableComponent
 
     public function columns(): array
     {
+        $actions = [];
         $actionButtons = [];
         if ($this->isTrash) {
-            $actionButtons = [
-                RestoreColumn::make('Restore')
+            if (Auth::user()
+                ?->can('restore', $this->builder()
+                    ->getModel())) {
+                $actions[] = RestoreColumn::make('Restore')
                     ->title(fn($row) => __('Restore'))
                     ->location(fn($row) => "window.livewire.emitTo('" . Str::of(self::class)
                             ->lower()
@@ -159,28 +163,36 @@ class Index extends DataTableComponent
                         return [
                             'class' => 'btn ms-0 ms-md-2',
                         ];
-                    }),
-            ];
+                    });
+            }
         } else {
-            $actionButtons = [
-                ...$this->additionalActionButtons,
-                EditColumn::make('Edit')
+            if (Auth::user()
+                ?->can('update', $this->builder()
+                    ->getModel())) {
+                $actions[] = EditColumn::make('Edit')
                     ->title(fn($row) => __('Edit'))
                     ->location(fn($row) => route($this->editRoute, $row))
                     ->attributes(function ($row) {
                         return [
                             'class' => 'btn ms-2',
                         ];
-                    }),
-                DeleteColumn::make('Delete')
+                    });
+            }
+
+            if (Auth::user()
+                ?->can('delete', $this->builder()
+                    ->getModel())) {
+                $actions[] = DeleteColumn::make('Delete')
                     ->title(fn($row) => __('Delete'))
                     ->location(fn($row) => $row->id)
                     ->attributes(function ($row) {
                         return [
                             'class' => 'btn ms-2',
                         ];
-                    }),
-            ];
+                    });
+            }
+
+            $actionButtons = array_merge($this->additionalActionButtons, $actions);
         }
 
         return [
@@ -209,18 +221,34 @@ class Index extends DataTableComponent
     public function bulkActions(): array
     {
         if ($this->isTrash) {
-            return [
-                'bulkRestore' => __('Restore'),
-            ];
+            if (Auth::user()
+                ?->can('restore', $this->builder()
+                    ->getModel())) {
+                return [
+                    'bulkRestore' => __('Restore'),
+                ];
+            }
+
+            return [];
         }
 
-        return [
-            ...$this->additionalBulkActions,
-            'bulkActivate' => __('Activate'),
-            'bulkDeactivate' => __('Deactivate'),
-            'bulkExport' => __('Export'),
-            'bulkDelete' => __('Delete'),
-        ];
+        $actions = [];
+        if (Auth::user()
+            ?->can('update', $this->builder()
+                ->getModel())) {
+            $actions['bulkActivate'] = __('Activate');
+            $actions['bulkDeactivate'] = __('Deactivate');
+        }
+
+        $actions['bulkExport'] = __('Export');
+
+        if (Auth::user()
+            ?->can('delete', $this->builder()
+                ->getModel())) {
+            $actions['bulkDelete'] = __('Delete');
+        }
+
+        return array_merge($this->additionalBulkActions, $actions);
     }
 
     public function bulkActivate(): void
@@ -334,12 +362,21 @@ class Index extends DataTableComponent
             ];
         }
 
-        return [
-            '<x-btn.create href="' . route($this->creteRoute) . '" 
-                label="' . $this->packageName . '" />',
-            '<x-btn.trash href="' . route($this->trashRoute) . '" 
-                label="" />',
-        ];
+        $actions = [];
+        if (Auth::user()
+            ?->can('create', $this->builder()
+                ->getModel())) {
+            $actions[] = '<x-btn.create href="' . route($this->creteRoute) . '" 
+                label="' . $this->packageName . '" />';
+        }
+        if (Auth::user()
+            ?->can('restore', $this->builder()
+                ->getModel())) {
+            $actions[] = '<x-btn.trash href="' . route($this->trashRoute) . '" 
+                label="" />';
+        }
+
+        return $actions;
     }
 
     public function render(): View
