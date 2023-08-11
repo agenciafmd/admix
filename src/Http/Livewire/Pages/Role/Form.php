@@ -3,20 +3,25 @@
 namespace Agenciafmd\Admix\Http\Livewire\Pages\Role;
 
 use Agenciafmd\Admix\Models\Role;
+use Illuminate\Contracts\View\View;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
-use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\Redirector;
 
 class Form extends Component
 {
+    use AuthorizesRequests;
+
     public Role $role;
     public Collection $gateRules;
 
     public function mount(Role $role): void
     {
+        ($role->id) ? $this->authorize('update', Role::class) : $this->authorize('create', Role::class);
+
         $this->role = $role;
         $this->role->is_active ??= false;
         $this->role->rules ??= [];

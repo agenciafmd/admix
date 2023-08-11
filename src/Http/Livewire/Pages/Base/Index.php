@@ -7,6 +7,7 @@ use Agenciafmd\Components\LaravelLivewireTables\Columns\EditColumn;
 use Agenciafmd\Components\LaravelLivewireTables\Columns\RestoreColumn;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -21,6 +22,8 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class Index extends DataTableComponent
 {
+    use AuthorizesRequests;
+
     protected $model;
     protected string $indexRoute = '';
     protected string $trashRoute = '';
@@ -42,6 +45,9 @@ class Index extends DataTableComponent
     public function mount(): void
     {
         $this->isTrash = request()?->is('*/trash');
+
+        ($this->isTrash) ? $this->authorize('restore', $this->model) : $this->authorize('view', $this->model);
+
     }
 
     public function configure(): void

@@ -6,6 +6,7 @@ use Agenciafmd\Admix\Models\Role;
 use Agenciafmd\Admix\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
@@ -15,6 +16,8 @@ use Livewire\Redirector;
 
 class Form extends Component
 {
+    use AuthorizesRequests;
+
     public User $user;
     public string $password;
     public string $password_confirmation;
@@ -22,6 +25,8 @@ class Form extends Component
 
     public function mount(User $user): void
     {
+        ($user->id) ? $this->authorize('update', User::class) : $this->authorize('create', User::class);
+
         $this->user = $user;
         $this->user->is_active ??= false;
         $this->user->can_notify ??= false;
