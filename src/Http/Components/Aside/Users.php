@@ -2,8 +2,8 @@
 
 namespace Agenciafmd\Admix\Http\Components\Aside;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
-use Illuminate\View\View;
 
 class Users extends Component
 {

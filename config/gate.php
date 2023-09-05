@@ -1,5 +1,6 @@
 <?php
 
+use Agenciafmd\Admix\Policies\AuditPolicy;
 use Agenciafmd\Admix\Policies\RolePolicy;
 use Agenciafmd\Admix\Policies\UserPolicy;
 
@@ -57,5 +58,16 @@ return [
             ],
         ],
         'sort' => 1,
+    ],
+    [
+        'name' => 'Configurations » ' . config('admix.audit.name'),
+        'policy' => AuditPolicy::class,
+        'abilities' => [
+            [
+                'name' => 'View',
+                'method' => 'view',
+            ],
+        ],
+        'sort' => 2,
     ],
 ];

@@ -47,7 +47,6 @@ class Index extends DataTableComponent
         $this->isTrash = request()?->is('*/trash');
 
         ($this->isTrash) ? $this->authorize('restore', $this->model) : $this->authorize('view', $this->model);
-
     }
 
     public function configure(): void
@@ -361,7 +360,7 @@ class Index extends DataTableComponent
 
     public function headerActions(): array
     {
-        if ($this->isTrash) {
+        if ($this->indexRoute && $this->isTrash) {
             return [
                 '<x-btn href="' . route($this->indexRoute) . '"
                     label="' . __('Back') . '"/>',
@@ -369,13 +368,13 @@ class Index extends DataTableComponent
         }
 
         $actions = [];
-        if (Auth::user()
+        if ($this->creteRoute && Auth::user()
             ?->can('create', $this->builder()
                 ->getModel())) {
             $actions[] = '<x-btn.create href="' . route($this->creteRoute) . '" 
                 label="' . $this->packageName . '" />';
         }
-        if (Auth::user()
+        if ($this->trashRoute && Auth::user()
             ?->can('restore', $this->builder()
                 ->getModel())) {
             $actions[] = '<x-btn.trash href="' . route($this->trashRoute) . '" 
@@ -387,7 +386,9 @@ class Index extends DataTableComponent
 
     public function render(): View
     {
-        session()->put('backUrl', route($this->indexRoute, ['table' => $this->table]));
+        if ($this->indexRoute) {
+            session()->put('backUrl', route($this->indexRoute, ['table' => $this->table]));
+        }
 
         $this->setupColumnSelect();
         $this->setupPagination();

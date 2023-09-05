@@ -39,5 +39,10 @@ return [
         'name' => 'Role',
         'icon' => 'minus',
         'sort' => 30,
-    ]
+    ],
+    'audit' => [
+        'name' => 'Audit',
+        'icon' => 'minus',
+        'sort' => 30,
+    ],
 ];

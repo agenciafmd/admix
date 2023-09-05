@@ -1,11 +1,14 @@
 <?php
 
 return [
+    'auditable_id' => 'registro',
+    'auditable_type' => 'local',
     'can_notify' => 'receber notificação',
     'check_email' => 'antes de continuar, verifique seu e-mail para um link de verificação.',
     'confirm_password' => 'confirme a senha',
     'created_at' => 'criado em',
     'email' => 'e-mail',
+    'event' => 'evento',
     'forgot_password' => 'esqueceu a senha?',
     'hide_at' => 'não mostrar após',
     'id' => 'id',
@@ -30,6 +33,7 @@ return [
     'role_id' => 'grupo',
     'rules' => 'permissões',
     'send_password_reset_link' => 'enviar link de redefinição de senha',
+    'user' => 'usuário',
     'updated_at' => 'atualizado em',
     'verify_email' => 'verifique seu e-mail',
     'verify_email_link' => 'um novo link de verificação foi enviado para o seu endereço de e-mail.',

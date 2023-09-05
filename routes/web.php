@@ -48,3 +48,6 @@ Route::get('/roles/create', Pages\Role\Form::class)
     ->name('admix.role.create');
 Route::get('/roles/{role}/edit', Pages\Role\Form::class)
     ->name('admix.role.edit');
+
+Route::get('/audit', Pages\Audit\Index::class)
+    ->name('admix.audit.index');

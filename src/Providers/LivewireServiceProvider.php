@@ -21,6 +21,7 @@ class LivewireServiceProvider extends ServiceProvider
         Livewire::component('agenciafmd.admix.http.livewire.pages.user.form', Pages\User\Form::class);
         Livewire::component('agenciafmd.admix.http.livewire.pages.role.index', Pages\Role\Index::class);
         Livewire::component('agenciafmd.admix.http.livewire.pages.role.form', Pages\Role\Form::class);
+        Livewire::component('agenciafmd.admix.http.livewire.pages.audit.index', Pages\Audit\Index::class);
     }
 
     public function register(): void
