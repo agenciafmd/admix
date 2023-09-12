@@ -17,7 +17,7 @@
         />
 
         <div class="collapse navbar-collapse" id="sidebar-menu">
-            <ul class="navbar-nav pt-lg-3">
+            <ul class="navbar-nav pt-lg-4">
                 @foreach(app()->make('admix-menu')->sortBy('ord') as $item)
                     <x-dynamic-component :component="$item->component"/>
                 @endforeach

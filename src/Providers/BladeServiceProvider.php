@@ -56,6 +56,10 @@ class BladeServiceProvider extends ServiceProvider
             ])->push((object)[
                 'component' => 'admix::aside.users',
                 'ord' => 2,
+            ])
+            ->push((object)[
+                'component' => 'admix::aside.logs',
+                'ord' => 3,
             ]);
     }
 

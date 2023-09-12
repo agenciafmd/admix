@@ -42,7 +42,7 @@ return [
     ],
     'audit' => [
         'name' => 'Audit',
-        'icon' => 'minus',
+        'icon' => 'list-search',
         'sort' => 30,
     ],
 ];
