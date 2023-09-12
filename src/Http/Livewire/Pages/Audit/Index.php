@@ -4,8 +4,10 @@ namespace Agenciafmd\Admix\Http\Livewire\Pages\Audit;
 
 use Agenciafmd\Admix\Http\Livewire\Pages\Base\Index as BaseIndex;
 use Agenciafmd\Admix\Models\Audit;
+use Agenciafmd\Components\LaravelLivewireTables\Columns\ModalColumn;
 use Illuminate\Support\Str;
 use Rappasoft\LaravelLivewireTables\Views\Column;
+use Rappasoft\LaravelLivewireTables\Views\Columns\ButtonGroupColumn;
 
 class Index extends BaseIndex
 {
@@ -15,26 +17,29 @@ class Index extends BaseIndex
     {
         $this->packageName = __(config('admix.audit.name'));
 
+        $this->setAdditionalSelects([
+            'audits.old_values as old_values',
+            'audits.new_values as new_values',
+            'audits.url as url',
+            'audits.ip_address as ip_address',
+            'audits.updated_at as updated_at',
+        ]);
+
         parent::configure();
     }
 
     public function columns(): array
     {
-        $actions = [];
-        $actionButtons = [];
-//        if (Auth::user()
-//            ?->can('update', $this->builder()
-//                ->getModel())) {
-//            $actions[] = EditColumn::make('Edit')
-//                ->title(fn($row) => __('Edit'))
-//                ->location(fn($row) => route($this->editRoute, $row))
-//                ->attributes(function ($row) {
-//                    return [
-//                        'class' => 'btn ms-2',
-//                    ];
-//                });
-//        }
-//        $actionButtons = array_merge($this->additionalActionButtons, $actions);
+        $actions[] = ModalColumn::make('Details')
+            ->title(fn($row) => __('Details'))
+            ->location(fn($row) => $row->log)
+            ->attributes(function ($row) {
+                return [
+                    'class' => 'btn ms-2',
+                ];
+            });
+
+        $actionButtons = array_merge($this->additionalActionButtons, $actions);
 
         return [
             Column::make(__('admix::fields.id'), 'id')
@@ -70,15 +75,14 @@ class Index extends BaseIndex
                 ->format(function ($value) {
                     return $value->format(config('admix.timestamp.format'));
                 }),
-
-//            ButtonGroupColumn::make('')
-//                ->excludeFromColumnSelect()
-//                ->attributes(function ($row) {
-//                    return [
-//                        'class' => 'text-end',
-//                    ];
-//                })
-//                ->buttons($actionButtons),
+            ButtonGroupColumn::make('')
+                ->excludeFromColumnSelect()
+                ->attributes(function ($row) {
+                    return [
+                        'class' => 'text-end',
+                    ];
+                })
+                ->buttons($actionButtons),
         ];
     }
 }
