@@ -4,10 +4,16 @@ namespace Agenciafmd\Admix\Http\Livewire\Pages\Audit;
 
 use Agenciafmd\Admix\Http\Livewire\Pages\Base\Index as BaseIndex;
 use Agenciafmd\Admix\Models\Audit;
+use Agenciafmd\Admix\Models\User;
 use Agenciafmd\Components\LaravelLivewireTables\Columns\ModalColumn;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Columns\ButtonGroupColumn;
+use Rappasoft\LaravelLivewireTables\Views\Filters\DateTimeFilter;
+use Rappasoft\LaravelLivewireTables\Views\Filters\SelectFilter;
+use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
 
 class Index extends BaseIndex
 {
@@ -28,6 +34,74 @@ class Index extends BaseIndex
         parent::configure();
     }
 
+    public function filters(): array
+    {
+        $strongTableFromBuilder = $this->builder()
+            ->getModel()
+            ->getTable();
+
+        return [
+            TextFilter::make(__('admix::fields.id'), 'id')
+                ->filter(function (Builder $builder, string $value) use ($strongTableFromBuilder) {
+                    $builder->where("{$strongTableFromBuilder}.id", $value);
+                }),
+            SelectFilter::make(__('admix::fields.auditable_type'), 'auditable_type')
+                ->options([
+                        '' => __('-'),
+                    ] + collect(config('audit-alias'))
+                        ->mapWithKeys(function ($value, $key) {
+                            return [
+                                $key => Str::of($value)
+                                    ->explode(' » ')
+                                    ->map(fn($name) => __($name))
+                                    ->implode(' » '),
+                            ];
+                        })
+                        ->toArray())
+                ->filter(function (Builder $builder, string $value) use ($strongTableFromBuilder) {
+                    $builder->where("{$strongTableFromBuilder}.auditable_type", $value);
+                }),
+            SelectFilter::make(__('admix::fields.user'), 'user_id')
+                ->options([
+                        '' => __('-'),
+                    ] + User::query()
+                        ->orderBy('name')
+                        ->pluck('name', 'id')
+                        ->toArray())
+                ->filter(function (Builder $builder, string $value) use ($strongTableFromBuilder) {
+                    $builder->where("{$strongTableFromBuilder}.user_id", $value);
+                }),
+            SelectFilter::make(__('admix::fields.event'), 'event')
+                ->options([
+                        '' => __('-'),
+                    ] + collect(config('audit.events'))
+                        ->mapWithKeys(function ($value) {
+                            return [
+                                $value => __('admix::events.' . $value),
+                            ];
+                        })
+                        ->toArray())
+                ->filter(function (Builder $builder, string $value) use ($strongTableFromBuilder) {
+                    $builder->where("{$strongTableFromBuilder}.event", $value);
+                }),
+            TextFilter::make(__('admix::fields.auditable_id'), 'auditable_id')
+                ->filter(function (Builder $builder, string $value) use ($strongTableFromBuilder) {
+                    $builder->where("{$strongTableFromBuilder}.auditable_id", $value);
+                }),
+            DateTimeFilter::make(__('admix::fields.initial_date'), 'initial_date')
+                ->filter(function (Builder $builder, string $value) use ($strongTableFromBuilder) {
+                    $builder->where("{$strongTableFromBuilder}.created_at", '>=', Carbon::parse($value)
+                        ->format('Y-m-d H:i:s'));
+                }),
+            DateTimeFilter::make(__('admix::fields.end_date'), 'end_date')
+                ->filter(function (Builder $builder, string $value) use ($strongTableFromBuilder) {
+                    $builder->where("{$strongTableFromBuilder}.created_at", '<=', Carbon::parse($value)
+                        ->format('Y-m-d H:i:s'));
+                }),
+            ...$this->additionalFilters,
+        ];
+    }
+
     public function columns(): array
     {
         $actions[] = ModalColumn::make('Details')
@@ -38,7 +112,6 @@ class Index extends BaseIndex
                     'class' => 'btn ms-2',
                 ];
             });
-
         $actionButtons = array_merge($this->additionalActionButtons, $actions);
 
         return [
