@@ -2,14 +2,11 @@
 
 namespace Agenciafmd\Admix\Http\Livewire\Pages\Profile;
 
-use Agenciafmd\Admix\Models\User;
-use Agenciafmd\Admix\Traits\WithModel;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
-use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\Redirector;
 use Livewire\TemporaryUploadedFile;
@@ -26,7 +23,7 @@ class MyAccount extends Component
     public bool $can_notify;
     public array $media;
 
-    public function mount()
+    public function mount(): void
     {
         $this->user = Auth::guard('admix-web')
             ->user();
@@ -44,7 +41,7 @@ class MyAccount extends Component
             ->section('profile-content');
     }
 
-    public function updated($field)
+    public function updated(mixed $field): void
     {
         $this->validateOnly($field, $this->rules(), [], $this->attributes());
     }
@@ -73,14 +70,14 @@ class MyAccount extends Component
 
         $this->media['avatar'] instanceof TemporaryUploadedFile
             ? $rules['media.avatar'] = [
-                'nullable',
-                'image',
-                'max:5120',
-            ]
+            'nullable',
+            'image',
+            'max:5120',
+        ]
             : $rules['media.avatar'] = [
-                'nullable',
-                'array',
-            ];
+            'nullable',
+            'array',
+        ];
 
         return $rules;
     }
@@ -122,7 +119,7 @@ class MyAccount extends Component
         return null;
     }
 
-    public function removeMedia($field)
+    public function removeMedia(mixed $field): void
     {
         if ($this->media[$field] instanceof TemporaryUploadedFile) {
             $this->media[$field] = null;
@@ -140,17 +137,17 @@ class MyAccount extends Component
         return;
     }
 
-    public function customNameMedia(string $field)
+    public function customNameMedia(string $field): string
     {
         return Str::of($this->name)
             ->slug()
             ->pipe(function (Stringable $string) use ($field) {
-                return $string . '-' . $field;
+                return $string->toString() . '-' . $field;
             })
             ->limit(150, '');
     }
 
-    public function customFileNameMedia(string $field)
+    public function customFileNameMedia(string $field): string
     {
         return $this->customNameMedia($field) . '.' . Str::of($this->media[$field]->getClientOriginalExtension())
                 ->lower();

@@ -35,6 +35,7 @@ return [
     'role_id' => 'grupo',
     'rules' => 'permissões',
     'send_password_reset_link' => 'enviar link de redefinição de senha',
+    'slug' => 'identificador / slug',
     'user' => 'usuário',
     'updated_at' => 'atualizado em',
     'verify_email' => 'verifique seu e-mail',

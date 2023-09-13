@@ -102,6 +102,7 @@ class Form extends Component
                         'policy' => $group['policy'] . '@' . $ability['method'],
                     ]),
                 ];
-            });
+            })
+            ->values();
     }
 }

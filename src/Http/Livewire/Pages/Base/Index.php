@@ -2,6 +2,7 @@
 
 namespace Agenciafmd\Admix\Http\Livewire\Pages\Base;
 
+use Agenciafmd\Admix\Models\User;
 use Agenciafmd\Components\LaravelLivewireTables\Columns\DeleteColumn;
 use Agenciafmd\Components\LaravelLivewireTables\Columns\EditColumn;
 use Agenciafmd\Components\LaravelLivewireTables\Columns\RestoreColumn;
@@ -36,6 +37,7 @@ class Index extends DataTableComponent
     protected array $additionalActionButtons = [];
     protected array $additionalBulkActions = [];
     public bool $isTrash;
+    public User $user;
 
     protected $listeners = [
         'bulkDelete' => 'bulkDelete',
@@ -44,6 +46,8 @@ class Index extends DataTableComponent
 
     public function mount(): void
     {
+        $this->user = Auth::guard('admix-web')
+            ->user();
         $this->isTrash = request()?->is('*/trash');
 
         ($this->isTrash) ? $this->authorize('restore', $this->model) : $this->authorize('view', $this->model);
@@ -155,8 +159,8 @@ class Index extends DataTableComponent
         $actions = [];
         $actionButtons = [];
         if ($this->isTrash) {
-            if (Auth::user()
-                ?->can('restore', $this->builder()
+
+            if ($this->user->can('restore', $this->builder()
                     ->getModel())) {
                 $actions[] = RestoreColumn::make('Restore')
                     ->title(fn($row) => __('Restore'))
@@ -171,8 +175,7 @@ class Index extends DataTableComponent
                     });
             }
         } else {
-            if (Auth::user()
-                ?->can('update', $this->builder()
+            if ($this->user->can('update', $this->builder()
                     ->getModel())) {
                 $actions[] = EditColumn::make('Edit')
                     ->title(fn($row) => __('Edit'))
@@ -184,8 +187,7 @@ class Index extends DataTableComponent
                     });
             }
 
-            if (Auth::user()
-                ?->can('delete', $this->builder()
+            if ($this->user->can('delete', $this->builder()
                     ->getModel())) {
                 $actions[] = DeleteColumn::make('Delete')
                     ->title(fn($row) => __('Delete'))
@@ -226,8 +228,7 @@ class Index extends DataTableComponent
     public function bulkActions(): array
     {
         if ($this->isTrash) {
-            if (Auth::user()
-                ?->can('restore', $this->builder()
+            if ($this->user->can('restore', $this->builder()
                     ->getModel())) {
                 return [
                     'bulkRestore' => __('Restore'),
@@ -238,8 +239,7 @@ class Index extends DataTableComponent
         }
 
         $actions = [];
-        if (Auth::user()
-            ?->can('update', $this->builder()
+        if ($this->user->can('update', $this->builder()
                 ->getModel())) {
             $actions['bulkActivate'] = __('Activate');
             $actions['bulkDeactivate'] = __('Deactivate');
@@ -247,8 +247,7 @@ class Index extends DataTableComponent
 
         $actions['bulkExport'] = __('Export');
 
-        if (Auth::user()
-            ?->can('delete', $this->builder()
+        if ($this->user->can('delete', $this->builder()
                 ->getModel())) {
             $actions['bulkDelete'] = __('Delete');
         }
@@ -366,16 +365,13 @@ class Index extends DataTableComponent
                     label="' . __('Back') . '"/>',
             ];
         }
-
         $actions = [];
-        if ($this->creteRoute && Auth::user()
-            ?->can('create', $this->builder()
+        if ($this->creteRoute && $this->user->can('create', $this->builder()
                 ->getModel())) {
             $actions[] = '<x-btn.create href="' . route($this->creteRoute) . '" 
                 label="' . $this->packageName . '" />';
         }
-        if ($this->trashRoute && Auth::user()
-            ?->can('restore', $this->builder()
+        if ($this->trashRoute && $this->user->can('restore', $this->builder()
                 ->getModel())) {
             $actions[] = '<x-btn.trash href="' . route($this->trashRoute) . '" 
                 label="" />';

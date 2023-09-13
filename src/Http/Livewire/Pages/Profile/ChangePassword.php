@@ -2,21 +2,13 @@
 
 namespace Agenciafmd\Admix\Http\Livewire\Pages\Profile;
 
-use Agenciafmd\Admix\Models\User;
-use Agenciafmd\Admix\Traits\WithModel;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Support\Str;
-use Illuminate\Support\Stringable;
-use Illuminate\View\View;
+use Illuminate\Validation\Rules\Password;
 use Livewire\Component;
 use Livewire\Redirector;
-use Livewire\TemporaryUploadedFile;
-use Livewire\WithFileUploads;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
-use Illuminate\Validation\Rules\Password;
 
 class ChangePassword extends Component
 {
@@ -24,7 +16,7 @@ class ChangePassword extends Component
     public string $password;
     public string $password_confirmation;
 
-    public function mount()
+    public function mount(): void
     {
         $this->user = Auth::guard('admix-web')
             ->user();
@@ -37,7 +29,7 @@ class ChangePassword extends Component
             ->section('profile-content');
     }
 
-    public function updated($field)
+    public function updated(mixed $field): void
     {
         $this->validateOnly($field, $this->rules(), [], $this->attributes());
     }
