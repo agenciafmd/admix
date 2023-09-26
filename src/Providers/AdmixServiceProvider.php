@@ -41,19 +41,19 @@ class AdmixServiceProvider extends ServiceProvider
             __DIR__ . '/../../config/livewire.php' => base_path('config/livewire.php'),
             __DIR__ . '/../../config/livewire-tables.php' => base_path('config/livewire-tables.php'),
             __DIR__ . '/../../config/media-library.php' => base_path('config/media-library.php'),
-        ], 'admix-config');
+        ], 'admix:config');
 
         $this->publishes([
             __DIR__ . '/../../lang/pt_BR' => lang_path('pt_BR'),
-        ], ['admix-translations']);
+        ], ['admix:translations']);
 
 //        $this->publishes([
 //            __DIR__ . '/../../resources/views/vendor/livewire-tables/components' => base_path('resources/views/vendor/livewire-tables/components'),
-//        ], ['admix-views']);
+//        ], ['admix:views']);
 
         $this->publishes([
             __DIR__ . '/../../public' => public_path('vendor/admix'),
-        ], ['admix-assets', 'laravel-assets']);
+        ], ['admix:assets', 'laravel-assets']);
     }
 
     private function loadMigrations(): void

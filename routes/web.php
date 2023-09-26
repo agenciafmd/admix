@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 Route::withoutMiddleware([Authenticate::class . ':admix-web'])
     ->middleware([RedirectIfAuthenticated::class])
     ->group(function () {
-        Route::redirect('/', '/login');
+        Route::redirect('/', config('admix.path') . '/login');
         Route::get('/login', Auth\Login::class)
             ->name('admix.auth.login');
         Route::get('/forgot-password', Auth\ForgotPassword::class)

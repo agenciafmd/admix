@@ -11,3 +11,23 @@
 Estamos usando o [Tabler](https://tabler.github.io/) como base para o nosso layout.
 
 https://github.com/tabler/tabler/commit/fc91e6ae8cad5ed3d2b17181b48348753222ce14
+
+## Instalação
+
+Create a new Laravel application:
+
+```bash
+composer create-project laravel/laravel:10.* laravel10
+```
+
+Require admix package:
+
+```bash
+composer require agenciafmd/admix:10.* agenciafmd/admix-postal:10.*
+```
+
+Install admix package:
+
+```bash
+php artisan admix:install
+```

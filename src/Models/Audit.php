@@ -22,25 +22,24 @@ class Audit extends AuditModel
                         ->lower(),
                     'id' => $this->auditable_id,
                 ]);
-
+                $packageName = 'admix-' . Str::of($this->auditable_type)
+                        ->afterLast('\\')
+                        ->lower();
                 if ($this->event === 'created' || $this->event === 'updated') {
                     $log .= '<br /><br />';
-                    try {
-                        foreach ($this->getModified() as $attribute => $modified) {
-                            $log .= __('<strong>:attribute</strong> was changed from <strong>:old</strong> to <strong>:new</strong>', [
-                                    'attribute' => __("admix::fields.{$attribute}"),
-                                    'old' => $modified['old'] ?? __('empty'),
-                                    'new' => $modified['new'] ?? __('empty'),
-                                ]) . '<br />';
+                    foreach ($this->getModified() as $attribute => $modified) {
+                        $attributeName = $packageName . '::fields.' . $attribute;
+                        $attributeName = __($attributeName);
+                        if (Str::of($attributeName)
+                            ->contains('::fields.')) {
+                            $attributeName = __("admix::fields.{$attribute}");
                         }
-                    } catch (\Throwable $exception) {
-                        foreach ($this->old_values as $attribute => $value) {
-                            $log .= __('<strong>:attribute</strong> was changed from <strong>:old</strong> to <strong>:new</strong>', [
-                                    'attribute' => __("admix::fields.{$attribute}"),
-                                    'old' => $this->old_values[$attribute] ?? __('empty'),
-                                    'new' => $this->new_values[$attribute] ?? __('empty'),
-                                ]) . '<br />';
-                        }
+
+                        $log .= __('<strong>:attribute</strong> was changed from <strong>:old</strong> to <strong>:new</strong>', [
+                                'attribute' => $attributeName,
+                                'old' => $modified['old'] ?? __('empty'),
+                                'new' => $modified['new'] ?? __('empty'),
+                            ]) . '<br />';
                     }
                 }
 

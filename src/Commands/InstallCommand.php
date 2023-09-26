@@ -27,6 +27,7 @@ class InstallCommand extends Command
         $this->requireComposerDevDependencies();
         $this->updateConfigApp();
         $this->updateConfigAuth();
+        $this->publishViewFiles();
         $this->publishConfigFiles();
         $this->publishLangFiles();
         $this->installHorizon();
@@ -62,11 +63,11 @@ class InstallCommand extends Command
         $packages = [
             'brianium/paratest:^6.0',
             'laravel/pint:^1.0',
-            'nunomaduro/collision:^6.1',
+            'nunomaduro/collision:^7.0',
             'nunomaduro/larastan:^2.5',
             'nunomaduro/phpinsights:^2.8',
-            'pestphp/pest-plugin-laravel:^1.1',
-            'pestphp/pest:^1.16',
+            'pestphp/pest-plugin-laravel:^2.2',
+            'pestphp/pest:^2.19',
             'roave/security-advisories:dev-latest',
             '--dev', // install packages as dev dependencies
         ];
@@ -130,16 +131,24 @@ class InstallCommand extends Command
         $this->replaceInFile($search, $replace, config_path('auth.php'));
 
         // passwords
-        $search = "'users' => [\n            'provider' => 'users',\n            'table' => 'password_resets',\n            'expire' => 60,\n            'throttle' => 60,\n        ],";
+        $search = "'users' => [\n            'provider' => 'users',\n            'table' => 'password_reset_tokens',\n            'expire' => 60,\n            'throttle' => 60,\n        ],";
         $replace = "{$search}
-        'admix-users' => [\n            'provider' => 'admix-users',\n            'table' => 'password_resets',\n            'expire' => 60,\n            'throttle' => 60,\n        ],";
+        'admix-users' => [\n            'provider' => 'admix-users',\n            'table' => 'password_reset_tokens',\n            'expire' => 60,\n            'throttle' => 60,\n        ],";
         $this->replaceInFile($search, $replace, config_path('auth.php'));
+    }
+
+    protected function publishViewFiles(): void
+    {
+        $this->callSilent('vendor:publish', [
+            '--tag' => 'admix-components:views',
+            '--force' => true,
+        ]);
     }
 
     protected function publishConfigFiles(): void
     {
         $this->callSilent('vendor:publish', [
-            '--tag' => 'admix-config',
+            '--tag' => 'admix:config',
             '--force' => true,
         ]);
     }
@@ -147,7 +156,7 @@ class InstallCommand extends Command
     protected function publishLangFiles(): void
     {
         $this->callSilent('vendor:publish', [
-            '--tag' => 'admix-translations',
+            '--tag' => 'admix:translations',
             '--force' => true,
         ]);
     }
