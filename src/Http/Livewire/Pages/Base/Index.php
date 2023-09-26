@@ -159,9 +159,8 @@ class Index extends DataTableComponent
         $actions = [];
         $actionButtons = [];
         if ($this->isTrash) {
-
             if ($this->user->can('restore', $this->builder()
-                    ->getModel())) {
+                ->getModel())) {
                 $actions[] = RestoreColumn::make('Restore')
                     ->title(fn($row) => __('Restore'))
                     ->location(fn($row) => "window.livewire.emitTo('" . Str::of(self::class)
@@ -176,7 +175,7 @@ class Index extends DataTableComponent
             }
         } else {
             if ($this->user->can('update', $this->builder()
-                    ->getModel())) {
+                ->getModel())) {
                 $actions[] = EditColumn::make('Edit')
                     ->title(fn($row) => __('Edit'))
                     ->location(fn($row) => route($this->editRoute, $row))
@@ -188,7 +187,7 @@ class Index extends DataTableComponent
             }
 
             if ($this->user->can('delete', $this->builder()
-                    ->getModel())) {
+                ->getModel())) {
                 $actions[] = DeleteColumn::make('Delete')
                     ->title(fn($row) => __('Delete'))
                     ->location(fn($row) => $row->id)
@@ -229,7 +228,7 @@ class Index extends DataTableComponent
     {
         if ($this->isTrash) {
             if ($this->user->can('restore', $this->builder()
-                    ->getModel())) {
+                ->getModel())) {
                 return [
                     'bulkRestore' => __('Restore'),
                 ];
@@ -240,7 +239,7 @@ class Index extends DataTableComponent
 
         $actions = [];
         if ($this->user->can('update', $this->builder()
-                ->getModel())) {
+            ->getModel())) {
             $actions['bulkActivate'] = __('Activate');
             $actions['bulkDeactivate'] = __('Deactivate');
         }
@@ -248,7 +247,7 @@ class Index extends DataTableComponent
         $actions['bulkExport'] = __('Export');
 
         if ($this->user->can('delete', $this->builder()
-                ->getModel())) {
+            ->getModel())) {
             $actions['bulkDelete'] = __('Delete');
         }
 
@@ -422,6 +421,11 @@ class Index extends DataTableComponent
     public function setAdditionalBulkActions(array $bulkActions): void
     {
         $this->additionalBulkActions = $bulkActions;
+    }
+
+    public function setAdditionalListeners(array $listeners): void
+    {
+        $this->listeners = array_merge($this->listeners, $listeners);
     }
 
     private function markIsActiveAs(bool $flag = true): void
