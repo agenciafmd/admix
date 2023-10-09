@@ -11,11 +11,11 @@ class LowerThanFilter implements Filter
     public function __invoke(Builder $query, $value, string $property): Builder
     {
         try {
-            $value = Carbon::createFromFormat('Y-m-d', $value)->endtOfDay();
+            $value = Carbon::createFromFormat('Y-m-d', $value)->endOfDay();
         } catch (\Exception $e) {
             //
         }
 
-        return $query->where(substr($property, 0, -3), '>=', $value);
+        return $query->where(substr($property, 0, -3), '<=', $value);
     }
 }
