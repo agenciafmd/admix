@@ -23,7 +23,6 @@
         "laravel/framework": "^8.0",
         "laravel/ui": "^3.0",
         "laravelcollective/html": "^6.0",
-        "league/commonmark": "^1.4",
         "livewire/livewire": "^2.0",
         "owen-it/laravel-auditing": "^12.0",
         "renatomarinho/laravel-page-speed": "^2.0",
