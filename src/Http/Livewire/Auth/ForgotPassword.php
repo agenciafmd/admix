@@ -2,12 +2,9 @@
 
 namespace Agenciafmd\Admix\Http\Livewire\Auth;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Support\Str;
-use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\Redirector;
 
