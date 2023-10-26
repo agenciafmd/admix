@@ -12,6 +12,7 @@
         }
     ],
     "require": {
+        "agenciafmd/admix-analytics": "dev-master",
         "agenciafmd/admix-form": "dev-master",
         "agenciafmd/admix-leads": "dev-master",
         "agenciafmd/admix-media": "dev-master",
