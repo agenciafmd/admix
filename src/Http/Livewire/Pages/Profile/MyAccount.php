@@ -2,11 +2,14 @@
 
 namespace Agenciafmd\Admix\Http\Livewire\Pages\Profile;
 
+use Agenciafmd\Admix\Models\User;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
+use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\Redirector;
 use Livewire\TemporaryUploadedFile;
@@ -17,21 +20,15 @@ class MyAccount extends Component
 {
     use WithFileUploads;
 
-    public $user;
-    public string $name;
-    public string $email;
-    public bool $can_notify;
+    public User $user;
     public array $media;
 
     public function mount(): void
     {
         $this->user = Auth::guard('admix-web')
             ->user();
-        $this->name = $this->user->name;
-        $this->email = $this->user->email;
-        $this->can_notify = $this->user->can_notify;
-        $this->media['avatar'] = $this->user->getFirstMedia('avatar')
-            ?->toArray();
+//        $this->media['avatar'] = $this->user->getFirstMedia('avatar')
+//            ?->toArray();
     }
 
     public function render(): View
@@ -49,16 +46,19 @@ class MyAccount extends Component
     public function rules(): array
     {
         $rules = [
-            'name' => [
+            'user.name' => [
                 'required',
                 'max:255',
             ],
-            'email' => [
+            'user.email' => [
                 'required',
+                Rule::unique('users', 'email')
+                    ->where(fn(Builder $query) => $query->where('type', $this->user->type))
+                    ->ignore($this->user->id ?? null),
                 'email:rfc,dns',
                 'max:255',
             ],
-            'can_notify' => [
+            'user.can_notify' => [
                 'boolean',
             ],
 //            'media.avatar' => [
@@ -68,16 +68,16 @@ class MyAccount extends Component
 //            ],
         ];
 
-        $this->media['avatar'] instanceof TemporaryUploadedFile
-            ? $rules['media.avatar'] = [
-            'nullable',
-            'image',
-            'max:5120',
-        ]
-            : $rules['media.avatar'] = [
-            'nullable',
-            'array',
-        ];
+//        $this->media['avatar'] instanceof TemporaryUploadedFile
+//            ? $rules['media.avatar'] = [
+//            'nullable',
+//            'image',
+//            'max:5120',
+//        ]
+//            : $rules['media.avatar'] = [
+//            'nullable',
+//            'array',
+//        ];
 
         return $rules;
     }
@@ -95,28 +95,39 @@ class MyAccount extends Component
     public function submit(): null|Redirector|RedirectResponse
     {
         $data = $this->validate($this->rules(), [], $this->attributes());
-        $user = Auth::guard('admix-web')
-            ->user();
-        $user->update($data);
 
-        if ($this->media['avatar'] instanceof TemporaryUploadedFile) {
-            $user->clearMediaCollection('avatar')
-                ->addMedia($this->media['avatar']->getRealPath())
-                ->withResponsiveImages()
-                ->usingName($this->customNameMedia('avatar'))
-                ->usingFileName($this->customFileNameMedia('avatar'))
-//            ->withCustomProperties(array_merge(['uuid' => uniqid()], $customProperties))
-                ->toMediaCollection('avatar');
-            $this->media['avatar'] = $user->getFirstMedia('avatar')
-                ->toArray();
+        try {
+            if ($this->user->save()) {
+                $this->emit('toast', [
+                    'level' => 'success',
+                    'message' => __('crud.success.update'),
+                ]);
+            } else {
+                $this->emit('toast', [
+                    'level' => 'error',
+                    'message' => __('crud.error.update'),
+                ]);
+            }
+        } catch (\Exception $e) {
+            $this->emit('toast', [
+                'level' => 'danger',
+                'message' => $e->getMessage(),
+            ]);
         }
 
-        $this->emit('toast', [
-            'level' => 'success',
-            'message' => __('crud.success.update'),
-        ]);
-
         return null;
+
+//        if ($this->media['avatar'] instanceof TemporaryUploadedFile) {
+//            $user->clearMediaCollection('avatar')
+//                ->addMedia($this->media['avatar']->getRealPath())
+//                ->withResponsiveImages()
+//                ->usingName($this->customNameMedia('avatar'))
+//                ->usingFileName($this->customFileNameMedia('avatar'))
+////            ->withCustomProperties(array_merge(['uuid' => uniqid()], $customProperties))
+//                ->toMediaCollection('avatar');
+//            $this->media['avatar'] = $user->getFirstMedia('avatar')
+//                ->toArray();
+//        }
     }
 
     public function removeMedia(mixed $field): void

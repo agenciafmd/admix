@@ -20,21 +20,21 @@
             <div class="mb-3 col-12 col-xl-6">
                 <x-card.title :title="__('admix::fields.name')"/>
                 <x-card.subtitle :subtitle="__('Use your first and last name.')"/>
-                <x-form.input name="name"/>
+                <x-form.input name="user.name"/>
             </div>
         </div>
         <div class="row">
             <div class="mb-3 col-12 col-xl-6">
                 <x-card.title :title="__('admix::fields.email')"/>
                 <x-card.subtitle :subtitle="__('Give preference to your corporate email.')"/>
-                <x-form.input name="email"/>
+                <x-form.input name="user.email"/>
             </div>
         </div>
         <div class="row">
             <div class="mb-3 col-12 -col-xl-6">
                 <x-card.title :title="__('admix::fields.can_notify')"/>
                 <x-card.subtitle :subtitle="__('We will send weekly reports on information and improvements.')"/>
-                <x-form.checkbox name="can_notify"
+                <x-form.checkbox name="user.can_notify"
                                  class="form-switch form-switch-lg"
                                  :label-on="__('Yes')"
                                  :label-off="__('No')"
