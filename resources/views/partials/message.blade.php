@@ -18,6 +18,11 @@
         });
     });
 
+    window.livewire.on('refreshPlugins', (param) => {
+        console.log('refresh');
+        refreshFsLightbox();
+    });
+
     function localToast(param) {
         param.level = param.level || 'info';
         const type = {

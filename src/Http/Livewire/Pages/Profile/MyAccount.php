@@ -3,32 +3,40 @@
 namespace Agenciafmd\Admix\Http\Livewire\Pages\Profile;
 
 use Agenciafmd\Admix\Models\User;
+use Agenciafmd\Components\Traits\WithMediaUploads;
 use Illuminate\Contracts\View\View;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
-use Illuminate\Support\Stringable;
-use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\Redirector;
-use Livewire\TemporaryUploadedFile;
-use Livewire\WithFileUploads;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class MyAccount extends Component
 {
-    use WithFileUploads;
+    use WithMediaUploads;
 
-    public User $user;
-    public array $media;
+    public User $model;
+//    public array $media = [];
+//
+    protected $listeners = [
+        'deleteMedia' => 'deleteMedia',
+    ];
 
     public function mount(): void
     {
-        $this->user = Auth::guard('admix-web')
+//        $this->listeners = array_merge($this->listeners, [
+//            'refreshPlugins' => '$refresh',
+//        ]);
+//
+//        dd($this->listeners);
+
+        $this->model = Auth::guard('admix-web')
             ->user();
-//        $this->media['avatar'] = $this->user->getFirstMedia('avatar')
-//            ?->toArray();
+
+//        dd($this->model->media->where('collection_name', 'avatara'));
+
+//        dd($this->model->attach['avatar']);
+
+        $this->media = $this->model->loadMappedMedia();
     }
 
     public function render(): View
@@ -46,19 +54,19 @@ class MyAccount extends Component
     public function rules(): array
     {
         $rules = [
-            'user.name' => [
+            'model.name' => [
                 'required',
                 'max:255',
             ],
-            'user.email' => [
+            'model.email' => [
                 'required',
-                Rule::unique('users', 'email')
-                    ->where(fn(Builder $query) => $query->where('type', $this->user->type))
-                    ->ignore($this->user->id ?? null),
+//                Rule::unique('users', 'email')
+//                    ->where(fn(Builder $query) => $query->where('users.type', $this->model->type))
+//                    ->ignore($this->model->id ?? null),
                 'email:rfc,dns',
                 'max:255',
             ],
-            'user.can_notify' => [
+            'model.can_notify' => [
                 'boolean',
             ],
 //            'media.avatar' => [
@@ -68,18 +76,18 @@ class MyAccount extends Component
 //            ],
         ];
 
-//        $this->media['avatar'] instanceof TemporaryUploadedFile
-//            ? $rules['media.avatar'] = [
-//            'nullable',
-//            'image',
-//            'max:5120',
-//        ]
-//            : $rules['media.avatar'] = [
-//            'nullable',
-//            'array',
-//        ];
-
-        return $rules;
+        return array_merge($rules, $this->model->loadMappedMediaRules($this->media));
+//
+//        collect($this->model->mappedMedia)->each(function ($media, $collection) use (&$rules) {
+//            $this->media[$collection] instanceof TemporaryUploadedFile
+//                ? $rules["media.{$collection}"] = $media['rules']
+//                : $rules["media.{$collection}"] = [
+//                'nullable',
+//                'array',
+//            ];
+//        });
+//
+//        return $rules;
     }
 
     public function attributes(): array
@@ -97,7 +105,9 @@ class MyAccount extends Component
         $data = $this->validate($this->rules(), [], $this->attributes());
 
         try {
-            if ($this->user->save()) {
+            if ($this->model->save()) {
+                $this->model->syncMedia($this->media);
+
                 $this->emit('toast', [
                     'level' => 'success',
                     'message' => __('crud.success.update'),
@@ -116,51 +126,5 @@ class MyAccount extends Component
         }
 
         return null;
-
-//        if ($this->media['avatar'] instanceof TemporaryUploadedFile) {
-//            $user->clearMediaCollection('avatar')
-//                ->addMedia($this->media['avatar']->getRealPath())
-//                ->withResponsiveImages()
-//                ->usingName($this->customNameMedia('avatar'))
-//                ->usingFileName($this->customFileNameMedia('avatar'))
-////            ->withCustomProperties(array_merge(['uuid' => uniqid()], $customProperties))
-//                ->toMediaCollection('avatar');
-//            $this->media['avatar'] = $user->getFirstMedia('avatar')
-//                ->toArray();
-//        }
-    }
-
-    public function removeMedia(mixed $field): void
-    {
-        if ($this->media[$field] instanceof TemporaryUploadedFile) {
-            $this->media[$field] = null;
-
-            return;
-        }
-
-        Media::query()
-            ->where('uuid', $this->media[$field]['uuid'])
-            ->first()
-            ->delete();
-
-        $this->media[$field] = null;
-
-        return;
-    }
-
-    public function customNameMedia(string $field): string
-    {
-        return Str::of($this->name)
-            ->slug()
-            ->pipe(function (Stringable $string) use ($field) {
-                return $string->toString() . '-' . $field;
-            })
-            ->limit(150, '');
-    }
-
-    public function customFileNameMedia(string $field): string
-    {
-        return $this->customNameMedia($field) . '.' . Str::of($this->media[$field]->getClientOriginalExtension())
-                ->lower();
     }
 }

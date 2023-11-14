@@ -4,37 +4,34 @@
         <div class="row">
             <div class="mb-3 col-12 col-xl-6">
                 <x-card.title :title="__('Profile Details')"/>
-                {{-- TODO: refatorar --}}
-                {{--                                <div class="row align-items-center mb-3">--}}
-                {{--                                    <x-form-avatar--}}
-                {{--                                            name="avatar"--}}
-                {{--                                            resize="400x400"--}}
-                {{--                                            quality="80"--}}
-                {{--                                            :media="$media"--}}
-                {{--                                            placeholder="{{ Str::of(Auth::guard('admix-web')->user()->name)->acronym() }}"--}}
-                {{--                                    />--}}
-                {{--                                </div>--}}
+                <x-form.file
+                        name="model.attach.avatar"
+                        {{--                            resize="400x400"--}}
+                        {{--                            quality="80"--}}
+                        {{--                        :media="$media"--}}
+                        {{--                        placeholder="{{ Str::of(Auth::guard('admix-web')->user()->name)->acronym() }}"--}}
+                />
             </div>
         </div>
         <div class="row">
             <div class="mb-3 col-12 col-xl-6">
                 <x-card.title :title="__('admix::fields.name')"/>
                 <x-card.subtitle :subtitle="__('Use your first and last name.')"/>
-                <x-form.input name="user.name"/>
+                <x-form.input name="model.name"/>
             </div>
         </div>
         <div class="row">
             <div class="mb-3 col-12 col-xl-6">
                 <x-card.title :title="__('admix::fields.email')"/>
                 <x-card.subtitle :subtitle="__('Give preference to your corporate email.')"/>
-                <x-form.input name="user.email"/>
+                <x-form.input name="model.email"/>
             </div>
         </div>
         <div class="row">
             <div class="mb-3 col-12 -col-xl-6">
                 <x-card.title :title="__('admix::fields.can_notify')"/>
                 <x-card.subtitle :subtitle="__('We will send weekly reports on information and improvements.')"/>
-                <x-form.checkbox name="user.can_notify"
+                <x-form.checkbox name="model.can_notify"
                                  class="form-switch form-switch-lg"
                                  :label-on="__('Yes')"
                                  :label-off="__('No')"
