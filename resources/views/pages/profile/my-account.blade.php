@@ -4,13 +4,7 @@
         <div class="row">
             <div class="mb-3 col-12 col-xl-6">
                 <x-card.title :title="__('Profile Details')"/>
-                <x-form.file
-                        name="model.attach.avatar"
-                        {{--                            resize="400x400"--}}
-                        {{--                            quality="80"--}}
-                        {{--                        :media="$media"--}}
-                        {{--                        placeholder="{{ Str::of(Auth::guard('admix-web')->user()->name)->acronym() }}"--}}
-                />
+                <x-form.file name="model.avatar"/>
             </div>
         </div>
         <div class="row">

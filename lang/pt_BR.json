@@ -1,9 +1,12 @@
 {
+    ":created_at, :user [:ip] :event the register #:id": ":created_at, :user [:ip] :event o registro #:id",
+    "<strong>:attribute</strong> was changed from <strong>:old</strong> to <strong>:new</strong>": "<strong>:attribute</strong> foi alterado de <strong>:old</strong> para <strong>:new</strong>",
     "Activate": "Ativar",
     "Active": "Ativo",
     "Administrator": "Administrador",
     "All Columns": "Todas as colunas",
     "All rights reserved.": "Todos os direitos reservados.",
+    "Allowed formats: :formats": "Formatos permitidos: :formats",
     "Are you sure you want to delete this record?": "Tem certeza que deseja excluir este registro?",
     "Attention!": "Atenção!",
     "Audit": "Logs",
@@ -19,7 +22,6 @@
     "Details": "Detalhes",
     "Do you want to select all": "Você deseja selecionar todas as",
     "Edit": "Editar",
-    "empty": "vazio",
     "Enable dark mode": "Ativar modo escuro",
     "Enable light mode": "Ativar modo claro",
     "Enter your email address and we will send a link to reset your password.": "Digite seu endereço de e-mail e enviaremos um link para redefinir sua senha.",
@@ -37,6 +39,9 @@
     "Keep me signed in": "Mantenha-me conectado",
     "Login to your account": "Entre com sua conta",
     "Logout": "Sair",
+    "Max dimensions: :dimensions": "Dimensões máximas: :dimensions",
+    "Maximum size: :size": "Tamanho máximo: :size",
+    "Min dimensions: :dimensions": "Dimensões mínimas: :dimensions",
     "My Account": "Minha Conta",
     "No": "Não",
     "Password changed successfully!": "Senha alterada com sucesso!",
@@ -68,8 +73,9 @@
     "We will send weekly reports on information and improvements.": "Enviaremos relatórios semanais sobre informações e melhorias.",
     "Yes": "Sim",
     "You recently requested to reset a password for your account. Use the button below to reset it. This message will expire in 24 hours.": "Você recentemente solicitou a redefinição de senha para sua conta. Use o botão abaixo para redefini-la. Esta mensagem expirará em 24 horas.",
+    "and": "e",
+    "empty": "vazio",
     "rows.": "linhas.",
     "rows?": "linhas?",
-    ":created_at, :user [:ip] :event the register #:id": ":created_at, :user [:ip] :event o registro #:id",
-    "<strong>:attribute</strong> was changed from <strong>:old</strong> to <strong>:new</strong>": "<strong>:attribute</strong> foi alterado de <strong>:old</strong> para <strong>:new</strong>"
+    "zzz": "zzz"
 }
