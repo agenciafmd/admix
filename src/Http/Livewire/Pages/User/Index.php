@@ -28,7 +28,7 @@ class Index extends BaseIndex
         $this->setAdditionalFilters([
             TextFilter::make(__('admix::fields.email'), 'email')
                 ->filter(function (Builder $builder, string $value) {
-                    $builder->where("users.email", 'LIKE', "%{$value}%");
+                    $builder->where('users.email', 'LIKE', "%{$value}%");
                 }),
         ]);
 

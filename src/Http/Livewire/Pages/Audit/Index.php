@@ -34,6 +34,11 @@ class Index extends BaseIndex
         parent::configure();
     }
 
+    public function builder(): Builder
+    {
+        return $this->model::query();
+    }
+
     public function filters(): array
     {
         $strongTableFromBuilder = $this->builder()

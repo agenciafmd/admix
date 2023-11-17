@@ -110,6 +110,9 @@ class Index extends DataTableComponent
         return $this->model::query()
             ->when($this->isTrash, function (Builder $builder) {
                 $builder->onlyTrashed();
+            })
+            ->when(!$this->hasSorts(), function (Builder $builder) {
+                $builder->sort();
             });
     }
 

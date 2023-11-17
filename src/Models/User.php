@@ -3,6 +3,7 @@
 namespace Agenciafmd\Admix\Models;
 
 use Agenciafmd\Admix\Notifications\ResetPasswordNotification;
+use Agenciafmd\Admix\Traits\WithScopes;
 use Agenciafmd\Components\Traits\InteractsWithMediaUploads;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -17,7 +18,7 @@ use Spatie\MediaLibrary\HasMedia;
 
 class User extends Authenticatable implements HasMedia, AuditableContract
 {
-    use SoftDeletes, HasFactory, Notifiable, InteractsWithMediaUploads, Auditable;
+    use SoftDeletes, HasFactory, Notifiable, InteractsWithMediaUploads, Auditable, WithScopes;
 
     protected $guarded = [
         'password_confirmation',
