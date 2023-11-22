@@ -3,7 +3,9 @@
 return [
     'auditable_id' => 'registro',
     'auditable_type' => 'local',
+    'bcc' => 'cópia oculta',
     'can_notify' => 'receber notificação',
+    'cc' => 'cópia',
     'check_email' => 'antes de continuar, verifique seu e-mail para um link de verificação.',
     'confirm_password' => 'confirme a senha',
     'created_at' => 'criado em',
@@ -36,8 +38,11 @@ return [
     'rules' => 'permissões',
     'send_password_reset_link' => 'enviar link de redefinição de senha',
     'slug' => 'identificador / slug',
-    'user' => 'usuário',
+    'subject' => 'assunto',
+    'to' => 'e-mail',
+    'to_name' => 'para',
     'updated_at' => 'atualizado em',
+    'user' => 'usuário',
     'verify_email' => 'verifique seu e-mail',
     'verify_email_link' => 'um novo link de verificação foi enviado para o seu endereço de e-mail.',
 ];

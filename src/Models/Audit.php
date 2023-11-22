@@ -24,6 +24,7 @@ class Audit extends AuditModel
                 ]);
                 $packageName = 'admix-' . Str::of($this->auditable_type)
                         ->afterLast('\\')
+                        ->plural()
                         ->lower();
                 if ($this->event === 'created' || $this->event === 'updated') {
                     $log .= '<br /><br />';
@@ -32,13 +33,24 @@ class Audit extends AuditModel
                         $attributeName = __($attributeName);
                         if (Str::of($attributeName)
                             ->contains('::fields.')) {
+                            $attributeName = Str::of($packageName)
+                                    ->replace('admix', 'local')
+                                    ->__toString() . '::fields.' . $attribute;
+                            $attributeName = __($attributeName);
+                        }
+                        if (Str::of($attributeName)
+                            ->contains('::fields.')) {
                             $attributeName = __("admix::fields.{$attribute}");
                         }
 
                         $log .= __('<strong>:attribute</strong> was changed from <strong>:old</strong> to <strong>:new</strong>', [
                                 'attribute' => $attributeName,
-                                'old' => $modified['old'] ?? __('empty'),
-                                'new' => $modified['new'] ?? __('empty'),
+                                'old' => isset($modified['old']) ? Str::of($modified['old'])
+                                    ->pipe('nl2br')
+                                    ->squish() : __('empty'),
+                                'new' => isset($modified['new']) ? Str::of($modified['new'])
+                                    ->pipe('nl2br')
+                                    ->squish() : __('empty'),
                             ]) . '<br />';
                     }
                 }
