@@ -7,6 +7,7 @@
         "explicit_string_variable": true,
         "logical_operators": true,
         "new_with_braces": true,
+        "no_operator_successor_space": false,
         "no_useless_concat_operator": true,
         "return_assignment": true,
         "simple_to_complex_string_variable": true,

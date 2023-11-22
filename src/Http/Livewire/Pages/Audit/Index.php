@@ -47,23 +47,23 @@ class Index extends BaseIndex
 
         return [
             TextFilter::make(__('admix::fields.id'), 'id')
-                ->filter(function (Builder $builder, string $value) use ($strongTableFromBuilder) {
+                ->filter(static function (Builder $builder, string $value) use ($strongTableFromBuilder) {
                     $builder->where("{$strongTableFromBuilder}.id", $value);
                 }),
             SelectFilter::make(__('admix::fields.auditable_type'), 'auditable_type')
                 ->options([
                         '' => __('-'),
                     ] + collect(config('audit-alias'))
-                        ->mapWithKeys(function ($value, $key) {
+                        ->mapWithKeys(static function ($value, $key) {
                             return [
                                 $key => Str::of($value)
                                     ->explode(' » ')
-                                    ->map(fn($name) => __($name))
+                                    ->map(static fn ($name) => __($name))
                                     ->implode(' » '),
                             ];
                         })
                         ->toArray())
-                ->filter(function (Builder $builder, string $value) use ($strongTableFromBuilder) {
+                ->filter(static function (Builder $builder, string $value) use ($strongTableFromBuilder) {
                     $builder->where("{$strongTableFromBuilder}.auditable_type", $value);
                 }),
             SelectFilter::make(__('admix::fields.user'), 'user_id')
@@ -73,33 +73,33 @@ class Index extends BaseIndex
                         ->orderBy('name')
                         ->pluck('name', 'id')
                         ->toArray())
-                ->filter(function (Builder $builder, string $value) use ($strongTableFromBuilder) {
+                ->filter(static function (Builder $builder, string $value) use ($strongTableFromBuilder) {
                     $builder->where("{$strongTableFromBuilder}.user_id", $value);
                 }),
             SelectFilter::make(__('admix::fields.event'), 'event')
                 ->options([
                         '' => __('-'),
                     ] + collect(config('audit.events'))
-                        ->mapWithKeys(function ($value) {
+                        ->mapWithKeys(static function ($value) {
                             return [
                                 $value => __('admix::events.' . $value),
                             ];
                         })
                         ->toArray())
-                ->filter(function (Builder $builder, string $value) use ($strongTableFromBuilder) {
+                ->filter(static function (Builder $builder, string $value) use ($strongTableFromBuilder) {
                     $builder->where("{$strongTableFromBuilder}.event", $value);
                 }),
             TextFilter::make(__('admix::fields.auditable_id'), 'auditable_id')
-                ->filter(function (Builder $builder, string $value) use ($strongTableFromBuilder) {
+                ->filter(static function (Builder $builder, string $value) use ($strongTableFromBuilder) {
                     $builder->where("{$strongTableFromBuilder}.auditable_id", $value);
                 }),
             DateTimeFilter::make(__('admix::fields.initial_date'), 'initial_date')
-                ->filter(function (Builder $builder, string $value) use ($strongTableFromBuilder) {
+                ->filter(static function (Builder $builder, string $value) use ($strongTableFromBuilder) {
                     $builder->where("{$strongTableFromBuilder}.created_at", '>=', Carbon::parse($value)
                         ->format('Y-m-d H:i:s'));
                 }),
             DateTimeFilter::make(__('admix::fields.end_date'), 'end_date')
-                ->filter(function (Builder $builder, string $value) use ($strongTableFromBuilder) {
+                ->filter(static function (Builder $builder, string $value) use ($strongTableFromBuilder) {
                     $builder->where("{$strongTableFromBuilder}.created_at", '<=', Carbon::parse($value)
                         ->format('Y-m-d H:i:s'));
                 }),
@@ -110,9 +110,9 @@ class Index extends BaseIndex
     public function columns(): array
     {
         $actions[] = ModalColumn::make('Details')
-            ->title(fn($row) => __('Details'))
-            ->location(fn($row) => $row->log)
-            ->attributes(function ($row) {
+            ->title(static fn ($row) => __('Details'))
+            ->location(static fn ($row) => $row->log)
+            ->attributes(static function ($row) {
                 return [
                     'class' => 'btn ms-2',
                 ];
@@ -127,22 +127,22 @@ class Index extends BaseIndex
                 ->sortable()
                 ->searchable()
                 ->format(
-                    fn($value) => config('audit-alias')[$value] ? Str::of(config('audit-alias')[$value])
+                    static fn ($value) => config('audit-alias')[$value] ? Str::of(config('audit-alias')[$value])
                         ->explode(' » ')
-                        ->map(fn($name) => __($name))
+                        ->map(static fn ($name) => __($name))
                         ->implode(' » ') : $value
                 ),
             Column::make(__('admix::fields.user'), 'admixUser.name')
                 ->sortable()
                 ->searchable()
                 ->format(
-                    fn($value) => $value ?? __('Unknown')
+                    static fn ($value) => $value ?? __('Unknown')
                 ),
             Column::make(__('admix::fields.event'), 'event')
                 ->sortable()
                 ->searchable()
                 ->format(
-                    fn($value) => __('admix::events.' . $value)
+                    static fn ($value) => __('admix::events.' . $value)
                 ),
             Column::make(__('admix::fields.auditable_id'), 'auditable_id')
                 ->sortable()
@@ -150,12 +150,12 @@ class Index extends BaseIndex
             Column::make(__('admix::fields.created_at'), 'created_at')
                 ->sortable()
                 ->searchable()
-                ->format(function ($value) {
+                ->format(static function ($value) {
                     return $value->format(config('admix.timestamp.format'));
                 }),
             ButtonGroupColumn::make('')
                 ->excludeFromColumnSelect()
-                ->attributes(function ($row) {
+                ->attributes(static function ($row) {
                     return [
                         'class' => 'text-end',
                     ];
