@@ -160,13 +160,12 @@ class Index extends DataTableComponent
     public function columns(): array
     {
         $actions = [];
-        $actionButtons = [];
         if ($this->isTrash) {
             if ($this->user->can('restore', $this->builder()
                 ->getModel())) {
                 $actions[] = RestoreColumn::make('Restore')
                     ->title(fn($row) => __('Restore'))
-                    ->location(fn($row) => "window.livewire.emitTo('" . Str::of(self::class)
+                    ->location(fn ($row) => "window.livewire.emitTo('" . Str::of(static::class)
                             ->lower()
                             ->replace('\\', '.')
                             ->toString() . "', 'bulkRestore', $row->id)")
@@ -200,9 +199,8 @@ class Index extends DataTableComponent
                         ];
                     });
             }
-
-            $actionButtons = array_merge($this->additionalActionButtons, $actions);
         }
+        $actionButtons = array_merge($this->additionalActionButtons, $actions);
 
         return [
             Column::make(__('admix::fields.id'), 'id')
