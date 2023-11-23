@@ -40,6 +40,18 @@
         .btn.btn-ghost-secondary.btn-sm {
             border-radius: 4px
         }
+
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
     </style>
 
     {{--    <link rel="stylesheet" href="{{ asset('css/app.css') }}?v={{ config('app.version') }}">--}}
