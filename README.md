@@ -20,6 +20,8 @@ Create a new Laravel application:
 composer create-project laravel/laravel:v10.x-dev laravel10
 ```
 
+Change the `minimum-stability` to `dev` in your composer.json file.
+
 Require admix package:
 
 ```bash
