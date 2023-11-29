@@ -2,6 +2,7 @@
 
 namespace Agenciafmd\Admix\Models;
 
+use Agenciafmd\Admix\Database\Factories\UserFactory;
 use Agenciafmd\Admix\Notifications\ResetPasswordNotification;
 use Agenciafmd\Admix\Traits\WithScopes;
 use Agenciafmd\Components\Traits\InteractsWithMediaUploads;
@@ -58,6 +59,7 @@ class User extends Authenticatable implements HasMedia, AuditableContract
         parent::boot();
 
         static::addGlobalScope('type', static function (Builder $builder) {
+            //TODO trocar o nome da tabela pela variável $table
             $builder->where('users.type', 'admix');
         });
     }
@@ -79,7 +81,7 @@ class User extends Authenticatable implements HasMedia, AuditableContract
     protected function isAdmin(): Attribute
     {
         return Attribute::make(
-            get: fn() => !(isset($this->attributes['role_id'])
+            get: fn () => !(isset($this->attributes['role_id'])
                 && $this->attributes['role_id']),
         );
     }
@@ -87,5 +89,14 @@ class User extends Authenticatable implements HasMedia, AuditableContract
     public function sendPasswordResetNotification($token): void
     {
         $this->notify(new ResetPasswordNotification($token));
+    }
+
+    protected static function newFactory(): UserFactory
+    {
+        if (class_exists(\Database\Factories\UserFactory::class)) {
+            return \Database\Factories\UserFactory::new();
+        }
+
+        return UserFactory::new();
     }
 }

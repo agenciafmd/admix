@@ -27,7 +27,9 @@
             "src/Http/helpers.php"
         ],
         "psr-4": {
-            "Agenciafmd\\Admix\\": "src/"
+            "Agenciafmd\\Admix\\": "src/",
+            "Agenciafmd\\Admix\\Database\\Factories\\": "database/factories/",
+            "Agenciafmd\\Admix\\Database\\Seeders\\": "database/seeders/"
         }
     },
     "extra": {
