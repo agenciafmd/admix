@@ -41,6 +41,7 @@ class AdmixServiceProvider extends ServiceProvider
             __DIR__ . '/../../config/livewire.php' => base_path('config/livewire.php'),
             __DIR__ . '/../../config/livewire-tables.php' => base_path('config/livewire-tables.php'),
             __DIR__ . '/../../config/media-library.php' => base_path('config/media-library.php'),
+            __DIR__ . '/../../tests/Pest.php' => base_path('tests/Pest.php'),
         ], 'admix:config');
 
         $this->publishes([
