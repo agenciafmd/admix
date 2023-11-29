@@ -20,7 +20,8 @@ trait WithScopes
 
         foreach ($defaultSort as $field => $direction) {
             if ($field === 'sort') {
-                $query->orderByRaw('ISNULL(sort), sort ASC');
+                // https://www.designcise.com/web/tutorial/how-to-order-null-values-first-or-last-in-mysql#sort-in-ascending-order-with-null-values-last
+                $query->orderByRaw('-sort DESC');
             } else {
                 $query->orderBy($field, $direction);
             }
