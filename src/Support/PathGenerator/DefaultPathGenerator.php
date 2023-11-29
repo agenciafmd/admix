@@ -28,7 +28,7 @@ class DefaultPathGenerator implements PathGenerator
         return $this->customPath($media->id);
     }
 
-    private function customPath(string $key)
+    private function customPath(string $key): string
     {
         return 'media/' . Str::of($key)->pipe('md5')->limit(6, '')->split(2)->implode('/') . '/' . $key;
     }
