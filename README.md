@@ -25,7 +25,7 @@ Change the `minimum-stability` to `dev` in your composer.json file.
 Require admix package:
 
 ```bash
-composer require agenciafmd/admix:v10.x-dev agenciafmd/admix-postal:v10.x-dev agenciafmd/admix-leads:v10.x-dev
+composer require agenciafmd/admix:v10.x-dev agenciafmd/admix-postal:v10.x-dev agenciafmd/admix-leads:v10.x-dev agenciafmd/admix-analytics:v10.x-dev 
 ```
 
 Install admix package:
