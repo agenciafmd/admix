@@ -14,5 +14,5 @@ return [
         'save' => 'Falha no salvamento',
         'delete' => 'Falha na remoção',
         'restore' => 'Falha na restauração',
-    ]
+    ],
 ];

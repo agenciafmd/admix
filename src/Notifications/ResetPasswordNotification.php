@@ -3,8 +3,8 @@
 namespace Agenciafmd\Admix\Notifications;
 
 use Illuminate\Notifications\Channels\MailChannel;
-use Illuminate\Notifications\Notification;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 
 class ResetPasswordNotification extends Notification
 {

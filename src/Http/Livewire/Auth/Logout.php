@@ -18,7 +18,8 @@ class Logout extends Component
 
     public function mount(): Redirector|RedirectResponse
     {
-        Auth::guard('admix-web')->logout();
+        Auth::guard('admix-web')
+            ->logout();
 
         return redirect()->to(route('admix.auth.login'));
     }

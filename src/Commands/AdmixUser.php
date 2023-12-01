@@ -21,7 +21,7 @@ class AdmixUser extends Command
 
         User::query()
             ->updateOrCreate([
-                'email' => $email
+                'email' => $email,
             ], [
                 'is_active' => true,
                 'name' => $name,

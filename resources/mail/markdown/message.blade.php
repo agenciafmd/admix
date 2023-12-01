@@ -16,10 +16,10 @@
 
     {{-- Subcopy --}}
     @isset($subcopy)
-    @slot('subcopy')
-        @component('admix-mail::subcopy')
-            {{ $subcopy }}
-        @endcomponent
-    @endslot
+        @slot('subcopy')
+            @component('admix-mail::subcopy')
+                {{ $subcopy }}
+            @endcomponent
+        @endslot
     @endisset
 @endcomponent

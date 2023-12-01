@@ -43,10 +43,10 @@ class ChangePassword extends Component
                 Password::min(8)
                     ->letters()
                     ->numbers()
-                    ->symbols()
+                    ->symbols(),
             ],
         ];
-   }
+    }
 
     public function attributes(): array
     {
@@ -64,7 +64,8 @@ class ChangePassword extends Component
             'password' => Hash::make($data['password']),
         ]);
 
-        Auth::guard('admix-web')->logout();
+        Auth::guard('admix-web')
+            ->logout();
 
         flash(__('Password changed successfully!'), 'success');
 

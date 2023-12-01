@@ -42,7 +42,7 @@ class MyAccount extends Component
             'model.email' => [
                 'required',
                 Rule::unique('users', 'email')
-                    ->where(fn(Builder $query) => $query->where('users.type', $this->model->type))
+                    ->where(fn (Builder $query) => $query->where('users.type', $this->model->type))
                     ->ignore($this->model->id ?? null),
                 'email:rfc,dns',
                 'max:255',

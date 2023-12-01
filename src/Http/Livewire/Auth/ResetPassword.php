@@ -4,12 +4,11 @@ namespace Agenciafmd\Admix\Http\Livewire\Auth;
 
 use Agenciafmd\Admix\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
-use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\Redirector;
 
@@ -59,7 +58,7 @@ class ResetPassword extends Component
             'password' => [
                 'required',
                 'min:6',
-                'confirmed'
+                'confirmed',
             ],
         ];
     }
@@ -83,7 +82,7 @@ class ResetPassword extends Component
                 'token' => $this->token,
             ], function (User $user, string $password) {
                 $user->forceFill([
-                    'password' => Hash::make($password)
+                    'password' => Hash::make($password),
                 ])
                     ->setRememberToken(Str::random(60));
 

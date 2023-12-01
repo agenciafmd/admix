@@ -10,9 +10,9 @@ class Users extends Component
     public function __construct(
         public string $icon = '',
         public string $label = '',
-        public bool   $active = false,
-        public bool   $visible = false,
-        public array  $children = [],
+        public bool $active = false,
+        public bool $visible = false,
+        public array $children = [],
     )
     {
     }
@@ -35,7 +35,7 @@ class Users extends Component
                 'url' => route('admix.role.index'),
                 'active' => request()?->currentRouteNameStartsWith('admix.role'),
                 'visible' => true,
-            ]
+            ],
         ];
 
         return view('admix::components.aside.dropdown');

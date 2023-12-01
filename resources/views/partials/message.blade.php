@@ -57,17 +57,17 @@
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         @if (session('flash_notification', collect([]))->count())
-            localToast({
-                level: '{{ session('flash_notification')['level'] }}',
-                message: '{!! session('flash_notification')['message'] !!}',
-            });
+        localToast({
+            level: '{{ session('flash_notification')['level'] }}',
+            message: '{!! session('flash_notification')['message'] !!}',
+        });
         @elseif (session()->get('errors'))
-            @if(collect(session()->get('errors'))->flatten()->first()->has('hp_time'))
-                localToast({
-                    level: 'info',
-                    message: '{{ __('Por favor, aguarde alguns segundos para enviar os dados.') }}',
-                });
-            @endif
+        @if(collect(session()->get('errors'))->flatten()->first()->has('hp_time'))
+        localToast({
+            level: 'info',
+            message: '{{ __('Por favor, aguarde alguns segundos para enviar os dados.') }}',
+        });
+        @endif
         @endif
     });
 </script>

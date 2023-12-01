@@ -12,7 +12,8 @@ class RedirectIfAuthenticated
 {
     public function handle(Request $request, Closure $next): Response|RedirectResponse
     {
-        if (Auth::guard('admix-web')->check()) {
+        if (Auth::guard('admix-web')
+            ->check()) {
             return redirect()->route('admix.dashboard');
         }
 

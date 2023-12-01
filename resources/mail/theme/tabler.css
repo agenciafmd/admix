@@ -360,19 +360,23 @@ strong {
         display: table !important;
         width: 100% !important;
     }
+
     .col-hr {
         border: 0 !important;
         height: 24px !important;
         width: auto !important;
         background: transparent !important;
     }
+
     .col-spacer {
         width: 100% !important;
         height: 24px !important;
     }
+
     .col-spacer-sm {
         height: 16px !important;
     }
+
     .col-spacer-xs {
         height: 8px !important;
     }
@@ -1900,6 +1904,7 @@ Text
     .text-mobile-center {
         text-align: center !important;
     }
+
     .d-mobile-none {
         display: none !important;
     }

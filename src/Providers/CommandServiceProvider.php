@@ -23,7 +23,7 @@ class CommandServiceProvider extends ServiceProvider
         }
 
         $minutes = Cache::rememberForever('schedule-minutes', static function () {
-            return Str::of((string)random_int(0, 59))
+            return Str::of((string) random_int(0, 59))
                 ->padLeft(2, '0')
                 ->toString();
         });

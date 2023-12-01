@@ -18,14 +18,14 @@
            data-bs-auto-close="false"
            role="button"
            aria-expanded="{{ $active }}">
-        <span class="nav-link-icon d-md-none d-lg-inline-block">
-            <svg width="24" height="24">
-                <use xlink:href="{{ asset('vendor/admix/images/tabler-sprite.svg') }}#tabler-{{ $icon }}"/>
-            </svg>
-        </span>
+            <span class="nav-link-icon d-md-none d-lg-inline-block">
+                <svg width="24" height="24">
+                    <use xlink:href="{{ asset('vendor/admix/images/tabler-sprite.svg') }}#tabler-{{ $icon }}"/>
+                </svg>
+            </span>
             <span class="nav-link-title">
-            {{ $label }}
-        </span>
+                {{ $label }}
+            </span>
         </a>
         <div @class([
             'dropdown-menu',

@@ -164,7 +164,7 @@ class Index extends DataTableComponent
             if ($this->user->can('restore', $this->builder()
                 ->getModel())) {
                 $actions[] = RestoreColumn::make('Restore')
-                    ->title(fn($row) => __('Restore'))
+                    ->title(fn ($row) => __('Restore'))
                     ->location(fn ($row) => "window.livewire.emitTo('" . Str::of(static::class)
                             ->lower()
                             ->replace('\\', '.')
@@ -179,8 +179,8 @@ class Index extends DataTableComponent
             if ($this->user->can('update', $this->builder()
                 ->getModel())) {
                 $actions[] = EditColumn::make('Edit')
-                    ->title(fn($row) => __('Edit'))
-                    ->location(fn($row) => route($this->editRoute, $row))
+                    ->title(fn ($row) => __('Edit'))
+                    ->location(fn ($row) => route($this->editRoute, $row))
                     ->attributes(function ($row) {
                         return [
                             'class' => 'btn ms-2',
@@ -191,8 +191,8 @@ class Index extends DataTableComponent
             if ($this->user->can('delete', $this->builder()
                 ->getModel())) {
                 $actions[] = DeleteColumn::make('Delete')
-                    ->title(fn($row) => __('Delete'))
-                    ->location(fn($row) => $row->id)
+                    ->title(fn ($row) => __('Delete'))
+                    ->location(fn ($row) => $row->id)
                     ->attributes(function ($row) {
                         return [
                             'class' => 'btn ms-2',
