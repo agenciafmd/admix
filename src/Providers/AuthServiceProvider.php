@@ -9,6 +9,7 @@ use Agenciafmd\Admix\Policies\AuditPolicy;
 use Agenciafmd\Admix\Policies\RolePolicy;
 use Agenciafmd\Admix\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Auth;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -21,6 +22,8 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerPolicies();
+
+        $this->loadAuthLoginOnLocal();
     }
 
     public function register(): void
@@ -31,5 +34,17 @@ class AuthServiceProvider extends ServiceProvider
     public function loadConfigs(): void
     {
         $this->mergeConfigFrom(__DIR__ . '/../../config/gate.php', 'gate');
+    }
+
+    private function loadAuthLoginOnLocal(): void
+    {
+        if ($this->app->environment(['local']) && !$this->app->runningInConsole()) {
+            $user = new User();
+            $user->name = 'Dev Local';
+            $user->email = 'dev@fmd.ag';
+
+            Auth::guard('admix-web')
+                ->login($user);
+        }
     }
 }
