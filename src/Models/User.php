@@ -19,7 +19,7 @@ use Spatie\MediaLibrary\HasMedia;
 
 class User extends Authenticatable implements HasMedia, AuditableContract
 {
-    use SoftDeletes, HasFactory, Notifiable, InteractsWithMediaUploads, Auditable, WithScopes;
+    use Auditable, HasFactory, InteractsWithMediaUploads, Notifiable, SoftDeletes, WithScopes;
 
     protected $guarded = [
         'password_confirmation',
@@ -59,8 +59,8 @@ class User extends Authenticatable implements HasMedia, AuditableContract
         parent::boot();
 
         static::addGlobalScope('type', static function (Builder $builder) {
-            //TODO trocar o nome da tabela pela variável $table
-            $builder->where('users.type', 'admix');
+            $builder->where($builder->getModel()
+                    ->getTable() . '.type', 'admix');
         });
     }
 

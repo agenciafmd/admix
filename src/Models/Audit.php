@@ -4,7 +4,6 @@ namespace Agenciafmd\Admix\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
-use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
 use OwenIt\Auditing\Models\Audit as AuditModel;
 
@@ -62,7 +61,7 @@ class Audit extends AuditModel
 
     public function admixUser(): morphOne
     {
-        $morphPrefix = Config::get('audit.user.morph_prefix', 'user');
+        $morphPrefix = config('audit.user.morph_prefix', 'user');
 
         return $this->morphOne(User::class, $morphPrefix, "{$morphPrefix}_type", 'id', "{$morphPrefix}_id");
     }

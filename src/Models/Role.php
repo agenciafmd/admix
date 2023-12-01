@@ -10,7 +10,7 @@ use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 class Role extends Model implements AuditableContract
 {
-    use SoftDeletes, Auditable, WithScopes;
+    use Auditable, SoftDeletes, WithScopes;
 
     protected $guarded = [
         //
