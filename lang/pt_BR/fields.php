@@ -12,6 +12,7 @@ return [
     'email' => 'e-mail',
     'end_date' => 'data final',
     'event' => 'evento',
+    'file' => 'arquivo',
     'forgot_password' => 'esqueceu a senha?',
     'hide_at' => 'não mostrar após',
     'id' => 'id',
