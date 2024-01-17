@@ -20,6 +20,10 @@ class MyAccount extends Component
 
     public array $media = [];
 
+    public array $loadedMedia = []; //acho que da pra colocar no boot da trait
+
+    public array $selectedMedia = [];
+
     protected $listeners = [
         'deleteMedia' => 'deleteMedia',
     ];
@@ -29,7 +33,9 @@ class MyAccount extends Component
         $this->model = Auth::guard('admix-web')
             ->user();
 
-        $this->media = $this->model->loadMappedMedia();
+        $this->loadedMedia = $this->model->loadMappedMedia(); //acho que da pra colocar no boot da trait
+        $this->meta = $this->model->loadMappedMeta();
+        $this->media = $this->model->initMappedMedia();
     }
 
     public function rules(): array
@@ -81,7 +87,8 @@ class MyAccount extends Component
 
         try {
             if ($this->model->save()) {
-                $this->model->syncMedia($data['media']);
+
+                $this->model->syncMedia($data['media'] ?? [], $data['meta'] ?? []);
 
                 $this->emit('toast', [
                     'level' => 'success',
