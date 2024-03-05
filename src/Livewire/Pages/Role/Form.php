@@ -1,6 +1,6 @@
 <?php
 
-namespace Agenciafmd\Admix\Http\Livewire\Pages\Role;
+namespace Agenciafmd\Admix\Livewire\Pages\Role;
 
 use Agenciafmd\Admix\Models\Role;
 use Illuminate\Contracts\View\View;
@@ -9,7 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Livewire\Component;
-use Livewire\Redirector;
+use Livewire\Features\SupportRedirects\Redirector;
 
 class Form extends Component
 {
@@ -70,11 +70,8 @@ class Form extends Component
             }
 
             return redirect()->to(session()->get('backUrl') ?: route('admix.role.index'));
-        } catch (\Exception $e) {
-            $this->emit('toast', [
-                'level' => 'danger',
-                'message' => $e->getMessage(),
-            ]);
+        } catch (\Exception $exception) {
+            $this->dispatch(event: 'toast', level: 'danger', message: $exception->getMessage());
 
             return null;
         }

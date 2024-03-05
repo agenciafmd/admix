@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
-class Role extends Model implements AuditableContract
+class Role extends Model
 {
-    use Auditable, SoftDeletes, WithScopes;
+    use SoftDeletes, WithScopes;
 
     protected $guarded = [
         //

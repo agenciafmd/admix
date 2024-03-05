@@ -1,6 +1,6 @@
 <?php
 
-namespace Agenciafmd\Admix\Http\Livewire\Pages\User;
+namespace Agenciafmd\Admix\Livewire\Pages\User;
 
 use Agenciafmd\Admix\Models\Role;
 use Agenciafmd\Admix\Models\User;
@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 use Livewire\Component;
-use Livewire\Redirector;
+use Livewire\Features\SupportRedirects\Redirector;
 
 class Form extends Component
 {
@@ -104,11 +104,8 @@ class Form extends Component
             }
 
             return redirect()->to(session()->get('backUrl') ?: route('admix.user.index'));
-        } catch (\Exception $e) {
-            $this->emit('toast', [
-                'level' => 'danger',
-                'message' => $e->getMessage(),
-            ]);
+        } catch (\Exception $exception) {
+            $this->dispatch(event: 'toast', level: 'danger', message: $exception->getMessage());
 
             return null;
         }

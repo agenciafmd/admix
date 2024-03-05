@@ -1,6 +1,6 @@
 <?php
 
-namespace Agenciafmd\Admix\Http\Livewire\Pages;
+namespace Agenciafmd\Admix\Livewire\Pages;
 
 use Agenciafmd\Analytics\Providers\AnalyticsServiceProvider;
 use Illuminate\Contracts\View\View;

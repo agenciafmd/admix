@@ -28,9 +28,7 @@ return [
         'morph_prefix' => 'user',
         'guards' => [
             'web',
-            'api',
             'admix-web',
-            'admix-api',
         ],
         'resolver' => OwenIt\Auditing\Resolvers\UserResolver::class,
     ],

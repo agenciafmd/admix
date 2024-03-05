@@ -1,8 +1,8 @@
 <?php
 
-namespace Agenciafmd\Admix\Http\Livewire\Pages\Audit;
+namespace Agenciafmd\Admix\Livewire\Pages\Audit;
 
-use Agenciafmd\Admix\Http\Livewire\Pages\Base\Index as BaseIndex;
+use Agenciafmd\Admix\Livewire\Pages\Base\Index as BaseIndex;
 use Agenciafmd\Admix\Models\Audit;
 use Agenciafmd\Admix\Models\User;
 use Agenciafmd\Components\LaravelLivewireTables\Columns\ModalColumn;

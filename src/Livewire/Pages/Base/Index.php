@@ -1,6 +1,6 @@
 <?php
 
-namespace Agenciafmd\Admix\Http\Livewire\Pages\Base;
+namespace Agenciafmd\Admix\Livewire\Pages\Base;
 
 use Agenciafmd\Admix\Models\User;
 use Agenciafmd\Components\LaravelLivewireTables\Columns\DeleteColumn;
@@ -275,21 +275,12 @@ class Index extends DataTableComponent
                 ->get()->each->delete();
 
             if ($model->count()) {
-                $this->emit('toast', [
-                    'level' => 'success',
-                    'message' => __('crud.success.delete'),
-                ]);
+                $this->dispatch(event: 'toast', level: 'success', message: __('crud.success.delete'));
             } else {
-                $this->emit('toast', [
-                    'level' => 'error',
-                    'message' => __('crud.error.delete'),
-                ]);
+                $this->dispatch(event: 'toast', level: 'error', message: __('crud.error.delete'));
             }
-        } catch (\Exception $e) {
-            $this->emit('toast', [
-                'level' => 'danger',
-                'message' => $e->getMessage(),
-            ]);
+        } catch (\Exception $exception) {
+            $this->dispatch(event: 'toast', level: 'danger', message: $exception->getMessage());
         }
 
         $this->clearSelected();
@@ -305,21 +296,12 @@ class Index extends DataTableComponent
                 ->get()->each->restore();
 
             if ($model->count()) {
-                $this->emit('toast', [
-                    'level' => 'success',
-                    'message' => __('crud.success.restore'),
-                ]);
+                $this->dispatch(event: 'toast', level: 'success', message: __('crud.success.restore'));
             } else {
-                $this->emit('toast', [
-                    'level' => 'error',
-                    'message' => __('crud.error.restore'),
-                ]);
+                $this->dispatch(event: 'toast', level: 'error', message: __('crud.error.restore'));
             }
-        } catch (\Exception $e) {
-            $this->emit('toast', [
-                'level' => 'danger',
-                'message' => $e->getMessage(),
-            ]);
+        } catch (\Exception $exception) {
+            $this->dispatch(event: 'toast', level: 'danger', message: $exception->getMessage());
         }
 
         $this->clearSelected();
@@ -437,21 +419,12 @@ class Index extends DataTableComponent
                 ->get()->each->update(['is_active' => $flag]);
 
             if ($model->count()) {
-                $this->emit('toast', [
-                    'level' => 'success',
-                    'message' => __('crud.success.update'),
-                ]);
+                $this->dispatch(event: 'toast', level: 'success', message: __('crud.success.update'));
             } else {
-                $this->emit('toast', [
-                    'level' => 'error',
-                    'message' => __('crud.error.update'),
-                ]);
+                $this->dispatch(event: 'toast', level: 'error', message: __('crud.error.update'));
             }
-        } catch (\Exception $e) {
-            $this->emit('toast', [
-                'level' => 'danger',
-                'message' => $e->getMessage(),
-            ]);
+        } catch (\Exception $exception) {
+            $this->dispatch(event: 'toast', level: 'danger', message: $exception->getMessage());
         }
 
         $this->clearSelected();

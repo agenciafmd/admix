@@ -1,6 +1,6 @@
 <?php
 
-namespace Agenciafmd\Admix\Http\Livewire\Pages\Profile;
+namespace Agenciafmd\Admix\Livewire\Pages\Profile;
 
 use Agenciafmd\Admix\Models\User;
 use Agenciafmd\Components\Traits\WithMediaUploads;
@@ -10,7 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Livewire\Component;
-use Livewire\Redirector;
+use Livewire\Features\SupportRedirects\Redirector;
 
 class MyAccount extends Component
 {
@@ -90,21 +90,12 @@ class MyAccount extends Component
 
                 $this->model->syncMedia($data['media'] ?? [], $data['meta'] ?? []);
 
-                $this->emit('toast', [
-                    'level' => 'success',
-                    'message' => __('crud.success.update'),
-                ]);
+                $this->dispatch(event: 'toast', level: 'success', message: __('crud.success.save'));
             } else {
-                $this->emit('toast', [
-                    'level' => 'error',
-                    'message' => __('crud.error.update'),
-                ]);
+                $this->dispatch(event: 'toast', level: 'error', message: __('crud.error.update'));
             }
-        } catch (\Exception $e) {
-            $this->emit('toast', [
-                'level' => 'danger',
-                'message' => $e->getMessage(),
-            ]);
+        } catch (\Exception $exception) {
+            $this->dispatch(event: 'toast', level: 'danger', message: $exception->getMessage());
         }
 
         return null;

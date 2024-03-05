@@ -1,23 +1,16 @@
 <?php
 
-namespace Agenciafmd\Admix\Http\Livewire\Auth;
+namespace Agenciafmd\Admix\Livewire\Auth;
 
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Password;
 use Livewire\Component;
-use Livewire\Redirector;
+use Livewire\Features\SupportRedirects\Redirector;
 
 class ForgotPassword extends Component
 {
     public string $email;
-
-//    public function route()
-//    {
-//        return Route::get('/login', static::class)
-//            ->name('login')
-//            ->middleware('guest');
-//    }
 
     public function render(): View
     {
@@ -61,10 +54,7 @@ class ForgotPassword extends Component
 
         if ($response === Password::RESET_LINK_SENT) {
             $this->email = '';
-            $this->emit('toast', [
-                'level' => 'success',
-                'message' => __('passwords.sent'),
-            ]);
+            $this->dispatch(event: 'toast', level: 'success', message: __('passwords.sent'));
 
             return null;
         }

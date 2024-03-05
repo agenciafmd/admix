@@ -39,7 +39,6 @@ class AdmixServiceProvider extends ServiceProvider
             __DIR__ . '/../../phpstan.neon' => base_path('phpstan.neon'),
             __DIR__ . '/../../config/horizon.php' => base_path('config/horizon.php'),
             __DIR__ . '/../../config/livewire.php' => base_path('config/livewire.php'),
-            __DIR__ . '/../../config/livewire-tables.php' => base_path('config/livewire-tables.php'),
             __DIR__ . '/../../config/media-library.php' => base_path('config/media-library.php'),
             __DIR__ . '/../../tests/Pest.php' => base_path('tests/Pest.php'),
         ], 'admix:config');
@@ -47,10 +46,6 @@ class AdmixServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../../lang/pt_BR' => lang_path('pt_BR'),
         ], ['admix:translations']);
-
-//        $this->publishes([
-//            __DIR__ . '/../../resources/views/vendor/livewire-tables/components' => base_path('resources/views/vendor/livewire-tables/components'),
-//        ], ['admix:views']);
 
         $this->publishes([
             __DIR__ . '/../../public' => public_path('vendor/admix'),

@@ -18,10 +18,6 @@ class RouteServiceProvider extends ServiceProvider
             Route::prefix(config('admix.path'))
                 ->middleware(['web', Authenticate::class . ':admix-web'])
                 ->group(__DIR__ . '/../../routes/web.php');
-
-            Route::prefix(config('admix.path') . '/api')
-                ->middleware('api')
-                ->group(__DIR__ . '/../../routes/api.php');
         });
     }
 

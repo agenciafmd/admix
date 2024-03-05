@@ -52,6 +52,12 @@
         input[type=number] {
             -moz-appearance: textfield;
         }
+
+        .is-invalid .input-group-text {
+            border-color: var(--tblr-danger);
+            border-top-right-radius: var(--tblr-border-radius) !important;
+            border-bottom-right-radius: var(--tblr-border-radius) !important;
+        }
     </style>
 
     {{--    <link rel="stylesheet" href="{{ asset('css/app.css') }}?v={{ config('app.version') }}">--}}
@@ -89,7 +95,6 @@
 <script src="{{ asset('/vendor/admix/vendor/tabler/libs/fslightbox/index.js') }}" defer></script>
 <script src="{{ asset('/vendor/admix/vendor/tabler/js/tabler.min.js') }}" defer></script>
 <script src="{{ asset('/vendor/admix/vendor/bootstrap-toaster/js/bootstrap-toaster.min.js') }}" defer></script>
-<script src="{{ asset('/vendor/admix/vendor/alpinejs/js/alpinejs-3.12.0.min.js') }}" defer></script>
 <livewire:scripts/>
 
 @include('admix::partials.message')

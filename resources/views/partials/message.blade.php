@@ -1,26 +1,28 @@
 <script>
-    window.livewire.on('toast', (param) => {
-        localToast(param);
-    });
-
-    window.livewire.on('datalayer', (param) => {
-        const defaultDataLayerOptions = {
-            event: param.event || 'gaEvent',
-            action: param.action || 'success',
-            details: param.message || 'Formulário Disparado!',
-            form_name: param.form_name || 'Contato',
-            form_id: param.form_id || '00000',
-        };
-        window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push({
-            ...defaultDataLayerOptions,
-            ...param,
+    document.addEventListener('livewire:init', () => {
+        Livewire.on('toast', (param) => {
+            localToast(param);
         });
-    });
 
-    window.livewire.on('refreshPlugins', (param) => {
-        console.log('refresh');
-        refreshFsLightbox();
+        Livewire.on('datalayer', (param) => {
+            const defaultDataLayerOptions = {
+                event: param.event || 'gaEvent',
+                action: param.action || 'success',
+                details: param.message || 'Formulário Disparado!',
+                form_name: param.form_name || 'Contato',
+                form_id: param.form_id || '00000',
+            };
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({
+                ...defaultDataLayerOptions,
+                ...param,
+            });
+        });
+
+        Livewire.on('refreshPlugins', (param) => {
+            console.log('refresh');
+            refreshFsLightbox();
+        });
     });
 
     function localToast(param) {

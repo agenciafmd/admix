@@ -1,8 +1,8 @@
 <?php
 
-namespace Agenciafmd\Admix\Http\Livewire\Pages\User;
+namespace Agenciafmd\Admix\Livewire\Pages\User;
 
-use Agenciafmd\Admix\Http\Livewire\Pages\Base\Index as BaseIndex;
+use Agenciafmd\Admix\Livewire\Pages\Base\Index as BaseIndex;
 use Agenciafmd\Admix\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Rappasoft\LaravelLivewireTables\Views\Column;

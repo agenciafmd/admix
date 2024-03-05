@@ -1,6 +1,6 @@
 <?php
 
-namespace Agenciafmd\Admix\Http\Livewire\Auth;
+namespace Agenciafmd\Admix\Livewire\Auth;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -8,20 +8,13 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Livewire\Component;
-use Livewire\Redirector;
+use Livewire\Features\SupportRedirects\Redirector;
 
 class Login extends Component
 {
     public string $email;
     public string $password;
     public bool $remember = false;
-
-//    public function route()
-//    {
-//        return Route::get('/login', static::class)
-//            ->name('login')
-//            ->middleware('guest');
-//    }
 
     public function render(): View
     {

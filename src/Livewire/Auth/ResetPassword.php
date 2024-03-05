@@ -1,6 +1,6 @@
 <?php
 
-namespace Agenciafmd\Admix\Http\Livewire\Auth;
+namespace Agenciafmd\Admix\Livewire\Auth;
 
 use Agenciafmd\Admix\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Livewire\Component;
-use Livewire\Redirector;
+use Livewire\Features\SupportRedirects\Redirector;
 
 class ResetPassword extends Component
 {

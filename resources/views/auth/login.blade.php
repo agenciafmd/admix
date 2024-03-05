@@ -7,7 +7,7 @@
     <div class="card card-md">
         <div class="card-body">
             <h2 class="h2 text-center mb-4">{{ __('Login to your account') }}</h2>
-            <x-form>
+            <x-form wire:submit.prevent='submit'>
                 <div class="mb-3">
                     <x-form.input type="email"
                                   name="email"
