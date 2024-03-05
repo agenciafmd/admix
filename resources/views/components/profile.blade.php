@@ -163,7 +163,7 @@
             {{--            <a href="./profile.html" class="dropdown-item">Profile</a>--}}
             {{--            <a href="#" class="dropdown-item">Feedback</a>--}}
             {{--            <div class="dropdown-divider"></div>--}}
-            <a href="{{ route('admix.profile') }}" class="dropdown-item">{{ __('Settings') }}</a>
+            <a href="{{-- route('admix.profile') --}}" class="dropdown-item">{{ __('Settings') }}</a>
             <x-btn.submit action="{{ route('admix.auth.logout') }}"
                           class="dropdown-item">{{ __('Logout') }}</x-btn.submit>
         </div>

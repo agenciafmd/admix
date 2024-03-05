@@ -21,7 +21,7 @@ class Logs extends Component
     {
         $this->icon = __(config('admix.audit.icon'));
         $this->label = __(config('admix.audit.name'));
-        $this->url = route('admix.audit.index');
+        $this->url = ''; //route('admix.audit.index');
         $this->active = request()?->currentRouteNameStartsWith('admix.audit');
         $this->visible = true;
 

@@ -3,9 +3,8 @@
 use Agenciafmd\Admix\Http\Middleware\Authenticate;
 use Agenciafmd\Admix\Http\Middleware\RedirectIfAuthenticated;
 use Agenciafmd\Admix\Livewire\Auth;
+use Agenciafmd\Admix\Livewire\Pages;
 use Illuminate\Support\Facades\Route;
-
-//use Agenciafmd\Admix\Livewire\Pages;
 
 Route::withoutMiddleware([Authenticate::class . ':admix-web'])
     ->middleware([RedirectIfAuthenticated::class])
@@ -25,8 +24,8 @@ Route::withoutMiddleware([Authenticate::class . ':admix-web'])
             ->name('admix.auth.logout');
     });
 
-//Route::get('/dashboard', Pages\Dashboard::class)
-//    ->name('admix.dashboard');
+Route::get('/dashboard', Pages\Dashboard::class)
+    ->name('admix.dashboard');
 //Route::get('/profile', Pages\Profile\MyAccount::class)
 //    ->name('admix.profile');
 //Route::get('/profile/change-password', Pages\Profile\ChangePassword::class)
