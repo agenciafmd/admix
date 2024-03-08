@@ -59,6 +59,7 @@ class InstallCommand extends Command
         }
 
         $packages = [
+            'barryvdh/laravel-ide-helper:^3.0',
             'brianium/paratest:^6.0',
             'nunomaduro/larastan:^2.5',
             'nunomaduro/phpinsights:^2.8',
@@ -153,6 +154,16 @@ class InstallCommand extends Command
         $packages['scripts']['phpstan'] = 'vendor/bin/phpstan analyse';
         $packages['scripts']['pint'] = 'vendor/bin/pint packages -v';
         $packages['scripts']['insights'] = 'vendor/bin/phpinsights analyse packages';
+
+        $packages['scripts']['post-update-cmd'] = collect($packages['scripts']['post-update-cmd'])
+            ->merge([
+                "@php artisan ide-helper:generate",
+                "@php artisan ide-helper:meta",
+                "@php artisan ide-helper:models 'packages/agenciafmd/*/src/Models' --nowrite",
+            ])
+            ->unique()
+            ->values()
+            ->toArray();
 
         file_put_contents(
             base_path('composer.json'),
