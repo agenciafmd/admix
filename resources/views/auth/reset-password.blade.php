@@ -7,7 +7,7 @@
     <div class="card card-md">
         <div class="card-body">
             <h2 class="h2 text-center mb-4">{{ __('Reset password') }}</h2>
-            <x-form wire:submit.prevent='submit'>
+            <x-form>
                 <p class="text-muted mb-3">{{ __('Enter your email address and your new password.') }}</p>
                 <div class="mb-3">
                     <x-form.input type="email"
