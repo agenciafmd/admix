@@ -8,7 +8,6 @@ use Agenciafmd\Admix\Models\User;
 use Agenciafmd\Components\LaravelLivewireTables\Columns\ModalColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Str;
 use Rappasoft\LaravelLivewireTables\Views\Column;
 use Rappasoft\LaravelLivewireTables\Views\Columns\ButtonGroupColumn;
 use Rappasoft\LaravelLivewireTables\Views\Filters\DateTimeFilter;
@@ -56,7 +55,7 @@ class Index extends BaseIndex
                     ] + collect(config('audit-alias'))
                         ->mapWithKeys(static function ($value, $key) {
                             return [
-                                $key => Str::of($value)
+                                $key => str($value)
                                     ->explode(' » ')
                                     ->map(static fn ($name) => __($name))
                                     ->implode(' » '),
@@ -127,7 +126,7 @@ class Index extends BaseIndex
                 ->sortable()
                 ->searchable()
                 ->format(
-                    static fn ($value) => config('audit-alias')[$value] ? Str::of(config('audit-alias')[$value])
+                    static fn ($value) => config('audit-alias')[$value] ? str(config('audit-alias')[$value])
                         ->explode(' » ')
                         ->map(static fn ($name) => __($name))
                         ->implode(' » ') : $value

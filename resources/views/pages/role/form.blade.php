@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-md-6 mb-3">
             <x-form.label for="role.is_active">
-                {{ Str::of(__('admix::fields.is_active'))->ucfirst() }}
+                {{ str(__('admix::fields.is_active'))->ucfirst() }}
             </x-form.label>
             <x-form.checkbox name="role.is_active"
                              class="form-switch form-switch-lg"
@@ -24,7 +24,7 @@
     <div class="row">
         <div class="col-md-12 mb-3">
             <x-form.label for="role.rules">
-                {{ Str::of(__('admix::fields.rules'))->ucfirst() }}
+                {{ str(__('admix::fields.rules'))->ucfirst() }}
             </x-form.label>
             <div class="row">
                 @foreach ($gateRules as $rule)

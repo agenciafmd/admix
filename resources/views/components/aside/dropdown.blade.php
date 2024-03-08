@@ -13,7 +13,7 @@
         'active' => $active,
     ])>
         <a class="nav-link dropdown-toggle"
-           href="#navbar-{{ Str::of($label)->slug() }}"
+           href="#navbar-{{ str($label)->slug() }}"
            data-bs-toggle="dropdown"
            data-bs-auto-close="false"
            role="button"

@@ -8,7 +8,6 @@ use Agenciafmd\Admix\Commands\NotificationsClear;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Str;
 
 class CommandServiceProvider extends ServiceProvider
 {
@@ -23,7 +22,7 @@ class CommandServiceProvider extends ServiceProvider
         }
 
         $minutes = Cache::rememberForever('schedule-minutes', static function () {
-            return Str::of((string) random_int(0, 59))
+            return str((string) random_int(0, 59))
                 ->padLeft(2, '0')
                 ->toString();
         });

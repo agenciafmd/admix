@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-md-6 mb-3">
             <x-form.label for="user.is_active">
-                {{ Str::of(__('admix::fields.is_active'))->ucfirst() }}
+                {{ str(__('admix::fields.is_active'))->ucfirst() }}
             </x-form.label>
             <x-form.checkbox name="user.is_active"
                              class="form-switch form-switch-lg"
@@ -13,7 +13,7 @@
         </div>
         <div class="col-md-6 mb-3">
             <x-form.label for="user.can_notify">
-                {{ Str::of(__('admix::fields.can_notify'))->ucfirst() }}
+                {{ str(__('admix::fields.can_notify'))->ucfirst() }}
             </x-form.label>
             <x-form.checkbox name="user.can_notify"
                              class="form-switch form-switch-lg"

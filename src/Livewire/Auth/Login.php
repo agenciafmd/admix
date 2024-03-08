@@ -5,7 +5,6 @@ namespace Agenciafmd\Admix\Livewire\Auth;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
-use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\Features\SupportRedirects\Redirector;
@@ -59,7 +58,7 @@ class Login extends Component
     {
         $data = $this->validate($this->rules(), [], $this->attributes());
 
-        $throttleKey = Str::of($data['email'])
+        $throttleKey = str($data['email'])
                 ->lower() . '|' . request()->ip();
 
         if (RateLimiter::tooManyAttempts($throttleKey, 5)) {

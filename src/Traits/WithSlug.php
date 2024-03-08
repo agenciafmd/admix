@@ -3,7 +3,6 @@
 namespace Agenciafmd\Admix\Traits;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 
 trait WithSlug
 {
@@ -22,7 +21,7 @@ trait WithSlug
             return null;
         }
 
-        $slug = Str::of($this->name)
+        $slug = str($this->name)
             ->trim()
             ->limit(120)
             ->slug();

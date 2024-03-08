@@ -7,7 +7,6 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\Features\SupportRedirects\Redirector;
 
@@ -90,7 +89,7 @@ class Form extends Component
             ->sortBy('sort')
             ->map(function ($group) {
                 return [
-                    'name' => Str::of($group['name'])
+                    'name' => str($group['name'])
                         ->explode(' » ')
                         ->map(fn ($name) => __($name))
                         ->implode(' » '),

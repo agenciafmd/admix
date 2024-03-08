@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 use Rap2hpoutre\FastExcel\FastExcel;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
@@ -165,7 +164,7 @@ class Index extends DataTableComponent
                 ->getModel())) {
                 $actions[] = RestoreColumn::make('Restore')
                     ->title(fn ($row) => __('Restore'))
-                    ->location(fn ($row) => "window.livewire.emitTo('" . Str::of(static::class)
+                    ->location(fn ($row) => "window.livewire.emitTo('" . str(static::class)
                             ->lower()
                             ->replace('\\', '.')
                             ->toString() . "', 'bulkRestore', $row->id)")

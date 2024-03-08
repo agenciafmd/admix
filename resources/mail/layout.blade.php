@@ -77,7 +77,7 @@
                     <tr>
                         <td align="center" valign="top" width="640">
                 <![endif]-->
-                <span class="preheader">{{ Str::of($greeting)->stripTags()->squish() }}</span>
+                <span class="preheader">{{ str($greeting)->stripTags()->squish() }}</span>
                 <table class="wrap" cellspacing="0" cellpadding="0">
                     <tr>
                         <td class="p-sm">
