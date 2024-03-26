@@ -8,9 +8,10 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('roles', static function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->boolean('is_active')
-                ->default(1);
+                ->default(1)
+                ->index();
             $table->string('name');
             $table->longText('rules');
             $table->timestamps();

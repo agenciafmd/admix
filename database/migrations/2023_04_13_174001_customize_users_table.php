@@ -21,6 +21,7 @@ return new class extends Migration {
                     ->nullable();
                 $table->foreignId('role_id')
                     ->nullable()
+                    ->index()
                     ->constrained();
                 $table->boolean('can_notify')
                     ->default(0);
