@@ -4,32 +4,37 @@
         <div class="row">
             <div class="mb-3 col-12 col-xl-6">
                 <x-card.title :title="__('Profile Details')"/>
-                <x-form.file name="model.avatar"/>
+                {{--                <x-form.file name="model.avatar"/>--}}
             </div>
         </div>
         <div class="row">
             <div class="mb-3 col-12 col-xl-6">
                 <x-card.title :title="__('admix::fields.name')"/>
                 <x-card.subtitle :subtitle="__('Use your first and last name.')"/>
-                <x-form.input name="model.name"/>
+                <x-form.input name="form.name"/>
             </div>
         </div>
         <div class="row">
             <div class="mb-3 col-12 col-xl-6">
                 <x-card.title :title="__('admix::fields.email')"/>
                 <x-card.subtitle :subtitle="__('Give preference to your corporate email.')"/>
-                <x-form.input name="model.email"/>
+                <x-form.input name="form.email"/>
             </div>
         </div>
         <div class="row">
             <div class="mb-3 col-12 -col-xl-6">
                 <x-card.title :title="__('admix::fields.can_notify')"/>
                 <x-card.subtitle :subtitle="__('We will send weekly reports on information and improvements.')"/>
-                <x-form.checkbox name="model.can_notify"
-                                 class="form-switch form-switch-lg"
-                                 :label-on="__('Yes')"
-                                 :label-off="__('No')"
+                <x-form.toggle name="form.can_notify"
+                               class="form-switch-lg"
+                               :label-on="__('Yes')"
+                               :label-off="__('No')"
                 />
+                {{--                <x-form.checkbox name="form.can_notify"--}}
+                {{--                                 class="form-switch form-switch-lg"--}}
+                {{--                                 :label-on="__('Yes')"--}}
+                {{--                                 :label-off="__('No')"--}}
+                {{--                />--}}
             </div>
         </div>
     </div>

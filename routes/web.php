@@ -26,10 +26,10 @@ Route::withoutMiddleware([Authenticate::class . ':admix-web'])
 
 Route::get('/dashboard', Pages\Dashboard::class)
     ->name('admix.dashboard');
-//Route::get('/profile', Pages\Profile\MyAccount::class)
-//    ->name('admix.profile');
-//Route::get('/profile/change-password', Pages\Profile\ChangePassword::class)
-//    ->name('admix.profile.change-password');
+Route::get('/profile', Pages\Profile\MyAccount::class)
+    ->name('admix.profile');
+Route::get('/profile/change-password', Pages\Profile\ChangePassword::class)
+    ->name('admix.profile.change-password');
 
 //Route::get('/users', Pages\User\Index::class)
 //    ->name('admix.user.index');

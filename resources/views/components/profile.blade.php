@@ -151,7 +151,7 @@
         <a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu"
            aria-expanded="false">
             <span class="avatar avatar-sm" {{--style="background-image: url(./static/avatars/000m.jpg)"--}}>
-                {{ Str::of($name)->acronym() }}
+                {{ str($name)->acronym() }}
             </span>
             <div class="d-none d-xl-block ps-2">
                 <div>{{ $name }}</div>
@@ -163,7 +163,7 @@
             {{--            <a href="./profile.html" class="dropdown-item">Profile</a>--}}
             {{--            <a href="#" class="dropdown-item">Feedback</a>--}}
             {{--            <div class="dropdown-divider"></div>--}}
-            <a href="{{-- route('admix.profile') --}}" class="dropdown-item">{{ __('Settings') }}</a>
+            <a href="{{ route('admix.profile') }}" class="dropdown-item">{{ __('Settings') }}</a>
             <x-btn.submit action="{{ route('admix.auth.logout') }}"
                           class="dropdown-item">{{ __('Logout') }}</x-btn.submit>
         </div>
