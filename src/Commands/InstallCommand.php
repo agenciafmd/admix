@@ -25,6 +25,7 @@ class InstallCommand extends Command
     {
         $this->requireComposerDevDependencies();
         $this->updateConfigAuth();
+        $this->updateConfigFilesystems();
 //        $this->publishViewFiles();
         $this->publishConfigFiles();
         $this->publishLangFiles();
@@ -88,22 +89,66 @@ class InstallCommand extends Command
         }
 
         // guards
-        $search = "'web' => [\n            'driver' => 'session',\n            'provider' => 'users',\n        ],";
+        $search = "'web' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],";
         $replace = "{$search}
-        'admix-web' => [\n            'driver' => 'session',\n            'provider' => 'admix-users',\n        ],";
+        'admix-web' => [
+            'driver' => 'session',
+            'provider' => 'admix-users',
+        ],";
         $this->replaceInFile($search, $replace, config_path('auth.php'));
 
         // providers
-        $search = "'users' => [\n            'driver' => 'eloquent',\n            'model' => env('AUTH_MODEL', App\Models\User::class),\n        ],";
+        $search = "'users' => [
+            'driver' => 'eloquent',
+            'model' => env('AUTH_MODEL', App\Models\User::class),
+        ],";
         $replace = "{$search}
-        'admix-users' => [\n            'driver' => 'eloquent',\n            'model' => \Agenciafmd\Admix\Models\User::class,\n        ],        ";
+        'admix-users' => [
+            'driver' => 'eloquent',
+            'model' => \Agenciafmd\Admix\Models\User::class,
+        ],";
         $this->replaceInFile($search, $replace, config_path('auth.php'));
 
         // passwords
-        $search = "'users' => [\n            'provider' => 'users',\n            'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),\n            'expire' => 60,\n            'throttle' => 60,\n        ],";
+        $search = "'users' => [
+            'provider' => 'users',
+            'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
+            'expire' => 60,
+            'throttle' => 60,
+        ],";
         $replace = "{$search}
-        'admix-users' => [\n            'provider' => 'admix-users',\n            'table' => 'password_reset_tokens',\n            'expire' => 60,\n            'throttle' => 60,\n        ],";
+        'admix-users' => [
+            'provider' => 'admix-users',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],";
         $this->replaceInFile($search, $replace, config_path('auth.php'));
+    }
+
+    private function updateConfigFilesystems(): void
+    {
+        $configAuth = file_get_contents(config_path('filesystems.php'));
+
+        if (Str::contains($configAuth, 'cdn')) {
+            return;
+        }
+
+        $search = "'s3' => [";
+        $replace = "'cdn' => [
+            'driver' => 'ftp',
+            'host' => env('CDN_HOST'),
+            'username' => env('CDN_USERNAME'),
+            'password' => env('CDN_PASSWORD'),
+            'url' => env('CDN_URL'),
+            'ssl' => false,
+        ],
+
+        {$search}";
+        $this->replaceInFile($search, $replace, config_path('filesystems.php'));
     }
 
     private function publishViewFiles(): void
