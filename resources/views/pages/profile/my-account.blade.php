@@ -26,15 +26,10 @@
                 <x-card.title :title="__('admix::fields.can_notify')"/>
                 <x-card.subtitle :subtitle="__('We will send weekly reports on information and improvements.')"/>
                 <x-form.toggle name="form.can_notify"
-                               class="form-switch-lg"
+                               :large="true"
                                :label-on="__('Yes')"
                                :label-off="__('No')"
                 />
-                {{--                <x-form.checkbox name="form.can_notify"--}}
-                {{--                                 class="form-switch form-switch-lg"--}}
-                {{--                                 :label-on="__('Yes')"--}}
-                {{--                                 :label-off="__('No')"--}}
-                {{--                />--}}
             </div>
         </div>
     </div>
