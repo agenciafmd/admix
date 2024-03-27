@@ -3,7 +3,6 @@
 namespace Agenciafmd\Admix\Livewire\Auth;
 
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -12,7 +11,9 @@ use Livewire\Features\SupportRedirects\Redirector;
 class Login extends Component
 {
     public string $email;
+
     public string $password;
+
     public bool $remember = false;
 
     public function render(): View
@@ -69,7 +70,7 @@ class Login extends Component
             return null;
         }
 
-        if (!Auth::guard('admix-web')
+        if (!auth('admix-web')
             ->attempt([
                 'email' => $data['email'],
                 'password' => $data['password'],

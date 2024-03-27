@@ -10,7 +10,6 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Auth;
 use Rap2hpoutre\FastExcel\FastExcel;
 use Rappasoft\LaravelLivewireTables\DataTableComponent;
 use Rappasoft\LaravelLivewireTables\Views\Column;
@@ -45,7 +44,7 @@ class Index extends DataTableComponent
 
     public function mount(): void
     {
-        $this->user = Auth::guard('admix-web')
+        $this->user = auth('admix-web')
             ->user();
         $this->isTrash = request()?->is('*/trash');
 
@@ -349,12 +348,12 @@ class Index extends DataTableComponent
         $actions = [];
         if ($this->creteRoute && $this->user->can('create', $this->builder()
                 ->getModel())) {
-            $actions[] = '<x-btn.create href="' . route($this->creteRoute) . '" 
+            $actions[] = '<x-btn.create href="' . route($this->creteRoute) . '"
                 label="' . $this->packageName . '" />';
         }
         if ($this->trashRoute && $this->user->can('restore', $this->builder()
                 ->getModel())) {
-            $actions[] = '<x-btn.trash href="' . route($this->trashRoute) . '" 
+            $actions[] = '<x-btn.trash href="' . route($this->trashRoute) . '"
                 label="" />';
         }
 

@@ -5,7 +5,6 @@ namespace Agenciafmd\Admix\Livewire\Pages\Profile;
 use Exception;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 use Livewire\Component;
 use Livewire\Features\SupportRedirects\Redirector;
@@ -16,7 +15,7 @@ class MyAccount extends Component
 
     public function mount(): void
     {
-        $this->form->setModel(Auth::guard('admix-web')
+        $this->form->setModel(auth('admix-web')
             ->user());
     }
 

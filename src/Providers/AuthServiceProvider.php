@@ -9,7 +9,6 @@ use Agenciafmd\Admix\Policies\AuditPolicy;
 use Agenciafmd\Admix\Policies\RolePolicy;
 use Agenciafmd\Admix\Policies\UserPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Auth;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -43,7 +42,7 @@ class AuthServiceProvider extends ServiceProvider
             $user->name = 'Dev Local';
             $user->email = 'dev@fmd.ag';
 
-            Auth::guard('admix-web')
+            auth('admix-web')
                 ->login($user);
         }
     }
