@@ -6,8 +6,8 @@
                 <x-card.title :title="__('admix::fields.new_password')"/>
                 <x-card.subtitle :subtitle="__('Use special characters like @, #, & or !.')"/>
                 <x-form.input type="password"
-                              name="password"
-                              wire:model.defer="password"
+                              name="form.password"
+                              wire:model.defer="form.password"
                 />
             </div>
         </div>
@@ -16,8 +16,8 @@
                 <x-card.title :title="__('admix::fields.password_confirmation')"/>
                 <x-card.subtitle :subtitle="__('Repeat the password used above.')"/>
                 <x-form.input type="password"
-                              name="password_confirmation"
-                              wire:model.defer="password_confirmation"
+                              name="form.password_confirmation"
+                              wire:model.defer="form.password_confirmation"
                 />
             </div>
         </div>

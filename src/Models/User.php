@@ -40,6 +40,7 @@ class User extends Authenticatable
         'is_active' => 'boolean',
         'can_notify' => 'boolean',
         'email_verified_at' => 'datetime',
+        'password' => 'hashed',
     ];
 
     public array $mappedMedia = [
@@ -59,8 +60,7 @@ class User extends Authenticatable
         parent::boot();
 
         static::addGlobalScope('type', static function (Builder $builder) {
-            $builder->where($builder->getModel()
-                    ->getTable() . '.type', 'admix');
+            $builder->where($builder->qualifyColumn('type'), 'admix');
         });
     }
 
