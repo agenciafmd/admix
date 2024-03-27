@@ -16,7 +16,7 @@ class MyAccount extends Component
 
     public function mount(): void
     {
-        $this->form->setUser(Auth::guard('admix-web')
+        $this->form->setModel(Auth::guard('admix-web')
             ->user());
     }
 
@@ -31,7 +31,7 @@ class MyAccount extends Component
         } catch (ValidationException $exception) {
             throw $exception;
         } catch (Exception $exception) {
-            $this->dispatch(event: 'toast', level: 'danger', message: 'asd' . $exception->getMessage());
+            $this->dispatch(event: 'toast', level: 'danger', message: $exception->getMessage());
         }
 
         return null;
