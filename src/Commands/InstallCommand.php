@@ -62,7 +62,7 @@ class InstallCommand extends Command
         $packages = [
             'barryvdh/laravel-ide-helper:^3.0',
             'brianium/paratest:^6.0',
-            'nunomaduro/larastan:^2.5',
+            'larastan/larastan:^2.5',
             'nunomaduro/phpinsights:^2.8',
             'pestphp/pest-plugin-laravel:^2.2',
             'pestphp/pest:^2.19',
