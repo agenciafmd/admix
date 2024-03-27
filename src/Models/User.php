@@ -17,9 +17,9 @@ use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 use Spatie\MediaLibrary\HasMedia;
 
-class User extends Authenticatable
+class User extends Authenticatable implements AuditableContract
 {
-    use HasFactory, Notifiable, SoftDeletes, WithScopes;
+    use Auditable, HasFactory, Notifiable, SoftDeletes, WithScopes;
 
     protected $guarded = [
         'password_confirmation',
