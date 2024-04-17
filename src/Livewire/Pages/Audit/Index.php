@@ -5,7 +5,7 @@ namespace Agenciafmd\Admix\Livewire\Pages\Audit;
 use Agenciafmd\Admix\Livewire\Pages\Base\Index as BaseIndex;
 use Agenciafmd\Admix\Models\Audit;
 use Agenciafmd\Admix\Models\User;
-use Agenciafmd\Components\LaravelLivewireTables\Columns\ModalColumn;
+use Agenciafmd\Ui\LaravelLivewireTables\Columns\ModalColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
 use Rappasoft\LaravelLivewireTables\Views\Column;
@@ -29,6 +29,8 @@ class Index extends BaseIndex
             'audits.ip_address as ip_address',
             'audits.updated_at as updated_at',
         ]);
+
+        $this->setBulkActionsDisabled();
 
         parent::configure();
     }
@@ -57,7 +59,7 @@ class Index extends BaseIndex
                             return [
                                 $key => str($value)
                                     ->explode(' » ')
-                                    ->map(static fn ($name) => __($name))
+                                    ->map(static fn($name) => __($name))
                                     ->implode(' » '),
                             ];
                         })
@@ -109,8 +111,8 @@ class Index extends BaseIndex
     public function columns(): array
     {
         $actions[] = ModalColumn::make('Details')
-            ->title(static fn ($row) => __('Details'))
-            ->location(static fn ($row) => $row->log)
+            ->title(static fn($row) => __('Details'))
+            ->location(static fn($row) => $row->log)
             ->attributes(static function ($row) {
                 return [
                     'class' => 'btn ms-2',
@@ -126,22 +128,22 @@ class Index extends BaseIndex
                 ->sortable()
                 ->searchable()
                 ->format(
-                    static fn ($value) => config('audit-alias')[$value] ? str(config('audit-alias')[$value])
+                    static fn($value) => config('audit-alias')[$value] ? str(config('audit-alias')[$value])
                         ->explode(' » ')
-                        ->map(static fn ($name) => __($name))
+                        ->map(static fn($name) => __($name))
                         ->implode(' » ') : $value
                 ),
             Column::make(__('admix::fields.user'), 'admixUser.name')
                 ->sortable()
                 ->searchable()
                 ->format(
-                    static fn ($value) => $value ?? __('Unknown')
+                    static fn($value) => $value ?? __('Unknown')
                 ),
             Column::make(__('admix::fields.event'), 'event')
                 ->sortable()
                 ->searchable()
                 ->format(
-                    static fn ($value) => __('admix::events.' . $value)
+                    static fn($value) => __('admix::events.' . $value)
                 ),
             Column::make(__('admix::fields.auditable_id'), 'auditable_id')
                 ->sortable()

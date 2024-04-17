@@ -34,7 +34,7 @@ class Index extends DataTableComponent
     protected array $additionalColumns = [];
     protected array $additionalActionButtons = [];
     protected array $additionalBulkActions = [];
-    public bool $isTrash;
+    public bool $isTrash = false;
     public User $user;
 
     protected $listeners = [
@@ -53,10 +53,10 @@ class Index extends DataTableComponent
 
     public function configure(): void
     {
+        $this->pageTitle = $this->packageName;
         if ($this->isTrash) {
-            $this->pageTitle = __('Trash of ');
+            $this->pageTitle = __('Trash of ') . $this->packageName;
         }
-        $this->pageTitle .= $this->packageName;
 
 //        $this->setDebugStatus(true);
 //        $this->setPaginationMethod('simple');
@@ -67,8 +67,8 @@ class Index extends DataTableComponent
 
         $this->setPrimaryKey('id');
         $this->setConfigurableAreas([
-            'before-toolbar' => 'admix-components::livewire-tables.toolbar.before-toolbar',
-            'after-toolbar' => 'admix-components::livewire-tables.toolbar.after-toolbar',
+            'before-toolbar' => 'admix-ui::livewire-tables.toolbar.before-toolbar',
+            'after-toolbar' => 'admix-ui::livewire-tables.toolbar.after-toolbar',
         ]);
         $this->setTableAttributes([
             'class' => 'card-table table-vcenter text-nowrap datatable',
@@ -89,7 +89,7 @@ class Index extends DataTableComponent
         $this->setTdAttributes(function (Column $column) {
             if ($column->isField('id')) {
                 return [
-                    'class' => 'text-secondary',
+                    'class' => 'text-secondary text-end ' . ($this->bulkActionsStatus === false ? 'ps-4' : ''),
                 ];
             }
 
@@ -116,7 +116,7 @@ class Index extends DataTableComponent
 
     public function customView(): string
     {
-        return 'admix-components::livewire-tables.includes.custom';
+        return 'admix-ui::livewire-tables.includes.custom';
     }
 
     public function filters(): array
@@ -162,8 +162,8 @@ class Index extends DataTableComponent
             if ($this->user->can('restore', $this->builder()
                 ->getModel())) {
                 $actions[] = RestoreColumn::make('Restore')
-                    ->title(fn ($row) => __('Restore'))
-                    ->location(fn ($row) => "window.livewire.emitTo('" . str(static::class)
+                    ->title(fn($row) => __('Restore'))
+                    ->location(fn($row) => "window.livewire.emitTo('" . str(static::class)
                             ->lower()
                             ->replace('\\', '.')
                             ->toString() . "', 'bulkRestore', $row->id)")
@@ -177,8 +177,8 @@ class Index extends DataTableComponent
             if ($this->user->can('update', $this->builder()
                 ->getModel())) {
                 $actions[] = EditColumn::make('Edit')
-                    ->title(fn ($row) => __('Edit'))
-                    ->location(fn ($row) => route($this->editRoute, $row))
+                    ->title(fn($row) => __('Edit'))
+                    ->location(fn($row) => route($this->editRoute, $row))
                     ->attributes(function ($row) {
                         return [
                             'class' => 'btn ms-2',
@@ -189,8 +189,8 @@ class Index extends DataTableComponent
             if ($this->user->can('delete', $this->builder()
                 ->getModel())) {
                 $actions[] = DeleteColumn::make('Delete')
-                    ->title(fn ($row) => __('Delete'))
-                    ->location(fn ($row) => $row->id)
+                    ->title(fn($row) => __('Delete'))
+                    ->location(fn($row) => $row->id)
                     ->attributes(function ($row) {
                         return [
                             'class' => 'btn ms-2',
@@ -209,7 +209,7 @@ class Index extends DataTableComponent
                 ->searchable(),
             ...$this->additionalColumns,
             BooleanColumn::make(__('admix::fields.is_active'), 'is_active')
-                ->setView('admix-components::livewire-tables.columns.boolean')
+                ->setView('admix-ui::livewire-tables.columns.boolean')
                 ->sortable()
                 ->searchable(),
             ButtonGroupColumn::make('')
@@ -372,7 +372,7 @@ class Index extends DataTableComponent
         $this->setupFooter();
         $this->setupReordering();
 
-        return view('admix-components::livewire-tables.datatable')
+        return view('admix-ui::livewire-tables.datatable')
             ->with([
                 'pageTitle' => $this->pageTitle,
                 'headerActions' => $this->headerActions(),

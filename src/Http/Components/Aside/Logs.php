@@ -13,15 +13,14 @@ class Logs extends Component
         public string $url = '',
         public bool $active = false,
         public bool $visible = false,
-    )
-    {
+    ) {
     }
 
     public function render(): View
     {
         $this->icon = __(config('admix.audit.icon'));
         $this->label = __(config('admix.audit.name'));
-        $this->url = ''; //route('admix.audit.index');
+        $this->url = route('admix.audit.index');
         $this->active = request()?->currentRouteNameStartsWith('admix.audit');
         $this->visible = true;
 
