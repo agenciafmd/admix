@@ -8,7 +8,6 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\Features\SupportRedirects\Redirector;
 
@@ -84,7 +83,7 @@ class ResetPassword extends Component
                 $user->forceFill([
                     'password' => Hash::make($password),
                 ])
-                    ->setRememberToken(Str::random(60));
+                    ->setRememberToken(str()->random(60));
 
                 $user->save();
 
