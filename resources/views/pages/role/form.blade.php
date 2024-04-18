@@ -1,14 +1,14 @@
 <x-page.form
-        headerTitle="{{ $role->id ? __('Update :name', ['name' => __(config('admix.role.name'))]) : __('Create :name', ['name' => __(config('admix.role.name'))]) }}">
+        headerTitle="{{ $role->exists ? __('Update :name', ['name' => __(config('admix.role.name'))]) : __('Create :name', ['name' => __(config('admix.role.name'))]) }}">
     <div class="row">
         <div class="col-md-6 mb-3">
             <x-form.label for="role.is_active">
                 {{ str(__('admix::fields.is_active'))->ucfirst() }}
             </x-form.label>
-            <x-form.checkbox name="role.is_active"
-                             class="form-switch form-switch-lg"
-                             :label-on="__('Yes')"
-                             :label-off="__('No')"
+            <x-form.toggle name="form.is_active"
+                           :large="true"
+                           :label-on="__('Yes')"
+                           :label-off="__('No')"
             />
         </div>
         <div class="col-md-6 mb-3">
@@ -16,7 +16,7 @@
     </div>
     <div class="row">
         <div class="col-md-6 mb-3">
-            <x-form.input name="role.name" :label="__('admix::fields.name')"/>
+            <x-form.input name="form.name" :label="__('admix::fields.name')"/>
         </div>
         <div class="col-md-6 mb-3">
         </div>
@@ -31,11 +31,10 @@
                     <div class="col-md-3">
                         <label class="form-label">{{ $rule['name'] }}</label>
                         @foreach($rule['policies'] as $policy)
-                            <x-form.checkbox name="role.rules"
-                                             wire:model.defer="role.rules"
-                                             class="form-switch"
-                                             :label="$policy['name']"
-                                             :value="$policy['policy']"/>
+                            <x-form.toggle name="form.rules"
+                                           :label="$policy['name']"
+                                           :value="$policy['policy']"
+                            />
                         @endforeach
                     </div>
                 @endforeach

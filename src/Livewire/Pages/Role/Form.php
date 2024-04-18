@@ -3,47 +3,49 @@
 namespace Agenciafmd\Admix\Livewire\Pages\Role;
 
 use Agenciafmd\Admix\Models\Role;
-use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Collection;
-use Livewire\Component;
-use Livewire\Features\SupportRedirects\Redirector;
+use Livewire\Attributes\Validate;
+use Livewire\Form as LivewireForm;
 
-class Form extends Component
+class Form extends LivewireForm
 {
-    use AuthorizesRequests;
-
     public Role $role;
-    public Collection $gateRules;
 
-    public function mount(Role $role): void
+    #[Validate]
+    public bool $is_active = true;
+
+    #[Validate]
+    public string $name = '';
+
+    #[Validate]
+    public array $rules = [];
+
+    public function setModel(Role $role): void
     {
-        ($role->id) ? $this->authorize('update', Role::class) : $this->authorize('create', Role::class);
-
         $this->role = $role;
-        $this->role->is_active ??= false;
-        $this->role->rules ??= [];
-        $this->gateRules = $this->gateRules();
+        if ($role->exists) {
+            $this->is_active = $role->is_active;
+            $this->name = $role->name;
+            $this->rules = $role->rules;
+        }
     }
 
     public function rules(): array
     {
         return [
-            'role.is_active' => [
+            'is_active' => [
                 'boolean',
             ],
-            'role.name' => [
+            'name' => [
                 'required',
                 'max:255',
             ],
-            'role.rules' => [
+            'rules' => [
                 'array',
             ],
         ];
     }
 
-    public function attributes(): array
+    public function validationAttributes(): array
     {
         return [
             'is_active' => __('admix::fields.is_active'),
@@ -52,53 +54,12 @@ class Form extends Component
         ];
     }
 
-    public function updated(string $field): void
+    public function save(): bool
     {
-        $this->validateOnly($field, $this->rules(), [], $this->attributes());
-    }
+        $this->validate(rules: $this->rules(), attributes: $this->validationAttributes());
 
-    public function submit(): null|Redirector|RedirectResponse
-    {
-        $data = $this->validate($this->rules(), [], $this->attributes());
+        $this->role->fill($this->except('role'));
 
-        try {
-            if ($this->role->save()) {
-                flash(__('crud.success.save'), 'success');
-            } else {
-                flash(__('crud.error.save'), 'error');
-            }
-
-            return redirect()->to(session()->get('backUrl') ?: route('admix.role.index'));
-        } catch (\Exception $exception) {
-            $this->dispatch(event: 'toast', level: 'danger', message: $exception->getMessage());
-
-            return null;
-        }
-    }
-
-    public function render(): View
-    {
-        return view('admix::pages.role.form')
-            ->extends('admix::internal')
-            ->section('internal-content');
-    }
-
-    private function gateRules(): Collection
-    {
-        return collect(config('gate'))
-            ->sortBy('sort')
-            ->map(function ($group) {
-                return [
-                    'name' => str($group['name'])
-                        ->explode(' » ')
-                        ->map(fn ($name) => __($name))
-                        ->implode(' » '),
-                    'policies' => collect($group['abilities'])->map(fn ($ability) => [
-                        'name' => __($ability['name']),
-                        'policy' => $group['policy'] . '@' . $ability['method'],
-                    ]),
-                ];
-            })
-            ->values();
+        return $this->role->save();
     }
 }

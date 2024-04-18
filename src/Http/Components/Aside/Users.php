@@ -13,8 +13,7 @@ class Users extends Component
         public bool $active = false,
         public bool $visible = false,
         public array $children = [],
-    )
-    {
+    ) {
     }
 
     public function render(): View
@@ -32,7 +31,7 @@ class Users extends Component
             ],
             [
                 'label' => __(config('admix.role.name')),
-                'url' => '', //route('admix.role.index'),
+                'url' => route('admix.role.index'),
                 'active' => request()?->currentRouteNameStartsWith('admix.role'),
                 'visible' => true,
             ],

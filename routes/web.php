@@ -40,14 +40,14 @@ Route::get('/profile/change-password', Pages\Profile\ChangePassword::class)
 //Route::get('/users/{user}/edit', Pages\User\Form::class)
 //    ->name('admix.user.edit');
 //
-//Route::get('/roles', Pages\Role\Index::class)
-//    ->name('admix.role.index');
-//Route::get('/roles/trash', Pages\Role\Index::class)
-//    ->name('admix.role.trash');
-//Route::get('/roles/create', Pages\Role\Form::class)
-//    ->name('admix.role.create');
-//Route::get('/roles/{role}/edit', Pages\Role\Form::class)
-//    ->name('admix.role.edit');
+Route::get('/roles', Pages\Role\Index::class)
+    ->name('admix.role.index');
+Route::get('/roles/trash', Pages\Role\Index::class)
+    ->name('admix.role.trash');
+Route::get('/roles/create', Pages\Role\Component::class)
+    ->name('admix.role.create');
+Route::get('/roles/{role}/edit', Pages\Role\Component::class)
+    ->name('admix.role.edit');
 
 Route::get('/audit', Pages\Audit\Index::class)
     ->name('admix.audit.index');
