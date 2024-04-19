@@ -1,5 +1,5 @@
 <x-page.form
-        headerTitle="{{ $role->exists ? __('Update :name', ['name' => __(config('admix.role.name'))]) : __('Create :name', ['name' => __(config('admix.role.name'))]) }}">
+        title="{{ $role->exists ? __('Update :name', ['name' => __(config('admix.role.name'))]) : __('Create :name', ['name' => __(config('admix.role.name'))]) }}">
     <div class="row">
         <div class="col-md-6 mb-3">
             <x-form.label for="role.is_active">
@@ -41,9 +41,8 @@
             </div>
         </div>
     </div>
-
-    <x-slot:cardComplement>
-        @if($role->id)
+    <x-slot:complement>
+        @if($role->exists)
             <div class="mb-3">
                 <x-form.plaintext :label="__('admix::fields.id')"
                                   :value="$role->id"/>
@@ -57,5 +56,5 @@
                                   :value="$role->updated_at->format(config('admix.timestamp.format'))"/>
             </div>
         @endif
-    </x-slot:cardComplement>
+    </x-slot:complement>
 </x-page.form>
