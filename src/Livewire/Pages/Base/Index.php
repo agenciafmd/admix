@@ -5,6 +5,7 @@ namespace Agenciafmd\Admix\Livewire\Pages\Base;
 use Agenciafmd\Admix\Models\User;
 use Agenciafmd\Ui\LaravelLivewireTables\Columns\DeleteColumn;
 use Agenciafmd\Ui\LaravelLivewireTables\Columns\EditColumn;
+use Agenciafmd\Ui\LaravelLivewireTables\Columns\RestoreColumn;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -160,17 +161,17 @@ class Index extends DataTableComponent
         if ($this->isTrash) {
             if ($this->user->can('restore', $this->builder()
                 ->getModel())) {
-//                $actions[] = RestoreColumn::make('Restore')
-//                    ->title(fn($row) => __('Restore'))
-//                    ->location(fn($row) => "window.livewire.emitTo('" . str(static::class)
-//                            ->lower()
-//                            ->replace('\\', '.')
-//                            ->toString() . "', 'bulkRestore', $row->id)")
-//                    ->attributes(function ($row) {
-//                        return [
-//                            'class' => 'btn ms-0 ms-md-2',
-//                        ];
-//                    });
+                $actions[] = RestoreColumn::make('Restore')
+                    ->title(fn($row) => __('Restore'))
+                    ->location(fn($row) => "window.Livewire.dispatchTo('" . str(static::class)
+                            ->lower()
+                            ->replace('\\', '.')
+                            ->toString() . "', 'bulkRestore', { id: $row->id })")
+                    ->attributes(function ($row) {
+                        return [
+                            'class' => 'btn ms-0 ms-md-2',
+                        ];
+                    });
             }
         } else {
             if ($this->user->can('update', $this->builder()
