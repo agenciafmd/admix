@@ -51,10 +51,10 @@ class Component extends LivewireComponent
         return null;
     }
 
-    #[Layout('admix::internal')]
     public function render(): View
     {
         return view('admix::pages.role.form')
+            ->extends('admix::internal')
             ->section('internal-content');
     }
 

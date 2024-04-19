@@ -4,7 +4,7 @@ namespace Agenciafmd\Admix\Livewire\Pages\Base;
 
 use Agenciafmd\Admix\Models\User;
 use Agenciafmd\Components\LaravelLivewireTables\Columns\DeleteColumn;
-use Agenciafmd\Components\LaravelLivewireTables\Columns\EditColumn;
+use Agenciafmd\Ui\LaravelLivewireTables\Columns\EditColumn;
 use Agenciafmd\Components\LaravelLivewireTables\Columns\RestoreColumn;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
@@ -161,17 +161,17 @@ class Index extends DataTableComponent
         if ($this->isTrash) {
             if ($this->user->can('restore', $this->builder()
                 ->getModel())) {
-                $actions[] = RestoreColumn::make('Restore')
-                    ->title(fn($row) => __('Restore'))
-                    ->location(fn($row) => "window.livewire.emitTo('" . str(static::class)
-                            ->lower()
-                            ->replace('\\', '.')
-                            ->toString() . "', 'bulkRestore', $row->id)")
-                    ->attributes(function ($row) {
-                        return [
-                            'class' => 'btn ms-0 ms-md-2',
-                        ];
-                    });
+//                $actions[] = RestoreColumn::make('Restore')
+//                    ->title(fn($row) => __('Restore'))
+//                    ->location(fn($row) => "window.livewire.emitTo('" . str(static::class)
+//                            ->lower()
+//                            ->replace('\\', '.')
+//                            ->toString() . "', 'bulkRestore', $row->id)")
+//                    ->attributes(function ($row) {
+//                        return [
+//                            'class' => 'btn ms-0 ms-md-2',
+//                        ];
+//                    });
             }
         } else {
             if ($this->user->can('update', $this->builder()
@@ -188,14 +188,14 @@ class Index extends DataTableComponent
 
             if ($this->user->can('delete', $this->builder()
                 ->getModel())) {
-                $actions[] = DeleteColumn::make('Delete')
-                    ->title(fn($row) => __('Delete'))
-                    ->location(fn($row) => $row->id)
-                    ->attributes(function ($row) {
-                        return [
-                            'class' => 'btn ms-2',
-                        ];
-                    });
+//                $actions[] = DeleteColumn::make('Delete')
+//                    ->title(fn($row) => __('Delete'))
+//                    ->location(fn($row) => $row->id)
+//                    ->attributes(function ($row) {
+//                        return [
+//                            'class' => 'btn ms-2',
+//                        ];
+//                    });
             }
         }
         $actionButtons = array_merge($this->additionalActionButtons, $actions);
