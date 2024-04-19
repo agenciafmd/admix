@@ -71,7 +71,7 @@ class Index extends DataTableComponent
             'after-toolbar' => 'admix-ui::livewire-tables.toolbar.after-toolbar',
         ]);
         $this->setTableAttributes([
-            'class' => 'card-table table-vcenter text-nowrap datatable',
+            'class' => 'card-table table-vcenter text-nowrap datatable table-striped',
         ]);
         $this->setThAttributes(function (Column $column) {
             if (
