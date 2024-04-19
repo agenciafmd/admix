@@ -20,7 +20,7 @@ class LivewireServiceProvider extends ServiceProvider
             Pages\Profile\ChangePassword::class);
 //        Livewire::component('agenciafmd.admix.http.livewire.pages.user.index', Pages\User\Index::class);
 //        Livewire::component('agenciafmd.admix.http.livewire.pages.user.form', Pages\User\Form::class);
-//        Livewire::component('agenciafmd.admix.http.livewire.pages.role.index', Pages\Role\Index::class);
+        Livewire::component('agenciafmd.admix.livewire.pages.role.index', Pages\Role\Index::class);
         Livewire::component('agenciafmd.admix.livewire.pages.role.component', Pages\Role\Component::class);
         Livewire::component('agenciafmd.admix.livewire.pages.audit.index', Pages\Audit\Index::class);
     }
