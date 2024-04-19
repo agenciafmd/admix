@@ -3,9 +3,8 @@
 namespace Agenciafmd\Admix\Livewire\Pages\Base;
 
 use Agenciafmd\Admix\Models\User;
-use Agenciafmd\Components\LaravelLivewireTables\Columns\DeleteColumn;
+use Agenciafmd\Ui\LaravelLivewireTables\Columns\DeleteColumn;
 use Agenciafmd\Ui\LaravelLivewireTables\Columns\EditColumn;
-use Agenciafmd\Components\LaravelLivewireTables\Columns\RestoreColumn;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -188,14 +187,14 @@ class Index extends DataTableComponent
 
             if ($this->user->can('delete', $this->builder()
                 ->getModel())) {
-//                $actions[] = DeleteColumn::make('Delete')
-//                    ->title(fn($row) => __('Delete'))
-//                    ->location(fn($row) => $row->id)
-//                    ->attributes(function ($row) {
-//                        return [
-//                            'class' => 'btn ms-2',
-//                        ];
-//                    });
+                $actions[] = DeleteColumn::make('Delete')
+                    ->title(fn($row) => __('Delete'))
+                    ->location(fn($row) => $row->id)
+                    ->attributes(function ($row) {
+                        return [
+                            'class' => 'btn ms-2',
+                        ];
+                    });
             }
         }
         $actionButtons = array_merge($this->additionalActionButtons, $actions);
