@@ -25,7 +25,7 @@ class Users extends Component
         $this->children = [
             [
                 'label' => __(config('admix.user.name')),
-                'url' => '', //route('admix.user.index'),
+                'url' => route('admix.user.index'),
                 'active' => request()?->currentRouteNameStartsWith('admix.user'),
                 'visible' => true,
             ],

@@ -18,8 +18,8 @@ class LivewireServiceProvider extends ServiceProvider
         Livewire::component('agenciafmd.admix.livewire.pages.profile.my-account', Pages\Profile\MyAccount::class);
         Livewire::component('agenciafmd.admix.livewire.pages.profile.change-password',
             Pages\Profile\ChangePassword::class);
-//        Livewire::component('agenciafmd.admix.http.livewire.pages.user.index', Pages\User\Index::class);
-//        Livewire::component('agenciafmd.admix.http.livewire.pages.user.form', Pages\User\Form::class);
+        Livewire::component('agenciafmd.admix.http.livewire.pages.user.index', Pages\User\Index::class);
+        Livewire::component('agenciafmd.admix.http.livewire.pages.user.component', Pages\User\Component::class);
         Livewire::component('agenciafmd.admix.livewire.pages.role.index', Pages\Role\Index::class);
         Livewire::component('agenciafmd.admix.livewire.pages.role.component', Pages\Role\Component::class);
         Livewire::component('agenciafmd.admix.livewire.pages.audit.index', Pages\Audit\Index::class);

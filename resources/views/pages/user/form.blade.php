@@ -1,60 +1,60 @@
 <x-page.form
-        headerTitle="{{ $user->id ? __('Update :name', ['name' => __(config('admix.user.name'))]) : __('Create :name', ['name' => __(config('admix.user.name'))]) }}">
+        headerTitle="{{ $user->exists ? __('Update :name', ['name' => __(config('admix.user.name'))]) : __('Create :name', ['name' => __(config('admix.user.name'))]) }}">
     <div class="row">
         <div class="col-md-6 mb-3">
             <x-form.label for="user.is_active">
                 {{ str(__('admix::fields.is_active'))->ucfirst() }}
             </x-form.label>
-            <x-form.checkbox name="user.is_active"
-                             class="form-switch form-switch-lg"
-                             :label-on="__('Yes')"
-                             :label-off="__('No')"
+            <x-form.toggle name="form.is_active"
+                           :large="true"
+                           :label-on="__('Yes')"
+                           :label-off="__('No')"
             />
         </div>
         <div class="col-md-6 mb-3">
-            <x-form.label for="user.can_notify">
+            <x-form.label for="form.can_notify">
                 {{ str(__('admix::fields.can_notify'))->ucfirst() }}
             </x-form.label>
-            <x-form.checkbox name="user.can_notify"
-                             class="form-switch form-switch-lg"
-                             :label-on="__('Yes')"
-                             :label-off="__('No')"
+            <x-form.toggle name="form.can_notify"
+                           :large="true"
+                           :label-on="__('Yes')"
+                           :label-off="__('No')"
             />
         </div>
     </div>
     <div class="row">
         <div class="col-md-6 mb-3">
-            <x-form.input name="user.name" :label="__('admix::fields.name')"/>
+            <x-form.input name="form.name" :label="__('admix::fields.name')"/>
         </div>
         <div class="col-md-6 mb-3">
-            <x-form.input name="user.email" :label="__('admix::fields.email')"/>
+            <x-form.input name="form.email" :label="__('admix::fields.email')"/>
         </div>
     </div>
     <div class="row">
         <div class="col-md-6 mb-3">
-            <x-form.password name="password"
+            <x-form.password name="form.password"
                              :label="__('admix::fields.password')"
-                             wire:model.defer="password"
+                             wire:model.defer="form.password"
             />
         </div>
         <div class="col-md-6 mb-3">
-            <x-form.password name="password_confirmation"
+            <x-form.password name="form.password_confirmation"
                              :label="__('admix::fields.password_confirmation')"
-                             wire:model.defer="password_confirmation"
+                             wire:model.defer="form.password_confirmation"
             />
         </div>
     </div>
     <div class="row">
         <div class="col-md-6 mb-3">
-            <x-form.select name="user.role_id"
+            <x-form.select name="form.role_id"
                            :label="__('admix::fields.role_id')"
-                           :options="$roles"
+                           :options="$roleOptions"
                            :placeholder="__('Administrator')"
             />
         </div>
     </div>
-    <x-slot:cardComplement>
-        @if($user->id)
+    <x-slot:complement>
+        @if($user->exists)
             <div class="mb-3">
                 <x-form.plaintext :label="__('admix::fields.id')"
                                   :value="$user->id"/>
@@ -68,5 +68,5 @@
                                   :value="$user->updated_at->format(config('admix.timestamp.format'))"/>
             </div>
         @endif
-    </x-slot:cardComplement>
+    </x-slot:complement>
 </x-page.form>

@@ -2,53 +2,64 @@
 
 namespace Agenciafmd\Admix\Livewire\Pages\User;
 
-use Agenciafmd\Admix\Models\Role;
 use Agenciafmd\Admix\Models\User;
-use Illuminate\Contracts\View\View;
 use Illuminate\Database\Query\Builder;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
-use Livewire\Component;
-use Livewire\Features\SupportRedirects\Redirector;
+use Livewire\Attributes\Validate;
+use Livewire\Form as LivewireForm;
 
-class Form extends Component
+class Form extends LivewireForm
 {
-    use AuthorizesRequests;
-
     public User $user;
-    public string $password;
-    public string $password_confirmation;
-    public array $roles;
 
-    public function mount(User $user): void
+    #[Validate]
+    public bool $is_active = true;
+
+    #[Validate]
+    public bool $can_notify = true;
+
+    #[Validate]
+    public string $name = '';
+
+    #[Validate]
+    public string $email = '';
+
+    #[Validate]
+    public ?string $password = '';
+
+    #[Validate]
+    public ?string $password_confirmation = '';
+
+    #[Validate]
+    public ?int $role_id = null;
+
+    public function setModel(User $user): void
     {
-        ($user->id) ? $this->authorize('update', User::class) : $this->authorize('create', User::class);
-
         $this->user = $user;
-        $this->user->is_active ??= false;
-        $this->user->can_notify ??= false;
-        $this->roles = Role::query()
-            ->pluck('name', 'id')
-            ->toArray();
+        if ($user->exists) {
+            $this->is_active = $user->is_active;
+            $this->can_notify = $user->can_notify;
+            $this->name = $user->name;
+            $this->email = $user->email;
+            $this->role_id = $user->role_id;
+        }
     }
 
     public function rules(): array
     {
         return [
-            'user.is_active' => [
+            'is_active' => [
                 'boolean',
             ],
-            'user.can_notify' => [
+            'can_notify' => [
                 'boolean',
             ],
-            'user.name' => [
+            'name' => [
                 'required',
                 'max:255',
             ],
-            'user.email' => [
+            'email' => [
                 'required',
                 Rule::unique('users', 'email')
                     ->where(fn(Builder $query) => $query->where('type', $this->user->type))
@@ -65,56 +76,34 @@ class Form extends Component
                     ->symbols(),
                 'confirmed',
             ],
-            'user.role_id' => [
+            'role_id' => [
                 'nullable',
             ],
         ];
     }
 
-    public function attributes(): array
+    public function validationAttributes(): array
     {
         return [
             'is_active' => __('admix::fields.is_active'),
+            'name' => __('admix::fields.name'),
             'email' => __('admix::fields.email'),
             'password' => __('admix::fields.password'),
             'can_notify' => __('admix::fields.can_notify'),
             'role_id' => __('admix::fields.role_id'),
-            'media.avatar' => __('admix::fields.media.avatar'),
+//            'media.avatar' => __('admix::fields.media.avatar'),
         ];
     }
 
-    public function updated(string $field): void
+    public function save(): bool
     {
-        $this->validateOnly($field, $this->rules(), [], $this->attributes());
-    }
-
-    public function submit(): null|Redirector|RedirectResponse
-    {
-        $data = $this->validate($this->rules(), [], $this->attributes());
-
-        if ($data['password']) {
-            $this->user->password = Hash::make($data['password']);
+        $this->validate(rules: $this->rules(), attributes: $this->validationAttributes());
+        $data = $this->except('user');
+        if (!$data['password']) {
+            unset($data['password'], $data['password_confirmation']);
         }
+        $this->user->fill($data);
 
-        try {
-            if ($this->user->save()) {
-                flash(__('crud.success.save'), 'success');
-            } else {
-                flash(__('crud.error.save'), 'error');
-            }
-
-            return redirect()->to(session()->get('backUrl') ?: route('admix.user.index'));
-        } catch (\Exception $exception) {
-            $this->dispatch(event: 'toast', level: 'danger', message: $exception->getMessage());
-
-            return null;
-        }
-    }
-
-    public function render(): View
-    {
-        return view('admix::pages.user.form')
-            ->extends('admix::internal')
-            ->section('internal-content');
+        return $this->user->save();
     }
 }
