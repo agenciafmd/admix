@@ -2,7 +2,7 @@
         title="{{ $role->exists ? __('Update :name', ['name' => __(config('admix.role.name'))]) : __('Create :name', ['name' => __(config('admix.role.name'))]) }}">
     <div class="row">
         <div class="col-md-6 mb-3">
-            <x-form.label for="role.is_active">
+            <x-form.label for="form.is_active">
                 {{ str(__('admix::fields.is_active'))->ucfirst() }}
             </x-form.label>
             <x-form.toggle name="form.is_active"
