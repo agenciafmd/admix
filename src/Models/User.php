@@ -81,7 +81,7 @@ class User extends Authenticatable implements AuditableContract
     protected function isAdmin(): Attribute
     {
         return Attribute::make(
-            get: fn () => !(isset($this->attributes['role_id'])
+            get: fn() => !(isset($this->attributes['role_id'])
                 && $this->attributes['role_id']),
         );
     }
@@ -91,7 +91,7 @@ class User extends Authenticatable implements AuditableContract
         $this->notify(new ResetPasswordNotification($token));
     }
 
-    protected static function newFactory(): UserFactory
+    protected static function newFactory(): UserFactory|\Database\Factories\UserFactory
     {
         if (class_exists(\Database\Factories\UserFactory::class)) {
             return \Database\Factories\UserFactory::new();
