@@ -91,7 +91,7 @@ class Form extends LivewireForm
             'password' => __('admix::fields.password'),
             'can_notify' => __('admix::fields.can_notify'),
             'role_id' => __('admix::fields.role_id'),
-//            'media.avatar' => __('admix::fields.media.avatar'),
+            //            'media.avatar' => __('admix::fields.media.avatar'),
         ];
     }
 

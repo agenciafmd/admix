@@ -41,15 +41,16 @@ class Audit extends AuditModel
                             $attributeName = __("admix::fields.{$attribute}");
                         }
 
-                        $log .= __('<strong>:attribute</strong> was changed from <strong>:old</strong> to <strong>:new</strong>', [
-                                'attribute' => $attributeName,
-                                'old' => isset($modified['old']) ? str($modified['old'])
-                                    ->pipe('nl2br')
-                                    ->squish() : __('empty'),
-                                'new' => isset($modified['new']) ? str($modified['new'])
-                                    ->pipe('nl2br')
-                                    ->squish() : __('empty'),
-                            ]) . '<br />';
+                        $log .= __('<strong>:attribute</strong> was changed from <strong>:old</strong> to <strong>:new</strong>',
+                                [
+                                    'attribute' => $attributeName,
+                                    'old' => isset($modified['old']) ? str($modified['old'])
+                                        ->pipe('nl2br')
+                                        ->squish() : __('empty'),
+                                    'new' => isset($modified['new']) ? str($modified['new'])
+                                        ->pipe('nl2br')
+                                        ->squish() : __('empty'),
+                                ]) . '<br />';
                     }
                 }
 

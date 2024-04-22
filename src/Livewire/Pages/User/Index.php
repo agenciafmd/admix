@@ -11,9 +11,13 @@ use Rappasoft\LaravelLivewireTables\Views\Filters\TextFilter;
 class Index extends BaseIndex
 {
     protected $model = User::class;
+
     protected string $indexRoute = 'admix.user.index';
+
     protected string $trashRoute = 'admix.user.trash';
+
     protected string $creteRoute = 'admix.user.create';
+
     protected string $editRoute = 'admix.user.edit';
 
     public function configure(): void

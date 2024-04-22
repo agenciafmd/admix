@@ -5,7 +5,6 @@ namespace Agenciafmd\Admix\Models;
 use Agenciafmd\Admix\Database\Factories\UserFactory;
 use Agenciafmd\Admix\Notifications\ResetPasswordNotification;
 use Agenciafmd\Admix\Traits\WithScopes;
-use Agenciafmd\Components\Traits\InteractsWithMediaUploads;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -15,7 +14,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
-use Spatie\MediaLibrary\HasMedia;
 
 class User extends Authenticatable implements AuditableContract
 {

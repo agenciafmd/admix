@@ -24,17 +24,29 @@ class Index extends DataTableComponent
     use AuthorizesRequests;
 
     protected $model;
+
     protected string $indexRoute = '';
+
     protected string $trashRoute = '';
+
     protected string $creteRoute = '';
+
     protected string $editRoute = '';
+
     protected string $pageTitle = '';
+
     protected string $packageName = '';
+
     protected array $additionalFilters = [];
+
     protected array $additionalColumns = [];
+
     protected array $additionalActionButtons = [];
+
     protected array $additionalBulkActions = [];
+
     public bool $isTrash = false;
+
     public User $user;
 
     protected $listeners = [
@@ -58,9 +70,9 @@ class Index extends DataTableComponent
             $this->pageTitle = __('Trash of ') . $this->packageName;
         }
 
-//        $this->setDebugStatus(true);
-//        $this->setPaginationMethod('simple');
-//        $this->setPaginationStatus(false);
+        //        $this->setDebugStatus(true);
+        //        $this->setPaginationMethod('simple');
+        //        $this->setPaginationStatus(false);
         $this->setPerPageAccepted([50, 100, 200]);
         $this->setSortingPillsDisabled();
         $this->setFilterPillsDisabled();
@@ -147,10 +159,10 @@ class Index extends DataTableComponent
                 ->filter(function (Builder $builder, string $value) use ($strongTableFromBuilder) {
                     $builder->where("{$strongTableFromBuilder}.name", 'LIKE', "%{$value}%");
                 }),
-//            TextFilter::make(__('admix::fields.email'), 'email')
-//                ->filter(function (Builder $builder, string $value) use ($strongTableFromBuilder) {
-//                    $builder->where("{$strongTableFromBuilder}.email", 'LIKE', "%{$value}%");
-//                }),
+            //            TextFilter::make(__('admix::fields.email'), 'email')
+            //                ->filter(function (Builder $builder, string $value) use ($strongTableFromBuilder) {
+            //                    $builder->where("{$strongTableFromBuilder}.email", 'LIKE', "%{$value}%");
+            //                }),
             ...$this->additionalFilters,
         ];
     }
@@ -166,7 +178,7 @@ class Index extends DataTableComponent
                     ->location(fn($row) => "window.Livewire.dispatchTo('" . str(static::class)
                             ->lower()
                             ->replace('\\', '.')
-                            ->toString() . "', 'bulkRestore', { id: $row->id })")
+                            ->toString() . "', 'bulkRestore', { id: {$row->id} })")
                     ->attributes(function ($row) {
                         return [
                             'class' => 'btn ms-0 ms-md-2',
@@ -325,16 +337,16 @@ class Index extends DataTableComponent
             ->getTable()));
     }
 
-    public function fieldsToExport(): null|\Closure
+    public function fieldsToExport(): ?\Closure
     {
         return null;
-//        return static function($model) {
-//            return [
-//                __('admix::fields.id') => $model->id,
-//                __('admix::fields.name') => $model->name,
-//                __('admix::fields.email') => $model->email,
-//            ];
-//        };
+        //        return static function($model) {
+        //            return [
+        //                __('admix::fields.id') => $model->id,
+        //                __('admix::fields.name') => $model->name,
+        //                __('admix::fields.email') => $model->email,
+        //            ];
+        //        };
     }
 
     public function headerActions(): array

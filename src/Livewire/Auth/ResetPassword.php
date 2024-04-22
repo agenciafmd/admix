@@ -21,12 +21,12 @@ class ResetPassword extends Component
 
     public string $password_confirmation;
 
-//    public function route()
-//    {
-//        return Route::get('/login', static::class)
-//            ->name('login')
-//            ->middleware('guest');
-//    }
+    //    public function route()
+    //    {
+    //        return Route::get('/login', static::class)
+    //            ->name('login')
+    //            ->middleware('guest');
+    //    }
 
     public function mount(string $token): void
     {
@@ -44,7 +44,7 @@ class ResetPassword extends Component
 
     public function updated(string $field): void
     {
-//        $this->validateOnly($field, $this->rules(), [], $this->attributes());
+        //        $this->validateOnly($field, $this->rules(), [], $this->attributes());
     }
 
     public function rules(): array

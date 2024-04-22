@@ -13,7 +13,7 @@ trait WithModel
     {
         if (!$key) {
             return $this->model;
-        } else if (is_array($key)) {
+        } elseif (is_array($key)) {
             return Arr::only($this->model, $key);
         } else {
             return Arr::get($this->model, $key, $default);
