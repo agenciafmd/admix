@@ -61,7 +61,7 @@ class Component extends LivewireComponent
     {
         /* Criar a macro de ->toOptions('label', 'value', 'texto do primeiro item vazio do select. Esse usado no preprend')*/
         return Role::query()
-            ->select('name', 'id')
+            ->select(['name', 'id'])
             ->sort()
             ->get()
             ->map(fn($role) => [
