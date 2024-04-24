@@ -29,14 +29,10 @@ class Index extends BaseIndex
 
     public function filters(): array
     {
-        $strongTableFromBuilder = $this->builder()
-            ->getModel()
-            ->getTable();
-
         $this->setAdditionalFilters([
             TextFilter::make(__('admix::fields.email'), 'email')
-                ->filter(function (Builder $builder, string $value) use ($strongTableFromBuilder) {
-                    $builder->where("{$strongTableFromBuilder}.email", 'LIKE', "%{$value}%");
+                ->filter(function (Builder $builder, string $value) {
+                    $builder->where($builder->qualifyColumn('email'), 'like', "%{$value}%");
                 }),
         ]);
 

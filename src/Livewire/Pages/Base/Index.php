@@ -133,14 +133,10 @@ class Index extends DataTableComponent
 
     public function filters(): array
     {
-        $strongTableFromBuilder = $this->builder()
-            ->getModel()
-            ->getTable();
-
         return [
             TextFilter::make(__('admix::fields.id'), 'id')
-                ->filter(function (Builder $builder, string $value) use ($strongTableFromBuilder) {
-                    $builder->where("{$strongTableFromBuilder}.id", $value);
+                ->filter(function (Builder $builder, string $value) {
+                    $builder->where($builder->qualifyColumn('id'), $value);
                 }),
             SelectFilter::make(__('admix::fields.is_active'), 'is_active')
                 ->options([
@@ -148,20 +144,16 @@ class Index extends DataTableComponent
                     'true' => __('Yes'),
                     'false' => __('No'),
                 ])
-                ->filter(function (Builder $builder, string $value) use ($strongTableFromBuilder) {
-                    if ($value === 'true') {
-                        $builder->where("{$strongTableFromBuilder}.is_active", true);
-                    } else {
-                        $builder->where("{$strongTableFromBuilder}.is_active", false);
-                    }
+                ->filter(function (Builder $builder, string $value) {
+                    $builder->where($builder->qualifyColumn('is_active'), ($value === 'true'));
                 }),
             TextFilter::make(__('admix::fields.name'), 'name')
-                ->filter(function (Builder $builder, string $value) use ($strongTableFromBuilder) {
-                    $builder->where("{$strongTableFromBuilder}.name", 'LIKE', "%{$value}%");
+                ->filter(function (Builder $builder, string $value) {
+                    $builder->where($builder->qualifyColumn('name'), 'like', "%{$value}%");
                 }),
             //            TextFilter::make(__('admix::fields.email'), 'email')
-            //                ->filter(function (Builder $builder, string $value) use ($strongTableFromBuilder) {
-            //                    $builder->where("{$strongTableFromBuilder}.email", 'LIKE', "%{$value}%");
+            //                ->filter(function (Builder $builder, string $value) {
+            //                    $builder->where($builder->qualifyColumn('email'), 'LIKE', "%{$value}%");
             //                }),
             ...$this->additionalFilters,
         ];

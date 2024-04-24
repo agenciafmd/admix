@@ -42,14 +42,10 @@ class Index extends BaseIndex
 
     public function filters(): array
     {
-        $strongTableFromBuilder = $this->builder()
-            ->getModel()
-            ->getTable();
-
         return [
             TextFilter::make(__('admix::fields.id'), 'id')
-                ->filter(static function (Builder $builder, string $value) use ($strongTableFromBuilder) {
-                    $builder->where("{$strongTableFromBuilder}.id", $value);
+                ->filter(static function (Builder $builder, string $value) {
+                    $builder->where($builder->qualifyColumn('id'), $value);
                 }),
             SelectFilter::make(__('admix::fields.auditable_type'), 'auditable_type')
                 ->options([
@@ -64,8 +60,8 @@ class Index extends BaseIndex
                             ];
                         })
                         ->toArray())
-                ->filter(static function (Builder $builder, string $value) use ($strongTableFromBuilder) {
-                    $builder->where("{$strongTableFromBuilder}.auditable_type", $value);
+                ->filter(static function (Builder $builder, string $value) {
+                    $builder->where($builder->qualifyColumn('auditable_type'), $value);
                 }),
             SelectFilter::make(__('admix::fields.user'), 'user_id')
                 ->options([
@@ -74,8 +70,8 @@ class Index extends BaseIndex
                         ->orderBy('name')
                         ->pluck('name', 'id')
                         ->toArray())
-                ->filter(static function (Builder $builder, string $value) use ($strongTableFromBuilder) {
-                    $builder->where("{$strongTableFromBuilder}.user_id", $value);
+                ->filter(static function (Builder $builder, string $value) {
+                    $builder->where($builder->qualifyColumn('user_id'), $value);
                 }),
             SelectFilter::make(__('admix::fields.event'), 'event')
                 ->options([
@@ -87,21 +83,21 @@ class Index extends BaseIndex
                             ];
                         })
                         ->toArray())
-                ->filter(static function (Builder $builder, string $value) use ($strongTableFromBuilder) {
-                    $builder->where("{$strongTableFromBuilder}.event", $value);
+                ->filter(static function (Builder $builder, string $value) {
+                    $builder->where($builder->qualifyColumn('event'), $value);
                 }),
             TextFilter::make(__('admix::fields.auditable_id'), 'auditable_id')
-                ->filter(static function (Builder $builder, string $value) use ($strongTableFromBuilder) {
-                    $builder->where("{$strongTableFromBuilder}.auditable_id", $value);
+                ->filter(static function (Builder $builder, string $value) {
+                    $builder->where($builder->qualifyColumn('auditable_id'), $value);
                 }),
             DateTimeFilter::make(__('admix::fields.initial_date'), 'initial_date')
-                ->filter(static function (Builder $builder, string $value) use ($strongTableFromBuilder) {
-                    $builder->where("{$strongTableFromBuilder}.created_at", '>=', Carbon::parse($value)
+                ->filter(static function (Builder $builder, string $value) {
+                    $builder->where($builder->qualifyColumn('created_at'), '>=', Carbon::parse($value)
                         ->format('Y-m-d H:i:s'));
                 }),
             DateTimeFilter::make(__('admix::fields.end_date'), 'end_date')
-                ->filter(static function (Builder $builder, string $value) use ($strongTableFromBuilder) {
-                    $builder->where("{$strongTableFromBuilder}.created_at", '<=', Carbon::parse($value)
+                ->filter(static function (Builder $builder, string $value) {
+                    $builder->where($builder->qualifyColumn('created_at'), '<=', Carbon::parse($value)
                         ->format('Y-m-d H:i:s'));
                 }),
             ...$this->additionalFilters,
