@@ -32,22 +32,22 @@ Route::get('/profile/change-password', Pages\Profile\ChangePassword::class)
     ->name('admix.profile.change-password');
 
 Route::get('/users', Pages\User\Index::class)
-    ->name('admix.user.index');
+    ->name('admix.users.index');
 Route::get('/users/trash', Pages\User\Index::class)
-    ->name('admix.user.trash');
+    ->name('admix.users.trash');
 Route::get('/users/create', Pages\User\Component::class)
-    ->name('admix.user.create');
+    ->name('admix.users.create');
 Route::get('/users/{user}/edit', Pages\User\Component::class)
-    ->name('admix.user.edit');
+    ->name('admix.users.edit');
 
 Route::get('/roles', Pages\Role\Index::class)
-    ->name('admix.role.index');
+    ->name('admix.roles.index');
 Route::get('/roles/trash', Pages\Role\Index::class)
-    ->name('admix.role.trash');
+    ->name('admix.roles.trash');
 Route::get('/roles/create', Pages\Role\Component::class)
-    ->name('admix.role.create');
+    ->name('admix.roles.create');
 Route::get('/roles/{role}/edit', Pages\Role\Component::class)
-    ->name('admix.role.edit');
+    ->name('admix.roles.edit');
 
 Route::get('/audit', Pages\Audit\Index::class)
     ->name('admix.audit.index');

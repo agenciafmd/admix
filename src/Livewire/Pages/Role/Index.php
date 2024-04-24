@@ -9,13 +9,13 @@ class Index extends BaseIndex
 {
     protected $model = Role::class;
 
-    protected string $indexRoute = 'admix.role.index';
+    protected string $indexRoute = 'admix.roles.index';
 
-    protected string $trashRoute = 'admix.role.trash';
+    protected string $trashRoute = 'admix.roles.trash';
 
-    protected string $creteRoute = 'admix.role.create';
+    protected string $creteRoute = 'admix.roles.create';
 
-    protected string $editRoute = 'admix.role.edit';
+    protected string $editRoute = 'admix.roles.edit';
 
     public function configure(): void
     {

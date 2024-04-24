@@ -12,13 +12,13 @@ class Index extends BaseIndex
 {
     protected $model = User::class;
 
-    protected string $indexRoute = 'admix.user.index';
+    protected string $indexRoute = 'admix.users.index';
 
-    protected string $trashRoute = 'admix.user.trash';
+    protected string $trashRoute = 'admix.users.trash';
 
-    protected string $creteRoute = 'admix.user.create';
+    protected string $creteRoute = 'admix.users.create';
 
-    protected string $editRoute = 'admix.user.edit';
+    protected string $editRoute = 'admix.users.edit';
 
     public function configure(): void
     {

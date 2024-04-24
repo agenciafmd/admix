@@ -40,7 +40,7 @@ class Component extends LivewireComponent
                 flash(__('crud.error.save'), 'error');
             }
 
-            return redirect()->to(session()->get('backUrl') ?: route('admix.user.index'));
+            return redirect()->to(session()->get('backUrl') ?: route('admix.users.index'));
         } catch (ValidationException $exception) {
             throw $exception;
         } catch (Exception $exception) {
