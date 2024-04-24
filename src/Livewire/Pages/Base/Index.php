@@ -89,6 +89,7 @@ class Index extends DataTableComponent
             if (
                 $column->isField('id') ||
                 $column->isField('is_active') ||
+                $column->isField('sort') ||
                 ($column->getField() === null)
             ) {
                 return [
@@ -98,6 +99,7 @@ class Index extends DataTableComponent
 
             return [];
         });
+
         $this->setTdAttributes(function (Column $column) {
             if ($column->isField('id')) {
                 return [
@@ -108,6 +110,12 @@ class Index extends DataTableComponent
             if ($column->isField('is_active')) {
                 return [
                     'align' => 'center',
+                ];
+            }
+
+            if ($column->isField('sort')) {
+                return [
+                    'class' => 'text-end',
                 ];
             }
 
