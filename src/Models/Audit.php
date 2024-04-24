@@ -10,6 +10,14 @@ class Audit extends AuditModel
 {
     protected function log(): Attribute
     {
+        /* TODO: refatorar e retornar uma tabela na descrição dos campos */
+        /*
+        | Campo | Ação       | De    | Para   |
+        |-------|------------|-------|--------|
+        | ativo | modificado | vazio | 1      |
+        | nome  | modificado | vazio | Irineu |
+        */
+
         return Attribute::make(
             get: function () {
                 $log = __(':created_at, :user [:ip] :event the register #:id', [
@@ -26,7 +34,7 @@ class Audit extends AuditModel
                         ->lower();
                 if ($this->event === 'created' || $this->event === 'updated') {
                     $log .= '<br /><br />';
-                    foreach ($this->getModified() as $attribute => $modified) {
+                    collect($this->getModified())->each(function ($modified, $attribute) use ($packageName, &$log) {
                         $attributeName = $packageName . '::fields.' . $attribute;
                         $attributeName = __($attributeName);
                         if (str($attributeName)
@@ -41,6 +49,13 @@ class Audit extends AuditModel
                             $attributeName = __("admix::fields.{$attribute}");
                         }
 
+                        collect($modified)
+                            ->each(function ($value, $key) use (&$modified) {
+                                if (is_array($value)) {
+                                    $modified[$key] = addslashes(implode(', ', $value));
+                                }
+                            });
+
                         $log .= __('<strong>:attribute</strong> was changed from <strong>:old</strong> to <strong>:new</strong>',
                                 [
                                     'attribute' => $attributeName,
@@ -51,7 +66,7 @@ class Audit extends AuditModel
                                         ->pipe('nl2br')
                                         ->squish() : __('empty'),
                                 ]) . '<br />';
-                    }
+                    });
                 }
 
                 return $log;

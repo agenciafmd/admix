@@ -5,10 +5,12 @@ namespace Agenciafmd\Admix\Models;
 use Agenciafmd\Admix\Traits\WithScopes;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Auditable;
+use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
-class Role extends Model
+class Role extends Model implements AuditableContract
 {
-    use SoftDeletes, WithScopes;
+    use Auditable, SoftDeletes, WithScopes;
 
     protected $guarded = [
         //
