@@ -25,6 +25,8 @@ return new class extends Migration {
                     ->constrained();
                 $table->boolean('can_notify')
                     ->default(0);
+                $table->json('library')
+                    ->nullable();
             });
             $table->softDeletes();
         });

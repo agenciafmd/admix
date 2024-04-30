@@ -31,6 +31,17 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-md-12 mb-3">
+            <x-form.image-library
+                    wire:model="form.files"
+                    wire:library="library"
+                    :preview="$this?->form?->library ?? collect()"
+                    name="form.image"
+                    :label="__('admix::fields.image')"
+            />
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-6 mb-3">
             <x-form.password name="form.password"
                              :label="__('admix::fields.password')"

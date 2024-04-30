@@ -16,6 +16,7 @@
     <link href="{{ asset('/vendor/admix/vendor/bootstrap-toaster/css/bootstrap-toaster.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('/vendor/admix-ui/vendor/libs/easymde/easymde.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('/vendor/admix-ui/vendor/libs/easymde/custom.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('/vendor/admix-ui/vendor/libs/cropperjs/cropper.min.css') }}" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css"
           rel="stylesheet"/>
     <style>
@@ -98,6 +99,8 @@
 <script src="{{ asset('/vendor/admix/vendor/tabler/js/tabler.min.js') }}" defer></script>
 <script src="{{ asset('/vendor/admix/vendor/bootstrap-toaster/js/bootstrap-toaster.min.js') }}" defer></script>
 <script src="{{ asset('/vendor/admix-ui/vendor/libs/easymde/easymde.min.js') }}" defer></script>
+<script src="{{ asset('/vendor/admix-ui/vendor/libs/cropperjs/cropper.min.js') }}" defer></script>
+<script src="{{ asset('/vendor/admix-ui/vendor/libs/sortablejs/sortable.min.js') }}" defer></script>
 <livewire:scripts/>
 
 @include('admix::partials.message')
