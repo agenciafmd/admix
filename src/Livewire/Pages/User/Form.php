@@ -93,11 +93,14 @@ class Form extends LivewireForm
             ],
             'files.*' => [
                 'image',
-                'max:1024',
+                'max:10240',
+                Rule::dimensions()
+                    ->maxWidth(8000)
+                    ->maxHeight(3000),
             ],
-            'library' => [
-                'required',
-            ],
+//            'library' => [
+//                'required',
+//            ],
         ];
     }
 

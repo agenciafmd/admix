@@ -33,11 +33,10 @@
     <div class="row">
         <div class="col-md-12 mb-3">
             <x-form.image-library
-                    wire:model="form.files"
+                    name="form.files"
+                    :label="__('admix::fields.image')"
                     wire:library="library"
                     :preview="$this?->form?->library ?? collect()"
-                    name="form.image"
-                    :label="__('admix::fields.image')"
             />
         </div>
     </div>
