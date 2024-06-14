@@ -5,8 +5,8 @@ namespace Agenciafmd\Admix\Models;
 use Agenciafmd\Admix\Database\Factories\UserFactory;
 use Agenciafmd\Admix\Notifications\ResetPasswordNotification;
 use Agenciafmd\Admix\Traits\WithScopes;
+use Agenciafmd\Ui\Casts\AsMediaLibrary;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Casts\AsCollection;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -15,10 +15,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class User extends Authenticatable implements AuditableContract
+class User extends Authenticatable implements AuditableContract, HasMedia
 {
-    use Auditable, HasFactory, Notifiable, SoftDeletes, WithScopes;
+    use Auditable, HasFactory, InteractsWithMedia, Notifiable, SoftDeletes, WithScopes;
 
     protected $guarded = [
         'password_confirmation',
@@ -40,19 +42,7 @@ class User extends Authenticatable implements AuditableContract
         'can_notify' => 'boolean',
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
-        'library' => AsCollection::class,
-    ];
-
-    public array $mappedMedia = [
-        'avatar' => [
-            'single' => true,
-            'rules' => [
-                'bail', /* usar até o livewire 3, porque a implementação do dimensions funciona somente nele */
-                'max:5120',
-                'image',
-                'dimensions:min_width=400,min_height=400',
-            ],
-        ],
+        'library' => AsMediaLibrary::class,
     ];
 
     protected static function boot(): void
