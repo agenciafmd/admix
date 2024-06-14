@@ -39,7 +39,7 @@ class Form extends LivewireForm
     public ?int $role_id = null;
 
     #[Validate]
-    public array $files = [];
+    public array $library_files = [];
 
     #[Validate]
     public Collection $library;
@@ -91,16 +91,18 @@ class Form extends LivewireForm
             'role_id' => [
                 'nullable',
             ],
-            'files.*' => [
+            'library_files.*' => [
                 'image',
                 'max:10240',
                 Rule::dimensions()
                     ->maxWidth(8000)
                     ->maxHeight(3000),
             ],
-//            'library' => [
-//                'required',
-//            ],
+            'library' => [
+                'array',
+                'required',
+                'min:3',
+            ],
         ];
     }
 
@@ -113,8 +115,8 @@ class Form extends LivewireForm
             'password' => __('admix::fields.password'),
             'can_notify' => __('admix::fields.can_notify'),
             'role_id' => __('admix::fields.role_id'),
-            'files.*' => __('admix::fields.files'),
-            //            'media.avatar' => __('admix::fields.media.avatar'),
+            'library' => __('admix::fields.library'),
+            'library_files.*' => __('admix::fields.library_files'),
         ];
     }
 
@@ -131,7 +133,7 @@ class Form extends LivewireForm
             $this->user->save();
         }
 
-        $this->syncMedia($this->user);
+        $this->syncMedia($this->user, 'library', 'library_files');
 
         return $this->user->save();
     }

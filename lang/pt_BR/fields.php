@@ -22,6 +22,10 @@ return [
     'images' => 'imagens',
     'initial_date' => 'data inicial',
     'is_active' => 'ativo',
+    'library' => 'arquivos',
+    'library_files' => 'arquivos',
+    'gallery' => 'galeria',
+    'gallery_files' => 'galeria',
     'login' => 'entrar',
     'logout' => 'sair',
     'media' => [
