@@ -63,7 +63,7 @@ class InstallCommand extends Command
             'barryvdh/laravel-ide-helper:^3.0',
             'brianium/paratest:^6.0',
             'larastan/larastan:^2.5',
-            'nunomaduro/phpinsights:^2.8',
+//            'nunomaduro/phpinsights:^2.8',
             'pestphp/pest-plugin-laravel:^2.2',
             'pestphp/pest:^2.19',
             'roave/security-advisories:dev-latest',
@@ -198,7 +198,7 @@ class InstallCommand extends Command
 
         $packages['scripts']['phpstan'] = 'vendor/bin/phpstan analyse';
         $packages['scripts']['pint'] = 'vendor/bin/pint packages -v';
-        $packages['scripts']['insights'] = 'vendor/bin/phpinsights analyse packages';
+//        $packages['scripts']['insights'] = 'vendor/bin/phpinsights analyse packages';
 
         $packages['scripts']['post-update-cmd'] = collect($packages['scripts']['post-update-cmd'])
             ->merge([
