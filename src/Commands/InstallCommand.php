@@ -26,7 +26,7 @@ class InstallCommand extends Command
         $this->requireComposerDevDependencies();
         $this->updateConfigAuth();
         $this->updateConfigFilesystems();
-//        $this->publishViewFiles();
+        //        $this->publishViewFiles();
         $this->publishConfigFiles();
         $this->publishLangFiles();
         $this->installHorizon();
@@ -202,8 +202,8 @@ class InstallCommand extends Command
 
         $packages['scripts']['post-update-cmd'] = collect($packages['scripts']['post-update-cmd'])
             ->merge([
-                "@php artisan ide-helper:generate",
-                "@php artisan ide-helper:meta",
+                '@php artisan ide-helper:generate',
+                '@php artisan ide-helper:meta',
                 "@php artisan ide-helper:models 'packages/agenciafmd/*/src/Models' --nowrite",
             ])
             ->unique()

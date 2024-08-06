@@ -4,6 +4,7 @@ return [
     'auditable_id' => 'registro',
     'auditable_type' => 'local',
     'avatar' => 'avatar',
+    'avatar_files' => 'avatar',
     'bcc' => 'cópia oculta',
     'can_notify' => 'receber notificação',
     'cc' => 'cópia',

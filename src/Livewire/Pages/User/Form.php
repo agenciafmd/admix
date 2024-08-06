@@ -44,10 +44,17 @@ class Form extends LivewireForm
     #[Validate]
     public Collection $library;
 
+    #[Validate]
+    public array $avatar_files = [];
+
+    #[Validate]
+    public Collection $avatar;
+
     public function setModel(User $user): void
     {
         $this->user = $user;
         $this->library = collect();
+        $this->avatar = collect();
         if ($user->exists) {
             $this->is_active = $user->is_active;
             $this->can_notify = $user->can_notify;
@@ -55,6 +62,7 @@ class Form extends LivewireForm
             $this->email = $user->email;
             $this->role_id = $user->role_id;
             $this->library = $user->library;
+            $this->avatar = $user->avatar;
         }
     }
 
@@ -103,6 +111,18 @@ class Form extends LivewireForm
                 'required',
                 'min:3',
             ],
+            'avatar_files.*' => [
+                'image',
+                'max:10240',
+                Rule::dimensions()
+                    ->maxWidth(8000)
+                    ->maxHeight(3000),
+            ],
+            'avatar' => [
+                'array',
+                'required',
+                'min:1',
+            ],
         ];
     }
 
@@ -117,6 +137,8 @@ class Form extends LivewireForm
             'role_id' => __('admix::fields.role_id'),
             'library' => __('admix::fields.library'),
             'library_files.*' => __('admix::fields.library_files'),
+            'avatar' => __('admix::fields.avatar'),
+            'avatar_files.*' => __('admix::fields.avatar_files'),
         ];
     }
 
@@ -134,6 +156,7 @@ class Form extends LivewireForm
         }
 
         $this->syncMedia($this->user, 'library', 'library_files');
+        $this->syncMedia($this->user, 'avatar', 'avatar_files');
 
         return $this->user->save();
     }

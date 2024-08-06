@@ -6,6 +6,7 @@ use Agenciafmd\Admix\Database\Factories\UserFactory;
 use Agenciafmd\Admix\Notifications\ResetPasswordNotification;
 use Agenciafmd\Admix\Traits\WithScopes;
 use Agenciafmd\Ui\Casts\AsMediaLibrary;
+use Agenciafmd\Ui\Casts\AsSingleMediaLibrary;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -43,6 +44,7 @@ class User extends Authenticatable implements AuditableContract, HasMedia
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
         'library' => AsMediaLibrary::class,
+        'avatar' => AsSingleMediaLibrary::class,
     ];
 
     protected static function boot(): void
