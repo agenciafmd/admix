@@ -46,10 +46,6 @@ class AdmixServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/../../lang/pt_BR' => lang_path('pt_BR'),
         ], ['admix:translations']);
-
-        $this->publishes([
-            __DIR__ . '/../../public' => public_path('vendor/admix'),
-        ], ['admix:assets', 'laravel-assets']);
     }
 
     private function loadMigrations(): void

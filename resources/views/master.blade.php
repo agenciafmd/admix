@@ -10,10 +10,12 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- CSS files -->
-    <link href="{{ asset('/vendor/admix/vendor/tabler/css/tabler.min.css') }}" rel="stylesheet"/>
-    <link href="{{ asset('/vendor/admix/vendor/tabler/css/tabler-vendors.min.css') }}" rel="stylesheet"/>
-    <link href="{{ asset('/vendor/admix/vendor/bootstrap-toaster/css/bootstrap-toaster.min.css') }}" rel="stylesheet"/>
-    <link href="{{ asset('/vendor/admix/vendor/bootstrap-toaster/css/bootstrap-toaster.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('/vendor/admix-ui/tabler/dist/css/tabler.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('/vendor/admix-ui/tabler/dist/css/tabler-vendors.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('/vendor/admix-ui/vendor/libs/bootstrap-toaster/css/bootstrap-toaster.min.css') }}"
+          rel="stylesheet"/>
+    <link href="{{ asset('/vendor/admix-ui/vendor/libs/bootstrap-toaster/css/bootstrap-toaster.min.css') }}"
+          rel="stylesheet"/>
     <link href="{{ asset('/vendor/admix-ui/vendor/libs/easymde/easymde.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('/vendor/admix-ui/vendor/libs/easymde/custom.css') }}" rel="stylesheet"/>
     <link href="{{ asset('/vendor/admix-ui/vendor/libs/cropperjs/cropper.min.css') }}" rel="stylesheet"/>
@@ -71,7 +73,7 @@
     @stack('styles')
 </head>
 <body class="{{ $bodyClass ?? '' }}">
-<script src="{{ asset('/vendor/admix/vendor/tabler/js/theme.min.js') }}" defer></script>
+<script src="{{ asset('/vendor/admix-ui/tabler/dist/js/demo-theme.min.js') }}" defer></script>
 <div class="{{ $pageClass ?? '' }}">
     @yield('aside')
     @yield('header')
@@ -95,9 +97,9 @@
 
 @stack('bottom')
 
-<script src="{{ asset('/vendor/admix/vendor/tabler/libs/fslightbox/index.js') }}" defer></script>
-<script src="{{ asset('/vendor/admix/vendor/tabler/js/tabler.min.js') }}" defer></script>
-<script src="{{ asset('/vendor/admix/vendor/bootstrap-toaster/js/bootstrap-toaster.min.js') }}" defer></script>
+<script src="{{ asset('/vendor/admix-ui/tabler/dist/libs/fslightbox/index.js') }}" defer></script>
+<script src="{{ asset('/vendor/admix-ui/tabler/dist/js/tabler.min.js') }}" defer></script>
+<script src="{{ asset('/vendor/admix-ui/vendor/libs/bootstrap-toaster/js/bootstrap-toaster.min.js') }}" defer></script>
 <script src="{{ asset('/vendor/admix-ui/vendor/libs/easymde/easymde.min.js') }}" defer></script>
 <script src="{{ asset('/vendor/admix-ui/vendor/libs/cropperjs/cropper.min.js') }}" defer></script>
 <script src="{{ asset('/vendor/admix-ui/vendor/libs/sortablejs/sortable.min.js') }}" defer></script>
