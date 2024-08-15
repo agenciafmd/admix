@@ -10,6 +10,7 @@ use Agenciafmd\Ui\Casts\AsSingleMediaLibrary;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Prunable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -21,7 +22,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class User extends Authenticatable implements AuditableContract, HasMedia
 {
-    use Auditable, HasFactory, InteractsWithMedia, Notifiable, SoftDeletes, WithScopes;
+    use Auditable, HasFactory, InteractsWithMedia, Notifiable, Prunable, SoftDeletes, WithScopes;
 
     protected $guarded = [
         'password_confirmation',
@@ -81,6 +82,11 @@ class User extends Authenticatable implements AuditableContract, HasMedia
     public function sendPasswordResetNotification($token): void
     {
         $this->notify(new ResetPasswordNotification($token));
+    }
+
+    public function prunable(): Builder
+    {
+        return static::where('deleted_at', '<=', now()->subYear());
     }
 
     protected static function newFactory(): UserFactory|\Database\Factories\UserFactory

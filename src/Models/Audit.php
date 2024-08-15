@@ -2,12 +2,16 @@
 
 namespace Agenciafmd\Admix\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Prunable;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use OwenIt\Auditing\Models\Audit as AuditModel;
 
 class Audit extends AuditModel
 {
+    use Prunable;
+
     protected function log(): Attribute
     {
         /* TODO: refatorar e retornar uma tabela na descrição dos campos */
@@ -79,5 +83,10 @@ class Audit extends AuditModel
         $morphPrefix = config('audit.user.morph_prefix', 'user');
 
         return $this->morphOne(User::class, $morphPrefix, "{$morphPrefix}_type", 'id', "{$morphPrefix}_id");
+    }
+
+    public function prunable(): Builder
+    {
+        return static::where('created_at', '<=', now()->subYear());
     }
 }

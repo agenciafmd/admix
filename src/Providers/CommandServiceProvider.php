@@ -4,6 +4,9 @@ namespace Agenciafmd\Admix\Providers;
 
 use Agenciafmd\Admix\Commands\AdmixUser;
 use Agenciafmd\Admix\Commands\NotificationsClear;
+use Agenciafmd\Admix\Models\Audit;
+use Agenciafmd\Admix\Models\Role;
+use Agenciafmd\Admix\Models\User;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
@@ -35,6 +38,15 @@ class CommandServiceProvider extends ServiceProvider
 
             $schedule->command('auth:clear-resets')
                 ->everyFifteenMinutes();
+
+            $schedule->command('model:prune', [
+                '--model' => [
+                    Audit::class,
+                    Role::class,
+                    User::class,
+                ],
+            ])
+                ->dailyAt("03:{$minutes}");
         });
     }
 }
