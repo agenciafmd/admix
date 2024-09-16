@@ -76,6 +76,7 @@ class Index extends DataTableComponent
         $this->setPerPageAccepted([50, 100, 200]);
         $this->setSortingPillsDisabled();
         $this->setFilterPillsDisabled();
+        $this->setHideBulkActionsWhenEmptyEnabled();
 
         $this->setPrimaryKey('id');
         $this->setConfigurableAreas([
