@@ -17,11 +17,13 @@ trait WithSlug
 
     protected function generateSlug(): ?string
     {
-        if ($this->getRawOriginal('name') === $this->name) {
+        $slugFrom = $this->slugFrom ?? 'name';
+
+        if ($this->getRawOriginal($slugFrom) === $this->{$slugFrom}) {
             return null;
         }
 
-        $slug = str($this->name)
+        $slug = str($this->{$slugFrom})
             ->trim()
             ->limit(120)
             ->slug();
