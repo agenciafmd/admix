@@ -90,6 +90,7 @@ class Index extends DataTableComponent
             if (
                 $column->isField('id') ||
                 $column->isField('is_active') ||
+                $column->isField('star') ||
                 $column->isField('sort') ||
                 ($column->getField() === null)
             ) {
@@ -108,7 +109,7 @@ class Index extends DataTableComponent
                 ];
             }
 
-            if ($column->isField('is_active')) {
+            if ($column->isField('is_active') || $column->isField('star')) {
                 return [
                     'align' => 'center',
                 ];
