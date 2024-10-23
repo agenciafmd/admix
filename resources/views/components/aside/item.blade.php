@@ -10,9 +10,7 @@
     ])>
     <a href="{{ $url }}" class="nav-link">
         <span class="nav-link-icon d-md-none d-lg-inline-block">
-            <svg width="24" height="24">
-                <use xlink:href="{{ asset('vendor/admix-ui/images/tabler-sprite.svg') }}#tabler-{{ $icon }}"/>
-            </svg>
+            <x-tblr-icon name="{{ $icon }}"/>
         </span>
         <span class="nav-link-title">
             {{ $label }}
