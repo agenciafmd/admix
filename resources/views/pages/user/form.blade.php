@@ -33,10 +33,11 @@
     <div class="row">
         <div class="col-md-12 mb-3">
             <x-form.image
-                    name="form.avatar_files"
-                    :label="__('admix::fields.avatar_files')"
-                    wire:library="avatar"
-                    :preview="$this?->form?->avatar ?? collect()"
+                    name="form.avatar"
+                    :label="__('admix::fields.avatar')"
+                    :crop-config="[
+                        'aspectRatio' => 1,
+                    ]"
             />
         </div>
     </div>

@@ -133,7 +133,7 @@ class Form extends LivewireForm
             $this->user->save();
         }
 
-        $this->syncMedia($this->user, 'avatar', 'avatar_files');
+        $this->syncMedia($this->user, 'avatar');
 
         return $this->user->save();
     }
