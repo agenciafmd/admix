@@ -44,7 +44,6 @@ class User extends Authenticatable implements AuditableContract, HasMedia
         'can_notify' => 'boolean',
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
-        'library' => AsMediaLibrary::class,
         'avatar' => AsSingleMediaLibrary::class,
     ];
 

@@ -30,16 +30,6 @@
             <x-form.input name="form.email" :label="__('admix::fields.email')"/>
         </div>
     </div>
-    {{--    <div class="row">--}}
-    {{--        <div class="col-md-12 mb-3">--}}
-    {{--            <x-form.image-library--}}
-    {{--                    name="form.library_files"--}}
-    {{--                    :label="__('admix::fields.library_files')"--}}
-    {{--                    wire:library="library"--}}
-    {{--                    :preview="$this?->form?->library ?? collect()"--}}
-    {{--            />--}}
-    {{--        </div>--}}
-    {{--    </div>--}}
     <div class="row">
         <div class="col-md-12 mb-3">
             <x-form.image
