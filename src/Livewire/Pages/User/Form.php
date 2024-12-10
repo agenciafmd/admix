@@ -42,12 +42,16 @@ class Form extends LivewireForm
     public array $avatar_files = [];
 
     #[Validate]
+    public array $avatar_meta = [];
+
+    #[Validate]
     public Collection $avatar;
 
     public function setModel(User $user): void
     {
         $this->user = $user;
         $this->avatar = collect();
+        $this->avatar_meta = [];
         if ($user->exists) {
             $this->is_active = $user->is_active;
             $this->can_notify = $user->can_notify;
@@ -55,6 +59,8 @@ class Form extends LivewireForm
             $this->email = $user->email;
             $this->role_id = $user->role_id;
             $this->avatar = $user->avatar;
+            $this->avatar_meta = $this->avatar->pluck('meta')
+                ->toArray();
         }
     }
 
@@ -102,6 +108,9 @@ class Form extends LivewireForm
                 'array',
                 'required',
                 'min:1',
+            ],
+            'avatar_meta' => [
+                'array',
             ],
         ];
     }
