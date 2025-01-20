@@ -8,7 +8,6 @@ use Agenciafmd\Admix\Models\Audit;
 use Agenciafmd\Admix\Models\Role;
 use Agenciafmd\Admix\Models\User;
 use Illuminate\Console\Scheduling\Schedule;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 
 class CommandServiceProvider extends ServiceProvider
@@ -22,27 +21,30 @@ class CommandServiceProvider extends ServiceProvider
             ]);
         }
 
-        $minutes = Cache::rememberForever('schedule-minutes', static function () {
-            return str((string) random_int(0, 59))
-                ->padLeft(2, '0')
-                ->toString();
-        });
-
-        $this->app->booted(function () use ($minutes) {
+        $this->app->booted(function () {
             $schedule = $this->app->make(Schedule::class);
-
-            $schedule->command('notifications:clear 90')
-                ->withoutOverlapping()
-                ->dailyAt("06:{$minutes}")
-                ->appendOutputTo(storage_path('logs/command-notifications-clear-' . date('Y-m-d') . '.log'));
+            $minutes = config('admix.schedule.minutes');
 
             $schedule->command('auth:clear-resets')
                 ->everyFifteenMinutes();
-
+            $schedule->command('notifications:clear 90')
+                ->withoutOverlapping()
+                ->dailyAt("04:{$minutes}")
+                ->appendOutputTo(storage_path('logs/command-notifications-clear-' . date('Y-m-d') . '.log'));
             $schedule->command('model:prune', [
                 '--model' => [
                     Audit::class,
+                ],
+            ])
+                ->dailyAt("03:{$minutes}");
+            $schedule->command('model:prune', [
+                '--model' => [
                     Role::class,
+                ],
+            ])
+                ->dailyAt("03:{$minutes}");
+            $schedule->command('model:prune', [
+                '--model' => [
                     User::class,
                 ],
             ])

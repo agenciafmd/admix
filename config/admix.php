@@ -30,6 +30,9 @@ return [
             ],
         ],
     ],
+    'schedule' => [
+        'minutes' => substr(base_convert(config('app.name'), 36, 5), 0, 2),
+    ],
     'user' => [
         'name' => 'User',
         'icon' => 'user',
