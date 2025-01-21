@@ -14,12 +14,14 @@ class CommandServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        if ($this->app->runningInConsole()) {
-            $this->commands([
-                AdmixUser::class,
-                NotificationsClear::class,
-            ]);
+        if (!$this->app->runningInConsole()) {
+            return;
         }
+
+        $this->commands([
+            AdmixUser::class,
+            NotificationsClear::class,
+        ]);
 
         $this->app->booted(function () {
             $schedule = $this->app->make(Schedule::class);
@@ -35,20 +37,17 @@ class CommandServiceProvider extends ServiceProvider
                 '--model' => [
                     Audit::class,
                 ],
-            ])
-                ->dailyAt("03:{$minutes}");
+            ])->dailyAt("03:{$minutes}");
             $schedule->command('model:prune', [
                 '--model' => [
                     Role::class,
                 ],
-            ])
-                ->dailyAt("03:{$minutes}");
+            ])->dailyAt("03:{$minutes}");
             $schedule->command('model:prune', [
                 '--model' => [
                     User::class,
                 ],
-            ])
-                ->dailyAt("03:{$minutes}");
+            ])->dailyAt("03:{$minutes}");
         });
     }
 }
