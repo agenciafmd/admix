@@ -13,8 +13,7 @@ class Dashboard extends Component
         public string $url = '',
         public bool $active = false,
         public bool $visible = false,
-    ) {
-    }
+    ) {}
 
     public function render(): View
     {

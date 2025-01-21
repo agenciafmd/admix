@@ -13,8 +13,7 @@ class Users extends Component
         public bool $active = false,
         public bool $visible = false,
         public array $children = [],
-    ) {
-    }
+    ) {}
 
     public function render(): View
     {

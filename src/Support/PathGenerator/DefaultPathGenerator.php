@@ -30,9 +30,9 @@ class DefaultPathGenerator implements PathGenerator
     private function customPath(string $key): string
     {
         return 'media/' . str($key)
-                ->pipe('md5')
-                ->limit(6, '')
-                ->split(2)
-                ->implode('/') . '/' . $key;
+            ->pipe('md5')
+            ->limit(6, '')
+            ->split(2)
+            ->implode('/') . '/' . $key;
     }
 }

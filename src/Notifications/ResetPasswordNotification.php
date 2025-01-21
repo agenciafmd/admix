@@ -24,7 +24,7 @@ class ResetPasswordNotification extends Notification
 
     public function toMail($notifiable): MailMessage
     {
-        return (new MailMessage())
+        return (new MailMessage)
             ->markdown('admix-mail::markdown.email')
             ->theme('admix-mail::theme.tabler')
             ->subject(config('app.name') . ' | ' . __('Forgot password'))

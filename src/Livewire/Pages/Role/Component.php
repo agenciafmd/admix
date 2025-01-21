@@ -65,9 +65,9 @@ class Component extends LivewireComponent
                 return [
                     'name' => str($group['name'])
                         ->explode(' » ')
-                        ->map(fn($name) => __($name))
+                        ->map(fn ($name) => __($name))
                         ->implode(' » '),
-                    'policies' => collect($group['abilities'])->map(fn($ability) => [
+                    'policies' => collect($group['abilities'])->map(fn ($ability) => [
                         'name' => __($ability['name']),
                         'policy' => $group['policy'] . '@' . $ability['method'],
                     ]),

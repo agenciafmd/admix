@@ -33,9 +33,9 @@ class Audit extends AuditModel
                     'id' => $this->auditable_id,
                 ]);
                 $packageName = 'admix-' . str($this->auditable_type)
-                        ->afterLast('\\')
-                        ->plural()
-                        ->lower();
+                    ->afterLast('\\')
+                    ->plural()
+                    ->lower();
                 if ($this->event === 'created' || $this->event === 'updated') {
                     $log .= '<br /><br />';
                     collect($this->getModified())->each(function ($modified, $attribute) use ($packageName, &$log) {
@@ -44,8 +44,8 @@ class Audit extends AuditModel
                         if (str($attributeName)
                             ->contains('::fields.')) {
                             $attributeName = str($packageName)
-                                    ->replace('admix', 'local')
-                                    ->__toString() . '::fields.' . $attribute;
+                                ->replace('admix', 'local')
+                                ->__toString() . '::fields.' . $attribute;
                             $attributeName = __($attributeName);
                         }
                         if (str($attributeName)
@@ -61,15 +61,15 @@ class Audit extends AuditModel
                             });
 
                         $log .= __('<strong>:attribute</strong> was changed from <strong>:old</strong> to <strong>:new</strong>',
-                                [
-                                    'attribute' => $attributeName,
-                                    'old' => isset($modified['old']) ? str($modified['old'])
-                                        ->pipe('nl2br')
-                                        ->squish() : __('empty'),
-                                    'new' => isset($modified['new']) ? str($modified['new'])
-                                        ->pipe('nl2br')
-                                        ->squish() : __('empty'),
-                                ]) . '<br />';
+                            [
+                                'attribute' => $attributeName,
+                                'old' => isset($modified['old']) ? str($modified['old'])
+                                    ->pipe('nl2br')
+                                    ->squish() : __('empty'),
+                                'new' => isset($modified['new']) ? str($modified['new'])
+                                    ->pipe('nl2br')
+                                    ->squish() : __('empty'),
+                            ]) . '<br />';
                     });
                 }
 

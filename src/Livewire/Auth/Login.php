@@ -60,7 +60,7 @@ class Login extends Component
         $data = $this->validate($this->rules(), [], $this->attributes());
 
         $throttleKey = str($data['email'])
-                ->lower() . '|' . request()->ip();
+            ->lower() . '|' . request()->ip();
 
         if (RateLimiter::tooManyAttempts($throttleKey, 5)) {
             $this->addError('email', __('auth.throttle', [

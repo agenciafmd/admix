@@ -49,40 +49,40 @@ class Index extends BaseIndex
                 }),
             SelectFilter::make(__('admix::fields.auditable_type'), 'auditable_type')
                 ->options([
-                        '' => __('-'),
-                    ] + collect(config('audit-alias'))
-                        ->mapWithKeys(static function ($value, $key) {
-                            return [
-                                $key => str($value)
-                                    ->explode(' » ')
-                                    ->map(static fn($name) => __($name))
-                                    ->implode(' » '),
-                            ];
-                        })
-                        ->toArray())
+                    '' => __('-'),
+                ] + collect(config('audit-alias'))
+                    ->mapWithKeys(static function ($value, $key) {
+                        return [
+                            $key => str($value)
+                                ->explode(' » ')
+                                ->map(static fn ($name) => __($name))
+                                ->implode(' » '),
+                        ];
+                    })
+                    ->toArray())
                 ->filter(static function (Builder $builder, string $value) {
                     $builder->where($builder->qualifyColumn('auditable_type'), $value);
                 }),
             SelectFilter::make(__('admix::fields.user'), 'user_id')
                 ->options([
-                        '' => __('-'),
-                    ] + User::query()
-                        ->orderBy('name')
-                        ->pluck('name', 'id')
-                        ->toArray())
+                    '' => __('-'),
+                ] + User::query()
+                    ->orderBy('name')
+                    ->pluck('name', 'id')
+                    ->toArray())
                 ->filter(static function (Builder $builder, string $value) {
                     $builder->where($builder->qualifyColumn('user_id'), $value);
                 }),
             SelectFilter::make(__('admix::fields.event'), 'event')
                 ->options([
-                        '' => __('-'),
-                    ] + collect(config('audit.events'))
-                        ->mapWithKeys(static function ($value) {
-                            return [
-                                $value => __('admix::events.' . $value),
-                            ];
-                        })
-                        ->toArray())
+                    '' => __('-'),
+                ] + collect(config('audit.events'))
+                    ->mapWithKeys(static function ($value) {
+                        return [
+                            $value => __('admix::events.' . $value),
+                        ];
+                    })
+                    ->toArray())
                 ->filter(static function (Builder $builder, string $value) {
                     $builder->where($builder->qualifyColumn('event'), $value);
                 }),
@@ -107,8 +107,8 @@ class Index extends BaseIndex
     public function columns(): array
     {
         $actions[] = ModalColumn::make('Details')
-            ->title(static fn($row) => __('Details'))
-            ->location(static fn($row) => $row->log)
+            ->title(static fn ($row) => __('Details'))
+            ->location(static fn ($row) => $row->log)
             ->attributes(static function ($row) {
                 return [
                     'class' => 'btn ms-2',
@@ -124,22 +124,22 @@ class Index extends BaseIndex
                 ->sortable()
                 ->searchable()
                 ->format(
-                    static fn($value) => config('audit-alias')[$value] ? str(config('audit-alias')[$value])
+                    static fn ($value) => config('audit-alias')[$value] ? str(config('audit-alias')[$value])
                         ->explode(' » ')
-                        ->map(static fn($name) => __($name))
+                        ->map(static fn ($name) => __($name))
                         ->implode(' » ') : $value
                 ),
             Column::make(__('admix::fields.user'), 'admixUser.name')
                 ->sortable()
                 ->searchable()
                 ->format(
-                    static fn($value) => $value ?? __('Unknown')
+                    static fn ($value) => $value ?? __('Unknown')
                 ),
             Column::make(__('admix::fields.event'), 'event')
                 ->sortable()
                 ->searchable()
                 ->format(
-                    static fn($value) => __('admix::events.' . $value)
+                    static fn ($value) => __('admix::events.' . $value)
                 ),
             Column::make(__('admix::fields.auditable_id'), 'auditable_id')
                 ->sortable()

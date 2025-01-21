@@ -38,7 +38,7 @@ class AuthServiceProvider extends ServiceProvider
     private function loadAuthLoginOnLocal(): void
     {
         if ($this->app->environment(['local']) && !$this->app->runningInConsole()) {
-            $user = new User();
+            $user = new User;
             $user->name = 'Dev Local';
             $user->email = 'dev@fmd.ag';
 

@@ -80,7 +80,7 @@ class Form extends LivewireForm
             'email' => [
                 'required',
                 Rule::unique('users', 'email')
-                    ->where(fn(Builder $query) => $query->where('type', $this->user->type))
+                    ->where(fn (Builder $query) => $query->where('type', $this->user->type))
                     ->ignore($this->user->id ?? null),
                 'email:rfc,dns',
                 'max:255',

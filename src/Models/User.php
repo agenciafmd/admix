@@ -5,7 +5,6 @@ namespace Agenciafmd\Admix\Models;
 use Agenciafmd\Admix\Database\Factories\UserFactory;
 use Agenciafmd\Admix\Notifications\ResetPasswordNotification;
 use Agenciafmd\Admix\Traits\WithScopes;
-use Agenciafmd\Ui\Casts\AsMediaLibrary;
 use Agenciafmd\Ui\Casts\AsSingleMediaLibrary;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -73,7 +72,7 @@ class User extends Authenticatable implements AuditableContract, HasMedia
     protected function isAdmin(): Attribute
     {
         return Attribute::make(
-            get: fn() => !(isset($this->attributes['role_id'])
+            get: fn () => !(isset($this->attributes['role_id'])
                 && $this->attributes['role_id']),
         );
     }
