@@ -25,7 +25,6 @@
     "Description": "Descrição",
     "Deselect all": "Desmarcar todas",
     "Details": "Detalhes",
-    "Do you want to select all": "Você deseja selecionar todas as",
     "Edit": "Editar",
     "Enable dark mode": "Ativar modo escuro",
     "Enable light mode": "Ativar modo claro",
@@ -61,8 +60,6 @@
     "Restore": "Restaurar",
     "Role": "Grupo",
     "Save": "Salvar",
-    "Select all on page": "Selecionar todas na página",
-    "Select all": "Selecionar todas",
     "Send": "Enviar",
     "Settings": "Configurações",
     "Show password": "Mostrar senha",
@@ -83,7 +80,5 @@
     "You recently requested to reset a password for your account. Use the button below to reset it. This message will expire in 24 hours.": "Você recentemente solicitou a redefinição de senha para sua conta. Use o botão abaixo para redefini-la. Esta mensagem expirará em 24 horas.",
     "and": "e",
     "empty": "vazio",
-    "rows.": "linhas.",
-    "rows?": "linhas?",
     "zzz": "zzz"
 }

@@ -176,11 +176,11 @@ class Index extends DataTableComponent
             if ($this->user->can('restore', $this->builder()
                 ->getModel())) {
                 $actions[] = RestoreColumn::make('Restore')
-                    ->title(fn($row) => __('Restore'))
-                    ->location(fn($row) => "window.Livewire.dispatchTo('" . str(static::class)
-                            ->lower()
-                            ->replace('\\', '.')
-                            ->toString() . "', 'bulkRestore', { id: {$row->id} })")
+                    ->title(fn ($row) => __('Restore'))
+                    ->location(fn ($row) => "window.Livewire.dispatchTo('" . str(static::class)
+                        ->lower()
+                        ->replace('\\', '.')
+                        ->toString() . "', 'bulkRestore', { id: {$row->id} })")
                     ->attributes(function ($row) {
                         return [
                             'class' => 'btn ms-0 ms-md-2',
@@ -191,8 +191,8 @@ class Index extends DataTableComponent
             if ($this->user->can('update', $this->builder()
                 ->getModel())) {
                 $actions[] = EditColumn::make('Edit')
-                    ->title(fn($row) => __('Edit'))
-                    ->location(fn($row) => route($this->editRoute, $row))
+                    ->title(fn ($row) => __('Edit'))
+                    ->location(fn ($row) => route($this->editRoute, $row))
                     ->attributes(function ($row) {
                         return [
                             'class' => 'btn ms-2',
@@ -203,8 +203,8 @@ class Index extends DataTableComponent
             if ($this->user->can('delete', $this->builder()
                 ->getModel())) {
                 $actions[] = DeleteColumn::make('Delete')
-                    ->title(fn($row) => __('Delete'))
-                    ->location(fn($row) => $row->id)
+                    ->title(fn ($row) => __('Delete'))
+                    ->location(fn ($row) => $row->id)
                     ->attributes(function ($row) {
                         return [
                             'class' => 'btn ms-2',
@@ -306,7 +306,6 @@ class Index extends DataTableComponent
             $model = $this->builder()
                 ->whereIn('id', $id)
                 ->get()->each->restore();
-
             if ($model->count()) {
                 $this->dispatch(event: 'toast', level: 'success', message: __('crud.success.restore'));
             } else {
@@ -325,7 +324,7 @@ class Index extends DataTableComponent
         $selectedItems = $this->getSelected();
         $items = (static function () use ($builder, $selectedItems): \Generator {
             foreach ($builder->whereIn('id', $selectedItems)
-                         ->cursor() as $item) {
+                ->cursor() as $item) {
                 yield $item;
             }
         })();
@@ -333,7 +332,7 @@ class Index extends DataTableComponent
 
         return response()->streamDownload(function () use ($items) {
             return (new FastExcel($items)) // usa generator para diminuir o consumo de memória
-            ->export('php://output', $this->fieldsToExport());
+                ->export('php://output', $this->fieldsToExport());
         }, sprintf('%s-%s.xlsx', date('YmdHi'), $this->builder()
             ->getModel()
             ->getTable()));
@@ -360,13 +359,11 @@ class Index extends DataTableComponent
             ];
         }
         $actions = [];
-        if ($this->creteRoute && $this->user->can('create', $this->builder()
-                ->getModel())) {
+        if ($this->creteRoute && $this->user->can('create', $this->builder()->getModel())) {
             $actions[] = '<x-btn.create href="' . route($this->creteRoute) . '"
                 label="' . $this->packageName . '" />';
         }
-        if ($this->trashRoute && $this->user->can('restore', $this->builder()
-                ->getModel())) {
+        if ($this->trashRoute && $this->user->can('restore', $this->builder()->getModel())) {
             $actions[] = '<x-btn.trash href="' . route($this->trashRoute) . '"
                 label="" />';
         }
@@ -382,8 +379,6 @@ class Index extends DataTableComponent
 
         $this->setupColumnSelect();
         $this->setupPagination();
-        $this->setupSecondaryHeader();
-        $this->setupFooter();
         $this->setupReordering();
 
         return view('admix-ui::livewire-tables.datatable')
