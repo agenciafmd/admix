@@ -8,13 +8,15 @@ use Illuminate\Support\ServiceProvider;
 
 class BladeServiceProvider extends ServiceProvider
 {
-    public function boot()
+    public function boot(): void
     {
         $this->loadBladeComponents();
 
         $this->loadBladeDirectives();
 
         $this->loadBladeComposers();
+
+        $this->setMenu();
 
         $this->setPaginator();
 
@@ -23,41 +25,57 @@ class BladeServiceProvider extends ServiceProvider
         $this->publish();
     }
 
-    public function register()
+    public function register(): void
     {
-        //
-    }
-
-    protected function loadBladeComponents()
-    {
-        //
-    }
-
-    protected function loadBladeComposers()
-    {
-        //
-    }
-
-    protected function loadBladeDirectives()
-    {
-        Blade::directive('render', function ($component) {
-            return "<?php echo (app($component))->toHtml(); ?>";
+        $this->app->singleton('admix-menu', function () {
+            return collect();
         });
     }
 
-    protected function setPaginator()
+    private function loadBladeComponents(): void
     {
-        Paginator::defaultView('agenciafmd/admix::partials.paginate.simple');
+        Blade::componentNamespace('Agenciafmd\\Admix\\Http\\Components', 'admix');
     }
 
-    protected function loadViews()
+    private function loadBladeComposers(): void
     {
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'admix');
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'agenciafmd/admix'); // deprecated
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'agenciafmd/flash');
+        //
     }
 
-    protected function publish()
+    private function loadBladeDirectives(): void
+    {
+        //
+    }
+
+    private function setMenu(): void
+    {
+        $this->app->make('admix-menu')
+            ->push((object) [
+                'component' => 'admix::aside.dashboard',
+                'ord' => 1,
+            ])
+            ->push((object) [
+                'component' => 'admix::aside.users',
+                'ord' => 2,
+            ])
+            ->push((object) [
+                'component' => 'admix::aside.logs',
+                'ord' => 3,
+            ]);
+    }
+
+    private function setPaginator(): void
+    {
+        Paginator::defaultView('admix::partials.paginate.simple');
+    }
+
+    private function loadViews(): void
+    {
+        $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'admix');
+        $this->loadViewsFrom(__DIR__ . '/../../resources/mail', 'admix-mail');
+    }
+
+    private function publish(): void
     {
         $this->publishes([
             __DIR__ . '/../resources/views' => base_path('resources/views/vendor/agenciafmd/admix'),

@@ -2,30 +2,36 @@
 
 namespace Agenciafmd\Admix\Notifications;
 
-use Illuminate\Notifications\Notification;
+use Illuminate\Notifications\Channels\MailChannel;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 
 class ResetPasswordNotification extends Notification
 {
-    public $token;
+    public string $token;
 
-    public function __construct($token)
+    public function __construct(string $token)
     {
         $this->token = $token;
     }
 
-    public function via($notifiable)
+    public function via($notifiable): array
     {
-        return ['mail'];
+        return [
+            MailChannel::class,
+        ];
     }
 
-    public function toMail($notifiable)
+    public function toMail($notifiable): MailMessage
     {
-        return (new MailMessage())
-            ->subject(config('app.name') . ' | Recuperação de senha')
-            ->markdown('agenciafmd/admix::markdown.email')
-            ->line('Enviamos este email para você porque foi solicitado a alteração de senha da sua conta.')
-            ->action('Alterar Senha', url(config('app.url') . route('admix.recover.reset.form', $this->token, false)))
-            ->line('Caso não tenha sido você que solicitou a alteração, por favor, ignore este email.');
+        return (new MailMessage)
+            ->markdown('admix-mail::markdown.email')
+            ->theme('admix-mail::theme.tabler')
+            ->subject(config('app.name') . ' | ' . __('Forgot password'))
+            ->level('default')
+            ->greeting(__('Forgot password'))
+            ->line(__('You recently requested to reset a password for your account. Use the button below to reset it. This message will expire in 24 hours.'))
+            ->action(__('Reset password'), route('admix.auth.resetPassword', $this->token))
+            ->line(__('If you didn\'t request a password reset, please ignore this message or contact us if you have any questions.'));
     }
 }

@@ -2,24 +2,29 @@
 
 namespace Agenciafmd\Admix\Models;
 
+use Agenciafmd\Admix\Traits\WithScopes;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Prunable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Auditable;
+use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
-class Role extends Model
+class Role extends Model implements AuditableContract
 {
-    use SoftDeletes;
+    use Auditable, Prunable, SoftDeletes, WithScopes;
 
     protected $guarded = [
         //
     ];
 
     protected $casts = [
-        'rules' => 'object',
+        'is_active' => 'boolean',
+        'rules' => 'array',
     ];
 
-    public function scopeIsActive($query)
+    public function prunable(): Builder
     {
-        $query->where('is_active', 1)
-            ->sort();
+        return static::where('deleted_at', '<=', now()->subYear());
     }
 }

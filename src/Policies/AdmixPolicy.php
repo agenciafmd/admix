@@ -9,46 +9,45 @@ class AdmixPolicy
 {
     use HandlesAuthorization;
 
-    public function before($user, $ability)
+    public function before(User $user, string $ability): ?bool
     {
-        if ($user->is_admin) {
+        if ($user->isAdmin) {
             return true;
         }
 
-        // validamos a habilidade, se for encontrada, continuamos
-        // caso contrario caimos no metodo da habilidade
-        // que por padrão retornará false
         if ($user->hasAbility(static::class . '@' . $ability)) {
             return true;
         }
+
+        return null;
     }
 
-    public function view(User $user)
+    public function view(User $user): bool
     {
         return false;
     }
 
-    public function edit(User $user)
+    public function edit(User $user): bool
     {
         return false;
     }
 
-    public function create(User $user)
+    public function create(User $user): bool
     {
         return false;
     }
 
-    public function update(User $user)
+    public function update(User $user): bool
     {
         return false;
     }
 
-    public function delete(User $user)
+    public function delete(User $user): bool
     {
         return false;
     }
 
-    public function restore(User $user)
+    public function restore(User $user): bool
     {
         return false;
     }

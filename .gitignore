@@ -1,3 +1,2 @@
-/resources/node_modules
-/vendor
-composer.lock
+resources/tabler
+.idea

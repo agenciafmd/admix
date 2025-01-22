@@ -1,0 +1,73 @@
+<?php
+
+use Agenciafmd\Admix\Policies\AuditPolicy;
+use Agenciafmd\Admix\Policies\RolePolicy;
+use Agenciafmd\Admix\Policies\UserPolicy;
+
+return [
+    [
+        'name' => config('admix.user.name') . ' » ' . config('admix.user.name'),
+        'policy' => UserPolicy::class,
+        'abilities' => [
+            [
+                'name' => 'View',
+                'method' => 'view',
+            ],
+            [
+                'name' => 'Create',
+                'method' => 'create',
+            ],
+            [
+                'name' => 'Update',
+                'method' => 'update',
+            ],
+            [
+                'name' => 'Delete',
+                'method' => 'delete',
+            ],
+            [
+                'name' => 'Restore',
+                'method' => 'restore',
+            ],
+        ],
+        'sort' => 0,
+    ],
+    [
+        'name' => config('admix.user.name') . ' » ' . config('admix.role.name'),
+        'policy' => RolePolicy::class,
+        'abilities' => [
+            [
+                'name' => 'View',
+                'method' => 'view',
+            ],
+            [
+                'name' => 'Create',
+                'method' => 'create',
+            ],
+            [
+                'name' => 'Update',
+                'method' => 'update',
+            ],
+            [
+                'name' => 'Delete',
+                'method' => 'delete',
+            ],
+            [
+                'name' => 'Restore',
+                'method' => 'restore',
+            ],
+        ],
+        'sort' => 1,
+    ],
+    [
+        'name' => 'Configurations » ' . config('admix.audit.name'),
+        'policy' => AuditPolicy::class,
+        'abilities' => [
+            [
+                'name' => 'View',
+                'method' => 'view',
+            ],
+        ],
+        'sort' => 2,
+    ],
+];

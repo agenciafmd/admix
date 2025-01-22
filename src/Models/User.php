@@ -4,26 +4,27 @@ namespace Agenciafmd\Admix\Models;
 
 use Agenciafmd\Admix\Database\Factories\UserFactory;
 use Agenciafmd\Admix\Notifications\ResetPasswordNotification;
-use Agenciafmd\Media\Traits\MediaTrait;
+use Agenciafmd\Admix\Traits\WithScopes;
+use Agenciafmd\Ui\Casts\AsSingleMediaLibrary;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Prunable;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Str;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 use Spatie\MediaLibrary\HasMedia;
-use Spatie\Searchable\Searchable;
-use Spatie\Searchable\SearchResult;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class User extends Authenticatable implements AuditableContract, HasMedia, Searchable
+class User extends Authenticatable implements AuditableContract, HasMedia
 {
-    use Notifiable, SoftDeletes, HasFactory, Auditable, MediaTrait;
+    use Auditable, HasFactory, InteractsWithMedia, Notifiable, Prunable, SoftDeletes, WithScopes;
 
     protected $guarded = [
         'password_confirmation',
-        'media',
     ];
 
     protected $hidden = [
@@ -33,92 +34,60 @@ class User extends Authenticatable implements AuditableContract, HasMedia, Searc
         'type',
     ];
 
-    protected $casts = [
-        'is_active' => 'boolean',
-    ];
-
     protected $attributes = [
         'type' => 'admix',
     ];
 
-    protected static function boot()
+    protected $casts = [
+        'is_active' => 'boolean',
+        'can_notify' => 'boolean',
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+        'avatar' => AsSingleMediaLibrary::class,
+    ];
+
+    protected static function boot(): void
     {
         parent::boot();
 
-        static::addGlobalScope('type', function (Builder $builder) {
-            $builder->where('users.type', 'admix');
+        static::addGlobalScope('type', static function (Builder $builder) {
+            $builder->where($builder->qualifyColumn('type'), 'admix');
         });
     }
 
-    public $searchableType = 'Usuários';
-
-    public function getSearchResult(): SearchResult
-    {
-        return new SearchResult(
-            $this,
-            "{$this->name} ({$this->email})",
-            route('admix.users.edit', $this->id)
-        );
-    }
-
-    public function role()
+    public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class);
     }
 
-    public function getAvatarAttribute()
-    {
-        $email = $this->attributes['email'];
-        $md5 = md5($email); // md5 é base 16
-        $base5 = base_convert($md5, 16, 5); // converte para base5, porque temos 50 avatares
-        $fileName = Str::limit($base5, 2, ''); // pegamos os dois primeiros caracteres que deve ser algo entre 01 e 50
-        $avatar = asset("/images/avatars/{$fileName}.svg");
-
-        if (!app()->environment(['local', 'testing', 'develop'])) {
-            $avatar = "https://unavatar.now.sh/{$email}?fallback=" . $avatar;
-        }
-
-        return $this->getFirstMediaUrl('image', 'thumb@2x') ?: $avatar;
-    }
-
-    public function hasAbility($ability)
+    public function hasAbility(string $ability): bool
     {
         if (!$this->role) {
             return false;
         }
 
-        return in_array('\\' . $ability, $this->role->rules, true);
+        return in_array($ability, $this->role->rules, true);
     }
 
-    public function getIsAdminAttribute()
+    protected function isAdmin(): Attribute
     {
-        return (isset($this->attributes['role_id'])
-            && $this->attributes['role_id']) ? false : true;
+        return Attribute::make(
+            get: fn () => !(isset($this->attributes['role_id'])
+                && $this->attributes['role_id']),
+        );
     }
 
-    public function scopeIsActive($query)
-    {
-        $query->where('is_active', 1);
-    }
-
-    public function scopeSort($query)
-    {
-        $sorts = default_sort([
-            '-is_active',
-            'name',
-        ]);
-
-        foreach ($sorts as $sort) {
-            $query->orderBy($sort['field'], $sort['direction']);
-        }
-    }
-
-    public function sendPasswordResetNotification($token)
+    public function sendPasswordResetNotification($token): void
     {
         $this->notify(new ResetPasswordNotification($token));
     }
 
-    protected static function newFactory()
+    public function prunable(): Builder
+    {
+        return static::where('deleted_at', '<=', now()->subYear());
+    }
+
+    protected static function newFactory(): UserFactory|\Database\Factories\AdmixUserFactory
     {
         if (class_exists(\Database\Factories\AdmixUserFactory::class)) {
             return \Database\Factories\AdmixUserFactory::new();

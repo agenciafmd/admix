@@ -12,49 +12,28 @@
         }
     ],
     "require": {
-        "agenciafmd/admix-analytics": "dev-master",
-        "agenciafmd/admix-form": "dev-master",
-        "agenciafmd/admix-leads": "dev-master",
-        "agenciafmd/admix-media": "dev-master",
-        "agenciafmd/admix-postal": "dev-master",
-        "geekcom/validator-docs": "^3.4",
-        "hmazter/laravel-schedule-list": "^2.0",
-        "laracasts/flash": "^3.0",
-        "laravel/framework": "^8.0",
-        "laravel/ui": "^3.0",
-        "laravelcollective/html": "^6.0",
-        "livewire/livewire": "^2.0",
-        "owen-it/laravel-auditing": "^12.0",
-        "renatomarinho/laravel-page-speed": "^2.0",
-        "silber/page-cache": "^1.0",
-        "spatie/laravel-query-builder": "^3.5",
-        "spatie/laravel-searchable": "^1.6",
-        "spatie/laravel-translatable": "^4.1"
-    },
-    "require-dev": {
-        "beyondcode/laravel-dump-server": "^1.0",
-        "itsgoingd/clockwork": "^4.0"
-    },
-    "config": {
-        "optimize-autoloader": true,
-        "preferred-install": "dist",
-        "sort-packages": true
+        "rap2hpoutre/fast-excel": "^5.4",
+        "itsgoingd/clockwork": "^5.1",
+        "laravel/framework": "^11.0",
+        "laravel/horizon": "^5.15",
+        "livewire/livewire": "^3.4",
+        "owen-it/laravel-auditing": "^13.0"
     },
     "autoload": {
         "files": [
             "src/Http/helpers.php"
         ],
         "psr-4": {
-            "Agenciafmd\\Admix\\": "src/"
+            "Agenciafmd\\Admix\\": "src/",
+            "Agenciafmd\\Admix\\Database\\Factories\\": "database/factories/",
+            "Agenciafmd\\Admix\\Database\\Seeders\\": "database/seeders/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
                 "Agenciafmd\\Admix\\Providers\\AdmixServiceProvider"
-            ],
-            "aliases": {
-            }
+            ]
         }
     }
 }
