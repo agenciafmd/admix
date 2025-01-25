@@ -22,7 +22,12 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css"
           rel="stylesheet"/>
     <style>
-        @import url('https://rsms.me/inter/inter.css');
+        @import
+        url
+        (
+        'https://rsms.me/inter/inter.css'
+        )
+        ;
 
         :root {
             --tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
@@ -64,11 +69,9 @@
             border-bottom-right-radius: var(--tblr-border-radius) !important;
         }
     </style>
-
-    {{--    <link rel="stylesheet" href="{{ asset('css/app.css') }}?v={{ config('app.version') }}">--}}
-    {{--    <link rel="apple-touch-icon" href="{{ asset('images/icon-touch.png') }}?v={{ config('app.version') }}">--}}
-    {{--    <link rel="icon" href="{{ asset('images/icon-fav.png') }}?v={{ config('app.version') }}">--}}
-    {{--    <link rel="manifest" href="{{ asset('json/manifest.json') }}?v={{ config('app.version') }}">--}}
+    <link rel="apple-touch-icon" href="{{ config('admix.icon.default') }}">
+    <link rel="icon" href="{{ config('admix.icon.default') }}">
+    <x-livewire-tables:styles/>
     <livewire:styles/>
     @stack('styles')
 </head>
@@ -104,6 +107,7 @@
 <script src="{{ asset('/vendor/admix-ui/vendor/libs/cropperjs/cropper.min.js') }}" defer></script>
 <script src="{{ asset('/vendor/admix-ui/vendor/libs/sortablejs/sortable.min.js') }}" defer></script>
 <livewire:scripts/>
+<x-livewire-tables:scripts/>
 
 @include('admix::partials.message')
 
