@@ -21,13 +21,9 @@
     <link href="{{ asset('/vendor/admix-ui/vendor/libs/cropperjs/cropper.min.css') }}" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css"
           rel="stylesheet"/>
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css"/>
     <style>
-        @import
-        url
-        (
-        'https://rsms.me/inter/inter.css'
-        )
-        ;
+        {{--        @import url('https://rsms.me/inter/inter.css');--}}
 
         :root {
             --tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
