@@ -93,12 +93,12 @@ class Index extends BaseIndex
             DateTimeFilter::make(__('admix::fields.initial_date'), 'initial_date')
                 ->filter(static function (Builder $builder, string $value) {
                     $builder->where($builder->qualifyColumn('created_at'), '>=', Carbon::parse($value)
-                        ->format('Y-m-d H:i:s'));
+                        ->format(config('admix.timestamp.format')));
                 }),
             DateTimeFilter::make(__('admix::fields.end_date'), 'end_date')
                 ->filter(static function (Builder $builder, string $value) {
                     $builder->where($builder->qualifyColumn('created_at'), '<=', Carbon::parse($value)
-                        ->format('Y-m-d H:i:s'));
+                        ->format(config('admix.timestamp.format')));
                 }),
             ...$this->additionalFilters,
         ];
