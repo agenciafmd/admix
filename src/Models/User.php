@@ -38,13 +38,16 @@ class User extends Authenticatable implements AuditableContract, HasMedia
         'type' => 'admix',
     ];
 
-    protected $casts = [
-        'is_active' => 'boolean',
-        'can_notify' => 'boolean',
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
-        'avatar' => AsSingleMediaLibrary::class,
-    ];
+    protected function casts(): array
+    {
+        return [
+            'is_active' => 'boolean',
+            'can_notify' => 'boolean',
+            'email_verified_at' => 'datetime',
+            'password' => 'hashed',
+            'avatar' => AsSingleMediaLibrary::class,
+        ];
+    }
 
     protected static function boot(): void
     {

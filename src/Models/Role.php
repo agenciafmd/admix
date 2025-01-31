@@ -18,10 +18,13 @@ class Role extends Model implements AuditableContract
         //
     ];
 
-    protected $casts = [
-        'is_active' => 'boolean',
-        'rules' => 'array',
-    ];
+    protected function casts(): array
+    {
+        return [
+            'is_active' => 'boolean',
+            'rules' => 'array',
+        ];
+    }
 
     public function prunable(): Builder
     {
