@@ -8,6 +8,8 @@
     <meta name="description" content="Painel Administrativo Agência F&MD">
     <meta name="author" content="Agência F&MD">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="googlebot" content="noindex,nofollow">
 
     <!-- CSS files -->
     <link href="{{ asset('/vendor/admix-ui/tabler/dist/css/tabler.min.css') }}" rel="stylesheet"/>
@@ -23,8 +25,6 @@
           rel="stylesheet"/>
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css"/>
     <style>
-        {{--        @import url('https://rsms.me/inter/inter.css');--}}
-
         :root {
             --tblr-font-sans-serif: 'Inter Var', -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
         }
@@ -74,6 +74,20 @@
 <body class="{{ $bodyClass ?? '' }}">
 <script src="{{ asset('/vendor/admix-ui/tabler/dist/js/demo-theme.min.js') }}" defer></script>
 <div class="{{ $pageClass ?? '' }}">
+    @if(config('app.env') !== 'production')
+        <div class="alert alert-important alert-warning alert-dismissible mb-0 rounded-0">
+            <div class="d-flex justify-content-center">
+                <div>
+                    Este é o <strong>ambiente de homologação</strong>
+                    <span class="d-none d-md-inline">e as informações inseridas não serão
+                        refletidas no ambiente de
+                        produção.
+                    </span>
+                </div>
+            </div>
+        </div>
+    @endif
+
     @yield('aside')
     @yield('header')
     @yield('content')
