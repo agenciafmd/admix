@@ -374,7 +374,9 @@ class Index extends DataTableComponent
     public function render(): View
     {
         if ($this->indexRoute) {
-            session()->put('backUrl', route($this->indexRoute, ['table' => $this->table]));
+            session()->put('backUrl', route($this->indexRoute, [
+                'table-search' => $this->search,
+            ]));
         }
 
         $this->setupColumnSelect();
