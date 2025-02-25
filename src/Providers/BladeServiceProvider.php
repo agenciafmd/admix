@@ -10,19 +10,19 @@ class BladeServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
-        $this->loadBladeComponents();
+        $this->bootBladeComponents();
 
-        $this->loadBladeDirectives();
+        $this->bootBladeDirectives();
 
-        $this->loadBladeComposers();
+        $this->bootBladeComposers();
 
-        $this->setMenu();
+        $this->bootMenu();
 
-        $this->setPaginator();
+        $this->bootPaginator();
 
-        $this->loadViews();
+        $this->bootViews();
 
-        $this->publish();
+        $this->bootPublish();
     }
 
     public function register(): void
@@ -32,22 +32,22 @@ class BladeServiceProvider extends ServiceProvider
         });
     }
 
-    private function loadBladeComponents(): void
+    private function bootBladeComponents(): void
     {
         Blade::componentNamespace('Agenciafmd\\Admix\\Http\\Components', 'admix');
     }
 
-    private function loadBladeComposers(): void
+    private function bootBladeComposers(): void
     {
         //
     }
 
-    private function loadBladeDirectives(): void
+    private function bootBladeDirectives(): void
     {
         //
     }
 
-    private function setMenu(): void
+    private function bootMenu(): void
     {
         $this->app->make('admix-menu')
             ->push((object) [
@@ -64,18 +64,18 @@ class BladeServiceProvider extends ServiceProvider
             ]);
     }
 
-    private function setPaginator(): void
+    private function bootPaginator(): void
     {
         Paginator::defaultView('admix::partials.paginate.simple');
     }
 
-    private function loadViews(): void
+    private function bootViews(): void
     {
         $this->loadViewsFrom(__DIR__ . '/../../resources/views', 'admix');
         $this->loadViewsFrom(__DIR__ . '/../../resources/mail', 'admix-mail');
     }
 
-    private function publish(): void
+    private function bootPublish(): void
     {
         $this->publishes([
             __DIR__ . '/../resources/views' => base_path('resources/views/vendor/agenciafmd/admix'),

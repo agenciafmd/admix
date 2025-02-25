@@ -22,20 +22,20 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        $this->loadAuthLoginOnLocal();
+        $this->bootAuthLoginOnLocal();
     }
 
     public function register(): void
     {
-        $this->loadConfigs();
+        $this->registerConfigs();
     }
 
-    public function loadConfigs(): void
+    public function registerConfigs(): void
     {
         $this->mergeConfigFrom(__DIR__ . '/../../config/gate.php', 'gate');
     }
 
-    private function loadAuthLoginOnLocal(): void
+    private function bootAuthLoginOnLocal(): void
     {
         if ($this->app->environment(['local']) && !$this->app->runningInConsole()) {
             $user = new User;
