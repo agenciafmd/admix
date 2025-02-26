@@ -15,8 +15,8 @@ class UserFactory extends Factory
         return [
             'is_active' => 1,
             'can_notify' => 1,
-            'name' => $this->faker->name,
-            'email' => $this->faker->unique()->safeEmail,
+            'name' => fake()->name,
+            'email' => fake()->unique()->safeEmail,
             'password' => Hash::make('secret'),
             'role_id' => null,
         ];
