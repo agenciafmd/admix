@@ -21,7 +21,7 @@ trait WithScopes
         foreach ($defaultSort as $field => $direction) {
             if ($field === 'sort') {
                 // https://www.designcise.com/web/tutorial/how-to-order-null-values-first-or-last-in-mysql#sort-in-ascending-order-with-null-values-last
-                $query->orderByRaw($query->qualifyColumn('-sort') . ' DESC');
+                $query->orderByRaw('-' . $query->qualifyColumn('sort') . ' DESC');
             } else {
                 $query->orderBy($query->qualifyColumn($field), $direction);
             }
