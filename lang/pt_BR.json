@@ -80,5 +80,8 @@
     "You recently requested to reset a password for your account. Use the button below to reset it. This message will expire in 24 hours.": "Você recentemente solicitou a redefinição de senha para sua conta. Use o botão abaixo para redefini-la. Esta mensagem expirará em 24 horas.",
     "and": "e",
     "empty": "vazio",
+    "field": "campo",
+    "old values": "de",
+    "new values": "para",
     "zzz": "zzz"
 }

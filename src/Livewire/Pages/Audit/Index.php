@@ -37,7 +37,10 @@ class Index extends BaseIndex
 
     public function builder(): Builder
     {
-        return $this->model::query();
+        return $this->model::query()
+            ->when(!$this->hasSorts(), function (Builder $builder) {
+                $builder->sort();
+            });
     }
 
     public function filters(): array
