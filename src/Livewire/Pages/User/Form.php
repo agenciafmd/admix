@@ -132,9 +132,15 @@ class Form extends LivewireForm
     public function save(): bool
     {
         $this->validate(rules: $this->rules(), attributes: $this->validationAttributes());
-        $data = $this->except(['user']);
+        $data = $this->except([
+            'user',
+            'password_confirmation',
+            'avatar',
+            'avatar_files',
+            'avatar_meta',
+        ]);
         if (!$data['password']) {
-            unset($data['password'], $data['password_confirmation']);
+            unset($data['password']);
         }
         $this->user->fill($data);
 

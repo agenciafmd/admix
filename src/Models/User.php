@@ -6,6 +6,7 @@ use Agenciafmd\Admix\Database\Factories\UserFactory;
 use Agenciafmd\Admix\Notifications\ResetPasswordNotification;
 use Agenciafmd\Admix\Traits\WithScopes;
 use Agenciafmd\Ui\Casts\AsSingleMediaLibrary;
+use Agenciafmd\Ui\Traits\WithUpload;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -21,11 +22,7 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 
 class User extends Authenticatable implements AuditableContract, HasMedia
 {
-    use Auditable, HasFactory, InteractsWithMedia, Notifiable, Prunable, SoftDeletes, WithScopes;
-
-    protected $guarded = [
-        'password_confirmation',
-    ];
+    use Auditable, HasFactory, InteractsWithMedia, Notifiable, Prunable, SoftDeletes, WithScopes, WithUpload;
 
     protected $hidden = [
         'password',
