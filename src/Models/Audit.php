@@ -5,18 +5,31 @@ namespace Agenciafmd\Admix\Models;
 use Agenciafmd\Admix\Traits\WithScopes;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Prunable;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Support\Collection;
-use OwenIt\Auditing\Models\Audit as AuditModel;
+use OwenIt\Auditing\Audit as AuditTrait;
+use OwenIt\Auditing\Contracts\Audit as AuditContract;
 
-class Audit extends AuditModel
+class Audit extends Model implements AuditContract
 {
-    use Prunable, WithScopes;
+    use AuditTrait, Prunable, WithScopes;
+
+    public static $auditingGloballyDisabled = false;
 
     protected array $defaultSort = [
         'created_at' => 'desc',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'old_values' => 'json',
+            'new_values' => 'json',
+            // Note: Please do not add 'auditable_id' in here, as it will break non-integer PK models
+        ];
+    }
 
     protected function log(): Attribute
     {
@@ -82,6 +95,11 @@ class Audit extends AuditModel
         );
     }
 
+    public function getSerializedDate(\DateTimeInterface $date): string
+    {
+        return $this->serializeDate($date);
+    }
+
     public function admixUser(): morphOne
     {
         $morphPrefix = config('audit.user.morph_prefix', 'user');
@@ -91,7 +109,7 @@ class Audit extends AuditModel
 
     public function prunable(): Builder
     {
-        return static::where('created_at', '<=', now()->subYear());
+        return static::query()->where('created_at', '<=', now()->subYear());
     }
 
     private function parseField(string $attribute, string $packageName): string
