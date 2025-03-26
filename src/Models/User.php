@@ -84,7 +84,7 @@ class User extends Authenticatable implements AuditableContract, HasMedia
 
     public function prunable(): Builder
     {
-        return static::where('deleted_at', '<=', now()->subYear());
+        return static::query()->where('deleted_at', '<=', now()->subYear());
     }
 
     protected static function newFactory(): UserFactory|\Database\Factories\AdmixUserFactory

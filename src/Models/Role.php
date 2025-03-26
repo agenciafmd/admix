@@ -28,6 +28,6 @@ class Role extends Model implements AuditableContract
 
     public function prunable(): Builder
     {
-        return static::where('deleted_at', '<=', now()->subYear());
+        return static::query()->where('deleted_at', '<=', now()->subYear());
     }
 }
