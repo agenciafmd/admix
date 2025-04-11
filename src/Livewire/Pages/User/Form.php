@@ -101,12 +101,11 @@ class Form extends LivewireForm
                 'image',
                 'max:1024',
                 Rule::dimensions()
-                    ->maxWidth(1200)
-                    ->maxHeight(1200),
+                    ->maxWidth(800)
+                    ->maxHeight(800),
             ],
             'avatar' => [
                 'array',
-                'required',
                 'min:1',
             ],
             'avatar_meta' => [
