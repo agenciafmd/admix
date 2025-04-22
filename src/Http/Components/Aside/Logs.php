@@ -2,8 +2,10 @@
 
 namespace Agenciafmd\Admix\Http\Components\Aside;
 
+use Agenciafmd\Admix\Models\Audit;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
+use Illuminate\Support\Facades\Gate;
 
 class Logs extends Component
 {
@@ -21,7 +23,7 @@ class Logs extends Component
         $this->label = __(config('admix.audit.name'));
         $this->url = route('admix.audit.index');
         $this->active = request()?->currentRouteNameStartsWith('admix.audit');
-        $this->visible = true;
+        $this->visible = Gate::allows('view',Audit::class);
 
         return view('admix::components.aside.item');
     }
