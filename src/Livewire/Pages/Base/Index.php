@@ -39,6 +39,8 @@ class Index extends DataTableComponent
 
     protected array $additionalFilters = [];
 
+    protected array $initialColumns = [];
+
     protected array $additionalColumns = [];
 
     protected array $additionalActionButtons = [];
@@ -218,6 +220,7 @@ class Index extends DataTableComponent
             Column::make(__('admix::fields.id'), 'id')
                 ->sortable()
                 ->searchable(),
+            ...$this->initialColumns,
             Column::make(__('admix::fields.name'), 'name')
                 ->sortable()
                 ->searchable(),
@@ -398,6 +401,11 @@ class Index extends DataTableComponent
     public function setAdditionalFilters(array $filters): void
     {
         $this->additionalFilters = $filters;
+    }
+
+    public function setInitialColumns(array $columns): void
+    {
+        $this->initialColumns = $columns;
     }
 
     public function setAdditionalColumns(array $columns): void
