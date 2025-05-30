@@ -16,6 +16,7 @@
         "itsgoingd/clockwork": "^5.1",
         "laravel/framework": "^11.0",
         "laravel/horizon": "^5.15",
+        "league/flysystem-ftp": "^3.29",
         "livewire/livewire": "^3.4",
         "owen-it/laravel-auditing": "^13.0"
     },
