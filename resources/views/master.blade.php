@@ -116,6 +116,7 @@
 <script src="{{ asset('/vendor/admix-ui/vendor/libs/easymde/easymde.min.js') }}" defer></script>
 <script src="{{ asset('/vendor/admix-ui/vendor/libs/cropperjs/cropper.min.js') }}" defer></script>
 <script src="{{ asset('/vendor/admix-ui/vendor/libs/sortablejs/sortable.min.js') }}" defer></script>
+<script src="{{ asset('/vendor/admix-ui/vendor/libs/tom-select/tom-select.complete.min.js') }}" defer></script>
 <livewire:scripts/>
 <x-livewire-tables:scripts/>
 
