@@ -14,6 +14,7 @@
     <!-- CSS files -->
     <link href="{{ asset('/vendor/admix-ui/tabler/dist/css/tabler.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('/vendor/admix-ui/tabler/dist/css/tabler-vendors.min.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('/vendor/admix-ui/tabler/dist/css/tabler-flags.min.css') }}" rel="stylesheet"/>
     <link href="{{ asset('/vendor/admix-ui/vendor/libs/bootstrap-toaster/css/bootstrap-toaster.min.css') }}"
           rel="stylesheet"/>
     <link href="{{ asset('/vendor/admix-ui/vendor/libs/bootstrap-toaster/css/bootstrap-toaster.min.css') }}"
@@ -60,7 +61,7 @@
         }
 
         .is-invalid .input-group-text {
-            border-color: var(--tblr-danger);
+            border-color: var(--tblr-form-invalid-color);
             border-top-right-radius: var(--tblr-border-radius) !important;
             border-bottom-right-radius: var(--tblr-border-radius) !important;
         }
