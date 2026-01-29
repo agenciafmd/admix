@@ -106,7 +106,7 @@ class Form extends LivewireForm
             ],
             'avatar' => [
                 'array',
-                'min:1',
+                'nullable',
             ],
             'avatar_meta' => [
                 'array',
